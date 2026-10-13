@@ -788,9 +788,9 @@ const VIDEOS = [
   { id: "i295i-WBI0c", v: ["448", "448"], ar: "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك", en: "Beware Dubai service charges: 3 tricks that eat your returns" },
 ];
 const TOOLS = [
-  { url: "https://realityengineer4u-ship-it.github.io/mizan/", img: "tool-mizan.webp", n: ["ميزان البناء", "Mizan Al-Binaa"], d: ["قارن عرض المقاول بأسعار السوق بندًا بند، واحسب تكلفة مشروعك بأسعار النهارده.", "Check a contractor's quote against market prices line by line, and price your project at today's rates."] },
-  { url: "https://realityengineer4u-ship-it.github.io/bawsala/", img: "tool-bawsala.webp", n: ["بوصلة المهندس", "Engineer's Compass"], d: ["اكتشف التخصص الهندسي اللي يناسبك فعلًا، في 22 تخصص و15 دقيقة.", "Find the engineering major that truly fits you: 22 majors, 15 minutes."] },
-  { url: "https://realityengineer4u-ship-it.github.io/structura-lab/", img: "tool-structura.webp", n: ["المعمل الإنشائي", "Structura Lab"], d: ["اتعلم الهندسة الإنشائية من الصفر: تحليل وخرسانة ومعدني في 117 حلقة و39 معمل ثلاثي الأبعاد.", "Learn structural engineering from zero: analysis, concrete and steel in 117 episodes and 39 3D labs."] },
+  { url: "https://realityengineer4u-ship-it.github.io/mizan/", img: ["tool-mizan.webp", "tool-mizan-en.webp"], n: ["ميزان البناء", "Mizan Al-Binaa"], d: ["قارن عرض المقاول بأسعار السوق بندًا بند، واحسب تكلفة مشروعك بأسعار النهارده.", "Check a contractor's quote against market prices line by line, and price your project at today's rates."] },
+  { url: "https://realityengineer4u-ship-it.github.io/bawsala/", img: ["tool-bawsala.webp", "tool-bawsala-en.webp"], n: ["بوصلة المهندس", "Engineer's Compass"], d: ["اكتشف التخصص الهندسي اللي يناسبك فعلًا، في 22 تخصص و15 دقيقة.", "Find the engineering major that truly fits you: 22 majors, 15 minutes."] },
+  { url: "https://realityengineer4u-ship-it.github.io/structura-lab/", img: ["tool-structura.webp", "tool-structura-en.webp"], n: ["المعمل الإنشائي", "Structura Lab"], d: ["اتعلم الهندسة الإنشائية من الصفر: تحليل وخرسانة ومعدني في 117 حلقة و39 معمل ثلاثي الأبعاد.", "Learn structural engineering from zero: analysis, concrete and steel in 117 episodes and 39 3D labs."] },
 ];
 
 /* =====================================================================
@@ -886,7 +886,7 @@ function render() {
   $("#yt-tags").innerHTML = d["v.tags"].map((t) => `<span>${esc(t)}</span>`).join("");
   $("#yt-stats").innerHTML = d["v.stats"].map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("");
   $("#videos").innerHTML = VIDEOS.map((v) => `<a class="vc" data-r href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener"><div class="th"><img src="assets/v-${v.id}.webp" alt="" loading="lazy" decoding="async" width="480" height="270"><span class="pl-ic"></span></div><h3>${esc(v[lang])}</h3><small>${esc(d.views(v.v[L()]))}</small></a>`).join("");
-  $("#tools").innerHTML = TOOLS.map((t) => `<a class="tool" data-r href="${t.url}" target="_blank" rel="noopener"><img src="assets/${t.img}" alt="" loading="lazy" width="960" height="600"><div><small>${esc(d["t.free"])}</small><h3>${esc(t.n[L()])}</h3><p>${esc(t.d[L()])}</p></div></a>`).join("");
+  $("#tools").innerHTML = TOOLS.map((t) => `<a class="tool" data-r href="${t.url}" target="_blank" rel="noopener"><img src="assets/${t.img[L()]}" alt="" loading="lazy" width="960" height="600"><div><small>${esc(d["t.free"])}</small><h3>${esc(t.n[L()])}</h3><p>${esc(t.d[L()])}</p></div></a>`).join("");
   observeReveals();
   layoutProjects();
 }
