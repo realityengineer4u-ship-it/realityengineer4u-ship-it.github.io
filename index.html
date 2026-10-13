@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Siddek Mahmoud</title>
-<meta name="description" content="صديق محمود: قائد تخطيط في الإمارات ومؤسس قناة مهندس الواقع. تخطيط وتحكم في المشاريع، مكتب فني، Shop Drawings وBIM.">
+<meta name="description" content="Siddek Mahmoud: Planning Lead in the UAE and creator of the Reality Engineer channel. Planning and project controls, technical office, shop drawings, BIM and Primavera P6.">
 <meta property="og:title" content="Siddek Mahmoud · Planning Lead">
 <meta property="og:description" content="Planning the built world: towers, master communities and villa programmes across the UAE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -800,7 +800,7 @@ const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isMobile = () => innerWidth <= 860;
-let lang = store.get("lang") === "en" ? "en" : "ar";
+let lang = store.get("lang") === "ar" ? "ar" : "en";
 const L = () => (lang === "ar" ? 0 : 1);
 const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const p6date = (y) => MON[Math.min(11, Math.floor((y % 1) * 12 + 1e-6))] + "-" + String(Math.floor(y) % 100).padStart(2, "0");
@@ -1325,7 +1325,7 @@ function hero() {
     const ls = new THREE.LineSegments(g, new THREE.LineBasicMaterial(Object.assign({ color: lin(0x7fd4ff), opacity: 0.9 }, ADD)));
     ls.userData.levels = levels; ls.frustumCulled = false; scene.add(ls); return ls;
   })();
-  const scan = new THREE.Mesh(new THREE.ShapeGeometry(rrect(W + 6, D + 6, R + 3), 8).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial(Object.assign({ color: lin(0x7fd4ff), opacity: 0.12, side: THREE.DoubleSide }, ADD)));
+  const scan = new THREE.Mesh(new THREE.ShapeGeometry(rrect(W + 6, D + 6, R + 3), 8).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial(Object.assign({ color: lin(0x7fd4ff), opacity: 0.05, side: THREE.DoubleSide }, ADD)));
   scene.add(scan);
 
   // the working front: pour ring, work lights and welding sparks, riding the top of the frame
