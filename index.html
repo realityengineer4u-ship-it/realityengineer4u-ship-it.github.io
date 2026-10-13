@@ -1416,7 +1416,7 @@ function hero() {
   const camAt = (p) => { let i = 0; while (i < K.length - 2 && p > K[i + 1][0]) i++;
     const t = Math.max(0, Math.min(1, (p - K[i][0]) / (K[i + 1][0] - K[i][0]))), k0 = K[Math.max(0, i - 1)], k1 = K[i], k2 = K[i + 1], k3 = K[Math.min(K.length - 1, i + 2)];
     return [1, 2, 3, 4].map((j) => cr(k0[j], k1[j], k2[j], k3[j], t)); };
-  let intro = 0, scrollP = 0, mx = 0, my = 0, tmx = 0, tmy = 0, visible = true, cam = null, lastS = -1, lastF = -1;
+  let intro = 0.12, scrollP = 0, mx = 0, my = 0, tmx = 0, tmy = 0, visible = true, cam = null, lastS = -1, lastF = -1;
   const sec = $("#hero");
   const readScroll = () => { const r = sec.getBoundingClientRect(); scrollP = Math.max(0, Math.min(1, -r.top / Math.max(1, sec.offsetHeight - innerHeight))); };
   addEventListener("scroll", readScroll, { passive: true });
