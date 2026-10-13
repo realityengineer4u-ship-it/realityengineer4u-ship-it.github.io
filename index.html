@@ -347,6 +347,13 @@ html.lenis, html.lenis body { height: auto; }
 .tool small { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; color: var(--amber-ink); text-transform: uppercase; }
 .tool h3 { font-size: 1.25rem; }
 .tool p { color: var(--muted); font-size: .9rem; }
+#tools { scroll-margin-top: 96px; }
+.gnote { position: fixed; inset-inline: 0; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 90; margin-inline: auto; width: min(640px, calc(100% - 32px)); display: flex; flex-wrap: wrap; gap: .7rem 1rem; align-items: center; justify-content: space-between; padding: .85rem 1rem; border: 1px solid rgba(245,165,36,.55); border-radius: 16px; background: var(--bg-2); box-shadow: 0 18px 50px rgba(0,0,0,.55); }
+.gnote[hidden] { display: none; }
+.gnote p { flex: 1 1 13rem; margin: 0; font-size: .95rem; line-height: 1.6; }
+.gnote .acts { display: flex; gap: .5rem; align-items: center; }
+.gnote .gx { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer; }
+.gnote .gx:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 
 /* ---------- contact ---------- */
 .contact { text-align: center; display: grid; justify-items: center; gap: 1.6rem; padding-block: clamp(6rem, 14vw, 11rem); border-top: 1px solid var(--line); background: radial-gradient(ellipse 60% 70% at 50% 100%, rgba(245,165,36,.16), transparent 70%); }
@@ -620,6 +627,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   </section>
 </main>
 
+<div class="gnote" id="gnote" role="status" hidden>
+  <p data-t="g.note"></p>
+  <div class="acts"><a class="btn solid" href="#tools" id="gnote-go"><span data-t="g.go"></span></a><button type="button" class="gx" id="gnote-x" aria-label="Close">×</button></div>
+</div>
+
 <footer><div class="wrap"><span data-t="foot">© صديق محمود · مهندس الواقع</span><span class="mono">DWG SM-002 · REV 00</span></div></footer>
 
 <script>
@@ -661,7 +673,7 @@ const T = {
     "v.sub": "اشترك", "v.all": "كل الفيديوهات", "v.latest": "أحدث الفيديوهات", "a.yt": "اشترك في القناة",
     "v.tags": ["عقارات", "ذهب", "استثمار", "دبي", "رواتب وفلوس", "مصر"],
     "v.stats": [["90.1K", "مشترك"], ["4.5M", "مشاهدة"], ["579", "فيديو"], ["2018", "على يوتيوب منذ"]], views: (n) => n + " مشاهدة",
-    "t.free": "أداة مجانية",
+    "t.free": "أداة مجانية", "g.note": "الأدوات بتتفتح من الموقع ده. اختار أداتك من قسم الأدوات.", "g.go": "روح للأدوات",
     "k.kicker": "تواصل", "k.big": "خلينا نخطط <em>مشروعك</em> الجاي.",
     "k.sub": "استشارات، مكتب فني، Shop Drawings، BIM، أو برامج زمنية P6. ابعتلي على واتساب أو الإيميل وهرد عليك.",
     "k.wa": "واتساب", copied: "اتنسخ.", select: "متحدد، انسخه بـ Ctrl+C.",
@@ -701,7 +713,7 @@ const T = {
     "v.sub": "Subscribe", "v.all": "All videos", "v.latest": "Latest videos", "a.yt": "Subscribe on YouTube",
     "v.tags": ["Real estate", "Gold", "Investing", "Dubai", "Salaries & money", "Egypt"],
     "v.stats": [["90.1K", "subscribers"], ["4.5M", "views"], ["579", "videos"], ["2018", "on YouTube since"]], views: (n) => n + " views",
-    "t.free": "Free tool",
+    "t.free": "Free tool", "g.note": "The tools open from this site. Pick yours in the tools section.", "g.go": "Go to the tools",
     "k.kicker": "Contact", "k.big": "Let's plan your <em>next</em> project.",
     "k.sub": "Consultancy, technical office, shop drawings, BIM or P6 programmes. Message me on WhatsApp or email.",
     "k.wa": "WhatsApp", copied: "Copied.", select: "Selected. Press Ctrl+C to copy.",
@@ -788,9 +800,9 @@ const VIDEOS = [
   { id: "i295i-WBI0c", v: ["448", "448"], ar: "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك", en: "Beware Dubai service charges: 3 tricks that eat your returns" },
 ];
 const TOOLS = [
-  { url: "https://realityengineer4u-ship-it.github.io/mizan/", img: ["tool-mizan.webp", "tool-mizan-en.webp"], n: ["ميزان البناء", "Mizan Al-Binaa"], d: ["قارن عرض المقاول بأسعار السوق بندًا بند، واحسب تكلفة مشروعك بأسعار النهارده.", "Check a contractor's quote against market prices line by line, and price your project at today's rates."] },
-  { url: "https://realityengineer4u-ship-it.github.io/bawsala/", img: ["tool-bawsala.webp", "tool-bawsala-en.webp"], n: ["بوصلة المهندس", "Engineer's Compass"], d: ["اكتشف التخصص الهندسي اللي يناسبك فعلًا، في 22 تخصص و15 دقيقة.", "Find the engineering major that truly fits you: 22 majors, 15 minutes."] },
-  { url: "https://realityengineer4u-ship-it.github.io/structura-lab/", img: ["tool-structura.webp", "tool-structura-en.webp"], n: ["المعمل الإنشائي", "Structura Lab"], d: ["اتعلم الهندسة الإنشائية من الصفر: تحليل وخرسانة ومعدني في 117 حلقة و39 معمل ثلاثي الأبعاد.", "Learn structural engineering from zero: analysis, concrete and steel in 117 episodes and 39 3D labs."] },
+  { url: "https://realityengineer4u-ship-it.github.io/mizan/", img: ["tool-mizan.webp", "tool-mizan-en.webp"], q: ["#ar", "#en"], n: ["ميزان البناء", "Mizan Al-Binaa"], d: ["قارن عرض المقاول بأسعار السوق بندًا بند، واحسب تكلفة مشروعك بأسعار النهارده.", "Check a contractor's quote against market prices line by line, and price your project at today's rates."] },
+  { url: "https://realityengineer4u-ship-it.github.io/bawsala/", img: ["tool-bawsala.webp", "tool-bawsala-en.webp"], q: ["?lang=ar", "?lang=en"], n: ["بوصلة المهندس", "Engineer's Compass"], d: ["اكتشف التخصص الهندسي اللي يناسبك فعلًا، في 22 تخصص و15 دقيقة.", "Find the engineering major that truly fits you: 22 majors, 15 minutes."] },
+  { url: "https://realityengineer4u-ship-it.github.io/structura-lab/", img: ["tool-structura.webp", "tool-structura-en.webp"], q: ["?lang=ar", "?lang=en"], n: ["المعمل الإنشائي", "Structura Lab"], d: ["اتعلم الهندسة الإنشائية من الصفر: تحليل وخرسانة ومعدني في 117 حلقة و39 معمل ثلاثي الأبعاد.", "Learn structural engineering from zero: analysis, concrete and steel in 117 episodes and 39 3D labs."] },
 ];
 
 /* =====================================================================
@@ -886,7 +898,7 @@ function render() {
   $("#yt-tags").innerHTML = d["v.tags"].map((t) => `<span>${esc(t)}</span>`).join("");
   $("#yt-stats").innerHTML = d["v.stats"].map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("");
   $("#videos").innerHTML = VIDEOS.map((v) => `<a class="vc" data-r href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener"><div class="th"><img src="assets/v-${v.id}.webp" alt="" loading="lazy" decoding="async" width="480" height="270"><span class="pl-ic"></span></div><h3>${esc(v[lang])}</h3><small>${esc(d.views(v.v[L()]))}</small></a>`).join("");
-  $("#tools").innerHTML = TOOLS.map((t) => `<a class="tool" data-r href="${t.url}" target="_blank" rel="noopener"><img src="assets/${t.img[L()]}" alt="" loading="lazy" width="960" height="600"><div><small>${esc(d["t.free"])}</small><h3>${esc(t.n[L()])}</h3><p>${esc(t.d[L()])}</p></div></a>`).join("");
+  $("#tools").innerHTML = TOOLS.map((t) => `<a class="tool" data-r href="${t.url}${t.q[L()]}" target="_blank" rel="noopener"><img src="assets/${t.img[L()]}" alt="" loading="lazy" width="960" height="600"><div><small>${esc(d["t.free"])}</small><h3>${esc(t.n[L()])}</h3><p>${esc(t.d[L()])}</p></div></a>`).join("");
   observeReveals();
   layoutProjects();
 }
@@ -973,6 +985,8 @@ addEventListener("scroll", () => {
 }, { passive: true });
 addEventListener("resize", () => { layoutProjects(); onScrollProjects(); });
 
+/* the tools only open for visitors who come through these cards: leave a short-lived ticket on any way of opening one */
+["pointerdown", "touchstart", "keydown", "contextmenu", "click", "auxclick"].forEach((ev) => $("#tools").addEventListener(ev, (e) => { if (e.target.closest && e.target.closest("a.tool")) store.set("re-ticket", String(Date.now())); }, { capture: true, passive: true }));
 $("#lang").addEventListener("click", () => { lang = lang === "ar" ? "en" : "ar"; store.set("lang", lang); render(); onScrollProjects(); });
 function copyText(text, node) {
   const done = (k) => { $("#toast").textContent = T[lang][k]; };
@@ -984,6 +998,17 @@ $("#cp-phone").addEventListener("click", (e) => copyText("+971528220524", e.curr
 
 render();
 onScrollProjects(); onScrollNav();
+/* a visitor sent here from a direct tool link gets a pointer to the tools */
+(() => {
+  let from = null;
+  try { from = sessionStorage.getItem("re-from"); sessionStorage.removeItem("re-from"); } catch (e) {}
+  if (!from && /\/(mizan|bawsala|structura-lab)\//.test(document.referrer || "")) from = "ref";
+  if (!from) return;
+  const n = $("#gnote"), hide = () => { n.hidden = true; };
+  n.hidden = false;
+  $("#gnote-x").addEventListener("click", hide);
+  $("#gnote-go").addEventListener("click", hide);
+})();
 document.fonts && document.fonts.ready.then(() => { layoutProjects(); onScrollProjects(); });
 
 /* ---------- hero HUD: a live mini P6 programme ---------- */
