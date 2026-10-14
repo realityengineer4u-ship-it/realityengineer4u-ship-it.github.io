@@ -281,6 +281,18 @@ html.lenis, html.lenis body { height: auto; }
 .pl h3 { font-size: 1.2rem; }
 .pl p { color: var(--muted); font-size: .92rem; }
 
+/* ---------- review fixes ---------- */
+html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] h4 { line-height: 1.3; }
+.g-axis span:first-child { transform: translate(0, -50%); }
+@media (max-width: 860px) { .g-name b { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.35; } }
+@media (max-width: 560px) {
+  .g-head > span:first-child { display: none; }
+  .g-head, .g-row > .g-main { grid-template-columns: 1fr !important; }
+  .g-row > .g-main { gap: .55rem; }
+  .g-name { padding-inline-end: 0; }
+  .duo .btn, .li-me .btns .btn { flex: 1 1 auto; justify-content: center; }
+}
+
 /* ---------- lab: automation, AI, machine learning ---------- */
 .model { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); border: 1px solid var(--line); border-radius: 26px; background: linear-gradient(160deg, #15181d, #0f1115 70%); overflow: hidden; }
 .model .ctl { padding: clamp(1.2rem, 2.6vw, 2rem); display: grid; gap: 1.05rem; align-content: start; border-inline-end: 1px solid var(--line); }
@@ -746,7 +758,7 @@ const T = {
     "lab.note": "نموذج توضيحي بأوزان تجريبية. النموذج الحقيقي بيتدرب على تاريخ تحديثات المحفظة نفسها.",
     "lab.lanes": [
       ["الأتمتة", "80%", "أقل وقت في دورة التقارير", ["محرك VBA بيحدّث الـ actuals في P6 بسجل مراجعة وحماية للبيانات", "محرك إنشاء Baseline لمشاريع +100 وحدة في دقايق بدل أيام", "نماذج Power Query وDAX بتربط P6 والتكلفة والموقع"], ["Excel VBA", "Python", "Power Query", "DAX", "TypeScript"]],
-      ["الذكاء الاصطناعي", "EOT", "مسار مطالبات بمساعدة AI", ["n8n + Gmail + Google Sheets + Primavera: أحداث التأخير بتتسجل وتترتبط بالأنشطة أول بأول", "تقارير بمساعدة الذكاء الاصطناعي للإدارة", "بدرّب فريق التخطيط على التقارير المدمجة بالـ AI"], ["n8n", "LLM workflows", "Gmail API", "Google Sheets"]],
+      ["الذكاء الاصطناعي", "EOT", "مسار مطالبات بمساعدة AI", ["أحداث التأخير بتتسجل وتترتبط بالأنشطة أول بأول عن طريق n8n وGmail وGoogle Sheets وPrimavera", "تقارير بمساعدة الذكاء الاصطناعي للإدارة", "بدرّب فريق التخطيط على التقارير المدمجة بالـ AI"], ["n8n", "LLM workflows", "Gmail API", "Google Sheets"]],
       ["التعلم الآلي", "Haven", "منصة بتتعلم من كل مشروع", ["مكتبات أنماط بتتعلم من جداول المشاريع السابقة، فكل مشروع بيرفع مستوى اللي بعده", "توليد ومراجعة ملفات XER تلقائيًا بفحوصات سلامة للبيانات", "كشف الشذوذ في الجدول قبل ما يوصل للتقرير"], ["React 18", "TypeScript", "Dexie", "SQLite", "Supabase"]]
     ],
     "lab.flow": "من الإيميل لـ P6 في دقايق: مسار التأخير الآلي",
@@ -829,7 +841,7 @@ const T = {
 const MARQUEE = ["Aldar · The Haven", "AZIZI · Venice", "Dubai Creek Harbour · Cove 2", "GCC Contracting", "Fibrex Construction", "Al Qabdah Global", "Talaat Moustafa Group", "LACASA", "360 Degrees", "Primavera P6", "Power BI", "Procore CMP"];
 
 const PROJECTS = [
-  { draw: "villas", value: "AED 900M", title: ["The Haven · الحزمتين 2 و3", "The Haven · Packages 2 & 3"], where: ["أبوظبي · ألدار العقارية", "Abu Dhabi · Aldar Properties"],
+  { draw: "villas", value: "AED 900M", title: ["The Haven", "The Haven · Packages 2 & 3"], where: ["الحزمتين 2 و3 · أبوظبي · ألدار العقارية", "Abu Dhabi · Aldar Properties"],
     facts: [[["الوحدات", "Units"], ["836 فيلا وتاون هاوس", "836 villas & townhouses"]], [["التسلسل", "Sequence"], ["604 يوم", "604 days"]], [["المقاول", "Contractor"], ["GCC Contracting", "GCC Contracting"]], [["الأداة", "Tooling"], ["محاكاة 4D · Haven", "4D simulation · Haven"]]],
     role: [["دوري:", "قيادة التخطيط، الـ Baseline، قياس التقدم، خطط التعافي، ومحاكاة 4D لتسلسل التنفيذ."], ["My role:", "Led site planning, the baseline, progress measurement, recovery planning and a 4D simulation of the build sequence."]] },
   { draw: "lagoon", value: "AED 30BN", title: ["عزيزي فينيسيا", "Azizi Venice"], where: ["دبي الجنوب · مجموعة عزيزي", "Dubai South · AZIZI Group"],
@@ -984,7 +996,8 @@ function updateLab(d = T[lang]) {
    PAGE
    ===================================================================== */
 const $ = (s, r = document) => r.querySelector(s);
-const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const bidi = (t) => (typeof lang !== "undefined" && lang === "ar" ? String(t).replace(/ ([·|]) /g, " \u200f$1\u200f ") : String(t));
+const esc = (t) => bidi(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isMobile = () => innerWidth <= 860;
@@ -1034,9 +1047,9 @@ function render() {
   const d = T[lang];
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  document.querySelectorAll("[data-t]").forEach((el) => { const v = d[el.dataset.t]; if (typeof v === "string") el.textContent = v; });
+  document.querySelectorAll("[data-t]").forEach((el) => { const v = d[el.dataset.t]; if (typeof v === "string") el.textContent = bidi(v); });
   document.querySelectorAll(".h2[data-t]").forEach((el) => { el.innerHTML = el.textContent.split(" ").map((w, i) => `<span class="w"><i style="--i:${i}">${esc(w)}</i></span>`).join(" "); });
-  document.querySelectorAll("[data-t-html]").forEach((el) => { el.innerHTML = d[el.dataset.tHtml]; });
+  document.querySelectorAll("[data-t-html]").forEach((el) => { el.innerHTML = bidi(d[el.dataset.tHtml]); });
   $("#lang").textContent = lang === "ar" ? "EN" : "ع";
   $("#title").innerHTML = d.title.map((w, i) => `<span><i class="${i === 2 ? "amber" : ""}">${esc(w)}</i></span>`).join("");
   $("#marq").innerHTML = MARQUEE.concat(MARQUEE).map((m) => `<span>${esc(m)}</span>`).join("");
@@ -1051,7 +1064,7 @@ function render() {
         <h3>${esc(p.title[L()])}</h3>
         <span class="where">${esc(p.where[L()])}</span>
         <span class="value">${p.value}</span>
-        <div class="facts">${p.facts.map(([k, v]) => `<div><small>${esc(k[L()])}</small><span>${esc(v[L()])}</span></div>`).join("")}</div>
+        <div class="facts">${p.facts.map(([k, v]) => `<div><small>${esc(k[L()])}</small><span dir="auto">${esc(v[L()])}</span></div>`).join("")}</div>
         <p class="role"><b>${esc(p.role[L()][0])}</b> ${esc(p.role[L()][1])}</p>
       </div></article>`;
   }).join("");
