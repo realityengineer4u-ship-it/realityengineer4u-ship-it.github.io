@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Siddek Mahmoud Portfolio</title>
+<meta name="description" content="Planning lead in the UAE: Primavera P6 to Power BI reporting that shows slippage early, delay analysis, and planning tools built for the team.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a monthly progress report. A title block with the data date, then one live
+   exhibit per claim: the status check, the forecast trace, the data pipeline, then the record. */
+:root {
+  --paper: #edf0f2;     /* report paper, cool grey toward the accent */
+  --sheet: #fafbfb;     /* exhibit sheet */
+  --ink: #14202b;
+  --muted: #566572;
+  --rule: #c7d0d6;
+  --accent: #1d5a93;    /* P6 activity-bar blue */
+  --baseline: #d9a400;  /* P6 baseline-bar yellow, marks only */
+  --red: #c2392f;
+  --amber: #b87900;
+  --green: #2c8549;
+  --red-bg: #f6dedb; --amber-bg: #f7ead0; --green-bg: #dcefe1;
+  --code-bg: #e3e8ec;
+
+  --f-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --s-1: .8125rem; --s0: 1rem; --s1: 1.25rem; --s2: 1.75rem; --s3: 2.4rem; --s4: clamp(2.6rem, 7vw, 4.75rem);
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f151b; --sheet: #161e26; --ink: #e2e8ec; --muted: #94a2ae; --rule: #2a3540;
+    --accent: #6ea6dc; --baseline: #e2b52c; --red: #ee6c61; --amber: #e5a83a; --green: #5cbf7a;
+    --red-bg: #3a1f1d; --amber-bg: #3a2e16; --green-bg: #183323; --code-bg: #1d2731;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f151b; --sheet: #161e26; --ink: #e2e8ec; --muted: #94a2ae; --rule: #2a3540;
+  --accent: #6ea6dc; --baseline: #e2b52c; --red: #ee6c61; --amber: #e5a83a; --green: #5cbf7a;
+  --red-bg: #3a1f1d; --amber-bg: #3a2e16; --green-bg: #183323; --code-bg: #1d2731;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: var(--s0); line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: .005em; }
+h2 { font-size: var(--s3); }
+h3 { font-size: var(--s2); font-weight: 600; }
+p { margin: 0; max-width: 65ch; }
+.mono, td.num, .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.label { font-family: var(--f-mono); font-size: var(--s-1); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.wrap { max-width: var(--wrap); margin-inline: auto; }
+.muted { color: var(--muted); }
+
+/* Title block */
+.titleblock {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--ink);
+  margin-block: 1.5rem 0; background: var(--sheet);
+}
+.titleblock > div { padding: .5rem .75rem; border-inline-end: 1px solid var(--rule); min-width: 0; }
+.titleblock > div:last-child { border-inline-end: 0; }
+.titleblock b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: .9rem; }
+@media (max-width: 640px) {
+  .titleblock { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .titleblock > div:nth-child(2) { border-inline-end: 0; }
+  .titleblock > div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+}
+
+/* Hero */
+.hero { display: grid; gap: 1.5rem; padding-block: 3rem 2.5rem; }
+.hero h1 { font-size: var(--s4); font-weight: 700; max-width: 18ch; }
+.hero h1 em { font-style: normal; color: var(--red); }
+.hero .lede { font-size: var(--s1); max-width: 56ch; }
+.who { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; align-items: baseline; }
+.who strong { font-family: var(--f-display); font-size: var(--s2); font-weight: 600; }
+.facts { display: flex; flex-wrap: wrap; gap: 0; border-block: 1px solid var(--rule); }
+.facts div { padding: .75rem 1.25rem .75rem 0; margin-inline-end: 1.25rem; display: grid; }
+.facts b { font-family: var(--f-display); font-size: var(--s2); font-weight: 600; line-height: 1.1; }
+.facts span { font-size: var(--s-1); color: var(--muted); }
+
+/* Exhibits */
+section { padding-block: 3rem; border-top: 1px solid var(--rule); }
+.sec-head { display: grid; gap: .6rem; margin-bottom: 1.75rem; }
+.sec-head .label b { color: var(--ink); font-weight: 500; }
+.exhibit { background: var(--sheet); border: 1px solid var(--rule); padding: 1.25rem; display: grid; gap: 1.25rem; min-width: 0; }
+.note { font-size: var(--s-1); color: var(--muted); }
+
+/* Status check */
+.rag-bars { display: grid; gap: .75rem; }
+.rag-row { display: grid; grid-template-columns: 7.5rem 1fr; gap: .75rem; align-items: center; }
+.bar { display: flex; height: 1.75rem; border: 1px solid var(--rule); overflow: hidden; }
+.bar span { display: grid; place-items: center; font-family: var(--f-mono); font-size: var(--s-1); color: var(--sheet); transition: flex-grow .4s ease; min-width: 0; overflow: hidden; }
+.bar .g { background: var(--green); } .bar .a { background: var(--amber); } .bar .r { background: var(--red); }
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: .72rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+td.num, th.num { text-align: right; white-space: nowrap; }
+.pill { display: inline-block; font-family: var(--f-mono); font-size: .72rem; padding: .1rem .5rem; border-radius: 2px; white-space: nowrap; }
+.pill.g { background: var(--green-bg); color: var(--green); }
+.pill.a { background: var(--amber-bg); color: var(--amber); }
+.pill.r { background: var(--red-bg); color: var(--red); }
+tr.changed td:first-child { box-shadow: inset 3px 0 0 var(--red); }
+.why { font-size: .8rem; color: var(--muted); min-width: 14rem; }
+.hit-r { color: var(--red); } .hit-a { color: var(--amber); }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem 1.5rem; }
+.ctl { display: grid; gap: .25rem; }
+.ctl label { font-size: var(--s-1); display: flex; justify-content: space-between; gap: .5rem; }
+.ctl output { font-family: var(--f-mono); }
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+button.reset { justify-self: start; font: inherit; font-size: var(--s-1); background: none; color: var(--accent); border: 1px solid var(--accent); padding: .3rem .8rem; cursor: pointer; }
+
+/* Forecast chart */
+.chart { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-size: var(--s-1); }
+.legend i { display: inline-block; width: 1.25rem; height: 0; border-top: 3px solid; vertical-align: middle; margin-inline-end: .4rem; }
+.two { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 1.5rem; align-items: start; }
+@media (max-width: 820px) { .two { grid-template-columns: 1fr; } }
+.callouts { display: grid; gap: 1rem; }
+.callout { border-inline-start: 3px solid var(--rule); padding-inline-start: .9rem; display: grid; gap: .2rem; }
+.callout b { font-family: var(--f-display); font-size: var(--s2); font-weight: 600; line-height: 1.1; }
+.callout.red { border-color: var(--red); } .callout.blue { border-color: var(--accent); }
+
+/* Pipeline */
+.steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; counter-reset: step; border: 1px solid var(--rule); background: var(--sheet); }
+.step { padding: 1rem; border-inline-end: 1px solid var(--rule); display: grid; gap: .4rem; align-content: start; min-width: 0; }
+.step:last-child { border-inline-end: 0; }
+.step::before { counter-increment: step; content: "STEP " counter(step); font-family: var(--f-mono); font-size: .7rem; letter-spacing: .08em; color: var(--accent); }
+.step h3 { font-size: var(--s1); }
+.step p { font-size: .88rem; color: var(--muted); }
+@media (max-width: 900px) {
+  .steps { grid-template-columns: 1fr; }
+  .step { border-inline-end: 0; border-bottom: 1px solid var(--rule); }
+  .step:last-child { border-bottom: 0; }
+}
+pre { margin: 0; background: var(--code-bg); padding: 1rem; overflow-x: auto; font-family: var(--f-mono); font-size: .82rem; line-height: 1.55; }
+code .k { color: var(--accent); } code .c { color: var(--muted); }
+
+/* Lists of work */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 1rem; }
+.item { background: var(--sheet); border: 1px solid var(--rule); padding: 1rem 1.1rem; display: grid; gap: .35rem; align-content: start; }
+.item h3 { font-size: var(--s1); }
+.item p { font-size: .92rem; }
+.item .label { font-size: .7rem; }
+.plan { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 820px) { .plan { grid-template-columns: 1fr; } }
+.plan ul, .item ul { margin: 0; padding-inline-start: 1.1rem; display: grid; gap: .3rem; font-size: .92rem; }
+.gantt { display: grid; gap: .4rem; }
+.g-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 1rem; align-items: center; }
+.g-row .who2 { font-size: .88rem; min-width: 0; }
+.g-row .who2 b { display: block; font-weight: 600; }
+.g-track { position: relative; height: 1.1rem; background: repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px calc(100% / 9)); }
+.g-bar { position: absolute; top: .2rem; bottom: .2rem; background: var(--accent); }
+.g-bar.now { background: linear-gradient(90deg, var(--accent) 70%, color-mix(in srgb, var(--accent) 40%, transparent)); }
+.g-axis { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 1rem; }
+.g-axis div:last-child { position: relative; height: 1.1rem; font-family: var(--f-mono); font-size: .7rem; color: var(--muted); }
+.g-axis div:last-child span { position: absolute; transform: translateX(-50%); }
+.g-axis div:last-child span:first-child { transform: none; }
+@media (max-width: 640px) { .g-row, .g-axis { grid-template-columns: 1fr; gap: .2rem; } .g-axis div:first-child { display: none; } }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
+.contact .item { gap: .5rem; }
+.copyrow { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+.copyrow span { font-family: var(--f-mono); font-size: .92rem; user-select: all; overflow-wrap: anywhere; }
+.copyrow button { font: inherit; font-size: .75rem; background: none; border: 1px solid var(--rule); color: var(--ink); padding: .15rem .55rem; cursor: pointer; }
+footer { padding-block: 2rem 3rem; border-top: 1px solid var(--ink); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: var(--s-1); color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="titleblock" role="group" aria-label="Document details">
+    <div><span class="label">Document</span><b>Project controls portfolio</b></div>
+    <div><span class="label">Prepared by</span><b>S. Mahmoud</b></div>
+    <div><span class="label">Data date</span><b>15-Oct-2026</b></div>
+    <div><span class="label">Revision</span><b>Rev 01</b></div>
+  </div>
+
+  <header class="hero">
+    <div class="who">
+      <strong>Siddek Mahmoud</strong>
+      <span class="muted">Planning Lead · Senior Planning Engineer · Dubai / Sharjah, UAE</span>
+    </div>
+    <h1>Reporting that turns <em>red</em> when the programme does.</h1>
+    <p class="lede">I connect Primavera P6 to Power BI so leadership sees slippage while it can still be recovered. I also handle delay analysis and EOT, and I build the tools my planning team uses every day.</p>
+    <div class="facts">
+      <div><b>8 yrs</b><span>planning, 7+ in the UAE</span></div>
+      <div><b>AED 1.9 bn</b><span>direct scope planned</span></div>
+      <div><b>836</b><span>villas &amp; townhouses delivered</span></div>
+      <div><b>32+</b><span>engineers use tools I built</span></div>
+      <div><b>80%</b><span>shorter reporting cycle</span></div>
+    </div>
+  </header>
+
+  <section id="status" aria-labelledby="status-h">
+    <div class="sec-head">
+      <span class="label">Exhibit A · <b>Status check</b></span>
+      <h2 id="status-h">Reported status vs. what the schedule data says</h2>
+      <p>A package can be reported green while its SPI drops, its float runs out and its forecast slips. This model sets each package's status from rules applied to the P6 update, so a package can't be reported green when its data says otherwise. Move the thresholds to see how the picture changes.</p>
+    </div>
+    <div class="exhibit">
+      <div class="rag-bars">
+        <div class="rag-row"><span class="label">Reported</span><div class="bar" id="bar-rep" aria-label="Reported status distribution"></div></div>
+        <div class="rag-row"><span class="label">From data</span><div class="bar" id="bar-ev" aria-label="Data-driven status distribution"></div></div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th>Work package</th><th>Reported</th><th>From data</th>
+            <th class="num">SPI</th><th class="num">Float left (d)</th><th class="num">Float lost, 3 upd (d)</th><th class="num">Forecast slip (d)</th><th>Why</th>
+          </tr></thead>
+          <tbody id="rag-body"></tbody>
+        </table>
+      </div>
+      <div class="controls">
+        <div class="ctl"><label for="t-spi-r">SPI red below <output id="o-spi-r"></output></label><input type="range" id="t-spi-r" min="0.80" max="0.95" step="0.01" value="0.90"></div>
+        <div class="ctl"><label for="t-spi-a">SPI amber below <output id="o-spi-a"></output></label><input type="range" id="t-spi-a" min="0.90" max="1.00" step="0.01" value="0.95"></div>
+        <div class="ctl"><label for="t-slip-r">Slip red above <output id="o-slip-r"></output></label><input type="range" id="t-slip-r" min="15" max="60" step="1" value="30"></div>
+        <div class="ctl"><label for="t-slip-a">Slip amber above <output id="o-slip-a"></output></label><input type="range" id="t-slip-a" min="0" max="30" step="1" value="10"></div>
+        <div class="ctl"><label for="t-lost-a">Float lost amber above <output id="o-lost-a"></output></label><input type="range" id="t-lost-a" min="5" max="30" step="1" value="15"></div>
+      </div>
+      <button class="reset" id="reset" type="button">Reset thresholds</button>
+      <p class="note">Illustrative data for a mixed-use development, update 14 of 24. Negative float left is always red. No client or employer data appears on this page.</p>
+    </div>
+  </section>
+
+  <section id="forecast" aria-labelledby="forecast-h">
+    <div class="sec-head">
+      <span class="label">Exhibit B · <b>Forecast quality</b></span>
+      <h2 id="forecast-h">Forecast quality as a KPI</h2>
+      <p>Every monthly update stores the forecast completion date. Plotting those forecasts over time shows whether the reported date is a real forecast or a target being held. Here the forecast based on achieved productivity started moving in February. The reported date held at contract completion until August.</p>
+    </div>
+    <div class="exhibit">
+      <div class="two">
+        <div>
+          <svg class="chart" id="drift" viewBox="0 0 640 340" role="img" aria-label="Forecast completion slip by monthly update, reported versus performance-based"></svg>
+          <div class="legend">
+            <span><i style="border-color: var(--red)"></i>Performance-based forecast</span>
+            <span><i style="border-color: var(--accent)"></i>Reported forecast</span>
+            <span><i style="border-color: var(--baseline); border-top-style: dashed"></i>Contract completion</span>
+          </div>
+        </div>
+        <div class="callouts">
+          <div class="callout red"><span class="label">Data showed 30+ days slip</span><b>May 2026</b><span class="muted">update 5, +38 days</span></div>
+          <div class="callout blue"><span class="label">Report admitted it</span><b>Aug 2026</b><span class="muted">update 8, +51 days</span></div>
+          <div class="callout"><span class="label">Warning lost</span><b>3 months</b><span class="muted">time that could have gone to recovery planning or an EOT notice</span></div>
+        </div>
+      </div>
+      <p class="note">Illustrative data. Contract completion 30-Jun-2027. The performance-based forecast projects remaining duration from earned progress rates in the last three updates.</p>
+    </div>
+  </section>
+
+  <section id="pipeline" aria-labelledby="pipeline-h">
+    <div class="sec-head">
+      <span class="label">Exhibit C · <b>How it is built</b></span>
+      <h2 id="pipeline-h">From P6 update to leadership report</h2>
+      <p>The dashboards are only as good as the schedule behind them. The pipeline checks the XER first, keeps every update as a snapshot, and calculates the measures in one model. Planners keep working in P6, and the report pack is ready when the update closes.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Extract</h3><p>XER export from each P6 update, with baseline and data date captured automatically.</p></div>
+      <div class="step"><h3>Validate</h3><p>Integrity checks before anything is reported: open ends, hard constraints, out-of-sequence progress, actuals after data date, missing logic.</p></div>
+      <div class="step"><h3>Snapshot</h3><p>Each update stored as a snapshot, so trends, float erosion and forecast drift are measured, not remembered.</p></div>
+      <div class="step"><h3>Model</h3><p>Power BI model with DAX measures: SPI, BEI, CPLI, float lost, forecast slip, critical and near-critical counts.</p></div>
+      <div class="step"><h3>Report</h3><p>Leadership pages first, with drill-down to package and activity, and a cause-effect trail ready for EOT.</p></div>
+    </div>
+    <div class="exhibit" style="margin-top: 1rem">
+      <span class="label">Sample measures (DAX)</span>
+<pre><code><span class="c">-- Days between baseline finish and current forecast finish</span>
+Forecast Slip (d) =
+<span class="k">VAR</span> _fc = <span class="k">MAX</span> ( Snapshot[ForecastFinish] )
+<span class="k">VAR</span> _bl = <span class="k">MAX</span> ( Baseline[BaselineFinish] )
+<span class="k">RETURN</span> <span class="k">DATEDIFF</span> ( _bl, _fc, <span class="k">DAY</span> )
+
+<span class="c">-- Total float consumed over the last three monthly updates</span>
+Float Lost 3U (d) =
+<span class="k">VAR</span> _now  = [Total Float (d)]
+<span class="k">VAR</span> _prev = <span class="k">CALCULATE</span> ( [Total Float (d)], <span class="k">DATEADD</span> ( 'Update'[DataDate], -3, <span class="k">MONTH</span> ) )
+<span class="k">RETURN</span> _prev - _now</code></pre>
+    </div>
+  </section>
+
+  <section id="claims" aria-labelledby="claims-h">
+    <div class="sec-head">
+      <span class="label">Exhibit D · <b>Delay &amp; claims</b></span>
+      <h2 id="claims-h">Delay analysis that holds up in review</h2>
+      <p>I provide central EOT and delay support to project teams at head office. Because the reporting model keeps every update, the evidence for a claim is already there when the notice goes out.</p>
+    </div>
+    <div class="grid2">
+      <div class="item"><span class="label">Methods</span><h3>TIA, windows, as-planned vs as-built</h3><p>Choice of method matched to the records available and the contract, with cause-effect substantiation and entitlement under FIDIC.</p></div>
+      <div class="item"><span class="label">Workflow</span><h3>AI-assisted EOT pipeline</h3><p>n8n, Gmail, Google Sheets and Primavera linked so delay events are logged, dated and traced to activities as they happen, not reconstructed months later.</p></div>
+      <div class="item"><span class="label">Project record</span><h3>Where this was done</h3><ul>
+        <li>The Haven, Aldar Properties · Packages 2 &amp; 3 · AED 900 M · 836 villas &amp; townhouses</li>
+        <li>Cove 2, Dubai Creek Harbour · AED 1 Bn · high-rise towers over podium</li>
+        <li>Azizi Venice, Dubai South · multiple plots in an AED 30 Bn community</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section id="platforms" aria-labelledby="platforms-h">
+    <div class="sec-head">
+      <span class="label">Exhibit E · <b>Tools in production</b></span>
+      <h2 id="platforms-h">Platforms I designed and built</h2>
+      <p>I am the architect and sole developer of each of these. They run every day on live projects.</p>
+    </div>
+    <div class="grid2">
+      <div class="item"><span class="label">Used by 32+ planners</span><h3>GCC Pro</h3><p>The planning department's operating system. Planning workflows that took days now run in minutes, with a record of every step.</p></div>
+      <div class="item"><span class="label">React · TypeScript · Dexie</span><h3>Haven</h3><p>Multi-project construction intelligence. Generates and validates P6 XER schedules from reusable pattern banks, so each project improves the baseline for the next.</p></div>
+      <div class="item"><span class="label">Days to minutes</span><h3>Baseline Creation Engine</h3><p>Generates P6 baselines automatically for residential programmes of 100+ units.</p></div>
+      <div class="item"><span class="label">DAX · Power Query</span><h3>Power BI Project Controls Suite</h3><p>P6, cost and site data in one model: progress, productivity and KPI dashboards, plus a portfolio timeline used as the standard view by management.</p></div>
+      <div class="item"><span class="label">9,964 documents</span><h3>DC Core</h3><p>Document control in SQLite and TypeScript, replacing spreadsheet logs, with 19,519 revision events traced through transmittals.</p></div>
+      <div class="item"><span class="label">Works offline</span><h3>Haven Snag Manager</h3><p>Site snagging app with unit-by-unit tracking and captioned photo evidence. Works with no signal.</p></div>
+    </div>
+  </section>
+
+  <section id="team" aria-labelledby="team-h">
+    <div class="sec-head">
+      <span class="label">Exhibit F · <b>Building the team</b></span>
+      <h2 id="team-h">I raise the level of the people around me</h2>
+    </div>
+    <div class="grid2">
+      <div class="item"><span class="label">Internal CPD</span><h3>Nine-session training programme</h3><p>Designed and run for the planning department: P6, EVM, delay analysis, Power BI and automation.</p></div>
+      <div class="item"><span class="label">Standards</span><h3>Company-wide planning rules</h3><p>WBS and activity coding, schedule quality and logic rules, and progress measurement, so programmes compare across the portfolio.</p></div>
+      <div class="item"><span class="label">90K+ subscribers</span><h3>Reality Engineer channel</h3><p>Arabic-language channel on planning, project controls and automation. I explain this work to engineers every week.</p></div>
+    </div>
+  </section>
+
+  <section id="plan" aria-labelledby="plan-h">
+    <div class="sec-head">
+      <span class="label">Exhibit G · <b>First 90 days</b></span>
+      <h2 id="plan-h">Standing up reporting on a new project</h2>
+      <p>How I would set up the reporting function for a planning team starting on a major project.</p>
+    </div>
+    <div class="plan">
+      <div class="item"><span class="label">Days 1–30</span><h3>Agree and connect</h3><ul>
+        <li>Agree the KPIs and status rules with leadership</li>
+        <li>Set coding and quality rules for every contractor's programme</li>
+        <li>Connect the first P6 updates and run the integrity checks</li>
+      </ul></div>
+      <div class="item"><span class="label">Days 31–60</span><h3>First full pack</h3><ul>
+        <li>Leadership dashboard live on the monthly update</li>
+        <li>Forecast tracking from the first stored snapshot</li>
+        <li>Train the planners on the update-to-report routine</li>
+      </ul></div>
+      <div class="item"><span class="label">Days 61–90</span><h3>Run and tighten</h3><ul>
+        <li>Automate the monthly cycle end to end</li>
+        <li>Add early-warning measures and the delay event register</li>
+        <li>Review forecast accuracy with leadership each month</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section id="career" aria-labelledby="career-h">
+    <div class="sec-head">
+      <span class="label">Exhibit H · <b>Record</b></span>
+      <h2 id="career-h">Career programme</h2>
+    </div>
+    <div class="exhibit">
+      <div class="gantt" id="gantt"></div>
+      <div class="g-axis"><div></div><div id="g-axis"></div></div>
+      <p class="note">B.Sc. Civil Engineering, Zagazig University (2018). Procore CMP and Professional Planning Engineer (2025). Dubai Municipality G+4 approved engineer. Abu Dhabi registered practising engineer. PMP in progress. Arabic native, English professional.</p>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-h">
+    <div class="sec-head">
+      <span class="label">Contact</span>
+      <h2 id="contact-h">Get in touch</h2>
+    </div>
+    <div class="contact">
+      <div class="item"><span class="label">Phone / WhatsApp</span><div class="copyrow"><span id="c-phone">+971 52 822 0524</span><button type="button" data-copy="c-phone">Copy</button></div></div>
+      <div class="item"><span class="label">Email</span><div class="copyrow"><span id="c-mail">realityengineer4u@gmail.com</span><button type="button" data-copy="c-mail">Copy</button></div></div>
+      <div class="item"><span class="label">Online</span><div class="copyrow"><a href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener">YouTube</a><a href="../">Website</a></div></div>
+    </div>
+  </section>
+
+  <footer><span>Siddek Mahmoud · Project controls portfolio · <a href="../">Back to the website</a></span><span class="mono">SM-PC-001 · Rev 01 · 15-Oct-2026</span></footer>
+</div>
+
+<script>
+(function () {
+  // Illustrative packages for the status check
+  var PKGS = [
+    { n: "Tower A superstructure",         rep: "g", spi: 0.97, fl: 24, lost: 6,  slip: 4 },
+    { n: "Podium facade & envelope",       rep: "g", spi: 0.88, fl: -6, lost: 22, slip: 38 },
+    { n: "MEP first fix, towers",          rep: "g", spi: 0.93, fl: 9,  lost: 18, slip: 12 },
+    { n: "District cooling interface",     rep: "g", spi: 0.99, fl: -4, lost: 31, slip: 0 },
+    { n: "Infrastructure & utilities",     rep: "g", spi: 1.02, fl: 41, lost: 2,  slip: -3 },
+    { n: "Villas cluster C finishes",      rep: "a", spi: 0.91, fl: 12, lost: 14, slip: 26 },
+    { n: "Landscape & public realm",       rep: "g", spi: 0.98, fl: 18, lost: 9,  slip: 6 },
+    { n: "Testing & commissioning",        rep: "g", spi: 0.96, fl: 5,  lost: 12, slip: 9 }
+  ];
+  var DEF = { spiR: 0.90, spiA: 0.95, slipR: 30, slipA: 10, lostA: 15 };
+  var ids = { spiR: "t-spi-r", spiA: "t-spi-a", slipR: "t-slip-r", slipA: "t-slip-a", lostA: "t-lost-a" };
+  var outs = { spiR: "o-spi-r", spiA: "o-spi-a", slipR: "o-slip-r", slipA: "o-slip-a", lostA: "o-lost-a" };
+  var NAME = { g: "Green", a: "Amber", r: "Red" };
+
+  function t() {
+    var o = {};
+    for (var k in ids) o[k] = parseFloat(document.getElementById(ids[k]).value);
+    return o;
+  }
+  function judge(p, T) {
+    var red = [], amb = [];
+    if (p.fl < 0) red.push("negative float (" + p.fl + " d)");
+    if (p.spi < T.spiR) red.push("SPI " + p.spi.toFixed(2) + " < " + T.spiR.toFixed(2));
+    else if (p.spi < T.spiA) amb.push("SPI " + p.spi.toFixed(2) + " < " + T.spiA.toFixed(2));
+    if (p.slip > T.slipR) red.push("slip " + p.slip + " d > " + T.slipR);
+    else if (p.slip > T.slipA) amb.push("slip " + p.slip + " d > " + T.slipA);
+    if (p.lost > T.lostA) amb.push("float lost " + p.lost + " d > " + T.lostA);
+    return { s: red.length ? "r" : amb.length ? "a" : "g", red: red, amb: amb };
+  }
+  function bar(el, counts) {
+    el.innerHTML = "";
+    ["g", "a", "r"].forEach(function (k) {
+      var s = document.createElement("span");
+      s.className = k;
+      s.style.flexGrow = counts[k];
+      s.style.flexBasis = "0";
+      s.textContent = counts[k] ? counts[k] + " " + NAME[k].toLowerCase() : "";
+      el.appendChild(s);
+    });
+  }
+  function render() {
+    var T = t();
+    for (var k in outs) document.getElementById(outs[k]).textContent = (k.indexOf("spi") === 0 ? T[k].toFixed(2) : T[k] + " d");
+    var body = document.getElementById("rag-body");
+    var cr = { g: 0, a: 0, r: 0 }, ce = { g: 0, a: 0, r: 0 };
+    body.innerHTML = "";
+    PKGS.forEach(function (p) {
+      var j = judge(p, T);
+      cr[p.rep]++; ce[j.s]++;
+      var tr = document.createElement("tr");
+      if (j.s !== p.rep) tr.className = "changed";
+      var why = j.red.map(function (x) { return '<span class="hit-r">' + x + "</span>"; })
+        .concat(j.amb.map(function (x) { return '<span class="hit-a">' + x + "</span>"; })).join(" · ") || "within thresholds";
+      tr.innerHTML =
+        "<td>" + p.n + "</td>" +
+        '<td><span class="pill ' + p.rep + '">' + NAME[p.rep] + "</span></td>" +
+        '<td><span class="pill ' + j.s + '">' + NAME[j.s] + "</span></td>" +
+        '<td class="num">' + p.spi.toFixed(2) + "</td>" +
+        '<td class="num">' + p.fl + "</td>" +
+        '<td class="num">' + p.lost + "</td>" +
+        '<td class="num">' + (p.slip > 0 ? "+" : "") + p.slip + "</td>" +
+        '<td class="why">' + why + "</td>";
+      body.appendChild(tr);
+    });
+    bar(document.getElementById("bar-rep"), cr);
+    bar(document.getElementById("bar-ev"), ce);
+  }
+  for (var k in ids) document.getElementById(ids[k]).addEventListener("input", render);
+  document.getElementById("reset").addEventListener("click", function () {
+    for (var k in ids) document.getElementById(ids[k]).value = DEF[k];
+    render();
+  });
+  render();
+
+  // Forecast drift chart: slip in days vs contract completion, by monthly update
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
+  var PERF = [0, 8, 17, 27, 38, 50, 63, 77, 90, 97];
+  var REP  = [0, 0, 0, 0, 0, 0, 0, 51, 82, 97];
+  var svg = document.getElementById("drift");
+  var W = 640, H = 340, L = 56, R = 20, TOP = 16, B = 44;
+  var yMin = -10, yMax = 110;
+  function x(i) { return L + i * (W - L - R) / (MONTHS.length - 1); }
+  function y(v) { return TOP + (yMax - v) * (H - TOP - B) / (yMax - yMin); }
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, a, txt) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in a) e.setAttribute(k, a[k]);
+    if (txt != null) e.textContent = txt;
+    svg.appendChild(e);
+    return e;
+  }
+  [0, 30, 60, 90].forEach(function (v) {
+    el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), stroke: "var(--rule)", "stroke-width": 1, fill: "none" });
+    el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end", fill: "var(--muted)", "font-size": 12, "font-family": "var(--f-mono)" }, "+" + v + " d");
+  });
+  el("line", { x1: L, x2: W - R, y1: y(0), y2: y(0), stroke: "var(--baseline)", "stroke-width": 2, "stroke-dasharray": "6 4", fill: "none" });
+  MONTHS.forEach(function (m, i) {
+    el("text", { x: x(i), y: H - B + 20, "text-anchor": "middle", fill: "var(--muted)", "font-size": 12, "font-family": "var(--f-mono)" }, m);
+  });
+  el("text", { x: L, y: H - 6, fill: "var(--muted)", "font-size": 11, "font-family": "var(--f-mono)" }, "Monthly update, 2026");
+  // gap between the two forecasts
+  var gap = "";
+  PERF.forEach(function (v, i) { gap += (i ? "L" : "M") + x(i) + " " + y(v); });
+  for (var i = REP.length - 1; i >= 0; i--) gap += "L" + x(i) + " " + y(REP[i]);
+  el("path", { d: gap + "Z", fill: "var(--red)", "fill-opacity": 0.1, stroke: "none" });
+  function line(vals, color, w) {
+    var d = "";
+    vals.forEach(function (v, i) { d += (i ? "L" : "M") + x(i) + " " + y(v); });
+    el("path", { d: d, fill: "none", stroke: color, "stroke-width": w, "stroke-linejoin": "round" });
+    vals.forEach(function (v, i) { el("circle", { cx: x(i), cy: y(v), r: 3.5, fill: color, stroke: "none" }); });
+  }
+  line(REP, "var(--accent)", 2.5);
+  line(PERF, "var(--red)", 2.5);
+  // markers
+  el("circle", { cx: x(4), cy: y(38), r: 7, fill: "none", stroke: "var(--red)", "stroke-width": 1.5 });
+  el("text", { x: x(4) - 10, y: y(38) - 12, "text-anchor": "end", fill: "var(--red)", "font-size": 12, "font-family": "var(--f-body)" }, "+38 d in May");
+  el("circle", { cx: x(7), cy: y(51), r: 7, fill: "none", stroke: "var(--accent)", "stroke-width": 1.5 });
+  el("text", { x: x(7) + 12, y: y(51) + 16, fill: "var(--accent)", "font-size": 12, "font-family": "var(--f-body)" }, "reported in Aug");
+  el("text", { x: W - R, y: y(0) + 16, "text-anchor": "end", fill: "var(--muted)", "font-size": 11, "font-family": "var(--f-mono)" }, "contract 30-Jun-2027");
+
+  // Career programme bars, 2018 to 2026
+  var JOBS = [
+    { r: "Technical & Site Engineer", c: "Talaat Moustafa Group · Cairo", s: 2018.75, e: 2019.1 },
+    { r: "Junior Planning Engineer", c: "Al Qabdah Global · Dubai", s: 2019.1, e: 2022.0 },
+    { r: "Planning Engineer", c: "Fibrex Construction · Cove 2", s: 2022.0, e: 2024.5 },
+    { r: "Planning Engineer", c: "Gardinia (Azizi Group) · Azizi Venice", s: 2024.5, e: 2025.45 },
+    { r: "Senior Planning Engineer, Planning Lead", c: "GCC Contracting · Head office", s: 2025.45, e: 2026.8, now: true }
+  ];
+  var g = document.getElementById("gantt"), S0 = 2018, S1 = 2027;
+  [2018, 2020, 2022, 2024, 2026].forEach(function (yr) {
+    var sp = document.createElement("span");
+    sp.style.left = (yr - S0) / (S1 - S0) * 100 + "%";
+    sp.textContent = yr;
+    document.getElementById("g-axis").appendChild(sp);
+  });
+  JOBS.forEach(function (j) {
+    var row = document.createElement("div");
+    row.className = "g-row";
+    var left = (j.s - S0) / (S1 - S0) * 100, wid = Math.max((j.e - j.s) / (S1 - S0) * 100, 1.5);
+    row.innerHTML = '<div class="who2"><b>' + j.r + "</b>" + j.c + "</div>" +
+      '<div class="g-track"><div class="g-bar' + (j.now ? " now" : "") + '" style="left:' + left + "%;width:" + wid + '%"></div></div>';
+    g.appendChild(row);
+  });
+
+  // Copy buttons
+  document.querySelectorAll("[data-copy]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var src = document.getElementById(b.getAttribute("data-copy"));
+      var done = function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500); };
+      var fallback = function () {
+        var r = document.createRange(); r.selectNodeContents(src);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        b.textContent = "Selected";
+      };
+      try { navigator.clipboard.writeText(src.textContent).then(done, fallback); } catch (e) { fallback(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
