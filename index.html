@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Siddek Mahmoud</title>
-<meta name="description" content="Siddek Mahmoud: Planning Lead in the UAE and creator of the Reality Engineer channel. Planning and project controls, technical office, shop drawings, BIM and Primavera P6.">
+<meta name="description" content="Siddek Mahmoud: Planning Lead in the UAE and creator of the Reality Engineer channel. Planning and project controls, Primavera P6, automation, AI workflows and machine learning for construction schedules.">
 <meta property="og:title" content="Siddek Mahmoud · Planning Lead">
 <meta property="og:description" content="Planning the built world: towers, master communities and villa programmes across the UAE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -281,6 +281,46 @@ html.lenis, html.lenis body { height: auto; }
 .pl h3 { font-size: 1.2rem; }
 .pl p { color: var(--muted); font-size: .92rem; }
 
+/* ---------- lab: automation, AI, machine learning ---------- */
+.model { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); border: 1px solid var(--line); border-radius: 26px; background: linear-gradient(160deg, #15181d, #0f1115 70%); overflow: hidden; }
+.model .ctl { padding: clamp(1.2rem, 2.6vw, 2rem); display: grid; gap: 1.05rem; align-content: start; border-inline-end: 1px solid var(--line); }
+.model .ctl h3 { font-size: 1.3rem; }
+.model .ctl > p { color: var(--muted); font-size: .9rem; }
+.fx { display: grid; gap: .3rem; }
+.fx label { display: flex; justify-content: space-between; gap: 1rem; font-size: .92rem; }
+.fx output { font-family: var(--f-mono); color: var(--amber-ink); white-space: nowrap; }
+.fx input[type="range"] { width: 100%; accent-color: var(--amber); direction: ltr; }
+.model .viz { padding: clamp(1.2rem, 2.6vw, 2rem); display: grid; gap: 1rem; align-content: start; }
+.net { width: 100%; height: auto; display: block; direction: ltr; }
+.net .e { transition: stroke-width .35s, stroke-opacity .35s; }
+.net .n { transition: fill-opacity .35s; }
+.out { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.out b { font-family: var(--f-display); font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.out .lbl { color: var(--muted); font-size: .9rem; max-width: 20em; }
+.meter { height: 10px; border-radius: 99px; background: rgba(236,235,230,.08); overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--green), var(--amber), #ff7a6b); transition: width .5s var(--ease); }
+.verdict { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .75rem; border-radius: 99px; border: 1px solid currentColor; }
+.verdict.low { color: var(--green); } .verdict.mid { color: var(--amber-ink); } .verdict.high { color: #ff8a7a; }
+.why { color: var(--muted); font-size: .88rem; }
+.why b { color: var(--ink); font-weight: 600; }
+.note-s { color: var(--muted); font-size: .78rem; font-family: var(--f-mono); letter-spacing: .02em; }
+.lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+.lane { padding: 1.6rem; border-radius: 20px; border: 1px solid var(--line); background: var(--bg-2); display: grid; gap: .8rem; align-content: start; }
+.lane svg.ic { width: 40px; height: 40px; stroke: var(--cyan); fill: none; stroke-width: 1.4; }
+.lane small { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan); }
+.lane h3 { font-size: 1.35rem; }
+.lane .stat { font-family: var(--f-display); font-size: 2.2rem; font-weight: 700; color: var(--amber-ink); line-height: 1; }
+.lane .stat span { display: block; font-family: var(--f-sans); font-size: .85rem; font-weight: 400; color: var(--muted); margin-top: .35rem; }
+.lane ul { margin: 0; padding-inline-start: 1.1rem; color: var(--muted); font-size: .92rem; display: grid; gap: .4rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chips span { font-family: var(--f-mono); font-size: .7rem; padding: .2rem .6rem; border-radius: 99px; border: 1px solid var(--line); }
+.flow { margin-top: 1rem; border: 1px solid var(--line); border-radius: 20px; background: var(--bg-2); padding: clamp(1.1rem, 2.4vw, 1.6rem); display: grid; gap: .9rem; }
+.flow h3 { font-size: 1.2rem; }
+.flow-wrap { overflow-x: auto; direction: ltr; }
+.flow-wrap svg { width: 100%; min-width: 680px; height: auto; display: block; direction: ltr; }
+@media (prefers-reduced-motion: reduce) { .flow .pk { display: none; } }
+@media (max-width: 960px) { .model { grid-template-columns: 1fr; } .model .ctl { border-inline-end: 0; border-bottom: 1px solid var(--line); } .lanes { grid-template-columns: 1fr; } }
+
 /* ---------- linkedin ---------- */
 .li-card { border: 1px solid var(--line); border-radius: 26px; overflow: hidden; background: var(--bg-2); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
 .li-side { position: relative; display: grid; align-content: start; }
@@ -433,6 +473,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     <nav class="links" aria-label="Sections">
       <a href="#projects" data-t="n.projects">المشاريع</a>
       <a href="#career" data-t="n.career">المسيرة</a>
+      <a href="#lab" data-t="n.lab">AI</a>
       <a href="#services" data-t="n.services">الخدمات</a>
       <a href="#linkedin">LinkedIn</a>
       <a href="#channel">YouTube</a>
@@ -516,6 +557,53 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     </div>
   </section>
 
+  <!-- LAB: AUTOMATION, AI, MACHINE LEARNING -->
+  <section class="section" id="lab">
+    <div class="wrap">
+      <div class="head" data-r>
+        <span class="kicker" data-t="lab.kicker"></span>
+        <h2 class="h2" data-t="lab.title"></h2>
+        <p class="lead" data-t="lab.sub"></p>
+      </div>
+
+      <div class="model" data-r>
+        <div class="ctl">
+          <h3 data-t="lab.mTitle"></h3>
+          <p data-t="lab.mSub"></p>
+          <div id="fx"></div>
+        </div>
+        <div class="viz">
+          <svg class="net" id="net" viewBox="0 0 520 300" role="img" aria-label="Neural network: five schedule signals feed four hidden units and one delay-risk output"></svg>
+          <div class="out">
+            <div><b id="risk">0%</b><div class="lbl" data-t="lab.out"></div></div>
+            <span class="verdict" id="verdict"></span>
+          </div>
+          <div class="meter"><i id="meter"></i></div>
+          <p class="why" id="why"></p>
+          <p class="note-s" data-t="lab.note"></p>
+        </div>
+      </div>
+
+      <div class="lanes" id="lanes"></div>
+
+      <div class="flow" data-r>
+        <h3 data-t="lab.flow"></h3>
+        <div class="flow-wrap"><svg id="flow" viewBox="0 0 1000 170" role="img" aria-label="Automated delay workflow: inbox, AI extraction, delay register, link to P6, Power BI"></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORMS -->
+  <section class="section" id="platforms" style="padding-top:0">
+    <div class="wrap">
+      <div class="head" data-r>
+        <span class="kicker" data-t="pl.kicker">برامج بنيتها بنفسي</span>
+        <h2 class="h2" data-t="pl.title">أدوات التخطيط اللي فريقي شغال عليها</h2>
+      </div>
+      <div class="plat" id="plat"></div>
+    </div>
+  </section>
+
   <!-- SERVICES -->
   <section class="section" id="services" style="padding-top:0">
     <div class="wrap">
@@ -532,17 +620,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
           <a class="btn solid" href="#contact"><span data-t="s.btn">اطلب عرض سعر</span></a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- PLATFORMS -->
-  <section class="section" id="platforms" style="padding-top:0">
-    <div class="wrap">
-      <div class="head" data-r>
-        <span class="kicker" data-t="pl.kicker">برامج بنيتها بنفسي</span>
-        <h2 class="h2" data-t="pl.title">أدوات التخطيط اللي فريقي شغال عليها</h2>
-      </div>
-      <div class="plat" id="plat"></div>
     </div>
   </section>
 
@@ -644,7 +721,7 @@ const T = {
     "n.projects": "المشاريع", "n.career": "المسيرة", "n.services": "الخدمات", "n.channel": "القناة", "n.contact": "تواصل",
     "h.kicker": "قائد التخطيط · الإمارات",
     title: ["بخطط", "اللي", "بيتبني."],
-    "h.sub": "مهندس تخطيط أول في الإمارات. خططت أبراج ومجتمعات فلل بقيمة مليارات الدراهم، وببني البرامج اللي فرق التخطيط بتشتغل عليها كل يوم.",
+    "h.sub": "مهندس تخطيط أول في الإمارات. خططت أبراج ومجتمعات فلل بقيمة مليارات الدراهم، وببني أدوات أتمتة وذكاء اصطناعي بتشتغل عليها فرق التخطيط كل يوم.",
     "h.cta1": "شوف المشاريع", "h.cta2": "اطلب عرض سعر", "h.cue": "انزل عشان البرج يتبني",
     "a.kicker": "عني", "a.tag": "مهندس تخطيط أول · GCC Contracting",
     "a.big": "ثمان سنين بحوّل الرسومات لـ<em>برامج زمنية</em> بتتنفذ، وبحوّل البرامج لـ<em>برمجيات</em> بتوفر أيام على الفرق.",
@@ -659,9 +736,23 @@ const T = {
     "s.kicker": "خدمات هندسية متكاملة", "s.title": "بنستقبل مشاريع جديدة",
     "s.sub": "نفس الخبرة اللي خططت مشاريع بمليارات، متاحة لمشروعك: من الاستشارة لحد التسليم.",
     "s.cta": "عندك مشروع؟ ابعت التفاصيل وهيوصلك عرض.", "s.btn": "اطلب عرض سعر",
+    "n.lab": "الأتمتة والـ AI",
+    "lab.kicker": "أتمتة · ذكاء اصطناعي · تعلم آلي", "lab.title": "برامج زمنية بتراجع نفسها.",
+    "lab.sub": "ببني أدوات بتقرأ جداول Primavera P6 وتراجعها وتنبّه للتأخير قبل ما يظهر في التقرير. الأتمتة بتعمل الشغل المتكرر، والذكاء الاصطناعي بيلقط الإشارات، والمهندس بياخد القرار.",
+    "lab.mTitle": "جرّب: نموذج مخاطر التأخير", "lab.mSub": "حرّك الإشارات اللي بتطلع من تحديث P6 وشوف الشبكة بتقرأها إزاي.",
+    "lab.f": [["SPI آخر 3 تحديثات", ""], ["الفائض الضايع كل تحديث", " يوم"], ["أنشطة شبه حرجة", "%"], ["مشاكل المنطق (open ends وخارج التسلسل)", "%"], ["الإنتاجية مقابل المخطط", "%"]],
+    "lab.out": "احتمال تأخير أكتر من 30 يوم", "lab.v": ["منخفض", "راقب", "مرتفع"], "lab.why": "أكتر حاجة رافعة الخطر:",
+    "lab.note": "نموذج توضيحي بأوزان تجريبية. النموذج الحقيقي بيتدرب على تاريخ تحديثات المحفظة نفسها.",
+    "lab.lanes": [
+      ["الأتمتة", "80%", "أقل وقت في دورة التقارير", ["محرك VBA بيحدّث الـ actuals في P6 بسجل مراجعة وحماية للبيانات", "محرك إنشاء Baseline لمشاريع +100 وحدة في دقايق بدل أيام", "نماذج Power Query وDAX بتربط P6 والتكلفة والموقع"], ["Excel VBA", "Python", "Power Query", "DAX", "TypeScript"]],
+      ["الذكاء الاصطناعي", "EOT", "مسار مطالبات بمساعدة AI", ["n8n + Gmail + Google Sheets + Primavera: أحداث التأخير بتتسجل وتترتبط بالأنشطة أول بأول", "تقارير بمساعدة الذكاء الاصطناعي للإدارة", "بدرّب فريق التخطيط على التقارير المدمجة بالـ AI"], ["n8n", "LLM workflows", "Gmail API", "Google Sheets"]],
+      ["التعلم الآلي", "Haven", "منصة بتتعلم من كل مشروع", ["مكتبات أنماط بتتعلم من جداول المشاريع السابقة، فكل مشروع بيرفع مستوى اللي بعده", "توليد ومراجعة ملفات XER تلقائيًا بفحوصات سلامة للبيانات", "كشف الشذوذ في الجدول قبل ما يوصل للتقرير"], ["React 18", "TypeScript", "Dexie", "SQLite", "Supabase"]]
+    ],
+    "lab.flow": "من الإيميل لـ P6 في دقايق: مسار التأخير الآلي",
+    "lab.nodes": [["البريد", "إشعار تأخير يوصل"], ["استخلاص بالـ AI", "التاريخ والسبب والنشاط"], ["سجل التأخير", "Google Sheets"], ["ربط بـ P6", "الأنشطة المتأثرة"], ["Power BI", "دليل جاهز لـ EOT"]],
     "pl.kicker": "برامج بنيتها بنفسي", "pl.title": "أدوات التخطيط اللي فريقي شغال عليها",
     "l.title": "بروفايلي المهني",
-    "l.headline": "قائد التخطيط | مهندس تخطيط أول | Primavera P6 · Power BI · تحليل التأخير ومطالبات EOT | بناء منصات للتحكم في المشاريع",
+    "l.headline": "قائد التخطيط | مهندس تخطيط أول | Primavera P6 · Power BI · تحليل التأخير ومطالبات EOT | أتمتة وذكاء اصطناعي للتحكم في المشاريع",
     "l.loc": "دبي، الإمارات العربية المتحدة", "l.openT": "متاح لمشاريع",
     "l.open": "استشارات · مكتب فني · Shop Drawings · BIM · تخطيط P6",
     "l.view": "افتح البروفايل", "l.connect": "تواصل معي",
@@ -684,7 +775,7 @@ const T = {
     "n.projects": "Projects", "n.career": "Career", "n.services": "Services", "n.channel": "Channel", "n.contact": "Contact",
     "h.kicker": "Planning Lead · UAE",
     title: ["Planning", "the built", "world."],
-    "h.sub": "Senior Planning Engineer in the UAE. I have planned towers and villa communities worth billions of dirhams, and I build the software planning teams work in every day.",
+    "h.sub": "Senior Planning Engineer in the UAE. I have planned towers and villa communities worth billions of dirhams, and I build the automation and AI tools planning teams work in every day.",
     "h.cta1": "See the projects", "h.cta2": "Request a proposal", "h.cue": "Scroll to build the tower",
     "a.kicker": "About", "a.tag": "Senior Planning Engineer · GCC Contracting",
     "a.big": "Eight years turning drawings into <em>programmes</em> that get built, and programmes into <em>software</em> that saves teams days.",
@@ -699,9 +790,23 @@ const T = {
     "s.kicker": "Integrated engineering services", "s.title": "Now taking on projects",
     "s.sub": "The same experience that planned billion-dirham projects, available for yours, from consultancy to handover.",
     "s.cta": "Have a project? Send the details and get a proposal.", "s.btn": "Request a proposal",
+    "n.lab": "AI & Automation",
+    "lab.kicker": "Automation · AI · Machine learning", "lab.title": "Schedules that check themselves.",
+    "lab.sub": "I build tools that read Primavera P6 schedules, check them and flag delay before it reaches the report. Automation does the repeat work, AI picks up the signals, and the engineer makes the call.",
+    "lab.mTitle": "Try it: a delay-risk model", "lab.mSub": "Move the signals that come out of a P6 update and watch the network read them.",
+    "lab.f": [["SPI, last 3 updates", ""], ["Float lost per update", " d"], ["Near-critical activities", "%"], ["Logic issues (open ends, out of sequence)", "%"], ["Productivity vs plan", "%"]],
+    "lab.out": "Probability of more than 30 days' slip", "lab.v": ["Low", "Watch", "High"], "lab.why": "Biggest drivers of risk:",
+    "lab.note": "Illustrative model with demo weights. A production model trains on the portfolio's own update history.",
+    "lab.lanes": [
+      ["Automation", "80%", "shorter reporting cycle", ["VBA engine that updates P6 actuals with an audit log and integrity guards", "Baseline Creation Engine: 100+ unit programmes in minutes instead of days", "Power Query and DAX models joining P6, cost and site data"], ["Excel VBA", "Python", "Power Query", "DAX", "TypeScript"]],
+      ["AI", "EOT", "AI-assisted claims workflow", ["n8n + Gmail + Google Sheets + Primavera: delay events logged and linked to activities as they happen", "AI-assisted reporting for leadership", "I train the planning team on AI-integrated reporting"], ["n8n", "LLM workflows", "Gmail API", "Google Sheets"]],
+      ["Machine learning", "Haven", "a platform that learns from every project", ["Pattern banks learned from past project schedules, so each project raises the baseline for the next", "Automatic XER generation and validation with data integrity checks", "Anomaly checks that catch schedule problems before they reach a report"], ["React 18", "TypeScript", "Dexie", "SQLite", "Supabase"]]
+    ],
+    "lab.flow": "From inbox to P6 in minutes: the automated delay workflow",
+    "lab.nodes": [["Inbox", "Delay notice arrives"], ["AI extraction", "Date, cause, activity"], ["Delay register", "Google Sheets"], ["Linked to P6", "Affected activities"], ["Power BI", "EOT-ready evidence"]],
     "pl.kicker": "Software I built", "pl.title": "The planning tools my team works in",
     "l.title": "My professional profile",
-    "l.headline": "Planning Lead | Senior Planning Engineer | Primavera P6 · Power BI · Delay analysis & EOT | Building project-controls platforms",
+    "l.headline": "Planning Lead | Senior Planning Engineer | Primavera P6 · Power BI · Delay analysis & EOT | Automation & AI for project controls",
     "l.loc": "Dubai, United Arab Emirates", "l.openT": "Open to projects",
     "l.open": "Consultancy · Technical office · Shop drawings · BIM · P6 planning",
     "l.view": "View profile", "l.connect": "Connect",
@@ -789,7 +894,7 @@ const LI_LIC = [
   ["AD", ["مهندس ممارس مسجل", "Registered Practising Engineer"], ["أبوظبي", "Abu Dhabi"]],
   ["PMP", ["PMP · جاري", "PMP · in progress"], ["PMI", "PMI"]],
 ];
-const LI_SKILLS = ["Primavera P6", "Project Controls", "Delay Analysis", "EOT Claims", "FIDIC", "Power BI", "EVM", "4D Simulation", "Revit & BIM", "Excel VBA", "TypeScript / React", "Team Leadership"];
+const LI_SKILLS = ["Primavera P6", "Project Controls", "Delay Analysis", "EOT Claims", "FIDIC", "Power BI", "EVM", "4D Simulation", "Revit & BIM", "Excel VBA", "Python", "n8n Automation", "AI Workflows", "Machine Learning", "TypeScript / React", "Team Leadership"];
 
 const VIDEOS = [
   { id: "7N72QijzO04", v: ["42 ألف", "42K"], ar: "لو معاك 3 مليون جنيه.. عقار ولا ذهب ولا دولار؟ حسبتها بالأرقام", en: "Got EGP 3 million? Property, gold or dollars. I ran the numbers" },
@@ -804,6 +909,75 @@ const TOOLS = [
   { url: "https://realityengineer4u-ship-it.github.io/bawsala/", img: ["tool-bawsala.webp", "tool-bawsala-en.webp"], q: ["?lang=ar", "?lang=en"], n: ["بوصلة المهندس", "Engineer's Compass"], d: ["اكتشف التخصص الهندسي اللي يناسبك فعلًا، في 22 تخصص و15 دقيقة.", "Find the engineering major that truly fits you: 22 majors, 15 minutes."] },
   { url: "https://realityengineer4u-ship-it.github.io/structura-lab/", img: ["tool-structura.webp", "tool-structura-en.webp"], q: ["?lang=ar", "?lang=en"], n: ["المعمل الإنشائي", "Structura Lab"], d: ["اتعلم الهندسة الإنشائية من الصفر: تحليل وخرسانة ومعدني في 117 حلقة و39 معمل ثلاثي الأبعاد.", "Learn structural engineering from zero: analysis, concrete and steel in 117 episodes and 39 3D labs."] },
 ];
+
+/* ---------- lab: a small, readable neural network over schedule signals ---------- */
+const FX = [
+  { id: "spi",   min: 0.75, max: 1.10, step: 0.01, v: 0.93, fmt: (x) => x.toFixed(2), norm: (x) => (1 - x) / 0.25 },
+  { id: "float", min: 0,    max: 20,   step: 1,    v: 6,    fmt: (x) => x,             norm: (x) => x / 20 },
+  { id: "nc",    min: 0,    max: 60,   step: 1,    v: 22,   fmt: (x) => x,             norm: (x) => x / 60 },
+  { id: "logic", min: 0,    max: 20,   step: 1,    v: 4,    fmt: (x) => x,             norm: (x) => x / 20 },
+  { id: "prod",  min: 50,   max: 120,  step: 1,    v: 88,   fmt: (x) => x,             norm: (x) => (100 - x) / 50 },
+];
+const W1 = [[2.2, 0.3, 0.2, 0.1, 1.6], [0.4, 2.4, 1.2, 0.2, 0.1], [0.1, 0.2, 0.6, 2.0, 0.3], [-1.5, -1.0, -0.3, -0.2, -0.6]];
+const B1 = [-0.6, -0.8, -0.5, 0.4], W2 = [1.6, 1.8, 1.1, -0.9], B2 = -2.2;
+const NX = 60, NH = 260, NO = 460, IY = [40, 95, 150, 205, 260], HY = [67, 122, 178, 233];
+
+function renderLab(d) {
+  const box = $("#fx");
+  if (!box.children.length) {
+    box.style.display = "grid"; box.style.gap = "1.05rem";
+    box.innerHTML = FX.map((f) => `<div class="fx"><label for="fx-${f.id}"><span></span><output id="fo-${f.id}"></output></label><input type="range" id="fx-${f.id}" min="${f.min}" max="${f.max}" step="${f.step}" value="${f.v}"></div>`).join("");
+    FX.forEach((f) => $("#fx-" + f.id).addEventListener("input", () => updateLab()));
+  }
+  d["lab.f"].forEach(([name], i) => { box.children[i].querySelector("span").textContent = name; });
+  $("#lanes").innerHTML = d["lab.lanes"].map(([k, stat, statL, items, chips], i) => {
+    const ic = ["M8 24h10l4-10 6 20 4-10h8M6 8h36v32H6z", "M24 6v6M24 36v6M6 24h6M36 24h6M14 14l4 4M30 30l4 4M34 14l-4 4M14 34l4-4M18 24a6 6 0 1 0 12 0 6 6 0 0 0-12 0", "M10 12a4 4 0 1 0 0 .1M10 36a4 4 0 1 0 0 .1M38 24a4 4 0 1 0 0 .1M24 16a4 4 0 1 0 0 .1M24 32a4 4 0 1 0 0 .1M14 12l6 4M14 36l6-4M28 16l6 6M28 32l6-6M10 16v16"][i];
+    return `<div class="lane spot" data-r><svg class="ic" viewBox="0 0 48 48"><path d="${ic}"/></svg><small>${esc(k)}</small><div class="stat">${esc(stat)}<span>${esc(statL)}</span></div><ul>${items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul><div class="chips">${chips.map((c) => `<span>${esc(c)}</span>`).join("")}</div></div>`;
+  }).join("");
+  const nodes = d["lab.nodes"], xs = [100, 300, 500, 700, 900];
+  let f = `<path id="flow-path" d="M175 62 H825" stroke="rgba(236,235,230,.18)" stroke-width="2" fill="none"/>`;
+  for (let k = 0; k < 3; k++) f += `<circle class="pk" r="5" fill="#f5a524"><animateMotion dur="4.5s" begin="${k * 1.5}s" repeatCount="indefinite"><mpath href="#flow-path"/></animateMotion></circle>`;
+  nodes.forEach(([t, sub], i) => {
+    const x = xs[i], hot = i === 1;
+    f += `<rect x="${x - 78}" y="30" width="156" height="64" rx="14" fill="${hot ? "#2a2214" : "#15181d"}" stroke="${hot ? "#f5a524" : "rgba(236,235,230,.18)"}"/>`
+      + `<text x="${x}" y="68" text-anchor="middle" fill="#ecebe6" font-size="16" font-weight="600" font-family="IBM Plex Sans Arabic, system-ui, sans-serif">${esc(t)}</text>`
+      + `<text x="${x}" y="128" text-anchor="middle" fill="#9b9b94" font-size="14" font-family="IBM Plex Sans Arabic, system-ui, sans-serif">${esc(sub)}</text>`;
+  });
+  $("#flow").innerHTML = f;
+  updateLab(d);
+}
+
+function updateLab(d = T[lang]) {
+  const raw = FX.map((f) => parseFloat($("#fx-" + f.id).value));
+  const x = FX.map((f, i) => f.norm(raw[i]));
+  FX.forEach((f, i) => { $("#fo-" + f.id).textContent = f.fmt(raw[i]) + d["lab.f"][i][1]; });
+  const h = W1.map((w, j) => Math.tanh(w.reduce((a, wi, i) => a + wi * x[i], B1[j])));
+  const p = 1 / (1 + Math.exp(-(W2.reduce((a, w, j) => a + w * h[j], B2))));
+  // contribution of each input to the risk (gradient x input)
+  const contrib = x.map((xi, i) => W2.reduce((a, w, j) => a + w * (1 - h[j] * h[j]) * W1[j][i], 0) * xi);
+  const RISK = "#f5a524", SAFE = "#7fd4ff";
+  let g = "";
+  W1.forEach((w, j) => w.forEach((wi, i) => {
+    const eff = wi * x[i] * W2[j], m = Math.min(1, Math.abs(eff) / 1.5);
+    g += `<line class="e" x1="${NX}" y1="${IY[i]}" x2="${NH}" y2="${HY[j]}" stroke="${eff >= 0 ? RISK : SAFE}" stroke-opacity="${(0.12 + 0.75 * m).toFixed(2)}" stroke-width="${(0.6 + 4 * m).toFixed(2)}"/>`;
+  }));
+  W2.forEach((w, j) => {
+    const eff = w * h[j], m = Math.min(1, Math.abs(eff) / 1.5);
+    g += `<line class="e" x1="${NH}" y1="${HY[j]}" x2="${NO}" y2="150" stroke="${eff >= 0 ? RISK : SAFE}" stroke-opacity="${(0.15 + 0.75 * m).toFixed(2)}" stroke-width="${(0.8 + 5 * m).toFixed(2)}"/>`;
+  });
+  x.forEach((xi, i) => { g += `<circle class="n" cx="${NX}" cy="${IY[i]}" r="13" fill="${RISK}" fill-opacity="${Math.max(0.08, Math.min(1, xi)).toFixed(2)}" stroke="rgba(236,235,230,.4)"/>`; });
+  h.forEach((hj, j) => { g += `<circle class="n" cx="${NH}" cy="${HY[j]}" r="13" fill="${hj * W2[j] >= 0 ? RISK : SAFE}" fill-opacity="${(0.1 + 0.85 * Math.abs(hj)).toFixed(2)}" stroke="rgba(236,235,230,.4)"/>`; });
+  g += `<circle cx="${NO}" cy="150" r="30" fill="${p >= 0.6 ? "#ff7a6b" : p >= 0.25 ? RISK : "#6fcf97"}" fill-opacity="${(0.25 + 0.7 * p).toFixed(2)}" stroke="rgba(236,235,230,.5)"/>`;
+  g += `<text x="${NO}" y="156" text-anchor="middle" fill="#ecebe6" font-size="17" font-weight="600" font-family="IBM Plex Mono, monospace">${Math.round(p * 100)}%</text>`;
+  ["SPI", "FLT", "NC", "LOG", "PRD"].forEach((t, i) => { g += `<text x="${NX - 22}" y="${IY[i] + 4}" text-anchor="end" fill="#9b9b94" font-size="11" font-family="IBM Plex Mono, monospace">${t}</text>`; });
+  $("#net").innerHTML = g;
+  $("#risk").textContent = Math.round(p * 100) + "%";
+  $("#meter").style.width = (p * 100).toFixed(1) + "%";
+  const lvl = p >= 0.6 ? 2 : p >= 0.25 ? 1 : 0, v = $("#verdict");
+  v.className = "verdict " + ["low", "mid", "high"][lvl]; v.textContent = d["lab.v"][lvl];
+  const top = contrib.map((c, i) => [c, i]).filter(([c]) => c > 0.05).sort((a, b) => b[0] - a[0]).slice(0, 2);
+  $("#why").innerHTML = top.length ? `${esc(d["lab.why"])} ${top.map(([, i]) => `<b>${esc(d["lab.f"][i][0])}</b>`).join(" · ")}` : "";
+}
 
 /* =====================================================================
    PAGE
@@ -891,6 +1065,7 @@ function render() {
   }).join("");
 
   $("#svc").innerHTML = SERVICES.map((s, i) => `<div class="svc spot" data-r><span class="no mono">0${i + 1}</span><svg viewBox="0 0 48 48"><path d="${s.ic}"/></svg><h3>${esc(s.t[L()])}</h3><p>${esc(s.d[L()])}</p></div>`).join("");
+  renderLab(d);
   $("#plat").innerHTML = PLATFORMS.map((p) => `<div class="pl spot" data-r><small>${esc(p.k[L()])}</small><h3>${p.n}</h3><p>${esc(p.d[L()])}</p></div>`).join("");
   const li = (arr) => arr.map(([ab, t, s]) => `<div class="it"><span class="logo">${ab}</span><div><b>${esc(t[L()])}</b><span>${esc(s[L()])}</span></div></div>`).join("");
   $("#li-exp").innerHTML = li(LI_EXP); $("#li-lic").innerHTML = li(LI_LIC);
