@@ -1,0 +1,4 @@
+{
+ "_how": "Recommendations shown on the site, newest first. Paste LinkedIn recommendations here, and approved ones sent from the site form. Fields: name, role, relation (mgr | rep | team | co | client | sub | learn | other), text (as written, any language), date, source (linkedin | site), optional url (their LinkedIn), photo, project.",
+ "items": []
+}

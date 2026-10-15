@@ -612,6 +612,84 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   .lk-axis { padding-inline-start: calc(48px + 1.9rem); }
 }
 
+/* ---------- recommendations + leave-a-recommendation form ---------- */
+.recs { margin-top: clamp(3rem, 7vw, 5rem); display: grid; gap: 1.4rem; }
+.recs-h { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: end; justify-content: space-between; }
+.recs-tt { display: grid; gap: .5rem; max-width: 42rem; }
+.recs-tt h3 { font-size: clamp(1.5rem, 3vw, 2.2rem); }
+.recs-tt p { margin: 0; color: var(--muted); }
+.recs-act { display: flex; gap: .6rem; flex-wrap: wrap; }
+.recs-act .btn.li { background: #0a66c2; color: #fff; border-color: #0a66c2; }
+.recs-act .btn.li svg { width: 16px; height: 16px; }
+.recs-track { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, calc((100% - 2 * 1.2rem) / 3)); gap: 1.2rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: .3rem .1rem 1rem; scrollbar-width: thin; }
+.rec-c { scroll-snap-align: start; position: relative; display: grid; gap: 1rem; align-content: start; padding: 1.4rem 1.4rem 1.2rem; border-radius: 20px; border: 1px solid var(--line); background: linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), var(--bg-2); transition: border-color .3s, transform .3s var(--ease); }
+.rec-c:hover { border-color: rgba(245,165,36,.35); transform: translateY(-3px); }
+.rec-c .q { position: absolute; inset-inline-end: 1.1rem; top: .4rem; font: 800 4.2rem/1 Georgia, serif; color: rgba(245,165,36,.18); pointer-events: none; }
+.rec-c blockquote { margin: 0; font-size: .98rem; line-height: 1.8; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+.rec-c.open blockquote { -webkit-line-clamp: unset; display: block; }
+.rec-c .more { justify-self: start; border: 0; background: none; padding: 0; color: var(--amber-ink); font: 600 .85rem var(--f-sans, system-ui); cursor: pointer; }
+.rec-who { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: .8rem; align-items: center; padding-top: .9rem; border-top: 1px solid var(--line); }
+.rec-av { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font: 800 .95rem var(--f-display); color: #fff; overflow: hidden; }
+.rec-av img { width: 100%; height: 100%; object-fit: cover; }
+.rec-who b { display: block; font-weight: 700; }
+.rec-who > div > span { display: block; color: var(--muted); font-size: .84rem; line-height: 1.45; }
+.rec-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.rec-tags i { font-style: normal; font-size: .76rem; padding: .22rem .6rem; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); }
+.rec-tags i.src { border-color: rgba(10,102,194,.5); color: #6fb2f2; }
+.rec-tags i.site { border-color: rgba(245,165,36,.45); color: var(--amber-ink); }
+.recs-track:has(.rec-empty) { grid-auto-columns: 100%; }
+.rec-empty { scroll-snap-align: start; grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; gap: 1.2rem; align-items: center; padding: 1.4rem; border-radius: 20px; border: 1px dashed rgba(245,165,36,.4); background: rgba(245,165,36,.04); }
+.rec-empty .q { font: 800 3.4rem/1 Georgia, serif; color: var(--amber); }
+.rec-empty b { display: block; font-size: 1.1rem; }
+.rec-empty span { color: var(--muted); font-size: .92rem; }
+.recs-nav { display: flex; gap: .4rem; justify-content: center; }
+.recs-nav button { width: 8px; height: 8px; border-radius: 4px; border: 0; padding: 0; background: rgba(255,255,255,.2); cursor: pointer; transition: width .3s, background .3s; }
+.recs-nav button[aria-current="true"] { width: 26px; background: var(--amber); }
+.rmod { position: fixed; inset: 0; z-index: 130; display: grid; place-items: center; padding: 16px; background: rgba(5,6,8,.82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); overflow-y: auto; animation: mnin .25s ease both; }
+.rmod[hidden] { display: none; }
+.rmod-box { width: min(720px, 100%); max-height: calc(100dvh - 32px); overflow-y: auto; display: grid; gap: 1rem; padding: clamp(1.1rem, 3vw, 1.8rem); border-radius: 22px; border: 1px solid var(--line); background: var(--bg-2); box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+.rmod-h { display: flex; gap: 1rem; justify-content: space-between; align-items: start; }
+.rmod-h h3 { font-size: 1.4rem; }
+.rmod-h p { margin: .35rem 0 0; color: var(--muted); font-size: .92rem; }
+.rmod .gx { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 1.3rem; cursor: pointer; }
+.rf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.rf { display: grid; gap: .4rem; min-width: 0; border: 0; padding: 0; margin: 0; }
+.rf > span, .rf legend { font-size: .86rem; font-weight: 600; color: var(--ink); padding: 0; }
+.rf input, .rf textarea { width: 100%; box-sizing: border-box; padding: .75rem .9rem; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.03); color: var(--ink); font: inherit; font-size: .95rem; resize: vertical; transition: border-color .2s, background .2s; }
+.rf input:focus, .rf textarea:focus { outline: none; border-color: var(--amber); background: rgba(245,165,36,.04); }
+.rf .bad { border-color: #ec6b6b; }
+.rf .cnt { justify-self: end; color: var(--muted); font: .74rem var(--f-mono); }
+.rel-opts { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .4rem; }
+.rel-opts label { cursor: pointer; }
+.rel-opts input { position: absolute; opacity: 0; pointer-events: none; }
+.rel-opts span { display: inline-block; padding: .5rem .85rem; border-radius: 999px; border: 1px solid var(--line); font-size: .86rem; transition: background .2s, border-color .2s, color .2s; }
+.rel-opts input:checked + span { background: var(--amber); border-color: var(--amber); color: #120c02; font-weight: 600; }
+.rel-opts input:focus-visible + span { outline: 2px solid var(--amber); outline-offset: 2px; }
+.rel-opts.bad span { border-color: rgba(236,107,107,.6); }
+.rf-mode { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.rf-mode label { cursor: pointer; }
+.rf-mode input { position: absolute; opacity: 0; pointer-events: none; }
+.rf-mode span { display: grid; gap: .15rem; padding: .75rem .9rem; border-radius: 12px; border: 1px solid var(--line); font-size: .9rem; font-weight: 600; }
+.rf-mode small { color: var(--muted); font-weight: 400; font-size: .78rem; }
+.rf-mode input:checked + span { border-color: var(--amber); background: rgba(245,165,36,.08); }
+.rf-ok { display: grid; grid-template-columns: auto 1fr; gap: .6rem; align-items: start; font-size: .86rem; color: var(--muted); cursor: pointer; }
+.rf-ok input { margin-top: .2rem; accent-color: var(--amber); width: 16px; height: 16px; }
+.hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; opacity: 0; }
+.rf-err { margin: 0; min-height: 1.2em; color: #ef8a8a; font-size: .88rem; }
+.rf-foot { display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.rf-note { color: var(--muted); font-size: .8rem; flex: 1 1 14rem; }
+.rf-done { display: grid; gap: .8rem; justify-items: center; text-align: center; padding: 1.4rem .6rem; }
+.rf-done .ok { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: rgba(111,207,151,.12); color: var(--green); font-size: 1.8rem; }
+.rf-done p { margin: 0; color: var(--muted); }
+.rf-done .alt { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+@media (max-width: 1080px) { .recs-track { grid-auto-columns: minmax(280px, calc((100% - 1.2rem) / 2)); } }
+@media (max-width: 640px) {
+  .recs-track { grid-auto-columns: 86%; }
+  .rf-grid, .rf-mode { grid-template-columns: 1fr; }
+  .rec-empty { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+  .recs-act { width: 100%; } .recs-act .btn { flex: 1 1 auto; justify-content: center; }
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {
   .links { display: none; }
@@ -747,6 +825,21 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
           <p class="lead" data-t="a.text"></p>
           <div class="duo"><a class="btn li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 2H3.6A1.6 1.6 0 0 0 2 3.6v16.8A1.6 1.6 0 0 0 3.6 22h16.8a1.6 1.6 0 0 0 1.6-1.6V3.6A1.6 1.6 0 0 0 20.4 2ZM8 19H5V9.5h3V19ZM6.5 8.2a1.8 1.8 0 1 1 0-3.5 1.8 1.8 0 0 1 0 3.5ZM19 19h-3v-4.6c0-1.1 0-2.5-1.5-2.5S12.8 13 12.8 14.3V19h-3V9.5h2.9v1.3a3.2 3.2 0 0 1 2.8-1.6c3 0 3.5 2 3.5 4.5V19Z"/></svg><span data-t="a.li">تابعني على LinkedIn</span></a><a class="btn yt" href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8ZM9.8 15.1V8.9l5.7 3.1-5.7 3.1Z"/></svg><span data-t="a.yt">اشترك في القناة</span></a></div>
         </div>
+      </div>
+      <div class="recs" id="recs" data-r>
+        <div class="recs-h">
+          <div class="recs-tt">
+            <span class="kicker" data-t="r.kicker">توصيات</span>
+            <h3 data-t="r.title">قالوا عني</h3>
+            <p data-t="r.sub"></p>
+          </div>
+          <div class="recs-act">
+            <a class="btn li" href="https://www.linkedin.com/in/siddekmahmoud/details/recommendations/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.4 2H3.6A1.6 1.6 0 0 0 2 3.6v16.8A1.6 1.6 0 0 0 3.6 22h16.8a1.6 1.6 0 0 0 1.6-1.6V3.6A1.6 1.6 0 0 0 20.4 2ZM8 19H5V9.5h3V19ZM6.5 8.2a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6ZM19 19h-3v-4.6c0-1.1 0-2.5-1.5-2.5S12.8 13 12.8 14.3V19h-3V9.5h2.9v1.3a3.2 3.2 0 0 1 2.9-1.6c3 0 3.5 2 3.5 4.6V19Z"/></svg><span data-t="r.li">على لينكدإن</span> ↗</a>
+            <button type="button" class="btn solid" id="rec-open"><span data-t="r.leave">اكتب توصية</span> +</button>
+          </div>
+        </div>
+        <div class="recs-track" id="recs-track"></div>
+        <div class="recs-nav" id="recs-nav"></div>
       </div>
       <div class="nums" id="nums" style="margin-top:clamp(4rem,9vw,7rem)"></div>
     </div>
@@ -959,6 +1052,30 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     <div class="toast" id="toast" role="status"></div>
   </section>
 </main>
+
+<div class="rmod" id="rmod" hidden role="dialog" aria-modal="true" aria-labelledby="rmod-t">
+  <form class="rmod-box" id="rform" novalidate>
+    <div class="rmod-h"><div><h3 id="rmod-t" data-t="r.fTitle">اكتب توصية أو رسالة</h3><p data-t="r.fSub"></p></div><button type="button" class="gx" id="rmod-x" aria-label="Close">×</button></div>
+    <div class="rf-grid">
+      <label class="rf"><span data-t="r.fName">الاسم</span><input name="name" required maxlength="80" autocomplete="name"></label>
+      <label class="rf"><span data-t="r.fRole">الوظيفة والشركة</span><input name="role" required maxlength="120" autocomplete="organization-title"></label>
+    </div>
+    <fieldset class="rf rf-rel"><legend data-t="r.fRel">علاقتك بيا</legend><div class="rel-opts" id="rel-opts"></div></fieldset>
+    <label class="rf"><span data-t="r.fProj">المشروع أو الفترة (اختياري)</span><input name="project" maxlength="120"></label>
+    <div class="rf-mode" id="rf-mode"></div>
+    <label class="rf" id="rf-text-l"><span data-t="r.fText">التوصية</span><textarea name="text" rows="5" maxlength="1500"></textarea><small class="cnt" id="rf-cnt" dir="ltr"></small></label>
+    <label class="rf"><span data-t="r.fMsg">رسالة خاصة ليا (مش هتتنشر)</span><textarea name="message" rows="3" maxlength="1500"></textarea></label>
+    <div class="rf-grid">
+      <label class="rf"><span data-t="r.fMail">إيميلك للرد (اختياري، مش هيتنشر)</span><input name="email" type="email" maxlength="120" autocomplete="email" dir="ltr"></label>
+      <label class="rf"><span data-t="r.fLi">رابط لينكدإن بتاعك (اختياري)</span><input name="linkedin" type="url" maxlength="200" dir="ltr" placeholder="https://www.linkedin.com/in/…"></label>
+    </div>
+    <label class="rf-ok"><input type="checkbox" name="consent" id="rf-consent"><span data-t="r.fConsent"></span></label>
+    <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="rf-err" id="rf-err" role="alert"></p>
+    <div class="rf-foot"><span class="rf-note" data-t="r.fNote"></span><button type="submit" class="btn solid" id="rf-send"><span data-t="r.fSend">ابعت</span></button></div>
+    <div class="rf-done" id="rf-done" hidden></div>
+  </form>
+</div>
 
 <div class="gnote" id="gnote" role="status" hidden>
   <p data-t="g.note"></p>
@@ -1288,6 +1405,113 @@ function renderTools(d) {
   $("#toolgrid").innerHTML = TOOLS.map((t, i) => `<a class="tool spot" data-r href="${t.url}${t.q[L()]}" target="_blank" rel="noopener"><span class="idx">0${i + 1}</span><img src="assets/${t.img[L()]}" alt="" loading="lazy" width="960" height="600"><div><small>${esc(d["t.free"])}</small><h3>${esc(t.n[L()])}</h3><p>${esc(t.d[L()])}</p><span class="go">${esc(d["t.open"])} <span aria-hidden="true">${lang === "ar" ? "←" : "→"}</span></span></div></a>`).join("");
 }
 
+/* ---------- recommendations: from LinkedIn and from visitors (reviewed before they appear) ---------- */
+Object.assign(T.ar, {
+  "r.kicker": "توصيات", "r.title": "قالوا عني", "r.sub": "توصيات من ناس اشتغلت معاهم على لينكدإن. اشتغلت معايا؟ سيب توصيتك أو رسالة هنا.",
+  "r.li": "كل التوصيات على لينكدإن", "r.leave": "اكتب توصية", "r.more": "اقرأ أكتر", "r.less": "أقل",
+  "r.emptyT": "التوصيات الجاية هتظهر هنا", "r.emptyS": "اشتغلت معايا قبل كده؟ كلمتين منك بيفرقوا.",
+  "r.fTitle": "اكتب توصية أو ابعت رسالة", "r.fSub": "بتوصلني على طول، والتوصيات بتظهر في الموقع بعد ما أراجعها.",
+  "r.fName": "الاسم", "r.fRole": "الوظيفة والشركة", "r.fRel": "علاقتك بيا", "r.fProj": "المشروع أو الفترة (اختياري)",
+  "r.fText": "التوصية", "r.fMsg": "رسالة خاصة ليا (مش هتتنشر)", "r.fMail": "إيميلك للرد (اختياري، مش هيتنشر)", "r.fLi": "رابط لينكدإن بتاعك (اختياري)",
+  "r.fConsent": "موافق إن اسمي ووظيفتي والتوصية يظهروا في الموقع بعد المراجعة.", "r.fNote": "مفيش حاجة بتتنشر من غير مراجعة. الإيميل والرسالة الخاصة مش بيظهروا لأي حد.", "r.fSend": "ابعت",
+  "r.mode": [["توصية", "ممكن تتنشر في الموقع"], ["رسالة بس", "خاصة ليا"]],
+  "r.rel": { mgr: "كنت مديره", rep: "كان مديري", team: "في نفس الفريق", co: "نفس الشركة، فريق تاني", client: "عميل أو استشاري", sub: "مقاول باطن أو مورد", learn: "اتعلمت منه", other: "علاقة تانية" },
+  "r.relCard": { mgr: "كان مدير صديق", rep: "صديق كان مديره", team: "اشتغلوا في نفس الفريق", co: "نفس الشركة", client: "عميل / استشاري", sub: "مقاول باطن / مورد", learn: "اتعلم منه", other: "" },
+  "r.src": { linkedin: "لينكدإن", site: "من الموقع" },
+  "r.eName": "اكتب اسمك.", "r.eRole": "اكتب وظيفتك والشركة.", "r.eRel": "اختار علاقتك بيا.", "r.eText": "التوصية قصيرة شوية، اكتب 30 حرف على الأقل.", "r.eMsg": "اكتب رسالتك.", "r.eConsent": "لازم توافق على النشر علشان التوصية تظهر، أو اختار «رسالة بس».", "r.eMail": "الإيميل مش مظبوط.",
+  "r.sending": "بيتبعت…", "r.okT": "وصلت، شكرًا!", "r.okS": "هراجعها وأرد عليك لو سيبت إيميل.", "r.failT": "ما وصلتش من هنا", "r.failS": "ابعتها بالإيميل أو واتساب، الرسالة جاهزة.",
+});
+Object.assign(T.en, {
+  "r.kicker": "Recommendations", "r.title": "What people say", "r.sub": "Recommendations from people I worked with, from LinkedIn. Worked with me? Leave a recommendation or a message here.",
+  "r.li": "All recommendations on LinkedIn", "r.leave": "Write a recommendation", "r.more": "Read more", "r.less": "Less",
+  "r.emptyT": "Recommendations will appear here", "r.emptyS": "Worked with me before? A few words from you go a long way.",
+  "r.fTitle": "Write a recommendation or send a message", "r.fSub": "It comes straight to me. Recommendations appear on the site after I review them.",
+  "r.fName": "Name", "r.fRole": "Role and company", "r.fRel": "How do you know me?", "r.fProj": "Project or period (optional)",
+  "r.fText": "Recommendation", "r.fMsg": "Private message to me (not published)", "r.fMail": "Your email for a reply (optional, private)", "r.fLi": "Your LinkedIn link (optional)",
+  "r.fConsent": "I agree that my name, role and recommendation may appear on this site after review.", "r.fNote": "Nothing is published without review. Your email and private message are never shown.", "r.fSend": "Send",
+  "r.mode": [["Recommendation", "may be published on the site"], ["Message only", "private, to me"]],
+  "r.rel": { mgr: "I managed Siddek", rep: "Siddek managed me", team: "Same team", co: "Same company, other team", client: "Client or consultant", sub: "Subcontractor or supplier", learn: "I learned from him", other: "Other" },
+  "r.relCard": { mgr: "Managed Siddek", rep: "Reported to Siddek", team: "Worked on the same team", co: "Same company", client: "Client / consultant", sub: "Subcontractor / supplier", learn: "Learned from Siddek", other: "" },
+  "r.src": { linkedin: "LinkedIn", site: "Via the site" },
+  "r.eName": "Please add your name.", "r.eRole": "Please add your role and company.", "r.eRel": "Please choose how you know me.", "r.eText": "The recommendation is a bit short, at least 30 characters please.", "r.eMsg": "Please write your message.", "r.eConsent": "Please agree to publishing so the recommendation can appear, or choose Message only.", "r.eMail": "That email does not look right.",
+  "r.sending": "Sending…", "r.okT": "Received, thank you!", "r.okS": "I will review it and reply if you left an email.", "r.failT": "It did not go through from here", "r.failS": "Send it by email or WhatsApp instead, the message is ready.",
+});
+const REC_TO = "realityengineer4u@gmail.com", REC_WA = "971528220524";
+let RECS = [], recMode = 0, recTimer = null;
+const recCol = (s) => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return `hsl(${h} 45% 38%)`; };
+const initials = (n) => n.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+function renderRecs(d) {
+  const tr = $("#recs-track"); if (!tr) return;
+  if (!RECS.length) {
+    tr.innerHTML = `<div class="rec-empty"><span class="q">“</span><div><b>${esc(d["r.emptyT"])}</b><span>${esc(d["r.emptyS"])}</span></div><button type="button" class="btn solid" data-rec-open>${esc(d["r.leave"])} +</button></div>`;
+    $("#recs-nav").innerHTML = ""; return;
+  }
+  tr.innerHTML = RECS.map((r, i) => `<article class="rec-c" data-i="${i}"><span class="q" aria-hidden="true">”</span><blockquote dir="auto">${esc(r.text)}</blockquote>${r.text.length > 320 ? `<button type="button" class="more">${esc(d["r.more"])}</button>` : ""}<div class="rec-tags">${r.relation && d["r.relCard"][r.relation] ? `<i>${esc(d["r.relCard"][r.relation])}</i>` : ""}${r.project ? `<i>${esc(r.project)}</i>` : ""}<i class="${r.source === "site" ? "site" : "src"}">${esc(d["r.src"][r.source] || d["r.src"].linkedin)}</i></div><div class="rec-who"><span class="rec-av" style="background:${recCol(r.name)}">${r.photo ? `<img src="${esc(r.photo)}" alt="" loading="lazy">` : esc(initials(r.name))}</span><div><b dir="auto">${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:inherit">${esc(r.name)}</a>` : esc(r.name)}</b><span dir="auto">${esc(r.role || "")}${r.date ? ` · ${esc(r.date)}` : ""}</span></div></div></article>`).join("");
+  tr.querySelectorAll(".more").forEach((b) => b.onclick = () => { const c = b.closest(".rec-c"), o = c.classList.toggle("open"); b.textContent = o ? d["r.less"] : d["r.more"]; });
+  const cards = [...tr.children];
+  $("#recs-nav").innerHTML = cards.length > 1 ? cards.map((_, i) => `<button type="button" aria-label="${i + 1}" data-i="${i}"></button>`).join("") : "";
+  const dots = [...$("#recs-nav").children], cur = () => { const r0 = tr.getBoundingClientRect(); let best = 0, bd = 1e9; cards.forEach((c, i) => { const dd = Math.abs(c.getBoundingClientRect().left - r0.left); if (dd < bd) { bd = dd; best = i; } }); return best; };
+  const mark = () => { const k = cur(); dots.forEach((b, i) => b.setAttribute("aria-current", i === k)); };
+  const show = (i) => { const c = cards[(i + cards.length) % cards.length]; tr.scrollTo({ left: c.offsetLeft - tr.offsetLeft - (lang === "ar" ? tr.clientWidth - c.offsetWidth : 0), behavior: reduceMotion ? "auto" : "smooth" }); };
+  dots.forEach((b) => b.onclick = () => show(+b.dataset.i));
+  tr.onscroll = () => mark(); mark();
+  clearInterval(recTimer);
+  if (!reduceMotion && cards.length > 1) recTimer = setInterval(() => { if (document.hidden || tr.matches(":hover") || !$("#rmod").hidden) return; const r0 = tr.getBoundingClientRect(); if (r0.bottom < 0 || r0.top > innerHeight) return; const k = cur(); show(k + 1 >= cards.length ? 0 : k + 1); }, 7000);
+}
+function recForm(d) {
+  $("#rel-opts").innerHTML = Object.entries(d["r.rel"]).map(([k, v]) => `<label><input type="radio" name="relation" value="${k}"><span>${esc(v)}</span></label>`).join("");
+  $("#rf-mode").innerHTML = d["r.mode"].map(([t, s], i) => `<label><input type="radio" name="mode" value="${i}" ${i === recMode ? "checked" : ""}><span>${esc(t)}<small>${esc(s)}</small></span></label>`).join("");
+  $("#rf-mode").querySelectorAll("input").forEach((x) => x.onchange = () => { recMode = +x.value; recModeUI(); });
+  recModeUI();
+}
+function recModeUI() { const f = $("#rform"), rec = recMode === 0; $("#rf-text-l").hidden = !rec; f.querySelector(".rf-ok").hidden = !rec; }
+function openRec() { const m = $("#rmod"); m.hidden = false; $("#rf-done").hidden = true; [...$("#rform").children].forEach((c) => { if (c.id !== "rf-done" && !c.classList.contains("hp")) c.style.display = ""; }); recModeUI(); $("#rf-err").textContent = ""; setTimeout(() => $("#rform").elements.name.focus(), 60); }
+function closeRec() { $("#rmod").hidden = true; }
+function recSubmit(e) {
+  e.preventDefault();
+  const d = T[lang], f = $("#rform"), v = (n) => (f.elements[n] ? f.elements[n].value.trim() : ""), err = $("#rf-err");
+  f.querySelectorAll(".bad").forEach((x) => x.classList.remove("bad"));
+  const fail = (msg, el) => { err.textContent = msg; if (el) { el.classList.add("bad"); (el.focus && el.focus()); } return false; };
+  const rel = (f.querySelector('input[name="relation"]:checked') || {}).value;
+  if (v("_honey")) return;
+  if (v("name").length < 2) return fail(d["r.eName"], f.elements.name);
+  if (v("role").length < 2) return fail(d["r.eRole"], f.elements.role);
+  if (!rel) return fail(d["r.eRel"], $("#rel-opts"));
+  if (recMode === 0 && v("text").length < 30) return fail(d["r.eText"], f.elements.text);
+  if (recMode === 1 && v("message").length < 5) return fail(d["r.eMsg"], f.elements.message);
+  if (recMode === 0 && !f.elements.consent.checked) return fail(d["r.eConsent"]);
+  if (v("email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("email"))) return fail(d["r.eMail"], f.elements.email);
+  err.textContent = "";
+  const T0 = T.en, relTxt = T0["r.rel"][rel];
+  const payload = { _subject: `${recMode === 0 ? "New recommendation" : "New message"} from ${v("name")} (site)`, _template: "table", _captcha: "false", type: recMode === 0 ? "Recommendation" : "Message only", name: v("name"), role: v("role"), relation: relTxt, project: v("project"), recommendation: recMode === 0 ? v("text") : "", consent_to_publish: recMode === 0 ? "yes" : "no", private_message: v("message"), email: v("email"), linkedin: v("linkedin"), language: lang, page: location.href };
+  if (v("email")) payload._replyto = v("email");
+  const body = Object.entries(payload).filter(([k, x]) => x && !k.startsWith("_")).map(([k, x]) => `${k}: ${x}`).join("\n");
+  const btn = $("#rf-send"); btn.disabled = true; btn.firstElementChild.textContent = d["r.sending"];
+  const done = (ok) => {
+    btn.disabled = false; btn.firstElementChild.textContent = d["r.fSend"];
+    [...f.children].forEach((c) => { if (c.id !== "rf-done" && !c.classList.contains("hp") && !c.classList.contains("rmod-h")) c.style.display = "none"; });
+    const box = $("#rf-done"); box.hidden = false;
+    const mail = `mailto:${REC_TO}?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(body)}`, wa = `https://wa.me/${REC_WA}?text=${encodeURIComponent(body)}`;
+    box.innerHTML = ok ? `<span class="ok">✓</span><h3>${esc(d["r.okT"])}</h3><p>${esc(d["r.okS"])}</p>` : `<span class="ok" style="color:var(--amber);background:rgba(245,165,36,.12)">!</span><h3>${esc(d["r.failT"])}</h3><p>${esc(d["r.failS"])}</p><div class="alt"><a class="btn solid" href="${mail}">Email</a><a class="btn" style="background:#25d366;color:#05210f;border-color:#25d366" href="${wa}" target="_blank" rel="noopener">WhatsApp</a></div>`;
+    if (ok) f.reset();
+  };
+  fetch(`https://formsubmit.co/ajax/${REC_TO}`, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) })
+    .then((r) => r.json().then((j) => done(r.ok && String(j.success) === "true")).catch(() => done(r.ok)))
+    .catch(() => done(false));
+}
+let recInit = false;
+function initRecs() {
+  if (recInit) return; recInit = true;
+  document.addEventListener("click", (e) => { if (e.target.closest("#rec-open, [data-rec-open]")) { e.preventDefault(); openRec(); } });
+  $("#rmod-x").addEventListener("click", closeRec);
+  $("#rmod").addEventListener("click", (e) => { if (e.target.id === "rmod") closeRec(); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("#rmod").hidden) closeRec(); });
+  $("#rform").addEventListener("submit", recSubmit);
+  const cnt = () => { $("#rf-cnt").textContent = `${$("#rform").elements.text.value.length} / 1500`; };
+  $("#rform").elements.text.addEventListener("input", cnt); cnt();
+  fetch("data/recommendations.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && Array.isArray(j.items)) { RECS = j.items.filter((x) => x && x.name && x.text); renderRecs(T[lang]); } }).catch(() => {});
+}
+
 /* ---------- lab: a small, readable neural network over schedule signals ---------- */
 const FX = [
   { id: "spi",   min: 0.75, max: 1.10, step: 0.01, v: 0.93, fmt: (x) => x.toFixed(2), norm: (x) => (1 - x) / 0.25 },
@@ -1457,6 +1681,7 @@ function render() {
   try { const f = document.getElementById("pbiframe"); if (f && f.contentWindow) f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {}
   $("#plat").innerHTML = PLATFORMS.map((p) => `<div class="pl spot" data-r><small>${esc(p.k[L()])}</small><h3>${p.n}</h3><p>${esc(p.d[L()])}</p></div>`).join("");
   initSocial(); renderLinkedIn(d); renderYouTube(d); renderTools(d);
+  initRecs(); renderRecs(d); recForm(d);
   observeReveals();
   layoutProjects();
 }
