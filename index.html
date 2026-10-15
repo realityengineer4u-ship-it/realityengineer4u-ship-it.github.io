@@ -648,6 +648,29 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 .rmod { position: fixed; inset: 0; z-index: 130; display: grid; place-items: center; padding: 16px; background: rgba(5,6,8,.82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); overflow-y: auto; animation: mnin .25s ease both; }
 .rmod[hidden] { display: none; }
 .rmod-box { width: min(720px, 100%); max-height: calc(100dvh - 32px); overflow-y: auto; display: grid; gap: 1rem; padding: clamp(1.1rem, 3vw, 1.8rem); border-radius: 22px; border: 1px solid var(--line); background: var(--bg-2); box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+.rmod-box[data-step="choose"] > :not(.rmod-h):not(.rf-choice), .rmod-box[data-step="li"] > :not(.rmod-h):not(.rf-li) { display: none !important; }
+.rmod-box[data-step="site"] > .rf-choice, .rmod-box[data-step="site"] > .rf-li, .rmod-box[data-step="choose"] .rf-back { display: none; }
+.rf-back { border: 0; background: none; padding: 0 0 .4rem; color: var(--amber-ink); font: 600 .85rem var(--f-sans, system-ui); cursor: pointer; }
+.rf-choice { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.rf-opt { display: grid; gap: .6rem; align-content: start; text-align: start; padding: 1.2rem; border-radius: 16px; border: 1px solid var(--line); background: rgba(255,255,255,.02); color: var(--ink); font: inherit; cursor: pointer; transition: border-color .2s, background .2s, transform .2s var(--ease); }
+.rf-opt:hover, .rf-opt:focus-visible { transform: translateY(-2px); outline: none; }
+.rf-opt.li:hover, .rf-opt.li:focus-visible { border-color: #0a66c2; background: rgba(10,102,194,.08); }
+.rf-opt.site:hover, .rf-opt.site:focus-visible { border-color: var(--amber); background: rgba(245,165,36,.06); }
+.rf-opt .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font: 800 1.2rem var(--f-display); }
+.rf-opt.li .ic { background: #0a66c2; color: #fff; }
+.rf-opt.site .ic { background: var(--amber); color: #120c02; }
+.rf-opt b { font-size: 1.1rem; }
+.rf-opt span { color: var(--muted); font-size: .88rem; line-height: 1.6; }
+.rf-opt em { font-style: normal; font-weight: 600; font-size: .88rem; color: var(--amber-ink); }
+.rf-opt.li em { color: #6fb2f2; }
+.rf-li { display: grid; gap: 1rem; }
+.rf-li ol { margin: 0; padding: 0; list-style: none; display: grid; gap: .6rem; counter-reset: st; }
+.rf-li li { counter-increment: st; display: grid; grid-template-columns: 34px 1fr; gap: .8rem; align-items: center; padding: .8rem .9rem; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.rf-li li::before { content: counter(st); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #0a66c2; color: #fff; font: 700 .95rem var(--f-display); }
+.rf-li .btn.li { justify-self: start; background: #0a66c2; color: #fff; border-color: #0a66c2; }
+.rf-li p { margin: 0; color: var(--muted); font-size: .88rem; }
+.rf-li p button { border: 0; background: none; padding: 0; color: var(--amber-ink); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
+@media (max-width: 640px) { .rf-choice { grid-template-columns: 1fr; } }
 .rmod-h { display: flex; gap: 1rem; justify-content: space-between; align-items: start; }
 .rmod-h h3 { font-size: 1.4rem; }
 .rmod-h p { margin: .35rem 0 0; color: var(--muted); font-size: .92rem; }
@@ -1055,7 +1078,9 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 
 <div class="rmod" id="rmod" hidden role="dialog" aria-modal="true" aria-labelledby="rmod-t">
   <form class="rmod-box" id="rform" novalidate>
-    <div class="rmod-h"><div><h3 id="rmod-t" data-t="r.fTitle">اكتب توصية أو رسالة</h3><p data-t="r.fSub"></p></div><button type="button" class="gx" id="rmod-x" aria-label="Close">×</button></div>
+    <div class="rmod-h"><div><button type="button" class="rf-back" id="rf-back" data-t="r.back">رجوع</button><h3 id="rmod-t" data-t="r.fTitle">اكتب توصية أو رسالة</h3><p data-t="r.fSub"></p></div><button type="button" class="gx" id="rmod-x" aria-label="Close">×</button></div>
+    <div class="rf-choice" id="rf-choice"></div>
+    <div class="rf-li" id="rf-li"></div>
     <div class="rf-grid">
       <label class="rf"><span data-t="r.fName">الاسم</span><input name="name" required maxlength="80" autocomplete="name"></label>
       <label class="rf"><span data-t="r.fRole">الوظيفة والشركة</span><input name="role" required maxlength="120" autocomplete="organization-title"></label>
@@ -1419,6 +1444,10 @@ Object.assign(T.ar, {
   "r.relCard": { mgr: "كان مدير صديق", rep: "صديق كان مديره", team: "اشتغلوا في نفس الفريق", co: "نفس الشركة", client: "عميل / استشاري", sub: "مقاول باطن / مورد", learn: "اتعلم منه", other: "" },
   "r.src": { linkedin: "لينكدإن", site: "من الموقع" },
   "r.eName": "اكتب اسمك.", "r.eRole": "اكتب وظيفتك والشركة.", "r.eRel": "اختار علاقتك بيا.", "r.eText": "التوصية قصيرة شوية، اكتب 30 حرف على الأقل.", "r.eMsg": "اكتب رسالتك.", "r.eConsent": "لازم توافق على النشر علشان التوصية تظهر، أو اختار «رسالة بس».", "r.eMail": "الإيميل مش مظبوط.",
+  "r.back": "→ رجوع", "r.chT": "فين تحب تكتب التوصية؟", "r.chS": "اختار المكان اللي يريحك.",
+  "r.chLi": ["على لينكدإن", "بتظهر على بروفايلي في لينكدإن، وبتظهر هنا كمان. محتاج تكون متصل بيا على لينكدإن.", "افتح لينكدإن"],
+  "r.chSite": ["هنا في الموقع", "من غير أي حساب. بتوصلني على طول وبتظهر هنا بعد المراجعة. وممكن تبعت رسالة خاصة بس.", "اكتبها هنا"],
+  "r.liT": "اكتبها على لينكدإن", "r.liSteps": ["افتح بروفايلي على لينكدإن (في التطبيق أو المتصفح)", "اضغط «المزيد» (More) تحت اسمي", "اختار «أوصِ» (Recommend) واكتب توصيتك"], "r.liGo": "افتح بروفايلي على لينكدإن", "r.liNote": "مش متصل بيا لسه؟ ابعت طلب تواصل الأول، أو", "r.liAlt": "اكتبها هنا في الموقع",
   "r.sending": "بيتبعت…", "r.okT": "وصلت، شكرًا!", "r.okS": "هراجعها وأرد عليك لو سيبت إيميل.", "r.failT": "ما وصلتش من هنا", "r.failS": "ابعتها بالإيميل أو واتساب، الرسالة جاهزة.",
 });
 Object.assign(T.en, {
@@ -1434,6 +1463,10 @@ Object.assign(T.en, {
   "r.relCard": { mgr: "Managed Siddek", rep: "Reported to Siddek", team: "Worked on the same team", co: "Same company", client: "Client / consultant", sub: "Subcontractor / supplier", learn: "Learned from Siddek", other: "" },
   "r.src": { linkedin: "LinkedIn", site: "Via the site" },
   "r.eName": "Please add your name.", "r.eRole": "Please add your role and company.", "r.eRel": "Please choose how you know me.", "r.eText": "The recommendation is a bit short, at least 30 characters please.", "r.eMsg": "Please write your message.", "r.eConsent": "Please agree to publishing so the recommendation can appear, or choose Message only.", "r.eMail": "That email does not look right.",
+  "r.back": "← Back", "r.chT": "Where would you like to write it?", "r.chS": "Pick whichever is easier for you.",
+  "r.chLi": ["On LinkedIn", "It shows on my LinkedIn profile, and here too. You need to be connected with me on LinkedIn.", "Open LinkedIn"],
+  "r.chSite": ["Here on the site", "No account needed. It comes straight to me and appears here after review. Or send a private message only.", "Write it here"],
+  "r.liT": "Write it on LinkedIn", "r.liSteps": ["Open my LinkedIn profile (app or browser)", "Tap More under my name", "Choose Recommend and write it"], "r.liGo": "Open my LinkedIn profile", "r.liNote": "Not connected yet? Send a connection request first, or", "r.liAlt": "write it here on the site",
   "r.sending": "Sending…", "r.okT": "Received, thank you!", "r.okS": "I will review it and reply if you left an email.", "r.failT": "It did not go through from here", "r.failS": "Send it by email or WhatsApp instead, the message is ready.",
 });
 const REC_TO = "realityengineer4u@gmail.com", REC_WA = "971528220524";
@@ -1465,7 +1498,16 @@ function recForm(d) {
   recModeUI();
 }
 function recModeUI() { const f = $("#rform"), rec = recMode === 0; $("#rf-text-l").hidden = !rec; f.querySelector(".rf-ok").hidden = !rec; }
-function openRec() { const m = $("#rmod"); m.hidden = false; $("#rf-done").hidden = true; [...$("#rform").children].forEach((c) => { if (c.id !== "rf-done" && !c.classList.contains("hp")) c.style.display = ""; }); recModeUI(); $("#rf-err").textContent = ""; setTimeout(() => $("#rform").elements.name.focus(), 60); }
+function recStep(st) {
+  const d = T[lang], f = $("#rform"); f.dataset.step = st;
+  const h = f.querySelector(".rmod-h"); h.querySelector("h3").textContent = st === "choose" ? d["r.chT"] : st === "li" ? d["r.liT"] : d["r.fTitle"]; h.querySelector("p").textContent = st === "choose" ? d["r.chS"] : st === "li" ? "" : d["r.fSub"];
+  if (st === "choose") $("#rf-choice").innerHTML = [["li", "in", d["r.chLi"]], ["site", "✎", d["r.chSite"]]].map(([k, ic, [t, s0, go]]) => `<button type="button" class="rf-opt ${k}" data-k="${k}"><span class="ic" aria-hidden="true">${ic}</span><b>${esc(t)}</b><span>${esc(s0)}</span><em>${esc(go)} ${lang === "ar" ? "←" : "→"}</em></button>`).join("");
+  if (st === "li") $("#rf-li").innerHTML = `<ol>${d["r.liSteps"].map((x) => `<li>${esc(x)}</li>`).join("")}</ol><a class="btn li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener">${esc(d["r.liGo"])} ↗</a><p>${esc(d["r.liNote"])} <button type="button" data-go-site>${esc(d["r.liAlt"])}</button>.</p>`;
+  $("#rf-choice").querySelectorAll(".rf-opt").forEach((b) => b.onclick = () => recStep(b.dataset.k));
+  const gs = $("#rf-li").querySelector("[data-go-site]"); if (gs) gs.onclick = () => recStep("site");
+  if (st === "site") { recModeUI(); setTimeout(() => f.elements.name.focus(), 60); } else setTimeout(() => { const x = f.querySelector(st === "li" ? ".rf-li .btn" : ".rf-opt"); if (x) x.focus(); }, 60);
+}
+function openRec() { const m = $("#rmod"); m.hidden = false; $("#rf-done").hidden = true; [...$("#rform").children].forEach((c) => { if (c.id !== "rf-done" && !c.classList.contains("hp")) c.style.display = ""; }); $("#rf-err").textContent = ""; recStep("choose"); }
 function closeRec() { $("#rmod").hidden = true; }
 function recSubmit(e) {
   e.preventDefault();
@@ -1504,6 +1546,7 @@ function initRecs() {
   if (recInit) return; recInit = true;
   document.addEventListener("click", (e) => { if (e.target.closest("#rec-open, [data-rec-open]")) { e.preventDefault(); openRec(); } });
   $("#rmod-x").addEventListener("click", closeRec);
+  $("#rf-back").addEventListener("click", () => recStep("choose"));
   $("#rmod").addEventListener("click", (e) => { if (e.target.id === "rmod") closeRec(); });
   addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("#rmod").hidden) closeRec(); });
   $("#rform").addEventListener("submit", recSubmit);
