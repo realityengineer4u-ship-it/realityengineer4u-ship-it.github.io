@@ -399,6 +399,11 @@ body.embed .only-full, body:not(.embed) .only-embed { display: none; }
 .iso .el.hl polygon { stroke: var(--amber); stroke-width: 1.4; }
 .g-risk { grid-template-columns: 1.45fr 1fr; grid-template-rows: auto 1.25fr 1fr; grid-template-areas: "rt rt" "hist reg" "torn trend"; }
 .g-log { grid-template-columns: 1.05fr 1fr; grid-template-rows: auto 1fr; grid-template-areas: "lt lt" "plan del"; }
+.g-s4d { grid-template-columns: 1.75fr 1fr; grid-template-rows: auto auto 1fr; grid-template-areas: "s4 s4t" "s4 s4c" "s4 s4e"; }
+#s4tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#s4iso { flex: 1 1 auto; min-height: 0; width: 100%; direction: ltr; unicode-bidi: isolate; }
+.v4 { cursor: pointer; transition: opacity .3s; }
+.v4:hover polygon { filter: brightness(1.15); }
 .g-bim { grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr; grid-template-areas: "iso rvt"; }
 .g-auto { grid-template-columns: 1.15fr 1fr; grid-template-rows: auto 1.05fr 1fr; grid-template-areas: "at at" "pipe jobs" "hist feed"; }
 .pbi-tabs { display: flex; align-items: stretch; gap: 0; padding: 0; background: #16191e; border-top: 1px solid var(--line); min-height: 40px; }
@@ -672,6 +677,26 @@ tr.picked td { background: rgba(245,165,36,.1); }
             <div class="gd-axis"><div></div><div><span>06</span><span>08</span><span>10</span><span>12</span><span>14</span><span>16</span><span>18</span></div></div>
             <div class="legend" id="dlegend"></div>
           </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-s4d" aria-label="4D site">
+        <div class="ph"><h2 data-t="pgS4"></h2><span data-t="pgS4s"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-s4d">
+          <div class="card" id="s4card" style="grid-area:s4">
+            <div class="card-h"><h3 data-t="s4.title"></h3><div class="modes" id="s4modes"></div></div>
+            <svg class="iso" id="s4iso" viewBox="78 118 806 456" role="img" aria-label="4D model of the whole site, built up to the selected week"></svg>
+            <div class="tip" id="s4tip"></div>
+            <div class="timeline">
+              <button type="button" id="s4play" aria-label="Play"><svg viewBox="0 0 16 16" id="s4playic"><path d="M4 2.5l9 5.5-9 5.5z"/></svg></button>
+              <input type="range" id="s4wk" min="1" max="80" value="41" aria-label="Week">
+              <output id="s4wko"></output>
+            </div>
+            <div class="legend" id="s4lg"></div>
+          </div>
+          <div class="tiles" id="s4tiles" style="grid-area:s4t"></div>
+          <div class="card" style="grid-area:s4c"><div class="card-h"><h3 data-t="s4.cl"></h3><span class="note-s" data-t="s4.cln"></span></div><div class="gantt-d" id="s4cl"></div></div>
+          <div class="card" style="grid-area:s4e"><div class="card-h"><h3 data-t="s4.ev"></h3><span class="note-s" id="s4evn"></span></div><div class="recs" id="s4ev"></div></div>
         </div>
       </section>
 
@@ -1827,7 +1852,7 @@ Object.assign(T.en, {
   pgE: "Executive summary", pgEs: "For senior management: health, money, dates, risks and decisions",
   pgP: "Engineering & procurement", pgPs: "Shop drawings, submittals and long-lead items linked to the villas",
   pgC: "EOT & claims", pgCs: "Delay events, notices, entitlement and time impact",
-  pgShort: ["Executive", "Overview", "Smart Site", "Schedule", "Eng & Proc", "EOT", "Risk", "Logistics", "4D / BIM", "Automation"],
+  pgShort: ["Executive", "Overview", "Smart Site", "Schedule", "Eng & Proc", "EOT", "Risk", "Logistics", "4D Site", "4D / BIM", "Automation"],
   vtabs5: ["Activities", "Logs & Asite", "Engineering", "Procurement", "EOT"],
   lm: { names: { stage: "Stage", upd: "Since last update", eng: "Engineering", proc: "Procurement", eot: "EOT" }, updS: "since last update", plan: "plan",
     upd: { ahead: "Ahead of plan", on: "Progressing", behind: "Behind plan", stalled: "No progress", idle: "Not started / done" },
@@ -1861,7 +1886,7 @@ Object.assign(T.ar, {
   pgE: "الملخص التنفيذي", pgEs: "للإدارة العليا: الحالة، الفلوس، التواريخ، المخاطر والقرارات",
   pgP: "الهندسة والمشتريات", pgPs: "الشوب دروينج والاعتمادات والمواد طويلة التوريد مربوطة بالفلل",
   pgC: "الـ EOT والمطالبات", pgCs: "أحداث التأخير، الإشعارات، الاستحقاق وتأثيرها على المدة",
-  pgShort: ["الملخص التنفيذي", "نظرة عامة", "الموقع الذكي", "الجدول", "هندسة ومشتريات", "EOT", "المخاطر", "اللوجستيات", "4D / BIM", "الأتمتة"],
+  pgShort: ["الملخص التنفيذي", "نظرة عامة", "الموقع الذكي", "الجدول", "هندسة ومشتريات", "EOT", "المخاطر", "اللوجستيات", "4D الموقع", "4D / BIM", "الأتمتة"],
   vtabs5: ["الأنشطة", "اليوميات وAsite", "الهندسة", "المشتريات", "EOT"],
   lm: { names: { stage: "المرحلة", upd: "من آخر تحديث", eng: "الهندسة", proc: "المشتريات", eot: "EOT" }, updS: "من آخر تحديث", plan: "المخطط",
     upd: { ahead: "أسرع من المخطط", on: "بيتقدم", behind: "متأخر عن المخطط", stalled: "مفيش تقدم", idle: "لم يبدأ / انتهى" },
@@ -2719,6 +2744,228 @@ renderBim = function () {
 };
 
 /* =========================================================
+   4D SITE: the whole master plan built from the schedule
+   ========================================================= */
+let s4mode = "stage", s4play = null, s4cl = -1;
+Object.assign(T.en, {
+  "s4.title": "4D site model by week", "s4.cl": "Progress by cluster", "s4.cln": "actual vs plan at the selected week", "s4.ev": "Stage changes",
+  pgS4: "4D Site", pgS4s: "The whole master plan built from the P6 schedule, week by week",
+  s4: { title: "4D site model by week", modes: { stage: "Stage", real: "Realistic", var: "Plan vs actual" }, cl: "Progress by cluster", cln: "actual vs plan at the selected week", ev: "Stage changes", evn: "last 4 weeks", t: ["Handed over", "Under construction", "Active cranes", "Progress vs plan"], plan: "plan", vr: { ahead: "Ahead of plan", on: "On plan", behind: "Behind", late: "Well behind", none: "Not started" }, click: "Click to open the villa 4D", type: "Type", act: "Actual", var: "Variance", none: "No stage changes in the last 4 weeks.", lgReal: ["Excavation", "Foundations", "Frame", "Blockwork", "Plaster", "Handed over"] },
+});
+Object.assign(T.ar, {
+  "s4.title": "نموذج 4D للموقع حسب الأسبوع", "s4.cl": "التقدم حسب الكلستر", "s4.cln": "الفعلي مقابل المخطط في الأسبوع المختار", "s4.ev": "تغييرات المراحل",
+  pgS4: "4D الموقع", pgS4s: "الماستر بلان كله بيتبني من جدول P6 أسبوع بأسبوع",
+  s4: { title: "نموذج 4D للموقع حسب الأسبوع", modes: { stage: "المرحلة", real: "واقعي", var: "المخطط مقابل الفعلي" }, cl: "التقدم حسب الكلستر", cln: "الفعلي مقابل المخطط في الأسبوع المختار", ev: "تغييرات المراحل", evn: "آخر 4 أسابيع", t: ["تم تسليمها", "تحت الإنشاء", "أوناش شغالة", "التقدم مقابل المخطط"], plan: "المخطط", vr: { ahead: "متقدم عن المخطط", on: "حسب المخطط", behind: "متأخر", late: "متأخر جدًا", none: "لم يبدأ" }, click: "اضغط لفتح الـ 4D للفيلا", type: "نوع", act: "الفعلي", var: "الفرق", none: "مفيش تغيير مراحل في آخر 4 أسابيع.", lgReal: ["حفر", "أساسات", "هيكل", "مباني", "لياسة", "تم التسليم"] },
+});
+const SC4 = 0.98;
+const iso4 = (x, y, z) => [480 + ((x - CX) - (y - CY)) * 0.866 * SC4, 290 + ((x - CX) + (y - CY)) * 0.5 * SC4 - z * SC4];
+const p4 = (arr) => arr.map((q) => q[0].toFixed(1) + "," + q[1].toFixed(1)).join(" ");
+function footPts(str) {
+  const out = []; let x = 0, y = 0; const tk = str.match(/[MhvzHV]|-?\d+(\.\d+)?/g); let i = 0;
+  while (i < tk.length) { const c = tk[i++]; if (c === "M") { x = +tk[i++]; y = +tk[i++]; out.push([x, y]); } else if (c === "h") { x += +tk[i++]; out.push([x, y]); } else if (c === "v") { y += +tk[i++]; out.push([x, y]); } }
+  if (out.length > 1 && out[0][0] === out[out.length - 1][0] && out[0][1] === out[out.length - 1][1]) out.pop();
+  return out;
+}
+const FOOTP = FOOT.map(footPts);
+function toPlan(n, pts) { const P = PLACES[n], a = (P.rot * Math.PI) / 180, c = Math.cos(a), s = Math.sin(a); return pts.map(([x, y]) => [P.x + x * c - y * s, P.y + x * s + y * c]); }
+function shade(hex, f) { const h = hex.replace("#", ""), n = parseInt(h.length === 3 ? h.split("").map((q) => q + q).join("") : h, 16); const r = Math.min(255, Math.round(((n >> 16) & 255) * f)), g = Math.min(255, Math.round(((n >> 8) & 255) * f)), b = Math.min(255, Math.round((n & 255) * f)); return `rgb(${r},${g},${b})`; }
+function prism(pl, z0, z1, top, side, op) {
+  // extruded plan polygon: visible side walls (facing the viewer) then the roof
+  let area = 0; pl.forEach((a, i) => { const b = pl[(i + 1) % pl.length]; area += a[0] * b[1] - b[0] * a[1]; });
+  const sgn = area > 0 ? 1 : -1, faces = [];
+  pl.forEach((a, i) => { const b = pl[(i + 1) % pl.length], dx = b[0] - a[0], dy = b[1] - a[1], nx = dy * sgn, ny = -dx * sgn, L0 = Math.hypot(nx, ny) || 1; if (nx + ny <= 0) return; const lit = 0.62 + 0.36 * Math.max(0, (nx * 0.2 + ny * 0.98) / L0); faces.push([a[0] + a[1] + b[0] + b[1], a, b, lit]); });
+  faces.sort((p, q) => p[0] - q[0]);
+  let g = "";
+  faces.forEach(([, a, b, lit]) => { g += `<polygon points="${p4([iso4(a[0], a[1], z0), iso4(b[0], b[1], z0), iso4(b[0], b[1], z1), iso4(a[0], a[1], z1)])}" fill="${shade(side, lit)}" stroke="rgba(0,0,0,.25)" stroke-width=".4"${op ? ` opacity="${op}"` : ""}/>`; });
+  g += `<polygon points="${p4(pl.map(([x, y]) => iso4(x, y, z1)))}" fill="${top}" stroke="rgba(0,0,0,.22)" stroke-width=".4"${op ? ` opacity="${op}"` : ""}/>`;
+  return g;
+}
+function ell4(cx, cy, rx, ry, z, n0 = 72) { const o = []; for (let k = 0; k < n0; k++) { const a = (k / n0) * Math.PI * 2; o.push(iso4(cx + rx * Math.cos(a), cy + ry * Math.sin(a), z)); } return o; }
+function s4var(v, n) { const st = stageAt(v, week); if (!st) return "none"; const d0 = vPct(v, week, v.ends) - vPct(v, week, PLAN_ENDS[n]); return d0 > 3 ? "ahead" : d0 >= -3 ? "on" : d0 >= -10 ? "behind" : "late"; }
+const S4VAR = { ahead: "#3aa76d", on: "#3987e5", behind: "#e2a33a", late: "#d25b5b", none: "#3a4048" };
+const S4REAL = { 1: "#5a4a35", 2: "#9aa1a8", 3: "#c3c8cd", 4: "#b0aa9f", 5: "#b0aa9f", 6: "#e6dccb", 7: "#f1ebe0" };
+/* one villa on the 4D site, built element by element in construction order */
+const cen = (pl) => [pl.reduce((a, q) => a + q[0], 0) / pl.length, pl.reduce((a, q) => a + q[1], 0) / pl.length];
+function visEdges(pl) {
+  let area = 0; pl.forEach((a, i) => { const b = pl[(i + 1) % pl.length]; area += a[0] * b[1] - b[0] * a[1]; });
+  const sgn = area > 0 ? 1 : -1, out = [];
+  pl.forEach((a, i) => { const b = pl[(i + 1) % pl.length], dx = b[0] - a[0], dy = b[1] - a[1], nx = dy * sgn, ny = -dx * sgn, L0 = Math.hypot(nx, ny) || 1; if (nx + ny <= 0) return; out.push({ a, b, d: a[0] + a[1] + b[0] + b[1], lit: 0.62 + 0.36 * Math.max(0, (nx * 0.2 + ny * 0.98) / L0), len: Math.hypot(dx, dy) }); });
+  return out.sort((p, q) => p.d - q.d);
+}
+const quad = (a, b, z0, z1, fill, extra = "") => `<polygon points="${p4([iso4(a[0], a[1], z0), iso4(b[0], b[1], z0), iso4(b[0], b[1], z1), iso4(a[0], a[1], z1)])}" fill="${fill}" ${extra}/>`;
+const lerp2 = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+function colPts(pl) {
+  const c = cen(pl), out = [];
+  pl.forEach((a, i) => { const b = pl[(i + 1) % pl.length]; out.push(a); const L0 = Math.hypot(b[0] - a[0], b[1] - a[1]); if (L0 > 16) out.push(lerp2(a, b, 0.5)); });
+  return out.map(([x, y]) => { const dx = c[0] - x, dy = c[1] - y, L0 = Math.hypot(dx, dy) || 1; return [x + dx / L0 * 1.6, y + dy / L0 * 1.6]; }).sort((p, q) => (p[0] + p[1]) - (q[0] + q[1]));
+}
+const sq = ([x, y], r) => [[x - r, y - r], [x + r, y - r], [x + r, y + r], [x - r, y + r]];
+function villa4(n, v, st, pv, varC) {
+  const ty = VTYPE(n), fp = toPlan(n, FOOTP[ty]);
+  const core = ty === 2 ? fp : toPlan(n, ty === 0 ? [[-15, -19], [15, -19], [15, -1], [-15, -1]] : [[-17, -18], [17, -18], [17, 2], [-17, 2]]);
+  // element colour: by activity (stage mode), by material (realistic) or by plan variance
+  const C = (k, real) => (s4mode === "stage" ? STG_VIR[k] : s4mode === "var" ? varC : real);
+  const at = (k, t) => st > k || (st === k && pv > t);
+  let h = "";
+  if (!st) return `<polygon points="${p4(fp.map(([x, y]) => iso4(x, y, 0.3)))}" fill="none" stroke="rgba(127,212,255,.3)" stroke-width=".6" stroke-dasharray="2 2"/>`;
+  const c0 = cen(fp);
+  // 1 excavation: the pit opens with progress, excavator on the edge
+  if (st <= 2) {
+    const s0 = st === 1 ? 0.35 + 0.75 * pv : 1.1;
+    const pit = fp.map(([x, y]) => [c0[0] + (x - c0[0]) * s0, c0[1] + (y - c0[1]) * s0]);
+    h += `<polygon points="${p4(pit.map(([x, y]) => iso4(x, y, 0.25)))}" fill="${s4mode === "real" ? "#3e3326" : shade(C(1, "#5a4a35"), 0.7)}" stroke="rgba(0,0,0,.3)" stroke-width=".5"/>`;
+    if (st === 1) { const P = PLACES[n], m0 = iso4(P.x + 12, P.y + 14, 0); h += `<g transform="translate(${m0[0]} ${m0[1]})"><rect x="-4" y="-3" width="8" height="3" rx="1" fill="#2a2a2a"/><rect x="-3.5" y="-6.5" width="6" height="3.6" rx=".6" fill="#f2b324"/><path d="M-1 -5 L-8 -11 L-12 -5" stroke="#e0a21a" stroke-width="1.4" fill="none"/></g>`; return h; }
+  }
+  // 2 foundations: blinding, then pad footings one by one, then tie beams
+  const cps = colPts(fp);
+  if (st === 2) {
+    if (pv > 0.02) h += `<polygon points="${p4(fp.map(([x, y]) => iso4(x, y, 0.3)))}" fill="${C(2, "#8f949a")}" opacity=".55"/>`;
+    const nF = Math.round(cps.length * Math.min(1, Math.max(0, (pv - 0.15) / 0.5)));
+    cps.forEach((q, i) => { if (i < nF) h += prism(sq(q, 2.4), 0.3, 1.6, C(2, "#a3aab1"), C(2, "#868d95")); else h += `<polygon points="${p4(sq(q, 2.4).map(([x, y]) => iso4(x, y, 0.35)))}" fill="none" stroke="#a87444" stroke-width=".5"/>`; });
+    if (pv > 0.7) visEdges(fp).forEach((e) => { h += quad(e.a, e.b, 0.3, 1.4, shade(C(2, "#9aa1a8").startsWith("#") ? C(2, "#9aa1a8") : "#9aa1a8", e.lit)); });
+    cps.forEach((q) => { if (pv > 0.2) { const a = iso4(q[0], q[1], 1.6), b = iso4(q[0], q[1], 4); h += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#b5562a" stroke-width=".7"/>`; } });
+    return h;
+  }
+  // 3 structure: ground slab, GF columns, FF slab (formwork first), FF columns, roof slab
+  const conc = (k) => C(k, "#c3c8cd"), H1 = 9, H2 = 18;
+  h += prism(fp, 0.2, 0.9, conc(3), conc(3));
+  const gfCol = st > 3 ? 1 : Math.min(1, Math.max(0, (pv - 0.08) / 0.3));
+  const ffSlab = at(3, 0.42), ffForm = st === 3 && pv > 0.36 && pv <= 0.42;
+  const ffCol = st > 3 ? 1 : Math.min(1, Math.max(0, (pv - 0.5) / 0.3)), roof = at(3, 0.84), roofForm = st === 3 && pv > 0.78 && pv <= 0.84;
+  const gfWall = st > 4 ? 1 : st === 4 ? Math.min(1, pv * 2) : 0, ffWall = st > 4 ? 1 : st === 4 ? Math.max(0, pv * 2 - 1) : 0;
+  const plaster = st > 6 ? 1 : st === 6 ? pv : 0, glazed = st === 7 || (st === 6 && pv > 0.5);
+  const wallC = (k, e, idx, tot) => { const pl = plaster > 0 && idx < Math.ceil(tot * plaster); if (s4mode === "real") return shade(pl ? (st === 7 ? "#f1ebe0" : "#e6dccb") : "#b0aa9f", e.lit); return shade(pl ? C(6, "#e6dccb") : C(4, "#b0aa9f"), e.lit); };
+  const drawCols = (pl, z0, z1, frac) => { if (frac <= 0) return ""; let g0 = ""; colPts(pl).forEach((q) => { g0 += prism(sq(q, 1.1), z0, z0 + (z1 - z0) * frac, conc(3), conc(3)); }); return g0; };
+  const drawWalls = (pl, z0, fill, offset) => {
+    if (fill <= 0) return "";
+    const es = visEdges(pl); let g0 = "";
+    es.forEach((e, i) => {
+      const top = z0 + (H1 - 0.9) * fill;
+      g0 += quad(e.a, e.b, z0, top, wallC(4, e, i + offset, es.length * 2), `stroke="rgba(0,0,0,.25)" stroke-width=".35"`);
+      if (s4mode === "real" && st === 4 && fill < 1) for (let z = z0 + 1; z < top; z += 1.2) { const a = iso4(e.a[0], e.a[1], z), b = iso4(e.b[0], e.b[1], z); g0 += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="rgba(0,0,0,.12)" stroke-width=".3"/>`; }
+      // window openings once the wall has risen past them
+      const nw = Math.floor(e.len / 11);
+      for (let k = 0; k < nw; k++) {
+        const t0 = (k + 0.5) / nw - 2.6 / e.len, t1 = (k + 0.5) / nw + 2.6 / e.len, w0 = z0 + 2.6, w1 = z0 + 6.4;
+        if (top < w1) continue;
+        const a = lerp2(e.a, e.b, t0), b = lerp2(e.a, e.b, t1);
+        g0 += quad(a, b, w0, w1, glazed ? (s4mode === "real" ? "#4f86ab" : "#7fb3d6") : "#1d1f22", glazed ? `stroke="#eef1f3" stroke-width=".35"` : "");
+      }
+    });
+    return g0;
+  };
+  h += drawCols(fp, 0.9, H1, gfCol);
+  h += drawWalls(fp, 0.9, gfWall, 0);
+  if (ffForm) { h += `<polygon points="${p4(fp.map(([x, y]) => iso4(x, y, H1)))}" fill="#8b6a43" opacity=".55" stroke="#a87444" stroke-width=".4"/>`; colPts(fp).forEach((q) => { const a = iso4(q[0], q[1], 0.9), b = iso4(q[0], q[1], H1); h += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#8b6a43" stroke-width=".4"/>`; }); }
+  if (ffSlab) h += prism(fp, H1, H1 + 0.8, conc(3), conc(3));
+  h += drawCols(core, H1 + 0.8, H2, ffSlab ? ffCol : 0);
+  h += drawWalls(core, H1 + 0.8, ffWall, visEdges(fp).length);
+  if (roofForm) h += `<polygon points="${p4(core.map(([x, y]) => iso4(x, y, H2)))}" fill="#8b6a43" opacity=".55" stroke="#a87444" stroke-width=".4"/>`;
+  if (roof) h += prism(core, H2, H2 + 0.8, conc(3), conc(3));
+  // parapet and coping (finishes), roof plant (MEP), solar at handover
+  if (roof && (st === 7 || (st === 6 && pv > 0.3))) { const pc = C(6, st === 7 ? "#f6f1e7" : "#e6dccb"); core.forEach((a, i) => { const b = core[(i + 1) % core.length]; h += quad(a, b, H2 + 0.8, H2 + 2, shade(pc.startsWith("#") ? pc : "#e6dccb", 0.85), `stroke="rgba(0,0,0,.2)" stroke-width=".3"`); }); }
+  if (at(5, 0.3)) { const cc = cen(core), mc = C(5, "#d9dde1"); h += prism(sq([cc[0] - 5, cc[1] - 3], 1.8), H2 + 0.8, H2 + 2.6, mc, mc) + prism(sq([cc[0] + 1, cc[1] - 3], 1.8), H2 + 0.8, H2 + 2.6, mc, mc) + prism(sq([cc[0] + 5, cc[1] + 3], 1.5), H2 + 0.8, H2 + 3.4, C(5, "#eef1f3"), C(5, "#c9ced3")); }
+  if (st === 7 && s4mode === "real") { const cc = cen(core), sp = [[cc[0] - 6, cc[1] + 2], [cc[0] - 1, cc[1] + 2], [cc[0] - 1, cc[1] + 6], [cc[0] - 6, cc[1] + 6]]; h += `<polygon points="${p4(sp.map(([x, y]) => iso4(x, y, H2 + 1.2)))}" fill="#1e3e63" stroke="#7fa9c6" stroke-width=".3"/>`; }
+  // scaffold with netting while the walls are worked on
+  if (st >= 4 && st <= 6 && s4mode === "real") { const e = visEdges(fp).slice(-1)[0]; if (e) h += quad(lerp2(e.a, e.b, 0), lerp2(e.a, e.b, 0.45), 0.2, H2 + 1, "rgba(46,125,74,.35)", `stroke="#8a96a3" stroke-width=".3"`); }
+  // handover: pool, lawn and boundary wall
+  if (st >= 6) { const pool = toPlan(n, [[-9, 11], [9, 11], [9, 19], [-9, 19]]); h += `<polygon points="${p4(pool.map(([x, y]) => iso4(x, y, 0.4)))}" fill="${st === 7 ? (s4mode === "real" ? "#2d8fbf" : C(7, "#2d8fbf")) : "none"}" stroke="${st === 7 ? "#7fd4ff" : "rgba(127,212,255,.4)"}" stroke-width=".5" stroke-dasharray="${st === 7 ? 0 : "2 2"}"/>`; }
+  if (st === 7 && s4mode === "real") { const lot = toPlan(n, [[-22, -25], [22, -25], [22, 25], [-22, 25]]); visEdges(lot).forEach((e) => { h += quad(e.a, e.b, 0.2, 1.6, shade("#efe6d6", e.lit)); }); const tp = toPlan(n, [[16, 18]])[0], t0 = iso4(tp[0], tp[1], 0); h += `<line x1="${t0[0]}" y1="${t0[1]}" x2="${t0[0]}" y2="${t0[1] - 9}" stroke="#7a5a3a" stroke-width=".9"/><ellipse cx="${t0[0]}" cy="${t0[1] - 10}" rx="3.4" ry="2.2" fill="#3f8a50"/>`; }
+  return h;
+}
+function renderS4() {
+  const D = d(), S = D.s4, svg = $("#s4iso");
+  let g = `<defs><linearGradient id="s4sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f1a26"/><stop offset="1" stop-color="#151b20"/></linearGradient><radialGradient id="s4lag" cx="45%" cy="40%" r="70%"><stop offset="0" stop-color="#3a9cc8"/><stop offset="1" stop-color="#174b66"/></radialGradient></defs>`;
+  g += `<rect width="960" height="600" fill="url(#s4sky)"/>`;
+  for (let k = 0; k < 50; k++) g += `<circle cx="${(k * 131) % 960}" cy="${120 + (k * 47) % 110}" r="${k % 6 ? .6 : 1}" fill="rgba(255,255,255,${k % 3 ? .15 : .3})"/>`;
+  // site slab with thickness
+  const BND = [[40, 70], [60, 30], [170, 22], [430, 18], [540, 24], [572, 110], [582, 430], [560, 530], [440, 546], [160, 548], [50, 535], [24, 420]];
+  g += prism(BND, -10, 0, "#171b17", "#2a2f2a");
+  // ring road, sidewalks, boulevard
+  g += `<polygon points="${p4(ell4(CX, CY, RING.rx + 14, RING.ry + 14, 0))}" fill="#2b3038"/><polygon points="${p4(ell4(CX, CY, RING.rx + 12, RING.ry + 12, 0))}" fill="#22262c"/><polygon points="${p4(ell4(CX, CY, RING.rx - 12, RING.ry - 12, 0))}" fill="#2b3038"/><polygon points="${p4(ell4(CX, CY, RING.rx - 14, RING.ry - 14, 0))}" fill="#171b17"/>`;
+  g += `<polyline points="${p4(ell4(CX, CY, RING.rx, RING.ry, 0.1, 96).concat([iso4(CX + RING.rx, CY, 0.1)]))}" fill="none" stroke="#5a6068" stroke-width=".8" stroke-dasharray="5 6"/>`;
+  g += `<polygon points="${p4([iso4(288, CY + RING.ry + 8, 0), iso4(312, CY + RING.ry + 8, 0), iso4(312, 548, 0), iso4(288, 548, 0)])}" fill="#22262c"/><polygon points="${p4([iso4(298, CY + RING.ry + 14, 0.1), iso4(302, CY + RING.ry + 14, 0.1), iso4(302, 546, 0.1), iso4(298, 546, 0.1)])}" fill="#1f4a2c"/>`;
+  g += `<polygon points="${p4([iso4(CX - 8, CY - RING.ry + 10, 0), iso4(CX + 8, CY - RING.ry + 10, 0), iso4(CX + 8, CY - 86, 0), iso4(CX - 8, CY - 86, 0)])}" fill="#22262c"/>`;
+  // central park and lagoon
+  g += `<polygon points="${p4(ell4(CX, CY + 4, 122, 92, 0.2))}" fill="#1d3a25"/><polygon points="${p4(ell4(CX - 4, CY + 4, 86, 54, 0.3))}" fill="url(#s4lag)"/><polyline points="${p4(ell4(CX - 4, CY + 4, 70, 42, 0.35, 40).slice(26, 36))}" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/>`;
+  g += prism([[CX - 26, CY - 116], [CX + 26, CY - 116], [CX + 26, CY - 86], [CX - 26, CY - 86]], 0, 9, "#4a515a", "#3a4048");
+  // painter's list: villas, trees and cranes sorted by depth
+  const items = [];
+  for (let k = 0; k < 56; k++) { const a = (k / 56) * Math.PI * 2; if (Math.abs(a - Math.PI / 2) < 0.12) continue; const x = CX + (RING.rx + (k % 2 ? 19 : -19)) * Math.cos(a), y = CY + (RING.ry + (k % 2 ? 17 : -17)) * Math.sin(a); items.push([x + y, "t", x, y]); }
+  VILLAS.forEach((v, n) => { const P = PLACES[n]; items.push([P.x + P.y, "v", n]); });
+  items.sort((a, b) => a[0] - b[0]);
+  let cranes = 0, under = 0, done = 0;
+  items.forEach((it) => {
+    if (it[1] === "t") { const [x, y] = [it[2], it[3]], b = iso4(x, y, 0), t = iso4(x, y, 7); g += `<line x1="${b[0]}" y1="${b[1]}" x2="${t[0]}" y2="${t[1]}" stroke="#5e4329" stroke-width="1"/><ellipse cx="${t[0]}" cy="${t[1] - 1}" rx="4.2" ry="3.2" fill="#2f6b3f"/><ellipse cx="${t[0] - 1}" cy="${t[1] - 2}" rx="2.2" ry="1.6" fill="#3f8a50"/>`; return; }
+    const n = it[2], v = VILLAS[n], st = stageAt(v, week), pv = st ? stProg(v, st, week, v.ends) : 0, ty = VTYPE(n);
+    const fp = toPlan(n, FOOTP[ty]), lot = toPlan(n, [[-22, -25], [22, -25], [22, 25], [-22, 25]]);
+    const dim = (FILT && !FILT.fn(v)) || (s4cl >= 0 && v.c !== s4cl);
+    if (st === 7) done++; else if (st) under++;
+    let h = `<polygon points="${p4(lot.map(([x, y]) => iso4(x, y, 0.2)))}" fill="${st === 7 ? "#1f3a26" : "#1f2329"}" stroke="#2b3038" stroke-width=".5"/>`;
+    const varC = S4VAR[s4var(v, n)], stg = st ? STG_VIR[st] : "#2a3038";
+    const top = (real) => (s4mode === "stage" ? stg : s4mode === "var" ? varC : real);
+    h += villa4(n, v, st, pv, varC);
+    if (st === 3) {
+      // tower crane with a slewing jib
+      const P = PLACES[n], cp = [P.x + (P.out ? 18 : -18) * 0.6, P.y - 20], b = iso4(cp[0], cp[1], 0), t = iso4(cp[0], cp[1], 34), ang = ((n * 47 + week * 23) % 360) * Math.PI / 180, j = iso4(cp[0] + 30 * Math.cos(ang), cp[1] + 30 * Math.sin(ang), 34), cj = iso4(cp[0] - 10 * Math.cos(ang), cp[1] - 10 * Math.sin(ang), 34);
+      h += `<line x1="${b[0]}" y1="${b[1]}" x2="${t[0]}" y2="${t[1]}" stroke="#e3a21a" stroke-width="1.6"/><line x1="${cj[0]}" y1="${cj[1]}" x2="${j[0]}" y2="${j[1]}" stroke="#e3a21a" stroke-width="1.3"/><rect x="${cj[0] - 2}" y="${cj[1] - 1}" width="4" height="3" fill="#555"/><line x1="${j[0]}" y1="${j[1]}" x2="${j[0]}" y2="${j[1] + 9}" stroke="#888" stroke-width=".5"/>`;
+      cranes++;
+    }
+    if (n === sel) { const P = PLACES[n], t = iso4(P.x, P.y, st >= 4 ? 24 : st === 3 ? 22 : 8); h += `<g><rect x="${t[0] - 15}" y="${t[1] - 16}" width="30" height="12" rx="6" fill="#f5a524"/><text x="${t[0]}" y="${t[1] - 7}" text-anchor="middle" style="font-size:8px;font-weight:700;fill:#120c02">${v.id}</text><path d="M${t[0] - 3} ${t[1] - 4} l3 4 l3 -4z" fill="#f5a524"/></g>`; }
+    g += `<g class="v4" data-n="${n}" tabindex="0" role="button" aria-label="Villa ${v.id}" style="opacity:${dim ? .14 : 1}">${h}</g>`;
+  });
+  // cluster labels
+  [["A", 480, 70], ["B", 120, 70], ["C", 110, 520], ["D", 490, 520]].forEach(([L0, x, y], c) => { const p = iso4(x, y, 0); g += `<g class="s4lab" data-c="${c}" style="cursor:pointer"><rect x="${p[0] - 32}" y="${p[1] - 10}" width="64" height="15" rx="7" fill="${s4cl === c ? "#f5a524" : "rgba(10,11,13,.75)"}" stroke="#3a3f47"/><text x="${p[0]}" y="${p[1] + 1}" text-anchor="middle" style="font-size:9px;fill:${s4cl === c ? "#120c02" : "#c3c2b7"}">${esc(D.cl)} ${L0}</text></g>`; });
+  const gt = iso4(300, 552, 0); g += `<text x="${gt[0]}" y="${gt[1] + 12}" text-anchor="middle" style="font-size:8.5px;fill:#c3c2b7">MAIN GATE</text>`;
+  let vb = [78, 118, 806, 456];
+  if (s4cl >= 0) { const P0 = VILLAS.map((x, i) => [x, i]).filter(([x]) => x.c === s4cl).map(([, i]) => [iso4(PLACES[i].x, PLACES[i].y, 0), iso4(PLACES[i].x, PLACES[i].y, 24)]).flat(); const x0 = Math.min(...P0.map((q) => q[0])) - 40, x1 = Math.max(...P0.map((q) => q[0])) + 40, y0 = Math.min(...P0.map((q) => q[1])) - 40, y1 = Math.max(...P0.map((q) => q[1])) + 30; let w0 = x1 - x0, h0 = y1 - y0; if (w0 / h0 < 806 / 456) w0 = h0 * 806 / 456; else h0 = w0 * 456 / 806; vb = [(x0 + x1) / 2 - w0 / 2, (y0 + y1) / 2 - h0 / 2, w0, h0]; }
+  svg.setAttribute("viewBox", vb.map((q) => q.toFixed(1)).join(" "));
+  g += `<g transform="translate(${vb[0] + 14 * vb[2] / 806} ${vb[1] + 10 * vb[2] / 806}) scale(${vb[2] / 806})"><rect width="196" height="40" rx="9" fill="rgba(10,11,13,.72)" stroke="rgba(236,235,230,.14)"/><text x="12" y="17" style="font-family:var(--f-display);font-size:12.5px;font-weight:700;fill:#ecebe6">${esc(D.wk)} ${week} · ${ltr(wkDate(week))}</text><text x="12" y="31" style="font-family:var(--f-mono);font-size:9.5px;fill:#c3c2b7">${esc(S.act)} ${ltr(ACT_CURVE[week].toFixed(1) + "%")} · ${esc(S.plan)} ${ltr(PLAN_CURVE[week].toFixed(1) + "%")}</text></g>`;
+  svg.innerHTML = g;
+  // hover and click
+  const tip = $("#s4tip"), card = $("#s4card");
+  svg.querySelectorAll(".v4").forEach((el) => {
+    const n = +el.dataset.n, v = VILLAS[n];
+    el.onpointermove = (e) => { const st = stageAt(v, week), a = vPct(v, week, v.ends), pl = vPct(v, week, PLAN_ENDS[n]), vr = s4var(v, n); tip.innerHTML = `<b>Villa ${v.id} · ${esc(S.type)} ${"ABC"[VTYPE(n)]}</b><div><i style="background:${st ? STG_VIR[st] : "#3a3f47"}"></i>${esc(D.stages[st])}</div><div>${esc(S.act)} ${a.toFixed(0)}% · ${esc(S.plan)} ${pl.toFixed(0)}%</div><div><i style="background:${S4VAR[vr]}"></i>${esc(S.vr[vr])}</div><div style="color:var(--amber-ink)">${esc(S.click)}</div>`; placeTip(tip, card, e); };
+    el.onpointerleave = () => tip.classList.remove("on");
+    el.onclick = (e) => { e.stopPropagation(); stopS4(); sel = n; photoSel = -1; BPIN = 0; go("bim"); };
+    el.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.onclick(e); } };
+  });
+  svg.querySelectorAll(".s4lab").forEach((el) => el.onclick = (e) => { e.stopPropagation(); s4cl = s4cl === +el.dataset.c ? -1 : +el.dataset.c; renderS4(); });
+  $("#s4wk").value = week; $("#s4wko").textContent = `${D.wk} ${week} · ${ltr(wkDate(week))}`;
+  $("#s4modes").innerHTML = Object.keys(S.modes).map((m) => `<button type="button" aria-pressed="${m === s4mode}" data-m="${m}">${esc(S.modes[m])}</button>`).join("");
+  $("#s4modes").querySelectorAll("button").forEach((b) => b.onclick = (e) => { e.stopPropagation(); s4mode = b.dataset.m; renderS4(); });
+  // legend for the mode
+  if (s4mode === "stage") { const cnt = Array(8).fill(0); VILLAS.forEach((v) => cnt[stageAt(v, week)]++); $("#s4lg").innerHTML = D.stages.map((s0, k) => `<span><i class="box" style="background:${k ? STG_VIR[k] : "transparent"};border:1px solid ${k ? "transparent" : "#3a3f47"}"></i>${esc(s0)} <span class="stg-count">${cnt[k]}</span></span>`).join(""); }
+  else if (s4mode === "var") { const cnt = {}; VILLAS.forEach((v, n) => { const k = s4var(v, n); cnt[k] = (cnt[k] || 0) + 1; }); $("#s4lg").innerHTML = Object.keys(S4VAR).map((k) => `<span><i class="box" style="background:${S4VAR[k]}"></i>${esc(S.vr[k])} <span class="stg-count">${cnt[k] || 0}</span></span>`).join(""); }
+  else $("#s4lg").innerHTML = [["#5a4a35", 0], ["#9aa1a8", 1], ["#c3c8cd", 2], ["#b0aa9f", 3], ["#e6dccb", 4], ["#f1ebe0", 5]].map(([c, i]) => `<span><i class="box" style="background:${c}"></i>${esc(S.lgReal[i])}</span>`).join("") + `<span><i class="box" style="background:#e3a21a"></i>${esc(S.t[2])} ${cranes}</span>`;
+  // KPI tiles
+  const act = ACT_CURVE[week], pl = PLAN_CURVE[week], dv = act - pl;
+  const tiles = [[`${done} / 48`, S.t[0], done ? "good" : "warn"], [String(under), S.t[1], "good"], [String(cranes), S.t[2], cranes > 10 ? "warn" : "good"], [`${dv >= 0 ? "+" : ""}${dv.toFixed(1)}%`, S.t[3], dv >= -1 ? "good" : dv >= -4 ? "warn" : "serious"]];
+  $("#s4tiles").innerHTML = tiles.map(([v0, l, st]) => `<div class="tile"><small>${esc(l)}</small><b>${ltr(v0)}</b>${statusHTML(st)}</div>`).join("");
+  // progress by cluster (actual bar, plan marker)
+  $("#s4cl").innerHTML = [0, 1, 2, 3].map((c) => { const vs = VILLAS.map((v, i) => [v, i]).filter(([v]) => v.c === c), a = vs.reduce((s0, [v]) => s0 + vPct(v, week, v.ends), 0) / vs.length, p = vs.reduce((s0, [v, i]) => s0 + vPct(v, week, PLAN_ENDS[i]), 0) / vs.length, col = a - p >= -3 ? "var(--s1)" : a - p >= -10 ? "var(--warn)" : "var(--crit)"; return `<div class="gd-row s4c${s4cl === c ? " picked" : ""}" data-c="${c}"><span class="nm">${esc(D.cl)} ${"ABCD"[c]}<small>${esc(S.act)} ${a.toFixed(0)}% · ${esc(S.plan)} ${p.toFixed(0)}%</small></span><div class="gd-track"><div class="gd-bar" style="left:0;width:${a}%;background:${col}"></div><div class="gd-now" style="left:${p}%;background:var(--ink);box-shadow:none"></div></div></div>`; }).join("");
+  $("#s4cl").classList.toggle("has-pick", s4cl >= 0);
+  $("#s4cl").querySelectorAll(".s4c").forEach((r) => r.onclick = (e) => { e.stopPropagation(); s4cl = s4cl === +r.dataset.c ? -1 : +r.dataset.c; renderS4(); });
+  // stage changes in the last four weeks
+  const ch = [];
+  VILLAS.forEach((v, n) => { for (let w0 = Math.max(1, week - 3); w0 <= week; w0++) { const a = stageAt(v, w0 - 1), b = stageAt(v, w0); if (b > a) ch.push([w0, n, a, b]); } });
+  ch.sort((a, b) => b[0] - a[0] || a[1] - b[1]);
+  $("#s4evn").textContent = `${S.evn} · ${ch.length}`;
+  $("#s4ev").innerHTML = ch.slice(0, 14).map(([w0, n, a, b]) => `<div class="rec s4e" data-n="${n}"><span class="tag" style="border-color:${STG_VIR[b]};color:var(--ink-2)"><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${STG_VIR[b]};margin-inline-end:5px"></i>${esc(D.stages[b])}</span><div><b>Villa ${VILLAS[n].id}</b><div class="m"><span>${esc(D.stages[a])} → ${esc(D.stages[b])}</span><span>${ltr(wkDate(w0))}</span></div></div></div>`).join("") || `<p class="note-s">${esc(S.none)}</p>`;
+  $("#s4ev").querySelectorAll(".s4e").forEach((r) => r.onclick = (e) => { e.stopPropagation(); sel = +r.dataset.n; renderS4(); });
+}
+function stopS4() { if (s4play) { clearInterval(s4play); s4play = null; $("#s4playic").innerHTML = '<path d="M4 2.5l9 5.5-9 5.5z"/>'; } }
+$("#s4wk").oninput = () => { week = +$("#s4wk").value; renderS4(); };
+$("#s4play").onclick = (e) => {
+  e.stopPropagation();
+  if (s4play) { stopS4(); return; }
+  if (week >= 80) week = 1;
+  $("#s4playic").innerHTML = '<path d="M4 2.5h3v11H4zM9 2.5h3v11H9z"/>';
+  s4play = setInterval(() => { if (page !== "s4d" || week >= 80) { stopS4(); return; } week++; renderS4(); }, 420);
+};
+
+/* =========================================================
    AUTOMATION PAGE
    ========================================================= */
 function renderAuto() {
@@ -2763,7 +3010,7 @@ function applyText() {
   $("#plegend").innerHTML = `<span><i class="box" style="background:var(--s2)"></i>${esc(D.p[0])}</span><span><i style="border-color:var(--ink);width:2px;height:12px;border-top:0;border-left:2px solid var(--ink)"></i>${esc(D.p[1])}</span>`;
   $("#mlegend").innerHTML = `<span><i class="box" style="background:var(--s3)"></i>${esc(D.m[0])}</span><span><i class="dash" style="border-color:var(--ink-2)"></i>${esc(D.m[1])}</span>`;
 }
-const PAGES = ["exec", "overview", "site", "schedule", "engproc", "eot", "risk", "logistics", "bim", "auto"];
+const PAGES = ["exec", "overview", "site", "schedule", "engproc", "eot", "risk", "logistics", "s4d", "bim", "auto"];
 const RELOAD = ((performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {}).type === "reload";
 let page = !RELOAD && PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "exec";   // a reload starts from the first page
 function renderTabs() {
@@ -2789,6 +3036,7 @@ function showPage(p) {
   if (p === "schedule") renderXer();
   if (p === "risk") { renderRisk(); if (!mcRes) runMC(); }
   if (p === "logistics") renderLogi();
+  if (p === "s4d") renderS4();
   if (p === "bim") renderBim();
   if (p === "auto") { renderAuto(); }
 }

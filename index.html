@@ -778,7 +778,7 @@ const T = {
     "s.kicker": "خدمات هندسية متكاملة", "s.title": "بنستقبل مشاريع جديدة",
     "s.sub": "نفس الخبرة اللي خططت مشاريع بمليارات، متاحة لمشروعك: من الاستشارة لحد التسليم.",
     "s.cta": "عندك مشروع؟ ابعت التفاصيل وهيوصلك عرض.", "s.btn": "اطلب عرض سعر",
-    "n.lab": "AI", "n.report": "الداشبورد", "rp.kicker": "تقرير حي · Power BI × كود", "rp.title": "داشبورد تقدر تقلب فيه بنفسك", "rp.sub": "تقرير بشكل Power BI بمقاس A4 عرضي، عشر صفحات لمشروع فلل واحد: الملخص التنفيذي، نظرة عامة، الموقع الذكي بالصور واليوميات وAsite، سلامة الجدول من XER، الهندسة والمشتريات، الـ EOT والمطالبات، مونت كارلو للمخاطر، اللوجستيات، 4D مع Revit، والأتمتة. اتعمل بربط Power BI بالكود. كل البيانات ديمو وهمية للعرض ومش بتمثل أي مشروع بشتغل عليه.", "rp.full": "افتحه بشاشة كاملة", "n.portfolio": "البورتفوليو", "lab.pf": "شوف البورتفوليو الكامل", "n.deck": "العرض", "lab.deck": "شوف البرزنتيشن",
+    "n.lab": "AI", "n.report": "الداشبورد", "rp.kicker": "تقرير حي · Power BI × كود", "rp.title": "داشبورد تقدر تقلب فيه بنفسك", "rp.sub": "تقرير بشكل Power BI بمقاس A4 عرضي، 11 صفحة لمشروع فلل واحد: الملخص التنفيذي، نظرة عامة، الموقع الذكي بالصور واليوميات وAsite، سلامة الجدول من XER، الهندسة والمشتريات، الـ EOT والمطالبات، مونت كارلو للمخاطر، اللوجستيات، 4D للموقع كله، 4D للفيلا مع Revit، والأتمتة. اتعمل بربط Power BI بالكود. كل البيانات ديمو وهمية للعرض ومش بتمثل أي مشروع بشتغل عليه.", "rp.full": "افتحه بشاشة كاملة", "n.portfolio": "البورتفوليو", "lab.pf": "شوف البورتفوليو الكامل", "n.deck": "العرض", "lab.deck": "شوف البرزنتيشن",
     "lab.kicker": "أتمتة · ذكاء اصطناعي · تعلم آلي", "lab.title": "برامج زمنية بتراجع نفسها.",
     "lab.sub": "ببني أدوات بتقرأ جداول Primavera P6 وتراجعها وتنبّه للتأخير قبل ما يظهر في التقرير. الأتمتة بتعمل الشغل المتكرر، والذكاء الاصطناعي بيلقط الإشارات، والمهندس بياخد القرار.",
     "lab.mTitle": "جرّب: نموذج مخاطر التأخير", "lab.mSub": "حرّك الإشارات اللي بتطلع من تحديث P6 وشوف الشبكة بتقرأها إزاي.",
@@ -832,7 +832,7 @@ const T = {
     "s.kicker": "Integrated engineering services", "s.title": "Now taking on projects",
     "s.sub": "The same experience that planned billion-dirham projects, available for yours, from consultancy to handover.",
     "s.cta": "Have a project? Send the details and get a proposal.", "s.btn": "Request a proposal",
-    "n.lab": "AI", "n.report": "Dashboard", "rp.kicker": "Live report · Power BI × Code", "rp.title": "A dashboard you can click through", "rp.sub": "A Power BI style report on an A4 landscape canvas, ten pages for one villa project: executive summary, overview, smart site with photos, diaries and Asite, schedule health from the XER, engineering and procurement, EOT and claims, Monte Carlo risk, logistics, 4D with Revit, and automation. Built by linking Power BI with code. All data is fictional demo data and does not represent any project I work on.", "rp.full": "Open full screen", "n.portfolio": "Portfolio", "lab.pf": "See the full portfolio", "n.deck": "Slides", "lab.deck": "Watch the presentation",
+    "n.lab": "AI", "n.report": "Dashboard", "rp.kicker": "Live report · Power BI × Code", "rp.title": "A dashboard you can click through", "rp.sub": "A Power BI style report on an A4 landscape canvas, eleven pages for one villa project: executive summary, overview, smart site with photos, diaries and Asite, schedule health from the XER, engineering and procurement, EOT and claims, Monte Carlo risk, logistics, 4D of the whole site, villa 4D with Revit, and automation. Built by linking Power BI with code. All data is fictional demo data and does not represent any project I work on.", "rp.full": "Open full screen", "n.portfolio": "Portfolio", "lab.pf": "See the full portfolio", "n.deck": "Slides", "lab.deck": "Watch the presentation",
     "lab.kicker": "Automation · AI · Machine learning", "lab.title": "Schedules that check themselves.",
     "lab.sub": "I build tools that read Primavera P6 schedules, check them and flag delay before it reaches the report. Automation does the repeat work, AI picks up the signals, and the engineer makes the call.",
     "lab.mTitle": "Try it: a delay-risk model", "lab.mSub": "Move the signals that come out of a P6 update and watch the network read them.",
@@ -1023,7 +1023,7 @@ function updateLab(d = T[lang]) {
 
 /* embedded report: size the frame to its content and keep the language in step */
 addEventListener("message", (e) => { const f = document.getElementById("pbiframe"); if (f && e.source === f.contentWindow && e.data && e.data.type === "pbi-height") f.style.height = Math.ceil(e.data.h) + "px"; });
-(function () { const f = document.getElementById("pbiframe"); if (!f) return; const set = () => { if (!f.style.height) f.style.height = Math.round(f.clientWidth * 990 / 1400 + 150) + "px"; }; set(); addEventListener("resize", () => { f.style.height = ""; set(); }); const vh = () => { try { const n = document.getElementById("nav"); f.contentWindow.postMessage({ type: "pbi-vh", h: innerHeight - (n ? n.offsetHeight : 0) - 24 }, "*"); } catch (err) {} }; addEventListener("resize", vh); f.addEventListener("load", () => { try { f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {} vh(); }); })();
+(function () { const f = document.getElementById("pbiframe"); if (!f) return; const set = () => { if (f.style.height) return; const n = document.getElementById("nav"), byW = f.clientWidth * 990 / 1400 + 150, byH = innerHeight - (n ? n.offsetHeight : 0) - 24; f.style.height = Math.round(f.clientWidth >= 680 ? Math.min(byW, Math.max(380, byH)) : byW) + "px"; }; set(); addEventListener("resize", () => { f.style.height = ""; set(); }); const vh = () => { try { const n = document.getElementById("nav"); f.contentWindow.postMessage({ type: "pbi-vh", h: innerHeight - (n ? n.offsetHeight : 0) - 24 }, "*"); } catch (err) {} }; addEventListener("resize", vh); f.addEventListener("load", () => { try { f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {} vh(); }); })();
 
 /* =====================================================================
    PAGE
@@ -1234,6 +1234,33 @@ onScrollProjects(); onScrollNav();
 })();
 document.fonts && document.fonts.ready.then(() => { layoutProjects(); onScrollProjects(); });
 
+/* ---------- land exactly on a section: clears the fixed header and keeps
+   re-aiming while lazy content above it (dashboard, images) settles ---------- */
+let landing = null;
+function landOn(el, instant) {
+  if (!el) return;
+  if (landing) landing();
+  const t0 = performance.now(), off = () => (($("#nav") || {}).offsetHeight || 0) + 14;
+  const target = () => Math.max(0, el.getBoundingClientRect().top + scrollY - off());
+  let alive = true, ro = null;
+  const evs = ["wheel", "touchstart", "keydown"];
+  const stop = () => { if (!alive) return; alive = false; if (ro) ro.disconnect(); evs.forEach((ev) => removeEventListener(ev, stop)); landing = null; };
+  evs.forEach((ev) => addEventListener(ev, stop, { passive: true }));
+  const aim = (now) => { if (!alive) return; const y = target(); if (window.__lenis) window.__lenis.scrollTo(y, now ? { immediate: true, force: true } : { force: true, duration: 1.1 }); else window.scrollTo({ top: y, behavior: now ? "instant" : "smooth" }); };
+  ro = new ResizeObserver(() => aim(instant || performance.now() - t0 > 1200)); ro.observe(document.body);
+  aim(instant);
+  [600, 1250, 1800, 2600, 3600].forEach((ms) => setTimeout(() => { if (alive && Math.abs(target() - scrollY) > 2) aim(true); }, ms));
+  setTimeout(stop, 4200);
+  landing = stop;
+}
+document.addEventListener("click", (e) => {
+  const a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+  const id = a.getAttribute("href"), el = id.length > 1 && document.getElementById(id.slice(1));
+  if (el) { e.preventDefault(); landOn(el, reduceMotion); }
+});
+// arriving from another page or a tool with #section in the link
+if (location.hash.length > 1) { const el0 = document.getElementById(location.hash.slice(1)); if (el0) { setTimeout(() => landOn(el0, true), 30); addEventListener("load", () => landOn(el0, true)); } }
+
 /* ---------- hero HUD: a live mini P6 programme ---------- */
 const HUD_ACTS = [["A1000", "BIM MODEL", 0, 0.24], ["A1200", "SUPERSTRUCTURE", 0.14, 0.62], ["A1400", "FACADE & MEP", 0.48, 0.9], ["M900", "HANDOVER", 0.95, 0.95]];
 $("#hud-rows").innerHTML = HUD_ACTS.map(([id, n, a, b]) => `<div class="hr${a === b ? " ms" : ""}"><em>${id}</em><span>${n}</span><div class="tr"><i class="hp" style="left:${a * 100}%;width:${(b - a) * 100}%"></i><i class="ha" style="left:${a * 100}%"></i><i class="hd"></i></div></div>`).join("");
@@ -1270,7 +1297,6 @@ if (!reduceMotion && !matchMedia("(pointer: coarse)").matches) {
     if (!window.Lenis) return;
     const l = new Lenis({ lerp: 0.085 }); window.__lenis = l;
     (function raf(t) { l.raf(t); requestAnimationFrame(raf); })(performance.now());
-    document.addEventListener("click", (e) => { const a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return; const id = a.getAttribute("href"), el = id.length > 1 && document.querySelector(id); if (el) { e.preventDefault(); l.scrollTo(el); } });
   };
   setTimeout(() => document.head.appendChild(s), 400);
 }
