@@ -1,0 +1,1815 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Project Controls Report · Siddek Mahmoud</title>
+<meta name="description" content="Auto-updating construction dashboards and reports: live S-curves, SPI and CPI, manpower, look-aheads and report packs that build themselves. All data shown is fictional demo data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a product brochure in the site's dark world. Hero with the demo-data notice,
+   then the live demo dashboard in an app frame, then the pipeline that feeds it, the
+   report that writes itself, what is included, how it is set up, and a call to action. */
+:root {
+  --bg: #0a0b0d; --bg-2: #111317; --panel: #15181d; --panel-2: #1b1f25;
+  --line: rgba(236,235,230,.12); --grid: #262a31; --axis: #3a3f47;
+  --ink: #ecebe6; --ink-2: #c3c2b7; --muted: #9b9b94;
+  --amber: #f5a524; --amber-ink: #f7b955; --cyan: #7fd4ff;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70;            /* planned, actual, third series */
+  --good: #0ca30c; --warn: #fab219; --serious: #ec835a; --crit: #d03b3b;
+  --f-display: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --f-sans: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --gutter: clamp(16px, 4vw, 56px);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-sans); line-height: 1.65; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3, h4 { margin: 0; font-family: var(--f-display); font-weight: 700; line-height: 1.12; text-wrap: balance; }
+html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3 { line-height: 1.3; }
+p { margin: 0; }
+.wrap { width: min(1320px, 100%); margin-inline: auto; padding-left: max(var(--gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--gutter), env(safe-area-inset-right, 0px)); }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.kicker { display: inline-flex; align-items: center; gap: .7rem; font-family: var(--f-mono); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber-ink); }
+.kicker::before { content: ""; width: 26px; height: 1px; background: currentColor; }
+.h2 { font-size: clamp(1.9rem, 4.6vw, 3.4rem); font-weight: 800; }
+.lead { color: var(--muted); font-size: 1.06rem; max-width: 42em; }
+.section { padding-block: clamp(4rem, 10vw, 7.5rem); }
+.head { display: grid; gap: .9rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.btn { display: inline-flex; align-items: center; gap: .55rem; padding: .78rem 1.35rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; text-decoration: none; font-weight: 600; cursor: pointer; transition: transform .25s var(--ease), border-color .25s; white-space: nowrap; }
+.btn:hover { transform: translateY(-2px); border-color: rgba(236,235,230,.3); }
+.btn.solid { background: var(--amber); border-color: var(--amber); color: #120c02; }
+.btn.wa { background: #1fae54; border-color: #1fae54; color: #fff; }
+
+/* top bar */
+.bar { position: sticky; top: 0; z-index: 30; background: rgba(10,11,13,.82); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 60px; }
+.bar nav { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.bar a, .bar button { font-family: var(--f-mono); font-size: .8rem; text-decoration: none; border: 1px solid var(--line); background: transparent; padding: .4rem .8rem; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.bar a:hover, .bar button:hover { border-color: var(--amber); color: var(--amber-ink); }
+.brand { display: flex; align-items: center; gap: .6rem; font-family: var(--f-display); font-weight: 700; }
+.brand i { width: 30px; height: 30px; border-radius: 50%; background: var(--amber); color: #120c02; display: grid; place-items: center; font-style: normal; font-weight: 800; font-size: .85rem; }
+@media (max-width: 640px) { .brand b, .bar .hide-sm { display: none; } }
+
+/* demo notice */
+.notice { display: flex; gap: .9rem; align-items: flex-start; padding: 1rem 1.2rem; border: 1px solid rgba(250,178,25,.45); background: rgba(250,178,25,.07); border-radius: 14px; font-size: .95rem; }
+.notice svg { width: 22px; height: 22px; flex: none; stroke: var(--warn); fill: none; stroke-width: 1.8; margin-top: .15rem; }
+.notice b { color: var(--warn); }
+
+/* hero */
+.hero { padding-block: clamp(3rem, 8vw, 6rem) clamp(2rem, 5vw, 3rem); display: grid; gap: 1.4rem; }
+.hero h1 { font-size: clamp(2.4rem, 7vw, 5.2rem); font-weight: 800; max-width: 15ch; }
+.hero h1 em { font-style: normal; color: var(--amber); }
+.hero .lead { font-size: clamp(1.02rem, 1.6vw, 1.2rem); color: var(--ink-2); }
+.cta { display: flex; gap: .7rem; flex-wrap: wrap; }
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chips span { font-family: var(--f-mono); font-size: .74rem; padding: .25rem .7rem; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); }
+
+/* app frame */
+.app { border: 1px solid var(--line); border-radius: 22px; background: var(--bg-2); overflow: hidden; box-shadow: 0 40px 120px rgba(0,0,0,.55), 0 0 0 1px rgba(245,165,36,.05); position: relative; }
+.app-top { display: flex; align-items: center; gap: 1rem; padding: .75rem 1rem; border-bottom: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; }
+.dots { display: flex; gap: 6px; direction: ltr; }
+.dots i { width: 11px; height: 11px; border-radius: 50%; background: #3a3f47; }
+.app-title { font-family: var(--f-display); font-weight: 700; font-size: .98rem; }
+.app-meta { margin-inline-start: auto; display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; font-family: var(--f-mono); font-size: .74rem; color: var(--muted); }
+.pill { display: inline-flex; align-items: center; gap: .4rem; padding: .22rem .6rem; border-radius: 999px; border: 1px solid var(--line); }
+.pill.demo { color: #120c02; background: var(--warn); border-color: var(--warn); font-weight: 600; letter-spacing: .08em; }
+.live { width: 8px; height: 8px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 0 rgba(12,163,12,.6); }
+.syncing .live { background: var(--warn); animation: pulse 1s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(250,178,25,.6); } 100% { box-shadow: 0 0 0 10px rgba(250,178,25,0); } }
+.app-body { padding: clamp(.8rem, 2vw, 1.2rem); display: grid; gap: clamp(.7rem, 1.6vw, 1rem); }
+.filters { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg button { background: transparent; border: 0; padding: .4rem .8rem; font-size: .82rem; cursor: pointer; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--panel-2); color: var(--ink); }
+.filters .note-s { margin-inline-start: auto; }
+.note-s { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+
+.tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(.6rem, 1.4vw, .9rem); }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: .9rem 1rem; display: grid; gap: .3rem; align-content: start; min-width: 0; }
+.tile small { color: var(--muted); font-size: .78rem; }
+.tile b { font-family: var(--f-display); font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; text-align: start; }
+.tile .sub { font-size: .76rem; color: var(--ink-2); font-family: var(--f-mono); }
+.status { display: inline-flex; align-items: center; gap: .35rem; font-size: .74rem; font-weight: 600; justify-self: start; }
+.status svg { width: 14px; height: 14px; flex: none; }
+.status.good { color: var(--good); } .status.warn { color: var(--warn); } .status.serious { color: var(--serious); } .status.crit { color: #ef6b6b; }
+.spark { width: 100%; height: 28px; display: block; direction: ltr; }
+
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(.7rem, 1.6vw, 1rem); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 1rem; display: grid; gap: .7rem; align-content: start; min-width: 0; position: relative; }
+.card-h { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+.card-h h3 { font-size: 1rem; font-family: var(--f-sans); font-weight: 600; }
+.legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .76rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.legend i { display: inline-block; width: 16px; height: 0; border-top: 2px solid; }
+.legend i.dash { border-top-style: dashed; }
+.legend i.box { width: 10px; height: 10px; border: 0; border-radius: 3px; }
+.chart { width: 100%; height: auto; display: block; direction: ltr; overflow: visible; }
+.chart text { font-family: var(--f-mono); font-size: 11px; fill: var(--muted); }
+.chart .lbl { fill: var(--ink-2); font-size: 12px; }
+.tip { position: absolute; pointer-events: none; background: #0d0f12; border: 1px solid var(--line); border-radius: 10px; padding: .5rem .7rem; font-size: .78rem; min-width: 150px; box-shadow: 0 10px 30px rgba(0,0,0,.5); opacity: 0; transition: opacity .15s; z-index: 5; direction: ltr; }
+.tip.on { opacity: 1; }
+.tip b { display: block; font-family: var(--f-mono); margin-bottom: .25rem; color: var(--ink); }
+.tip div { display: flex; align-items: center; gap: .45rem; color: var(--ink-2); font-family: var(--f-mono); }
+.tip i { width: 10px; height: 2px; display: inline-block; }
+
+.pk { display: grid; gap: .65rem; }
+.pk-row { display: grid; grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) 3.4rem; align-items: center; gap: .7rem; font-size: .84rem; }
+.pk-row .nm { color: var(--ink-2); overflow-wrap: anywhere; }
+.pk-track { position: relative; height: 12px; background: #20242b; border-radius: 4px; direction: ltr; }
+.pk-fill { position: absolute; inset-block: 0; left: 0; width: 0; border-radius: 0 4px 4px 0; background: var(--s2); transition: width 1.2s var(--ease); }
+.pk-plan { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); border-radius: 1px; transition: left 1.2s var(--ease); }
+.pk-row .v { font-family: var(--f-mono); text-align: end; font-variant-numeric: tabular-nums; }
+
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .82rem; }
+th, td { text-align: start; padding: .55rem .6rem; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+th { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+td.num { font-family: var(--f-mono); text-align: end; font-variant-numeric: tabular-nums; }
+td .status { font-size: .74rem; }
+.feed { display: grid; gap: .45rem; font-family: var(--f-mono); font-size: .76rem; max-height: 214px; overflow: hidden; }
+.feed div { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); gap: .6rem; color: var(--ink-2); animation: feedin .5s var(--ease) both; }
+.feed div span:first-child { color: var(--muted); direction: ltr; }
+@keyframes feedin { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.watermark { position: absolute; inset-inline-end: 1rem; bottom: .8rem; font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em; color: rgba(250,178,25,.55); pointer-events: none; }
+
+/* smart site */
+.site { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(.7rem, 1.6vw, 1rem); }
+.layout-card { padding-bottom: .8rem; }
+.lay { width: 100%; height: auto; display: block; direction: ltr; touch-action: manipulation; }
+.lay .villa { cursor: pointer; }
+.lay .villa:focus { outline: none; }
+.lay .villa:focus .fp, .lay .villa.sel .fp { stroke: var(--amber); stroke-width: 2.5; }
+.lay text { font-family: var(--f-mono); font-size: 10px; fill: var(--muted); }
+.timeline { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .7rem; align-items: center; }
+.timeline button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel-2); cursor: pointer; display: grid; place-items: center; }
+.timeline button svg { width: 16px; height: 16px; fill: var(--ink); }
+.timeline input { width: 100%; accent-color: var(--amber); direction: ltr; }
+.timeline output { font-family: var(--f-mono); font-size: .8rem; white-space: nowrap; direction: ltr; }
+.stg-legend { display: flex; flex-wrap: wrap; gap: .35rem .9rem; font-size: .74rem; color: var(--ink-2); }
+.stg-legend span { display: inline-flex; align-items: center; gap: .35rem; }
+.stg-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.stg-count { font-family: var(--f-mono); color: var(--muted); }
+.vpanel { display: grid; gap: .8rem; align-content: start; }
+.vhead { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; flex-wrap: wrap; }
+.vhead h3 { font-size: 1.25rem; }
+.vhead .sub { color: var(--muted); font-size: .82rem; }
+.vbar { height: 8px; background: #20242b; border-radius: 4px; overflow: hidden; direction: ltr; }
+.vbar i { display: block; height: 100%; background: var(--s1); border-radius: 0 4px 4px 0; transition: width .5s var(--ease); }
+.photo-main { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16 / 9; max-width: 100%; background: #0d0f12; }
+.photo-main svg { width: 100%; height: 100%; display: block; }
+.thumbs { display: flex; gap: .45rem; overflow-x: auto; padding-bottom: .3rem; direction: ltr; }
+.thumbs button { flex: none; width: 92px; padding: 0; border: 2px solid transparent; border-radius: 8px; overflow: hidden; background: none; cursor: pointer; display: grid; }
+.thumbs button[aria-pressed="true"] { border-color: var(--amber); }
+.thumbs button svg { width: 100%; height: auto; display: block; aspect-ratio: 16 / 9; }
+.thumbs button span { font-family: var(--f-mono); font-size: .62rem; color: var(--muted); padding: .2rem 0; background: var(--panel-2); }
+.tabs { display: flex; gap: .3rem; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: .45rem .7rem; cursor: pointer; color: var(--muted); font-size: .84rem; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-color: var(--amber); }
+.recs { display: grid; gap: .5rem; max-height: 300px; overflow-y: auto; }
+.rec { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .7rem; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); font-size: .82rem; }
+.rec .tag { font-family: var(--f-mono); font-size: .66rem; padding: .15rem .45rem; border-radius: 6px; border: 1px solid var(--line); color: var(--ink-2); align-self: start; white-space: nowrap; }
+.rec .tag.ir { border-color: rgba(57,135,229,.6); } .rec .tag.asite { border-color: rgba(245,165,36,.6); } .rec .tag.ncr { border-color: rgba(208,59,59,.7); } .rec .tag.rfi { border-color: rgba(25,158,112,.7); }
+.rec b { font-weight: 600; }
+.rec .m { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .15rem; }
+.rec .m a { color: var(--cyan); text-decoration: none; }
+
+/* xer */
+.xer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(.7rem, 1.6vw, 1rem); }
+.xtiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; }
+.xtiles div { background: var(--panel-2); border-radius: 10px; padding: .6rem .75rem; display: grid; gap: .1rem; }
+.xtiles b { font-family: var(--f-display); font-size: 1.3rem; direction: ltr; unicode-bidi: isolate; text-align: start; }
+.xtiles small { color: var(--muted); font-size: .72rem; }
+.dcma td:nth-child(3), .dcma td:nth-child(4) { font-family: var(--f-mono); text-align: end; }
+.dcma th:nth-child(3), .dcma th:nth-child(4) { text-align: end; }
+@media (max-width: 1080px) { .site, .xer { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .xtiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .timeline { grid-template-columns: auto minmax(0, 1fr); } .timeline output { grid-column: 1 / -1; } }
+
+/* pipeline */
+.pipe { border: 1px solid var(--line); border-radius: 22px; background: var(--bg-2); padding: clamp(1rem, 3vw, 2rem); }
+.pipe-wrap { overflow-x: auto; }
+.pipe svg { width: 100%; min-width: 760px; height: auto; display: block; direction: ltr; }
+.pipe text { font-family: var(--f-sans); }
+
+/* report preview */
+.report { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.2rem, 4vw, 3rem); align-items: center; }
+.paper { background: #f4f3ef; color: #16181b; border-radius: 6px; padding: clamp(1.1rem, 3vw, 2rem); box-shadow: 0 30px 80px rgba(0,0,0,.6); transform: rotate(-1.2deg); position: relative; display: grid; gap: .8rem; }
+html[dir="rtl"] .paper { transform: rotate(1.2deg); }
+.paper .ph { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--f-mono); font-size: .68rem; color: #555b62; border-bottom: 2px solid #16181b; padding-bottom: .5rem; flex-wrap: wrap; }
+.paper h4 { font-size: 1.15rem; }
+.paper p { font-size: .9rem; color: #2c3036; }
+.paper .typing::after { content: "▍"; color: #b86a00; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.paper .mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.paper .mini div { border: 1px solid #d7d5cd; border-radius: 6px; padding: .45rem .55rem; font-size: .72rem; color: #555b62; }
+.paper .mini b { display: block; font-family: var(--f-display); font-size: 1.05rem; color: #16181b; direction: ltr; unicode-bidi: isolate; text-align: start; }
+.paper .stamp { position: absolute; inset-inline-end: 1rem; top: -12px; background: var(--warn); color: #120c02; font-family: var(--f-mono); font-size: .66rem; font-weight: 600; letter-spacing: .1em; padding: .25rem .6rem; border-radius: 4px; }
+.ticks { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
+.ticks li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: .7rem; color: var(--ink-2); }
+.ticks svg { width: 22px; height: 22px; stroke: var(--amber); fill: none; stroke-width: 1.8; margin-top: .15rem; }
+
+/* features */
+.feat { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.f { padding: 1.5rem; border: 1px solid var(--line); border-radius: 20px; background: var(--bg-2); display: grid; gap: .6rem; align-content: start; }
+.f svg { width: 38px; height: 38px; stroke: var(--cyan); fill: none; stroke-width: 1.5; }
+.f h3 { font-size: 1.2rem; }
+.f p { color: var(--muted); font-size: .93rem; }
+
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.st { padding: 1.5rem 1.2rem 1.5rem 0; display: grid; gap: .5rem; align-content: start; border-inline-end: 1px solid var(--line); padding-inline: 1.2rem; }
+.st:first-child { padding-inline-start: 0; }
+.st:last-child { border-inline-end: 0; }
+.st .n { font-family: var(--f-mono); font-size: .76rem; color: var(--amber-ink); }
+.st h3 { font-size: 1.15rem; }
+.st p { color: var(--muted); font-size: .92rem; }
+
+.final { text-align: center; display: grid; gap: 1.2rem; justify-items: center; }
+.final h2 { font-size: clamp(2rem, 5.5vw, 4rem); font-weight: 800; max-width: 18ch; }
+footer { border-top: 1px solid var(--line); padding-block: 2rem 3rem; color: var(--muted); font-size: .85rem; display: grid; gap: .8rem; }
+
+@media (max-width: 1080px) {
+  .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid2, .report { grid-template-columns: 1fr; }
+  .feat { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .st:nth-child(2) { border-inline-end: 0; }
+  .st:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .st:nth-child(3) { padding-inline-start: 0; }
+}
+@media (max-width: 640px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feat, .steps { grid-template-columns: 1fr; }
+  .st { border-inline-end: 0 !important; border-bottom: 1px solid var(--line); padding-inline: 0 !important; }
+  .pk-row { grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr) 3rem; }
+  .app-meta { margin-inline-start: 0; }
+  .filters .note-s { margin-inline-start: 0; }
+  .paper .mini { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+/* ---------- app shell ---------- */
+html, body { min-height: 100%; }
+.shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 100vh; }
+.side { position: sticky; top: 0; height: 100vh; border-inline-end: 1px solid var(--line); background: #0d0f12; display: flex; flex-direction: column; gap: 1rem; padding: 1rem .8rem; }
+.side .brand { padding: .3rem .4rem .8rem; border-bottom: 1px solid var(--line); text-decoration: none; }
+.side .brand b { font-size: .95rem; }
+.nav { display: grid; gap: .25rem; }
+.nav button { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: start; padding: .6rem .7rem; border: 0; border-radius: 10px; background: transparent; color: var(--muted); cursor: pointer; font-size: .9rem; }
+.nav button svg { width: 18px; height: 18px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.nav button:hover { color: var(--ink); background: rgba(236,235,230,.04); }
+.nav button[aria-current="page"] { color: var(--ink); background: rgba(245,165,36,.1); box-shadow: inset 3px 0 0 var(--amber); }
+html[dir="rtl"] .nav button[aria-current="page"] { box-shadow: inset -3px 0 0 var(--amber); }
+.made { margin-top: auto; border: 1px solid var(--line); border-radius: 12px; padding: .8rem; display: grid; gap: .4rem; font-size: .76rem; color: var(--muted); }
+.made .pbx { display: flex; align-items: center; gap: .45rem; font-family: var(--f-mono); color: var(--ink); font-size: .74rem; }
+.made .pbx i { width: 18px; height: 18px; border-radius: 4px; background: linear-gradient(135deg, #f2c811, #e8a20c); display: grid; place-items: center; font-style: normal; color: #1a1300; font-weight: 700; font-size: .62rem; }
+.made .pbx em { font-style: normal; color: var(--amber-ink); }
+.main { display: grid; grid-template-rows: auto 1fr auto; min-width: 0; }
+.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; padding: .7rem clamp(.8rem, 2vw, 1.4rem); border-bottom: 1px solid var(--line); background: rgba(10,11,13,.9); backdrop-filter: blur(10px); }
+.top h1 { font-size: 1.05rem; font-weight: 700; }
+.top .crumb { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.top .right { margin-inline-start: auto; display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; font-family: var(--f-mono); font-size: .74rem; color: var(--muted); }
+.top a, .top .lang { font-family: var(--f-mono); font-size: .74rem; text-decoration: none; border: 1px solid var(--line); background: transparent; padding: .25rem .65rem; border-radius: 999px; cursor: pointer; color: var(--ink-2); }
+.top a:hover, .top .lang:hover { border-color: var(--amber); color: var(--amber-ink); }
+.pages { padding: clamp(.8rem, 2vw, 1.4rem); display: grid; align-content: start; }
+.page { display: none; gap: clamp(.7rem, 1.6vw, 1rem); animation: pagein .45s var(--ease) both; }
+.page.on { display: grid; }
+@keyframes pagein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.strip { border-top: 1px solid var(--line); padding: .7rem clamp(.8rem, 2vw, 1.4rem); display: flex; gap: .6rem 1.2rem; flex-wrap: wrap; align-items: center; font-size: .76rem; color: var(--muted); }
+.strip b { color: var(--warn); font-weight: 600; }
+.embed .top .full { border-color: var(--amber); color: var(--amber-ink); }
+.embed .only-full { display: none; }
+body:not(.embed) .only-embed { display: none; }
+
+/* risk */
+.risk { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(.7rem, 1.6vw, 1rem); }
+.ctrl { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+.run { background: var(--amber); color: #120c02; border: 0; border-radius: 999px; padding: .55rem 1.1rem; font-weight: 600; cursor: pointer; }
+.run[disabled] { opacity: .6; cursor: progress; }
+.rlist { display: grid; gap: .45rem; }
+.rrow { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .6rem; align-items: center; padding: .55rem .65rem; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); font-size: .82rem; }
+.rrow input { accent-color: var(--good); width: 16px; height: 16px; }
+.rrow .m { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); }
+.rrow .imp { font-family: var(--f-mono); font-size: .74rem; color: var(--ink-2); text-align: end; white-space: nowrap; }
+.prog { height: 4px; background: #20242b; border-radius: 2px; overflow: hidden; direction: ltr; }
+.prog i { display: block; height: 100%; width: 0; background: var(--amber); }
+
+/* logistics */
+.logi { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(.7rem, 1.6vw, 1rem); }
+.layers { display: flex; flex-wrap: wrap; gap: .4rem; }
+.layers button { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 999px; padding: .3rem .7rem; font-size: .76rem; cursor: pointer; }
+.layers button[aria-pressed="true"] { color: var(--ink); border-color: rgba(236,235,230,.35); background: var(--panel-2); }
+.layers i { width: 14px; height: 3px; display: inline-block; border-radius: 2px; }
+.dash-anim { animation: dashmove 1.2s linear infinite; }
+@keyframes dashmove { to { stroke-dashoffset: -24; } }
+.gantt-d { display: grid; gap: .35rem; }
+.gd-row { display: grid; grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr); gap: .6rem; align-items: center; font-size: .78rem; }
+.gd-row .nm { color: var(--ink-2); overflow-wrap: anywhere; }
+.gd-row .nm small { display: block; font-family: var(--f-mono); color: var(--muted); font-size: .66rem; }
+.gd-track { position: relative; height: 18px; background: repeating-linear-gradient(90deg, #1d2127 0 1px, transparent 1px calc(100% / 12)); border-radius: 4px; direction: ltr; }
+.gd-bar { position: absolute; top: 3px; height: 12px; border-radius: 4px; }
+.gd-now { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+.gd-axis { display: grid; grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr); gap: .6rem; }
+.gd-axis div:last-child { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: .66rem; color: var(--muted); direction: ltr; }
+
+/* 4D */
+.bim { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(.7rem, 1.6vw, 1rem); }
+.iso { width: 100%; height: auto; display: block; direction: ltr; }
+.iso .fl { cursor: pointer; }
+.iso .fl:hover .hl, .iso .fl.sel .hl { stroke: var(--amber); stroke-width: 2; }
+.vsel { background: var(--panel-2); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: .3rem .5rem; font: inherit; font-size: .8rem; }
+.modes { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.modes button { background: transparent; border: 0; padding: .35rem .75rem; font-size: .78rem; color: var(--muted); cursor: pointer; }
+.modes button[aria-pressed="true"] { background: var(--panel-2); color: var(--ink); }
+
+@media (max-width: 1080px) { .risk, .logi, .bim { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { position: sticky; top: 0; z-index: 25; height: auto; flex-direction: row; align-items: center; padding: .5rem .6rem; gap: .5rem; border-inline-end: 0; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .side .brand { border: 0; padding: 0; flex: none; }
+  .side .brand b, .made { display: none; }
+  .nav { display: flex; gap: .25rem; }
+  .nav button { white-space: nowrap; padding: .45rem .6rem; font-size: .82rem; }
+  .nav button[aria-current="page"], html[dir="rtl"] .nav button[aria-current="page"] { box-shadow: inset 0 -2px 0 var(--amber); }
+  .top { position: static; }
+}
+/* ---------- Power BI style report, A4 landscape canvas ---------- */
+html, body { background: var(--bg); }
+body.embed { background: transparent; }
+.pbi { display: grid; grid-template-rows: auto auto auto; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #0d0f12; }
+.pbi-top { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; padding: .55rem .9rem; background: #16191e; border-bottom: 1px solid var(--line); }
+.bi { width: 26px; height: 26px; border-radius: 6px; background: linear-gradient(135deg, #f2c811, #e8a20c); display: grid; place-items: center; flex: none; }
+.bi svg { width: 15px; height: 15px; fill: #1a1300; }
+.pbi-top .t { display: grid; line-height: 1.2; }
+.pbi-top .t b { font-family: var(--f-display); font-size: .95rem; }
+.pbi-top .t span { font-family: var(--f-mono); font-size: .68rem; color: var(--muted); }
+.pbi-top .right { margin-inline-start: auto; display: flex; gap: .45rem; align-items: center; flex-wrap: wrap; font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.pbi-top a, .pbi-top .lang { font-family: var(--f-mono); font-size: .72rem; text-decoration: none; border: 1px solid var(--line); background: transparent; padding: .25rem .65rem; border-radius: 999px; cursor: pointer; color: var(--ink-2); }
+.pbi-top a:hover, .pbi-top .lang:hover { border-color: var(--amber); color: var(--amber-ink); }
+body.embed .only-full, body:not(.embed) .only-embed { display: none; }
+.wrap-c { position: relative; overflow: hidden; background: #0a0b0d; }
+.canvas { width: 1400px; height: 990px; transform-origin: 0 0; position: absolute; left: 0; top: 0; background: #0f1216; }
+.page { display: none; position: absolute; inset: 0; padding: 18px 20px 16px; animation: pagein .4s var(--ease) both; }
+.page.on { display: block; }
+@keyframes pagein { from { opacity: 0; } to { opacity: 1; } }
+.ph { display: flex; align-items: center; gap: 1rem; height: 46px; margin-bottom: 12px; border-bottom: 1px solid var(--line); }
+.ph h2 { font-size: 1.35rem; font-weight: 700; }
+.ph span { color: var(--muted); font-size: .85rem; }
+.ph .seg { margin-inline-start: auto; }
+.ph .stamp { margin-inline-start: auto; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .1em; color: #120c02; background: var(--warn); padding: .2rem .55rem; border-radius: 4px; font-weight: 600; }
+.ph .seg + .stamp { margin-inline-start: .6rem; }
+.pg { display: grid; gap: 12px; height: calc(100% - 58px); }
+.pg > * { min-width: 0; min-height: 0; }
+.pg .card { display: flex; flex-direction: column; overflow: hidden; }
+.pg .card > svg.chart, .pg .card > svg.lay, .pg .card > svg.iso, .pg .card > .pipe-wrap svg { flex: 1 1 auto; min-height: 0; width: 100%; height: 100%; }
+.pg .card > .pipe-wrap { flex: 1 1 auto; min-height: 0; display: flex; }
+.pg .card > .pipe-wrap svg { min-width: 0; }
+.pg .table-scroll, .pg .recs, .pg .feed, .pg .rlist, .pg .gantt-d, .pg #vtab { flex: 1 1 auto; min-height: 0; overflow: auto; max-height: none; }
+.pg .tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.pg .tile { padding: .7rem .9rem; }
+.pg .vpanel { display: flex; }
+.pg .photo-main { flex: none; }
+.g-ov { grid-template-columns: 1.55fr 1fr; grid-template-rows: auto 1.2fr 1fr; grid-template-areas: "tiles tiles" "s pk" "mp look"; }
+.g-site { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; grid-template-areas: "lay panel"; }
+.g-sch { grid-template-columns: 1fr 1.05fr; grid-template-rows: auto 1fr; grid-template-areas: "xt dcma" "fh dcma"; }
+.g-risk { grid-template-columns: 1.45fr 1fr; grid-template-rows: auto 1.25fr 1fr; grid-template-areas: "rt rt" "hist reg" "torn trend"; }
+.g-log { grid-template-columns: 1.05fr 1fr; grid-template-rows: auto 1fr; grid-template-areas: "lt lt" "plan del"; }
+.g-bim { grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr; grid-template-areas: "iso rvt"; }
+.g-auto { grid-template-columns: 1.15fr 1fr; grid-template-rows: auto 1.05fr 1fr; grid-template-areas: "at at" "pipe jobs" "hist feed"; }
+.pbi-tabs { display: flex; align-items: stretch; gap: 0; padding: 0; background: #16191e; border-top: 1px solid var(--line); min-height: 40px; }
+.pbi-tabs .arrows { display: flex; border-inline-end: 1px solid var(--line); }
+.pbi-tabs .arrows button { width: 38px; background: transparent; border: 0; color: var(--ink-2); cursor: pointer; font-size: 1rem; }
+.pbi-tabs .arrows button:disabled { opacity: .3; cursor: default; }
+.pbi-tabs nav { display: flex; overflow-x: auto; flex: 1; scrollbar-width: thin; }
+.pbi-tabs nav button { white-space: nowrap; background: transparent; border: 0; border-inline-end: 1px solid var(--line); padding: 0 1rem; font-size: .8rem; color: var(--muted); cursor: pointer; position: relative; }
+.pbi-tabs nav button:hover { color: var(--ink); background: rgba(236,235,230,.03); }
+.pbi-tabs nav button[aria-current="page"] { color: var(--ink); background: #0f1216; font-weight: 600; }
+.pbi-tabs nav button[aria-current="page"]::before { content: ""; position: absolute; inset-inline: 0; top: 0; height: 3px; background: var(--amber); }
+.pbi-tabs .info { display: flex; align-items: center; gap: .8rem; padding: 0 .9rem; font-family: var(--f-mono); font-size: .68rem; color: var(--muted); white-space: nowrap; border-inline-start: 1px solid var(--line); }
+.pbi-tabs .info b { color: var(--amber-ink); font-weight: 500; }
+.recs { align-content: start; }
+.pg table { font-size: .76rem; }
+#look td:nth-child(2), #jobs td:nth-child(1), #jobs td:nth-child(2) { white-space: normal; min-width: 7rem; }
+.pg th, .pg td { padding: .45rem .45rem; }
+.notice-s { padding: .55rem .9rem; font-size: .76rem; color: var(--muted); background: #121418; border-top: 1px solid var(--line); }
+.notice-s b { color: var(--warn); }
+.jstat { display: inline-flex; }
+/* mobile: the report reflows into a stacked mobile layout */
+@media (max-width: 899px) {
+  .wrap-c { height: auto !important; overflow: visible; }
+  .canvas { position: static; width: auto; height: auto; transform: none !important; }
+  .page { position: static; padding: 12px; }
+  .ph { height: auto; flex-wrap: wrap; padding-bottom: .6rem; }
+  .ph .seg { margin-inline-start: 0; order: 3; overflow-x: auto; max-width: 100%; }
+  .pg { display: grid; grid-template-columns: 1fr !important; grid-template-rows: none !important; grid-template-areas: none !important; height: auto; }
+  .pg > * { grid-area: auto !important; }
+  .pg .card > svg.chart, .pg .card > svg.lay, .pg .card > svg.iso { height: auto; }
+  .pg .table-scroll, .pg .recs, .pg .feed, .pg .rlist { max-height: 340px; }
+  .pg .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pbi-tabs .info { display: none; }
+  .pg .card > .pipe-wrap { overflow-x: auto; }
+  .pg .card > .pipe-wrap svg { min-width: 640px; height: auto; }
+}
+
+body:not(.embed) { padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 24px max(12px, env(safe-area-inset-left, 0px)); }
+.pbi { max-width: 1560px; margin-inline: auto; }
+.pbi { grid-template-columns: minmax(0, 1fr); } .pbi > * { min-width: 0; }
+@media (max-width: 899px) { .canvas, .page, .pg, .pg .card { min-width: 0; max-width: 100%; } .pbi-top .right { margin-inline-start: 0; } .site, .xer, .risk, .logi, .bim, .grid2 { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<div class="pbi" id="pbi">
+  <header class="pbi-top">
+    <span class="bi" aria-hidden="true"><svg viewBox="0 0 16 16"><rect x="2" y="8" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="9" rx="1"/><rect x="11" y="2" width="3" height="12" rx="1"/></svg></span>
+    <div class="t"><b data-t="rep.title"></b><span data-t="rep.sub"></span></div>
+    <div class="right">
+      <span class="pill demo" data-t="d.demo"></span>
+      <span class="pill" id="sync"><span class="live" aria-hidden="true"></span><span id="sync-t"></span></span>
+      <span class="pill"><span data-t="d.dd"></span>&nbsp;<span class="mono">15-Oct-2026</span></span>
+      <button type="button" class="lang" id="lang" aria-label="Switch language"></button>
+      <a class="only-full" href="../" data-t="nav.back"></a>
+      <a class="only-embed" href="./" target="_blank" rel="noopener" id="fulllink" data-t="nav.full"></a>
+    </div>
+  </header>
+  <div class="wrap-c" id="wrapc">
+    <div class="canvas" id="canvas">
+
+      <section class="page" id="pg-overview" aria-label="Overview">
+        <div class="ph"><h2 data-t="pg0"></h2><span data-t="pg0s"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-ov">
+          <div class="tiles" id="tiles" style="grid-area:tiles"></div>
+          <div class="card" id="scard" style="grid-area:s">
+            <div class="card-h"><h3 data-t="c.s"></h3><div class="legend" id="slegend"></div></div>
+            <svg class="chart" id="scurve" viewBox="0 0 640 300" role="img" aria-label="S-curve of cumulative progress: planned, actual and forecast"></svg>
+            <div class="tip" id="stip"></div>
+          </div>
+          <div class="card" style="grid-area:pk">
+            <div class="card-h"><h3 data-t="c.p"></h3><div class="legend" id="plegend"></div></div>
+            <div class="pk" id="pk"></div>
+          </div>
+          <div class="card" id="mcard" style="grid-area:mp">
+            <div class="card-h"><h3 data-t="c.m"></h3><div class="legend" id="mlegend"></div></div>
+            <svg class="chart" id="manpower" viewBox="0 0 640 220" role="img" aria-label="Daily manpower on site, last 14 days, with planned level"></svg>
+            <div class="tip" id="mtip"></div>
+          </div>
+          <div class="card" style="grid-area:look">
+            <div class="card-h"><h3 data-t="c.l"></h3><span class="note-s" data-t="c.ls"></span></div>
+            <div class="table-scroll"><table id="look"></table></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-site" aria-label="Smart Site">
+        <div class="ph"><h2 data-t="pg1"></h2><span data-t="pg1s"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-site">
+          <div class="card layout-card" style="grid-area:lay">
+            <div class="card-h"><h3 data-t="v.lay"></h3><span class="note-s" data-t="v.layhint"></span></div>
+            <svg class="lay" id="lay" viewBox="0 0 600 560" role="group" aria-label="Master plan of a fictional villa community, coloured by construction stage"></svg>
+            <div class="tip" id="ltip"></div>
+            <div class="timeline">
+              <button type="button" id="play" aria-label="Play"><svg viewBox="0 0 16 16" id="playic"><path d="M4 2.5l9 5.5-9 5.5z"/></svg></button>
+              <input type="range" id="wk" min="1" max="80" value="41" aria-label="Week">
+              <output id="wko"></output>
+            </div>
+            <div class="stg-legend" id="stglg"></div>
+          </div>
+          <div class="card vpanel" id="vpanel" style="grid-area:panel">
+            <div class="vhead"><div><h3 id="vname"></h3><div class="sub" id="vsub"></div></div><span id="vstat"></span></div>
+            <div class="vbar"><i id="vbar"></i></div>
+            <div class="photo-main" id="pmain"></div>
+            <div class="thumbs" id="thumbs"></div>
+            <div class="tabs" role="tablist" id="vtabs"></div>
+            <div id="vtab"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-schedule" aria-label="Schedule health">
+        <div class="ph"><h2 data-t="pg2"></h2><span data-t="pg2s"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-sch">
+          <div class="card" style="grid-area:xt">
+            <div class="card-h"><h3 data-t="x.title"></h3><span class="note-s">PGV_Update_W41.xer</span></div>
+            <div class="xtiles" id="xtiles"></div>
+          </div>
+          <div class="card" style="grid-area:fh">
+            <div class="card-h"><h3 data-t="x.float"></h3><span class="note-s" data-t="x.floatn"></span></div>
+            <svg class="chart" id="fhist" viewBox="0 0 520 220" role="img" aria-label="Total float distribution of activities"></svg>
+            <div class="tip" id="ftip"></div>
+          </div>
+          <div class="card" style="grid-area:dcma">
+            <div class="card-h"><h3 data-t="x.dcma"></h3><span class="note-s" data-t="x.dcman"></span></div>
+            <div class="table-scroll"><table class="dcma" id="dcma"></table></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-risk" aria-label="Forecast and risk">
+        <div class="ph"><h2 data-t="pg3"></h2><span data-t="pg3s"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-risk">
+          <div class="tiles" id="rtiles" style="grid-area:rt"></div>
+          <div class="card" id="hcard" style="grid-area:hist">
+            <div class="card-h"><h3 data-t="r2h"></h3><div class="legend" id="hlegend"></div></div>
+            <div class="ctrl">
+              <button type="button" class="run" id="runmc" data-t="r2run"></button>
+              <div class="seg" role="group" aria-label="Iterations" id="iters"></div>
+              <span class="note-s" id="mcstat"></span>
+            </div>
+            <div class="prog"><i id="mcprog"></i></div>
+            <svg class="chart" id="mchist" viewBox="0 0 640 280" role="img" aria-label="Monte Carlo distribution of the forecast finish date"></svg>
+            <div class="tip" id="mctip"></div>
+          </div>
+          <div class="card" style="grid-area:reg">
+            <div class="card-h"><h3 data-t="r2reg"></h3><span class="note-s" data-t="r2regn"></span></div>
+            <div class="rlist" id="rlist"></div>
+          </div>
+          <div class="card" style="grid-area:torn">
+            <div class="card-h"><h3 data-t="r2torn"></h3><span class="note-s" data-t="r2tornn"></span></div>
+            <svg class="chart" id="torn" viewBox="0 0 640 230" role="img" aria-label="Average delay contributed by each risk"></svg>
+          </div>
+          <div class="card" id="fcard" style="grid-area:trend">
+            <div class="card-h"><h3 data-t="r2trend"></h3><div class="legend" id="flegend"></div></div>
+            <svg class="chart" id="ftrend" viewBox="0 0 520 230" role="img" aria-label="Forecast finish by monthly update with P20 to P80 band"></svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-logistics" aria-label="Logistics">
+        <div class="ph"><h2 data-t="pg4"></h2><span data-t="pg4s"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-log">
+          <div class="tiles" id="ltiles" style="grid-area:lt"></div>
+          <div class="card" style="grid-area:plan">
+            <div class="card-h"><h3 data-t="l2plan"></h3><div class="layers" id="layers"></div></div>
+            <svg class="lay" id="logi" viewBox="0 0 600 560" role="img" aria-label="Site logistics plan: gates, delivery route, crane coverage, laydown and exclusion zones"></svg>
+          </div>
+          <div class="card" style="grid-area:del">
+            <div class="card-h"><h3 data-t="l2del"></h3><span class="note-s" data-t="l2deln"></span></div>
+            <div class="gantt-d" id="gdel"></div>
+            <div class="gd-axis"><div></div><div><span>06</span><span>08</span><span>10</span><span>12</span><span>14</span><span>16</span><span>18</span></div></div>
+            <div class="legend" id="dlegend"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-bim" aria-label="4D BIM">
+        <div class="ph"><h2 data-t="pg5"></h2><span data-t="pg5s"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-bim">
+          <div class="card" id="isocard" style="grid-area:iso">
+            <div class="card-h"><h3 data-t="b.title"></h3><div style="display:flex;gap:.5rem;align-items:center"><select id="bvilla" aria-label="Villa" class="vsel"></select><div class="modes" id="bmodes"></div></div></div>
+            <svg class="iso" id="iso" viewBox="0 0 620 560" role="img" aria-label="4D model of the selected villa, built up to the selected week"></svg>
+            <div class="tip" id="isotip"></div>
+            <div class="timeline">
+              <button type="button" id="bplay" aria-label="Play"><svg viewBox="0 0 16 16" id="bplayic"><path d="M4 2.5l9 5.5-9 5.5z"/></svg></button>
+              <input type="range" id="bwk" min="1" max="80" value="41" aria-label="Week">
+              <output id="bwko"></output>
+            </div>
+            <div class="legend" id="blegend"></div>
+          </div>
+          <div class="card" style="grid-area:rvt">
+            <div class="card-h"><h3 data-t="b.rvt"></h3><span class="note-s">PGV_Villa_TypeB.rvt</span></div>
+            <p class="note-s" data-t="b.link"></p>
+            <div class="table-scroll" style="flex:none"><table id="rvt"></table></div>
+            <div class="card-h"><h3 id="bfl" style="font-size:.95rem"></h3></div>
+            <div class="recs" id="bdet"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-auto" aria-label="Automation">
+        <div class="ph"><h2 data-t="pg6"></h2><span data-t="pg6s"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-auto">
+          <div class="tiles" id="atiles" style="grid-area:at"></div>
+          <div class="card" style="grid-area:pipe">
+            <div class="card-h"><h3 data-t="a.pipe"></h3><span class="note-s" data-t="a.pipen"></span></div>
+            <div class="pipe-wrap"><svg id="pipe" viewBox="0 0 1000 420" role="img" aria-label="Data sources feed an automation engine that refreshes the Power BI dataset, report packs and alerts"></svg></div>
+          </div>
+          <div class="card" style="grid-area:jobs">
+            <div class="card-h"><h3 data-t="a.jobsT"></h3><span class="note-s" data-t="a.jobsn"></span></div>
+            <div class="table-scroll"><table id="jobs"></table></div>
+          </div>
+          <div class="card" id="rhcard" style="grid-area:hist">
+            <div class="card-h"><h3 data-t="a.hist"></h3><div class="legend" id="rhlegend"></div></div>
+            <svg class="chart" id="rhist" viewBox="0 0 640 220" role="img" aria-label="Power BI dataset refresh duration over the last 30 days"></svg>
+            <div class="tip" id="rhtip"></div>
+          </div>
+          <div class="card" style="grid-area:feed">
+            <div class="card-h"><h3 data-t="c.f"></h3><span class="note-s" data-t="c.fs"></span></div>
+            <div class="feed" id="feed" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+  <footer class="pbi-tabs">
+    <div class="arrows"><button type="button" id="prevp" aria-label="Previous page">‹</button><button type="button" id="nextp" aria-label="Next page">›</button></div>
+    <nav id="tabs" aria-label="Report pages"></nav>
+    <div class="info"><span><b>Power BI × Code</b></span><span id="pgn"></span></div>
+  </footer>
+  <div class="notice-s"><b data-t="n.title"></b> <span data-t="n.body"></span> <span data-t="mk.sub"></span></div>
+</div>
+
+<script>
+(function () {
+/* =========================================================
+   TEXT (English + Arabic)
+   ========================================================= */
+const T = {
+  en: {
+    name: "Siddek Mahmoud", "nav.back": "← Website", "nav.portfolio": "Portfolio",
+    "h.kicker": "Dashboards · Automated reporting",
+    "h.title": "Your project, <em>reporting itself.</em>",
+    "h.sub": "Live dashboards and report packs for construction that refresh from Primavera P6, site records and cost data on their own. Leadership sees the truth every morning, and planners stop rebuilding the same report every week.",
+    chips: ["Primavera P6", "Power BI", "Excel / VBA", "Python", "n8n", "AI summaries"],
+    "h.cta1": "See the live demo", "h.cta2": "Talk on WhatsApp",
+    "n.title": "Demo data only.", "n.body": "Every project name, number, chart and report on this page is fictional and made up for illustration. None of it is real, and none of it represents any project I work on, or any client or employer.",
+    "d.title": "Project Controls Command Center", "d.demo": "DEMO DATA", "d.dd": "Data date", "d.wm": "FICTIONAL DEMO · NOT A REAL PROJECT",
+    "d.src": "Sources (simulated): P6 · site diary · cost ledger", "d.foot": "The dashboard simulates an automatic refresh every few seconds. Hover the charts to read values.",
+    sync: ["Synced", "Syncing…", "s ago"],
+    projects: ["Marina Heights Tower", "Palm Grove Villas", "Harbor Logistics Park"],
+    tiles: ["Overall progress", "Schedule (SPI)", "Cost (CPI)", "Forecast finish", "Manpower today"],
+    tsub: ["plan", "vs baseline", "budget", "days vs contract", "plan"],
+    st: { good: "On track", warn: "Watch", serious: "At risk", crit: "Critical" },
+    "c.s": "Cumulative progress (S-curve)", s: ["Planned", "Actual", "Forecast"],
+    "c.p": "Progress by package", p: ["Actual", "Planned"],
+    packages: ["Substructure", "Superstructure", "MEP", "Facade", "Finishes", "External works"],
+    "c.m": "Manpower on site, last 14 days", m: ["Actual", "Planned level"],
+    "c.f": "Automation log", "c.fs": "auto-generated",
+    feed: ["P6 update imported · {n} activities", "Schedule health check passed · 0 open ends", "{k} activities flagged out of sequence", "Site diary synced · manpower {m}", "Cost ledger refreshed · CPI {c}", "Weekly report pack generated · 18 pages", "Alert sent: Facade float below 5 days", "Look-ahead updated · next 3 weeks"],
+    "c.l": "3-week look-ahead · critical and near-critical", "c.ls": "sorted by total float",
+    lh: ["ID", "Activity", "Start", "Finish", "Float (d)", "Status"],
+    look: [["A2410", "Level 28 slab pour"], ["A3120", "Chiller plant delivery"], ["A3305", "Facade units, zone C"], ["A2475", "Core wall to roof"], ["A4110", "Lift installation, cars 1-4"], ["A3390", "MEP risers, L20-L28"]],
+    "p.kicker": "What updates on its own", "p.title": "From raw site data to a decision, without copy and paste",
+    "p.sub": "Data is pulled from where it already lives, checked, stored as a snapshot and pushed to the people who need it. The same pipeline feeds the dashboard, the report pack and the alerts.",
+    pin: ["Primavera P6", "Site diaries", "Cost / ERP", "Excel trackers", "Email & WhatsApp"],
+    peng: ["Automation engine", "validate · merge · snapshot"],
+    pout: ["Live dashboard", "Weekly report pack", "Early-warning alerts"],
+    "r.kicker": "Reports that write themselves", "r.title": "The weekly report, drafted before the meeting",
+    "r.sub": "Numbers, charts and a plain-language summary are generated from the same data as the dashboard. The planner reviews and signs, instead of building from scratch.",
+    rticks: ["Narrative drafted with AI from the week's data, then checked by a planner", "Same figures as the dashboard, so the report and the screen never disagree", "Export to PDF, PowerPoint or email on a schedule", "Arabic and English versions from one source"],
+    "r.ph1": "WEEKLY PROGRESS REPORT · MARINA HEIGHTS (FICTIONAL)", "r.h": "Executive summary",
+    rmini: ["Progress", "SPI", "Forecast"],
+    rtext: "Overall progress reached {a}% against {p}% planned (SPI {spi}). Superstructure is the main driver, two floors behind the baseline cycle. Facade zone C has 4 days of float left and is now on the watch list. Recovery: a second tower crane shift from week 43 is expected to recover 9 days. No change to the forecast finish this week.",
+    "f.kicker": "What you get", "f.title": "Built for how construction teams actually report",
+    feat: [["Live S-curves, SPI and CPI", "Planned, actual and forecast in one view, with schedule and cost indices that update with every P6 and cost refresh."], ["Look-aheads and critical path", "Three-week look-aheads sorted by float, with near-critical work flagged before it becomes critical."], ["Manpower and productivity", "Daily labour from site diaries against the planned level, and output per trade."], ["Cost and cash flow", "Budget, committed and actual, with CPI and forecast at completion by package."], ["Delay register and EOT evidence", "Delay events logged and linked to activities as they happen, ready for a claim."], ["Mobile view and alerts", "Leadership reads it on a phone. Alerts go out when float or productivity crosses a threshold."]],
+    "s.kicker": "How it is set up", "s.title": "Four steps from scattered files to a live dashboard",
+    steps: [["Connect", "Map the sources: P6 exports, site diaries, cost ledger, trackers.", "Week 1"], ["Validate", "Schedule health and data checks, so the dashboard is built on clean data.", "Week 1–2"], ["Design", "KPIs, thresholds and layouts agreed with leadership, in Arabic and English.", "Week 2–3"], ["Automate", "Scheduled refresh, report packs and alerts, then handover and training.", "Week 3–4"]],
+    "k.kicker": "Next step", "k.title": "Want this for your project?", "k.sub": "Send a message and tell me what you report today. I will show you what it can look like.",
+    "k.pf": "See the portfolio", "k.deck": "Watch the presentation",
+    foot: "© Siddek Mahmoud · Reality Engineer · All dashboard content on this page is fictional demo data.",
+    tipDay: "Day", tipMonth: "Month",
+    "v.kicker": "Smart site layout · photos · XER · Asite", "v.title": "See every villa, every day.",
+    "v.sub": "A custom site layout that colours each villa by its current stage, straight from the P6 activities. Tap a villa to see its dated photo log, its activities, and every site diary, inspection request and Asite record linked to them. Press play to watch the site progress week by week.",
+    "v.app": "Palm Grove Villas · Smart Site (fictional)", "v.src": "XER · site photos · diaries · Asite (simulated)",
+    "v.lay": "Site layout by stage", "v.layhint": "tap a villa",
+    stages: ["Not started", "Excavation", "Foundations", "Structure", "Blockwork", "MEP first fix", "Finishes", "Handed over"],
+    wk: "Week", cl: "Cluster",
+    vt: ["Photos", "Activities", "Logs & Asite"], vtabs: ["Activities", "Logs & Asite"],
+    vh: ["ID", "Activity", "Start", "Finish", "%"],
+    acts: ["Excavation & blinding", "Foundations & tie beams", "Structure: GF to roof slab", "Blockwork, all floors", "MEP first fix", "Plaster, tiling & finishes", "Snagging & handover"],
+    rec: { diary: "Site diary", ir: "Inspection request", asite: "Asite transmittal", ncr: "NCR", rfi: "RFI" },
+    irs: ["Approved", "Approved with comments", "Rejected, resubmitted"],
+    recTxt: { diary: "{n} workers on villa · {act}", ir: "{act} · {st}", asite: "Shop drawing rev {r} issued for {act}", ncr: "Honeycombing at column C3, repair method approved", rfi: "Clarify MEP sleeve levels at first floor slab" },
+    open: "open", linked: "linked to",
+    vsub: "{c} · Plot {p} · {pct}% complete", none: "No photos yet. Work has not started on this villa at the selected week.",
+    "x.title": "XER analysis", "x.float": "Total float distribution (days)", "x.floatn": "activities per band",
+    xt: [["2,184", "activities"], ["4,390", "relationships"], ["96", "critical"], ["0", "open ends"], ["6", "constraints"], ["21", "out of sequence"], ["0.95", "BEI"], ["0.97", "CPLI"]],
+    "x.dcma": "Schedule health check (DCMA 14-point)", "x.dcman": "auto-run on every update",
+    dh: ["Check", "Rule", "Result", "Limit"],
+    dcma: [["Logic", "missing pred./succ.", "0.0%", "5%"], ["Leads", "negative lags", "0", "0"], ["Lags", "with lag", "3.1%", "5%"], ["Relationship types", "finish-to-start", "93%", "90%"], ["Hard constraints", "of activities", "0.2%", "5%"], ["High float", "> 44 days", "6.8%", "5%"], ["Negative float", "activities", "0", "0"], ["High duration", "> 44 days", "2.4%", "5%"], ["Invalid dates", "forecast/actual", "0", "0"], ["Resources", "loaded", "97%", "100%"], ["Missed tasks", "finished late", "8.2%", "5%"], ["Critical path test", "passed", "Yes", "Yes"], ["CPLI", "critical path index", "0.98", "0.95"], ["BEI", "baseline execution", "0.96", "0.95"]],
+    dres: [1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+    tipFloat: "Float", tipActs: "Activities", pass: "Pass", review: "Review",
+  },
+  ar: {
+    name: "صديق محمود", "nav.back": "→ الموقع", "nav.portfolio": "البورتفوليو",
+    "h.kicker": "داشبورد · تقارير أوتوماتيك",
+    "h.title": "مشروعك <em>بيكتب تقريره بنفسه.</em>",
+    "h.sub": "داشبورد وتقارير للمقاولات بتتحدث لوحدها من Primavera P6 وسجلات الموقع وبيانات التكلفة. الإدارة بتشوف الصورة الحقيقية كل صباح، ومهندس التخطيط بيبطل يعيد نفس التقرير كل أسبوع.",
+    chips: ["Primavera P6", "Power BI", "Excel / VBA", "Python", "n8n", "ملخصات بالذكاء الاصطناعي"],
+    "h.cta1": "شوف الديمو الحي", "h.cta2": "كلمني على واتساب",
+    "n.title": "بيانات ديمو فقط.", "n.body": "كل أسماء المشاريع والأرقام والرسومات والتقارير في الصفحة دي وهمية ومعمولة للعرض بس. مفيش منها حاجة حقيقية، ولا بتمثل أي مشروع بشتغل عليه، ولا أي عميل أو جهة عمل.",
+    "d.title": "مركز التحكم في المشروع", "d.demo": "بيانات ديمو", "d.dd": "تاريخ البيانات", "d.wm": "ديمو وهمي · مش مشروع حقيقي",
+    "d.src": "المصادر (محاكاة): P6 · يومية الموقع · دفتر التكلفة", "d.foot": "الداشبورد بيحاكي تحديث أوتوماتيك كل كام ثانية. حرّك الماوس على الرسومات عشان تقرأ القيم.",
+    sync: ["متزامن", "جاري التحديث…", "ث"],
+    projects: ["برج مارينا هايتس", "فلل بالم جروف", "مجمع هاربر اللوجستي"],
+    tiles: ["نسبة الإنجاز الكلية", "الجدول الزمني (SPI)", "التكلفة (CPI)", "تاريخ الانتهاء المتوقع", "العمالة النهارده"],
+    tsub: ["المخطط", "مقابل الـ Baseline", "الميزانية", "يوم مقابل العقد", "المخطط"],
+    st: { good: "في المسار", warn: "راقب", serious: "في خطر", crit: "حرج" },
+    "c.s": "الإنجاز التراكمي (S-Curve)", s: ["المخطط", "الفعلي", "المتوقع"],
+    "c.p": "الإنجاز حسب الحزمة", p: ["الفعلي", "المخطط"],
+    packages: ["الأساسات", "الهيكل", "الكهروميكانيك", "الواجهات", "التشطيبات", "الأعمال الخارجية"],
+    "c.m": "العمالة في الموقع، آخر 14 يوم", m: ["الفعلي", "المستوى المخطط"],
+    "c.f": "سجل الأتمتة", "c.fs": "بيتولد أوتوماتيك",
+    feed: ["تم استيراد تحديث P6 · {n} نشاط", "فحص سلامة الجدول نجح · 0 open ends", "{k} أنشطة خارج التسلسل", "تمت مزامنة يومية الموقع · عمالة {m}", "تم تحديث دفتر التكلفة · CPI {c}", "تم توليد تقرير الأسبوع · 18 صفحة", "تنبيه: فائض الواجهات أقل من 5 أيام", "تم تحديث الـ Look-ahead · 3 أسابيع"],
+    "c.l": "Look-ahead لـ 3 أسابيع · الحرج وشبه الحرج", "c.ls": "مرتب حسب الفائض",
+    lh: ["الكود", "النشاط", "البداية", "النهاية", "الفائض (يوم)", "الحالة"],
+    look: [["A2410", "صب سقف الدور 28"], ["A3120", "توريد محطة التبريد"], ["A3305", "وحدات الواجهة، منطقة C"], ["A2475", "حوائط الكور للسطح"], ["A4110", "تركيب المصاعد 1-4"], ["A3390", "صواعد MEP، 20-28"]],
+    "p.kicker": "اللي بيتحدث لوحده", "p.title": "من بيانات الموقع الخام لقرار، من غير نسخ ولصق",
+    "p.sub": "البيانات بتتسحب من مكانها، بتتراجع، بتتحفظ كنسخة، وبتوصل للناس اللي محتاجاها. نفس المسار بيغذي الداشبورد والتقرير والتنبيهات.",
+    pin: ["Primavera P6", "يوميات الموقع", "التكلفة / ERP", "ملفات Excel", "إيميل وواتساب"],
+    peng: ["محرك الأتمتة", "مراجعة · دمج · حفظ"],
+    pout: ["داشبورد حي", "تقرير أسبوعي", "تنبيهات مبكرة"],
+    "r.kicker": "تقارير بتكتب نفسها", "r.title": "تقرير الأسبوع جاهز قبل الاجتماع",
+    "r.sub": "الأرقام والرسومات وملخص بلغة بسيطة بيتولدوا من نفس بيانات الداشبورد. مهندس التخطيط بيراجع ويعتمد، بدل ما يبني من الصفر.",
+    rticks: ["الملخص بيتكتب بالذكاء الاصطناعي من بيانات الأسبوع، ويراجعه مهندس التخطيط", "نفس أرقام الداشبورد، فالتقرير والشاشة عمرهم ما يختلفوا", "تصدير PDF أو PowerPoint أو إيميل بجدول زمني", "نسخة عربي ونسخة إنجليزي من مصدر واحد"],
+    "r.ph1": "تقرير التقدم الأسبوعي · مارينا هايتس (وهمي)", "r.h": "الملخص التنفيذي",
+    rmini: ["الإنجاز", "SPI", "المتوقع"],
+    rtext: "الإنجاز الكلي وصل {a}% مقابل {p}% مخطط (SPI {spi}). الهيكل هو السبب الأساسي، متأخر دورين عن دورة الـ Baseline. منطقة C في الواجهات فاضل لها 4 أيام فائض ودخلت قائمة المراقبة. خطة التعافي: وردية تانية للونش من الأسبوع 43 متوقع ترجّع 9 أيام. مفيش تغيير في تاريخ الانتهاء المتوقع الأسبوع ده.",
+    "f.kicker": "اللي هتاخده", "f.title": "معمول على طريقة فرق المقاولات في التقارير",
+    feat: [["S-Curve وSPI وCPI حي", "المخطط والفعلي والمتوقع في شاشة واحدة، مع مؤشرات الجدول والتكلفة بتتحدث مع كل تحديث."], ["Look-ahead والمسار الحرج", "3 أسابيع قدام مرتبة حسب الفائض، والشغل شبه الحرج بيظهر قبل ما يبقى حرج."], ["العمالة والإنتاجية", "العمالة اليومية من يوميات الموقع مقابل المخطط، وإنتاجية كل تخصص."], ["التكلفة والتدفق النقدي", "الميزانية والمرتبط والفعلي، مع CPI والتكلفة المتوقعة لكل حزمة."], ["سجل التأخير وأدلة الـ EOT", "أحداث التأخير بتتسجل وتترتبط بالأنشطة أول بأول، جاهزة للمطالبة."], ["موبايل وتنبيهات", "الإدارة بتقرأه من الموبايل، والتنبيهات بتطلع لما الفائض أو الإنتاجية يعدّوا الحد."]],
+    "s.kicker": "إزاي بيتعمل", "s.title": "4 خطوات من ملفات متفرقة لداشبورد حي",
+    steps: [["الربط", "تحديد المصادر: ملفات P6 ويوميات الموقع ودفتر التكلفة والـ trackers.", "الأسبوع 1"], ["المراجعة", "فحص سلامة الجدول والبيانات، عشان الداشبورد يتبني على بيانات نضيفة.", "الأسبوع 1–2"], ["التصميم", "المؤشرات والحدود والشكل بالاتفاق مع الإدارة، عربي وإنجليزي.", "الأسبوع 2–3"], ["الأتمتة", "تحديث مجدول وتقارير وتنبيهات، وبعدها تسليم وتدريب.", "الأسبوع 3–4"]],
+    "k.kicker": "الخطوة الجاية", "k.title": "عايز ده لمشروعك؟", "k.sub": "ابعتلي رسالة وقولي بتعمل تقاريرك إزاي النهارده، وأوريك ممكن تبقى شكلها إيه.",
+    "k.pf": "شوف البورتفوليو", "k.deck": "شوف البرزنتيشن",
+    foot: "© صديق محمود · مهندس الواقع · كل محتوى الداشبورد في الصفحة دي بيانات ديمو وهمية.",
+    tipDay: "اليوم", tipMonth: "الشهر",
+    "v.kicker": "لاي اوت ذكي · صور · XER · Asite", "v.title": "شوف كل فيلا، كل يوم.",
+    "v.sub": "لاي اوت مخصص للموقع بيلوّن كل فيلا حسب مرحلتها الحالية، مباشرة من أنشطة P6. دوس على أي فيلا تشوف سجل صورها بالتاريخ، وأنشطتها، وكل يومية موقع وطلب استلام وسجل Asite مربوط بيها. ودوس تشغيل تشوف الموقع بيتبني أسبوع بأسبوع.",
+    "v.app": "فلل بالم جروف · موقع ذكي (وهمي)", "v.src": "XER · صور الموقع · اليوميات · Asite (محاكاة)",
+    "v.lay": "لاي اوت الموقع حسب المرحلة", "v.layhint": "دوس على فيلا",
+    stages: ["لم يبدأ", "حفر", "أساسات", "هيكل", "مباني", "تأسيس MEP", "تشطيبات", "تم التسليم"],
+    wk: "أسبوع", cl: "كلستر",
+    vt: ["الصور", "الأنشطة", "اليوميات وAsite"], vtabs: ["الأنشطة", "اليوميات وAsite"],
+    vh: ["الكود", "النشاط", "البداية", "النهاية", "%"],
+    acts: ["حفر وخرسانة نظافة", "أساسات وسملات", "هيكل: من الأرضي للسطح", "مباني كل الأدوار", "تأسيس كهروميكانيك", "لياسة وبلاط وتشطيبات", "ملاحظات واستلام"],
+    rec: { diary: "يومية موقع", ir: "طلب استلام", asite: "مراسلة Asite", ncr: "عدم مطابقة", rfi: "استفسار فني" },
+    irs: ["معتمد", "معتمد بملاحظات", "مرفوض، أعيد تقديمه"],
+    recTxt: { diary: "{n} عامل على الفيلا · {act}", ir: "{act} · {st}", asite: "إصدار شوب دروينج مراجعة {r} لـ {act}", ncr: "تعشيش في العمود C3، تم اعتماد طريقة الإصلاح", rfi: "توضيح مناسيب جلب MEP في سقف الأول" },
+    open: "فتح", linked: "مربوط بـ",
+    vsub: "{c} · قطعة {p} · {pct}% إنجاز", none: "مفيش صور لسه. الشغل ما بدأش في الفيلا دي في الأسبوع المختار.",
+    "x.title": "تحليل ملف XER", "x.float": "توزيع الفائض الكلي (يوم)", "x.floatn": "عدد الأنشطة في كل شريحة",
+    xt: [["2,184", "نشاط"], ["4,390", "علاقة"], ["96", "حرج"], ["0", "open ends"], ["6", "قيود"], ["21", "خارج التسلسل"], ["0.95", "BEI"], ["0.97", "CPLI"]],
+    "x.dcma": "فحص سلامة الجدول (DCMA 14 نقطة)", "x.dcman": "بيشتغل أوتوماتيك مع كل تحديث",
+    dh: ["الفحص", "القاعدة", "النتيجة", "الحد"],
+    dcma: [["المنطق", "بدون سابق/لاحق", "0.0%", "5%"], ["Leads", "تأخير سالب", "0", "0"], ["Lags", "بتأخير", "3.1%", "5%"], ["أنواع العلاقات", "FS", "93%", "90%"], ["قيود صارمة", "من الأنشطة", "0.2%", "5%"], ["فائض عالي", "> 44 يوم", "6.8%", "5%"], ["فائض سالب", "أنشطة", "0", "0"], ["مدة طويلة", "> 44 يوم", "2.4%", "5%"], ["تواريخ خاطئة", "متوقع/فعلي", "0", "0"], ["الموارد", "محمّلة", "97%", "100%"], ["مهام فائتة", "انتهت متأخر", "8.2%", "5%"], ["اختبار المسار الحرج", "نجح", "نعم", "نعم"], ["CPLI", "مؤشر المسار الحرج", "0.98", "0.95"], ["BEI", "تنفيذ الـ Baseline", "0.96", "0.95"]],
+    dres: [1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+    tipFloat: "الفائض", tipActs: "الأنشطة", pass: "ناجح", review: "مراجعة",
+  },
+};
+
+/* =========================================================
+   DEMO DATA (fictional)
+   ========================================================= */
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const N = 25, DD = 9;                       // Jan-26 .. Jan-28, data date at index 9 (Oct-26)
+const logistic = (t, mid, k) => 1 / (1 + Math.exp(-(t - mid) / k));
+function makeProject(mid, k, perf, bias, seed) {
+  const a = logistic(0, mid, k), b = logistic(N - 1, mid, k);
+  const plan = [...Array(N)].map((_, t) => 100 * (logistic(t, mid, k) - a) / (b - a));
+  let r = seed;
+  const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
+  const actual = plan.slice(0, DD + 1).map((p, t) => Math.max(0, p * (perf - 0.04 * (t / DD) * bias) + (rnd() - 0.5) * 0.6));
+  actual[0] = 0;
+  const spi = actual[DD] / plan[DD];
+  const fc = []; for (let t = DD; t < N; t++) fc.push(t === DD ? actual[DD] : Math.min(100, actual[DD] + (plan[Math.min(N - 1, t + 0)] - plan[DD]) * (0.9 + 0.1 * spi)));
+  // stretch the tail so forecast reaches 100 slightly after plan
+  fc[fc.length - 1] = Math.min(fc[fc.length - 1], 98.6);
+  return { plan, actual, fc, spi };
+}
+const PROJ = [
+  Object.assign(makeProject(12.5, 3.4, 0.985, 1, 7), { cpi: 1.03, slip: 12, mp: 1284, mpPlan: 1320, pk: [[100, 100], [62, 68], [31, 38], [14, 19], [4, 6], [2, 2]] }),
+  Object.assign(makeProject(11.5, 3.0, 1.01, 0.2, 11), { cpi: 0.97, slip: -6, mp: 642, mpPlan: 610, pk: [[100, 100], [88, 85], [52, 50], [40, 41], [21, 18], [9, 8]] }),
+  Object.assign(makeProject(13.5, 3.8, 0.93, 1.6, 23), { cpi: 0.91, slip: 34, mp: 418, mpPlan: 520, pk: [[96, 100], [44, 58], [12, 22], [5, 11], [0, 2], [3, 6]] }),
+];
+const LOOK = [[[0, "20-Oct", "26-Oct", 0], [1, "22-Oct", "22-Oct", 2], [2, "23-Oct", "14-Nov", 4], [3, "27-Oct", "21-Nov", 6], [4, "02-Nov", "28-Dec", 9], [5, "03-Nov", "30-Nov", 12]]];
+let pi = 0;
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const $ = (s) => document.querySelector(s);
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+let lang = store.get("lang") === "ar" ? "ar" : "en";
+const d = () => T[lang];
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const NS = "http://www.w3.org/2000/svg";
+const ICON = {
+  good: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3.5 8.5l3 3 6-7"/></svg>',
+  warn: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2.5l6 11H2z"/><path d="M8 7v2.5"/></svg>',
+  serious: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5M8 11v.2"/></svg>',
+  crit: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5"/></svg>',
+};
+const statusHTML = (k) => `<span class="status ${k}">${ICON[k]}${esc(d().st[k])}</span>`;
+const lvlIdx = (v, good, warn, serious) => (v >= good ? "good" : v >= warn ? "warn" : v >= serious ? "serious" : "crit");
+function tween(el, to, dec, suffix = "", ms = 900) {
+  const from = parseFloat(el.dataset.v || "0"); el.dataset.v = to;
+  if (reduce) { el.textContent = to.toFixed(dec) + suffix; return; }
+  const t0 = performance.now();
+  const step = (t) => { const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3); el.textContent = (from + (to - from) * e).toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, dec ? "" : ",") + suffix; if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+function renderTiles(first) {
+  const P = PROJ[pi], D = d();
+  const act = P.actual[DD], pl = P.plan[DD];
+  const items = [
+    { v: act, dec: 1, suf: "%", sub: `${D.tsub[0]} ${pl.toFixed(1)}%`, st: lvlIdx(P.spi, 0.97, 0.93, 0.88), spark: P.actual },
+    { v: P.spi, dec: 2, suf: "", sub: D.tsub[1], st: lvlIdx(P.spi, 0.97, 0.93, 0.88) },
+    { v: P.cpi, dec: 2, suf: "", sub: D.tsub[2], st: lvlIdx(P.cpi, 1.0, 0.95, 0.9) },
+    { v: P.slip, dec: 0, suf: " d", sub: D.tsub[3], st: P.slip <= 0 ? "good" : P.slip <= 14 ? "warn" : P.slip <= 30 ? "serious" : "crit", sign: true },
+    { v: P.mp, dec: 0, suf: "", sub: `${D.tsub[4]} ${P.mpPlan.toLocaleString("en-US")}`, st: P.mp >= P.mpPlan * 0.97 ? "good" : P.mp >= P.mpPlan * 0.9 ? "warn" : "serious" },
+  ];
+  const box = $("#tiles");
+  if (first || box.children.length !== 5) box.innerHTML = items.map((it, i) => `<div class="tile"><small>${esc(D.tiles[i])}</small><b id="tv${i}">0</b><span class="sub">${esc(it.sub)}</span><span id="ts${i}">${statusHTML(it.st)}</span>${i === 0 ? '<svg class="spark" id="spark" viewBox="0 0 120 28" aria-hidden="true"></svg>' : ""}</div>`).join("");
+  items.forEach((it, i) => {
+    const el = $("#tv" + i);
+    if (it.sign) { el.dataset.v = it.v; el.textContent = (it.v > 0 ? "+" : "") + it.v + it.suf; }
+    else tween(el, it.v, it.dec, it.suf);
+    $("#ts" + i).innerHTML = statusHTML(it.st);
+  });
+  const sp = P.actual, mx = Math.max(...sp) || 1;
+  const pts = sp.map((v, i) => `${(i / (sp.length - 1)) * 116 + 2},${26 - (v / mx) * 22}`).join(" ");
+  $("#spark").innerHTML = `<polyline points="${pts}" fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="118" cy="${26 - (sp[sp.length - 1] / mx) * 22}" r="3" fill="var(--s2)"/>`;
+}
+
+const SC = { W: 640, H: 300, L: 44, R: 16, T: 14, B: 34 };
+const sx = (i) => SC.L + (i / (N - 1)) * (SC.W - SC.L - SC.R);
+const sy = (v) => SC.T + (1 - v / 100) * (SC.H - SC.T - SC.B);
+function renderS() {
+  const P = PROJ[pi], svg = $("#scurve");
+  let g = "";
+  [0, 25, 50, 75, 100].forEach((v) => { g += `<line x1="${SC.L}" x2="${SC.W - SC.R}" y1="${sy(v)}" y2="${sy(v)}" stroke="${v ? "var(--grid)" : "var(--axis)"}" stroke-width="1"/><text x="${SC.L - 8}" y="${sy(v) + 4}" text-anchor="end">${v}%</text>`; });
+  for (let i = 0; i < N; i += 3) { const m = MON[i % 12], y = 26 + Math.floor(i / 12); g += `<text x="${sx(i)}" y="${SC.H - 12}" text-anchor="middle">${m}-${y}</text>`; }
+  g += `<line x1="${sx(DD)}" x2="${sx(DD)}" y1="${SC.T}" y2="${SC.H - SC.B}" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="3 4"/><text x="${sx(DD) + 6}" y="${SC.T + 10}" class="lbl" style="fill:var(--amber-ink)">DD</text>`;
+  const path = (arr, off = 0) => arr.map((v, i) => `${i ? "L" : "M"}${sx(i + off).toFixed(1)} ${sy(v).toFixed(1)}`).join(" ");
+  const area = path(P.actual) + ` L${sx(DD)} ${sy(0)} L${sx(0)} ${sy(0)} Z`;
+  g += `<path d="${area}" fill="var(--s2)" fill-opacity=".1"/>`;
+  g += `<path class="draw" d="${path(P.plan)}" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  g += `<path class="draw" d="${path(P.actual)}" fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  g += `<path d="${path(P.fc, DD)}" fill="none" stroke="var(--s2)" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round" opacity=".9"/>`;
+  g += `<circle cx="${sx(DD)}" cy="${sy(P.actual[DD])}" r="5" fill="var(--s2)" stroke="var(--panel)" stroke-width="2"/>`;
+  g += `<text x="${sx(DD) - 8}" y="${sy(P.actual[DD]) + 18}" text-anchor="end" class="lbl">${P.actual[DD].toFixed(1)}%</text>`;
+  g += `<text x="${sx(N - 1) - 4}" y="${sy(100) - 4}" text-anchor="end" class="lbl">100%</text>`;
+  g += `<line id="sx" y1="${SC.T}" y2="${SC.H - SC.B}" stroke="var(--ink-2)" stroke-width="1" opacity="0"/><circle id="sp1" r="4.5" fill="var(--s1)" stroke="var(--panel)" stroke-width="2" opacity="0"/><circle id="sp2" r="4.5" fill="var(--s2)" stroke="var(--panel)" stroke-width="2" opacity="0"/>`;
+  g += `<rect id="shit" x="${SC.L}" y="${SC.T}" width="${SC.W - SC.L - SC.R}" height="${SC.H - SC.T - SC.B}" fill="transparent"/>`;
+  svg.innerHTML = g;
+  if (!reduce) svg.querySelectorAll(".draw").forEach((p) => { const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.getBoundingClientRect(); p.style.transition = "stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)"; p.style.strokeDashoffset = 0; });
+  const hit = $("#shit"), tip = $("#stip"), card = $("#scard");
+  hit.onpointermove = (e) => {
+    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * (SC.W / r.width);
+    const i = Math.max(0, Math.min(N - 1, Math.round(((x - SC.L) / (SC.W - SC.L - SC.R)) * (N - 1))));
+    const D = d(), m = `${MON[i % 12]}-${26 + Math.floor(i / 12)}`;
+    $("#sx").setAttribute("x1", sx(i)); $("#sx").setAttribute("x2", sx(i)); $("#sx").setAttribute("opacity", ".5");
+    const p1 = $("#sp1"), p2 = $("#sp2");
+    p1.setAttribute("cx", sx(i)); p1.setAttribute("cy", sy(P.plan[i])); p1.setAttribute("opacity", 1);
+    const av = i <= DD ? P.actual[i] : P.fc[i - DD];
+    p2.setAttribute("cx", sx(i)); p2.setAttribute("cy", sy(av)); p2.setAttribute("opacity", 1);
+    tip.innerHTML = `<b>${m}</b><div><i style="background:var(--s1)"></i>${esc(D.s[0])} ${P.plan[i].toFixed(1)}%</div><div><i style="background:var(--s2)"></i>${esc(i <= DD ? D.s[1] : D.s[2])} ${av.toFixed(1)}%</div>`;
+    placeTip(tip, card, e);
+  };
+  hit.onpointerleave = () => { tip.classList.remove("on"); ["#sx", "#sp1", "#sp2"].forEach((s) => $(s).setAttribute("opacity", 0)); };
+}
+
+function renderPk() {
+  const P = PROJ[pi], D = d();
+  $("#pk").innerHTML = P.pk.map(([a, p], i) => `<div class="pk-row" title="${esc(D.packages[i])}: ${a}% / ${p}%"><span class="nm">${esc(D.packages[i])}</span><div class="pk-track"><div class="pk-fill" data-w="${a}"></div><div class="pk-plan" style="left:calc(${p}% - 1px)"></div></div><span class="v">${a}%</span></div>`).join("");
+  requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll(".pk-fill").forEach((f) => { f.style.width = f.dataset.w + "%"; })));
+}
+
+const MP = { W: 640, H: 220, L: 44, R: 16, T: 14, B: 30 };
+let mpSeries = [];
+function makeMp() {
+  const P = PROJ[pi]; let r = 17 + pi * 13; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
+  mpSeries = [...Array(14)].map((_, i) => Math.round(P.mp * (0.9 + 0.12 * rnd()) * (i % 7 === 5 ? 0.62 : 1)));
+  mpSeries[13] = P.mp;
+}
+function renderMp() {
+  const P = PROJ[pi], svg = $("#manpower"), D = d();
+  const max = Math.ceil(Math.max(P.mpPlan, ...mpSeries) * 1.15 / 200) * 200;
+  const y = (v) => MP.T + (1 - v / max) * (MP.H - MP.T - MP.B);
+  const bw = Math.min(24, ((MP.W - MP.L - MP.R) / 14) * 0.62), step = (MP.W - MP.L - MP.R) / 14;
+  let g = "";
+  for (let k = 0; k <= 4; k++) { const v = (max / 4) * k; g += `<line x1="${MP.L}" x2="${MP.W - MP.R}" y1="${y(v)}" y2="${y(v)}" stroke="${k ? "var(--grid)" : "var(--axis)"}"/><text x="${MP.L - 8}" y="${y(v) + 4}" text-anchor="end">${v >= 1000 ? (v / 1000).toFixed(v % 1000 ? 1 : 0) + "K" : v}</text>`; }
+  mpSeries.forEach((v, i) => {
+    const x = MP.L + step * i + (step - bw) / 2, h = y(0) - y(v);
+    g += `<path class="bar" data-i="${i}" d="M${x} ${y(0)} V${y(v) + 4} Q${x} ${y(v)} ${x + 4} ${y(v)} H${x + bw - 4} Q${x + bw} ${y(v)} ${x + bw} ${y(v) + 4} V${y(0)} Z" fill="var(--s3)" style="transform-origin:${x}px ${y(0)}px;${reduce ? "" : `transform:scaleY(0);transition:transform .8s ${i * 0.03}s cubic-bezier(.2,.8,.2,1)`}"/>`;
+    if (i % 2 === 1) g += `<text x="${x + bw / 2}" y="${MP.H - 10}" text-anchor="middle">${String(i + 2).padStart(2, "0")}</text>`;
+  });
+  g += `<line x1="${MP.L}" x2="${MP.W - MP.R}" y1="${y(P.mpPlan)}" y2="${y(P.mpPlan)}" stroke="var(--ink-2)" stroke-width="1.5" stroke-dasharray="6 5"/>`;
+  const lastX = MP.L + step * 13 + step / 2;
+  g += `<text x="${lastX}" y="${y(mpSeries[13]) - 8}" text-anchor="middle" class="lbl">${mpSeries[13].toLocaleString("en-US")}</text>`;
+  mpSeries.forEach((v, i) => { g += `<rect class="mhit" data-i="${i}" x="${MP.L + step * i}" y="${MP.T}" width="${step}" height="${MP.H - MP.T - MP.B}" fill="transparent"/>`; });
+  svg.innerHTML = g;
+  if (!reduce) requestAnimationFrame(() => requestAnimationFrame(() => svg.querySelectorAll(".bar").forEach((b) => b.style.transform = "scaleY(1)")));
+  const tip = $("#mtip"), card = $("#mcard");
+  svg.querySelectorAll(".mhit").forEach((h) => {
+    h.onpointermove = (e) => {
+      const i = +h.dataset.i; svg.querySelectorAll(".bar").forEach((b) => b.setAttribute("fill-opacity", +b.dataset.i === i ? 1 : 0.55));
+      tip.innerHTML = `<b>${esc(D.tipDay)} ${String(i + 2).padStart(2, "0")}-Oct</b><div><i style="background:var(--s3)"></i>${esc(D.m[0])} ${mpSeries[i].toLocaleString("en-US")}</div><div><i style="background:var(--ink-2)"></i>${esc(D.m[1])} ${P.mpPlan.toLocaleString("en-US")}</div>`;
+      placeTip(tip, card, e);
+    };
+    h.onpointerleave = () => { tip.classList.remove("on"); svg.querySelectorAll(".bar").forEach((b) => b.setAttribute("fill-opacity", 1)); };
+  });
+}
+
+function renderLook() {
+  const D = d();
+  const rows = LOOK[0].map(([k, s, f, fl]) => { const st = fl <= 0 ? "crit" : fl <= 4 ? "serious" : fl <= 8 ? "warn" : "good"; return `<tr><td class="mono">${D.look[k][0]}</td><td>${esc(D.look[k][1])}</td><td class="mono">${s}</td><td class="mono">${f}</td><td class="num">${fl}</td><td>${statusHTML(st)}</td></tr>`; }).join("");
+  $("#look").innerHTML = `<thead><tr>${D.lh.map((h, i) => `<th${i === 4 ? ' style="text-align:end"' : ""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody>`;
+}
+
+let feedN = 0;
+function feedPush() {
+  const D = d(), P = PROJ[pi];
+  const tpl = D.feed[feedN % D.feed.length]; feedN++;
+  const txt = tpl.replace("{n}", "2,184").replace("{k}", 3 + pi).replace("{m}", (486 + Math.round(liveBump * 40)).toLocaleString("en-US")).replace("{c}", P.cpi.toFixed(2));
+  const now = new Date(), t = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+  const div = document.createElement("div"); div.innerHTML = `<span>${t}</span><span>${esc(txt)}</span>`;
+  const f = $("#feed"); f.prepend(div); while (f.children.length > 7) f.lastChild.remove();
+}
+
+function renderAll(first) { renderTiles(first); renderS(); renderPk(); makeMp(); renderMp(); renderLook(); }
+
+/* live refresh simulation */
+let lastSync = Date.now();
+function syncTick() {
+  const D = d(), s = Math.round((Date.now() - lastSync) / 1000);
+  if (!$("#sync").classList.contains("syncing")) $("#sync-t").textContent = `${D.sync[0]} · ${s}${lang === "ar" ? " " : ""}${D.sync[2]}`;
+}
+function refresh() {
+  const sy = $("#sync"); sy.classList.add("syncing"); $("#sync-t").textContent = d().sync[1];
+  setTimeout(() => {
+    const P = PROJ[pi];
+    P.actual[DD] = Math.min(P.actual[DD] + 0.05 + Math.random() * 0.06, P.plan[DD] * 1.02);
+    P.spi = P.actual[DD] / P.plan[DD]; P.fc[0] = P.actual[DD];
+    P.mp = Math.max(200, P.mp + Math.round((Math.random() - 0.45) * 30));
+    mpSeries[13] = P.mp;
+    renderTiles(false); renderMpLast(); feedPush();
+    sy.classList.remove("syncing"); lastSync = Date.now(); syncTick();
+  }, 1100);
+}
+function renderMpLast() { renderMp(); }
+
+/* =========================================================
+   PIPELINE (animated)
+   ========================================================= */
+function renderPipe() {
+  const D = d(), svg = $("#pipe"); let g = "";
+  const ins = D.pin, iy = (i) => 50 + i * 80;
+  const ex = 430, ey = 150, ew = 200, eh = 120;
+  ins.forEach((t, i) => {
+    g += `<path id="pin${i}" d="M200 ${iy(i)} C 320 ${iy(i)}, 330 ${ey + eh / 2}, ${ex} ${ey + eh / 2}" fill="none" stroke="rgba(236,235,230,.16)" stroke-width="1.5"/>`;
+    g += `<rect x="20" y="${iy(i) - 24}" width="180" height="48" rx="12" fill="#15181d" stroke="rgba(236,235,230,.16)"/><text x="110" y="${iy(i) + 5}" text-anchor="middle" fill="#ecebe6" font-size="15" font-weight="600">${esc(t)}</text>`;
+    if (!reduce) g += `<circle r="4" fill="#7fd4ff"><animateMotion dur="${2.6 + i * 0.35}s" begin="${i * 0.4}s" repeatCount="indefinite"><mpath href="#pin${i}"/></animateMotion></circle>`;
+  });
+  const outs = D.pout, oy = (i) => 110 + i * 100;
+  outs.forEach((t, i) => {
+    g += `<path id="pout${i}" d="M${ex + ew} ${ey + eh / 2} C 720 ${ey + eh / 2}, 720 ${oy(i)}, 790 ${oy(i)}" fill="none" stroke="rgba(245,165,36,.35)" stroke-width="1.5"/>`;
+    g += `<rect x="790" y="${oy(i) - 26}" width="190" height="52" rx="12" fill="rgba(245,165,36,.08)" stroke="rgba(245,165,36,.55)"/><text x="885" y="${oy(i) + 5}" text-anchor="middle" fill="#f7b955" font-size="15" font-weight="600">${esc(t)}</text>`;
+    if (!reduce) g += `<circle r="4.5" fill="#f5a524"><animateMotion dur="2.2s" begin="${0.6 + i * 0.5}s" repeatCount="indefinite"><mpath href="#pout${i}"/></animateMotion></circle>`;
+  });
+  g += `<rect x="${ex}" y="${ey}" width="${ew}" height="${eh}" rx="18" fill="#1b1f25" stroke="#f5a524" stroke-width="1.5"/>`;
+  g += `<text x="${ex + ew / 2}" y="${ey + 52}" text-anchor="middle" fill="#ecebe6" font-size="17" font-weight="700">${esc(D.peng[0])}</text><text x="${ex + ew / 2}" y="${ey + 78}" text-anchor="middle" fill="#9b9b94" font-size="13">${esc(D.peng[1])}</text>`;
+  if (!reduce) g += `<circle cx="${ex + ew / 2}" cy="${ey + eh / 2}" r="70" fill="none" stroke="#f5a524" stroke-opacity=".25"><animate attributeName="r" values="62;84;62" dur="3s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values=".35;0;.35" dur="3s" repeatCount="indefinite"/></circle>`;
+  svg.innerHTML = g;
+}
+
+/* report typing */
+let typeTimer = null;
+function typeReport() {
+  const R = PROJ[0], el = $("#rtext"), full = d().rtext.replace("{a}", R.actual[DD].toFixed(1)).replace("{p}", R.plan[DD].toFixed(1)).replace("{spi}", R.spi.toFixed(2)); clearInterval(typeTimer);
+  if (reduce) { el.textContent = full; el.classList.remove("typing"); return; }
+  let i = 0; el.textContent = ""; el.classList.add("typing");
+  const start = () => { typeTimer = setInterval(() => { i += 3; el.textContent = full.slice(0, i); if (i >= full.length) { clearInterval(typeTimer); el.classList.remove("typing"); } }, 22); };
+  const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); } }, { threshold: 0.3 });
+  io.observe(el);
+}
+
+
+/* =========================================================
+   SMART SITE (fictional villa community)
+   ========================================================= */
+const STG_COL = ["transparent", "#184f95", "#1c5cab", "#256abf", "#2a78d6", "#3987e5", "#5598e7", "#86b6ef"];
+const DUR = [2, 4, 8, 5, 6, 8, 1];
+const T0 = Date.UTC(2026, 0, 5);
+const wkDate = (w) => { const dt = new Date(T0 + (w - 1) * 7 * 864e5); return String(dt.getUTCDate()).padStart(2, "0") + "-" + MON[dt.getUTCMonth()] + "-" + String(dt.getUTCFullYear()).slice(2); };
+const QUAD = [[30, 28], [322, 28], [30, 306], [322, 306]];
+const VILLAS = [];
+for (let c = 0; c < 4; c++) for (let i = 0; i < 12; i++) {
+  const r = Math.floor(i / 4), col = i % 4, slow = (i * 7 + c * 3) % 9 === 4;
+  const start = 1 + c * 7 + i * 0.85 + (r === 2 ? 1 : 0);
+  const f = slow ? 1.3 : 1 + ((i + c) % 3) * 0.04;
+  const ends = []; let t = start; DUR.forEach((d0) => { t += d0 * f; ends.push(t); });
+  VILLAS.push({ c, i, id: "ABCD"[c] + String(i + 1).padStart(2, "0"), plot: 100 * (c + 1) + i + 1, x: QUAD[c][0] + col * 62, y: QUAD[c][1] + r * 76, start, ends, slow });
+}
+let week = 40, sel = 30, playing = null, photoSel = -1, vtab = 0;
+function stageAt(v, w) { if (w < v.start) return 0; for (let k = 0; k < 7; k++) if (w < v.ends[k]) return k + 1; return 7; }
+function pctAt(v, w) { const tot = v.ends[6] - v.start; return Math.max(0, Math.min(100, ((w - v.start) / tot) * 100)); }
+
+function renderLayout() {
+  const D = d(), svg = $("#lay"); let g = "";
+  g += `<rect x="6" y="6" width="588" height="548" rx="18" fill="#101317" stroke="#262a31"/>`;
+  g += `<rect x="18" y="258" width="564" height="38" fill="#1a1d22"/><rect x="284" y="18" width="32" height="524" fill="#1a1d22"/>`;
+  g += `<path d="M18 277 H582 M300 18 V542" stroke="#3a3f47" stroke-dasharray="8 8"/>`;
+  g += `<circle cx="300" cy="277" r="34" fill="#16301f" stroke="#262a31"/><circle cx="300" cy="277" r="18" fill="#1f4a2c"/>`;
+  g += `<text x="300" y="281" text-anchor="middle" style="fill:#7fbf8f">PARK</text>`;
+  ["A", "B", "C", "D"].forEach((L, c) => { g += `<text x="${QUAD[c][0] + 121}" y="${c < 2 ? 22 : 300}" text-anchor="middle">${esc(D.cl)} ${L}</text>`; });
+  g += `<text x="300" y="552" text-anchor="middle">▲ GATE</text>`;
+  VILLAS.forEach((v, n) => {
+    const st = stageAt(v, week), x = v.x, y = v.y;
+    const fill = STG_COL[st], stroke = st ? "rgba(236,235,230,.25)" : "#3a3f47";
+    g += `<g class="villa${n === sel ? " sel" : ""}" data-n="${n}" tabindex="0" role="button" aria-label="Villa ${v.id}, ${esc(D.stages[st])}">`;
+    g += `<rect x="${x}" y="${y}" width="56" height="64" rx="4" fill="#121519" stroke="#262a31"/>`;
+    g += `<path class="fp" d="M${x + 8} ${y + 10} h28 v14 h12 v30 h-40 z" fill="${fill}" stroke="${stroke}" stroke-width="1.2" style="transition:fill .4s"/>`;
+    g += `<rect x="${x + 38}" y="${y + 10}" width="10" height="11" rx="2" fill="${st >= 6 ? "#2d7fa3" : "#1b2229"}"/>`;
+    g += `<text x="${x + 28}" y="${y + 62}" text-anchor="middle" style="font-size:8.5px">${v.id}</text></g>`;
+  });
+  svg.innerHTML = g;
+  const tip = $("#ltip"), card = svg.closest(".card");
+  svg.querySelectorAll(".villa").forEach((el) => {
+    const n = +el.dataset.n, v = VILLAS[n];
+    el.onclick = () => { sel = n; photoSel = -1; renderLayout(); renderPanel(); };
+    el.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.onclick(); } };
+    el.onpointermove = (e) => {
+      const st = stageAt(v, week);
+      tip.innerHTML = `<b>Villa ${v.id}</b><div><i style="background:${st ? STG_COL[st] : "#3a3f47"}"></i>${esc(d().stages[st])}</div><div>${pctAt(v, week).toFixed(0)}%</div>`;
+      placeTip(tip, card, e);
+    };
+    el.onpointerleave = () => tip.classList.remove("on");
+  });
+  const counts = Array(8).fill(0); VILLAS.forEach((v) => counts[stageAt(v, week)]++);
+  $("#stglg").innerHTML = D.stages.map((s0, k) => `<span><i style="background:${k ? STG_COL[k] : "transparent"};border:1px solid ${k ? "transparent" : "#3a3f47"}"></i>${esc(s0)} <span class="stg-count">${counts[k]}</span></span>`).join("");
+  $("#wko").textContent = `${D.wk} ${week} · ${wkDate(week)}`;
+}
+
+/* site photo, drawn per stage (illustration, not a real photo) */
+let phId = 0;
+function photo(stage, seed, stamp, big) {
+  const id = "ph" + (phId++), r = (k) => ((seed * 9301 + k * 49297) % 233280) / 233280;
+  let g = `<defs><linearGradient id="${id}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fa8d6"/><stop offset="1" stop-color="#d9e7ee"/></linearGradient></defs>`;
+  g += `<rect width="320" height="180" fill="url(#${id}s)"/>`;
+  g += `<path d="M0 118 Q80 ${108 + r(1) * 6} 160 116 T320 112 V180 H0Z" fill="#c9b48e"/><rect y="150" width="320" height="30" fill="#b59f78"/>`;
+  g += `<g opacity=".45" fill="#9aa9b4"><rect x="${10 + r(2) * 30}" y="96" width="34" height="24"/><rect x="${250 + r(3) * 20}" y="92" width="44" height="28"/></g>`;
+  const X = 96, B = 140;
+  if (stage === 1) {
+    g += `<path d="M70 ${B} L95 118 H225 L250 ${B} Z" fill="#7a6447"/><path d="M80 ${B - 2} L100 124 H220 L240 ${B - 2}" fill="#5f4d36"/>`;
+    g += `<rect x="190" y="98" width="46" height="20" rx="3" fill="#f2b324"/><rect x="200" y="86" width="20" height="14" fill="#f2b324"/><path d="M196 100 L160 84 L142 104" stroke="#e0a21a" stroke-width="5" fill="none"/><rect x="186" y="116" width="54" height="8" rx="4" fill="#333"/>`;
+  } else if (stage === 2) {
+    g += `<rect x="${X - 6}" y="${B - 10}" width="140" height="12" fill="#a7a49c"/>`;
+    for (let k = 0; k < 6; k++) g += `<rect x="${X + k * 25}" y="${B - 22}" width="10" height="12" fill="#b9b5ab"/><path d="M${X + 2 + k * 25} ${B - 22} v-14 M${X + 8 + k * 25} ${B - 22} v-14" stroke="#c4672b" stroke-width="1.5"/>`;
+  } else {
+    // structure frame
+    const floors = stage === 3 ? 1 + Math.round(r(4)) : 2;
+    const wall = stage >= 6 ? "#efe6d6" : stage >= 4 ? "#b9b2a5" : "none";
+    for (let f = 0; f < floors; f++) {
+      const y0 = B - 34 * (f + 1);
+      if (stage >= 4) {
+        g += `<rect x="${X}" y="${y0}" width="128" height="34" fill="${wall}"/>`;
+        if (stage === 4) for (let k = 0; k < 4; k++) g += `<path d="M${X} ${y0 + 8 * k + 6} H${X + 128}" stroke="#9e978a" stroke-width=".8"/>`;
+        const glass = stage >= 7 ? "#2f4f66" : stage >= 6 ? "#5d7080" : "#3b3a37";
+        g += `<rect x="${X + 14}" y="${y0 + 9}" width="26" height="18" fill="${glass}"/><rect x="${X + 88}" y="${y0 + 9}" width="26" height="18" fill="${glass}"/>`;
+        if (f === 0) g += `<rect x="${X + 54}" y="${y0 + 8}" width="20" height="26" fill="${stage >= 7 ? "#6b4a2e" : "#3b3a37"}"/>`;
+      }
+      for (let k = 0; k < 5; k++) g += `<rect x="${X + k * 30}" y="${y0}" width="8" height="34" fill="#a9a59c"/>`;
+      g += `<rect x="${X - 6}" y="${y0 - 6}" width="140" height="7" fill="#c3bfb5"/>`;
+      if (stage === 5) g += `<path d="M${X + 4} ${y0 + 30} H${X + 124} M${X + 60} ${y0 + 2} V${y0 + 30}" stroke="#d07a2b" stroke-width="1.5" stroke-dasharray="4 2"/>`;
+    }
+    if (stage === 3) g += `<rect x="${X + 140}" y="40" width="4" height="${B - 40}" fill="#e3a21a"/><path d="M${X + 142} 42 H${X + 30}" stroke="#e3a21a" stroke-width="3"/>`;
+    if (stage >= 5 && stage < 7) for (let k = 0; k < 6; k++) g += `<path d="M${X - 10} ${B - 10 * k} H${X - 2} M${X - 10} ${B} V${B - 60}" stroke="#7b8794" stroke-width="1.2"/>`;
+    if (stage >= 7) { g += `<rect x="${X - 6}" y="${B - 74}" width="140" height="6" fill="#f6efe2"/><circle cx="${X - 18}" cy="${B - 6}" r="9" fill="#4f8a4a"/><circle cx="${X + 150}" cy="${B - 8}" r="11" fill="#4f8a4a"/><rect x="${X + 160}" y="${B - 2}" width="36" height="10" rx="3" fill="#5a6b7a"/>`; }
+  }
+  g += `<rect x="6" y="6" width="${big ? 74 : 60}" height="15" rx="3" fill="rgba(0,0,0,.55)"/><text x="12" y="17" fill="#fff" font-family="monospace" font-size="${big ? 9 : 8}">CAM-0${1 + (seed % 3)} · DEMO</text>`;
+  g += `<rect x="${320 - (big ? 120 : 102)}" y="160" width="${big ? 114 : 96}" height="15" rx="3" fill="rgba(0,0,0,.55)"/><text x="${320 - (big ? 114 : 97)}" y="171" fill="#f7b955" font-family="monospace" font-size="${big ? 9 : 8}">${stamp}</text>`;
+  return `<svg viewBox="0 0 320 180" role="img" aria-label="Illustrated site photo, ${stamp}, demo">${g}</svg>`;
+}
+
+function villaRecords(v) {
+  const D = d(), out = [], st = stageAt(v, week);
+  for (let k = 1; k <= Math.min(st, 7); k++) {
+    const s0 = k === 1 ? v.start : v.ends[k - 2], e0 = v.ends[k - 1], act = `V${v.id}-${1000 + (k - 1) * 10}`, an = D.acts[k - 1];
+    out.push({ w: s0 + 0.2, type: "diary", txt: D.recTxt.diary.replace("{n}", 6 + ((v.i + k) % 9)).replace("{act}", an), act });
+    if (k === 3 || k === 5) out.push({ w: s0 - 0.6, type: "asite", txt: D.recTxt.asite.replace("{r}", String.fromCharCode(65 + (v.i % 3))).replace("{act}", an), act, ref: `PGV-ASITE-SD-${String(v.plot * 3 + k).padStart(4, "0")}` });
+    if (k === 5 && v.i % 3 === 0) out.push({ w: s0 + 0.5, type: "rfi", txt: D.recTxt.rfi, act, ref: `PGV-ASITE-RFI-${String(v.plot + k).padStart(4, "0")}` });
+    if (k === 3 && v.slow && week > e0) out.push({ w: e0 - 1.5, type: "ncr", txt: D.recTxt.ncr, act, ref: `PGV-ASITE-NCR-${String(v.plot).padStart(4, "0")}` });
+    if (week >= e0) { const sti = (v.i + k * 2) % 7 === 0 ? 2 : (v.i + k) % 3 === 0 ? 1 : 0; out.push({ w: e0, type: "ir", txt: D.recTxt.ir.replace("{act}", an).replace("{st}", D.irs[sti]), act, ref: `PGV-ASITE-IR-${String(v.plot * 7 + k).padStart(4, "0")}` }); }
+  }
+  return out.sort((a, b) => b.w - a.w);
+}
+
+function renderPanel() {
+  const D = d(), v = VILLAS[sel], st = stageAt(v, week), pct = pctAt(v, week);
+  $("#vname").textContent = `Villa ${v.id}`;
+  $("#vsub").textContent = D.vsub.replace("{c}", `${D.cl} ${"ABCD"[v.c]}`).replace("{p}", v.plot).replace("{pct}", pct.toFixed(0));
+  const stk = st === 7 ? "good" : st === 0 ? "warn" : v.slow ? "serious" : "good";
+  $("#vstat").innerHTML = `<span class="status ${stk}">${ICON[stk]}${esc(D.stages[st])}</span>`;
+  $("#vbar").style.width = pct + "%";
+  // photos: one per reached stage, dated at the stage end (or this week if in progress)
+  const shots = [];
+  for (let k = 1; k <= st; k++) { const w = Math.min(week, v.ends[k - 1] - 0.3); shots.push({ k, w, stamp: `${wkDate(Math.floor(w))} ${String(7 + ((v.i + k) % 4)).padStart(2, "0")}:${String((v.plot * k * 7) % 60).padStart(2, "0")}` }); }
+  if (photoSel < 0 || photoSel >= shots.length) photoSel = shots.length - 1;
+  if (!shots.length) { $("#pmain").innerHTML = `<div style="display:grid;place-items:center;height:100%;padding:1rem;text-align:center;color:var(--muted);font-size:.85rem">${esc(D.none)}</div>`; $("#thumbs").innerHTML = ""; }
+  else {
+    const sh = shots[photoSel];
+    $("#pmain").innerHTML = photo(sh.k, v.plot + sh.k, sh.stamp, true);
+    $("#thumbs").innerHTML = shots.map((s0, j) => `<button type="button" aria-pressed="${j === photoSel}" data-j="${j}" aria-label="${esc(D.stages[s0.k])} ${s0.stamp}">${photo(s0.k, v.plot + s0.k, s0.stamp, false)}<span>${esc(D.stages[s0.k])}</span></button>`).join("");
+    $("#thumbs").querySelectorAll("button").forEach((b) => b.onclick = () => { photoSel = +b.dataset.j; renderPanel(); });
+  }
+  $("#vtabs").innerHTML = D.vtabs.map((t, j) => `<button type="button" role="tab" aria-selected="${j === vtab}" data-j="${j}">${esc(t)}</button>`).join("");
+  $("#vtabs").querySelectorAll("button").forEach((b) => b.onclick = () => { vtab = +b.dataset.j; renderPanel(); });
+  if (vtab === 0) {
+    const rows = D.acts.map((a, k) => {
+      const s0 = k === 0 ? v.start : v.ends[k - 1], e0 = v.ends[k];
+      const p0 = Math.max(0, Math.min(100, ((week - s0) / (e0 - s0)) * 100));
+      return `<tr><td class="mono">V${v.id}-${1000 + k * 10}</td><td>${esc(a)}</td><td class="mono">${wkDate(Math.floor(s0))}</td><td class="mono">${wkDate(Math.floor(e0))}</td><td class="num">${p0.toFixed(0)}</td></tr>`;
+    }).join("");
+    $("#vtab").innerHTML = `<div class="table-scroll"><table><thead><tr>${D.vh.map((h, j) => `<th${j === 4 ? ' style="text-align:end"' : ""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  } else {
+    const recs = villaRecords(v);
+    $("#vtab").innerHTML = `<div class="recs">${recs.map((r0) => `<div class="rec"><span class="tag ${r0.type}">${esc(D.rec[r0.type])}</span><div><b>${esc(r0.txt)}</b><div class="m"><span>${wkDate(Math.floor(r0.w))}</span><span>${esc(D.linked)} ${r0.act}</span>${r0.ref ? `<span>${r0.ref}</span>` : ""}</div></div></div>`).join("") || `<p class="note-s">—</p>`}</div>`;
+  }
+}
+
+function setWeek(w) { week = w; $("#wk").value = w; renderLayout(); renderPanel(); }
+$("#wk").oninput = (e) => { stopPlay(); setWeek(+e.target.value); };
+function stopPlay() { if (playing) { clearInterval(playing); playing = null; $("#playic").innerHTML = '<path d="M4 2.5l9 5.5-9 5.5z"/>'; $("#play").setAttribute("aria-label", "Play"); } }
+$("#play").onclick = () => {
+  if (playing) return stopPlay();
+  if (week >= 80) setWeek(1);
+  $("#playic").innerHTML = '<path d="M4 3h3v10H4zM9 3h3v10H9z"/>'; $("#play").setAttribute("aria-label", "Pause");
+  playing = setInterval(() => { if (week >= 80) return stopPlay(); setWeek(week + 1); }, 380);
+};
+
+/* XER analysis */
+function renderXer() {
+  const D = d();
+  $("#xtiles").innerHTML = D.xt.map(([v0, l]) => `<div><b>${v0}</b><small>${esc(l)}</small></div>`).join("");
+  const bands = ["< 0", "0", "1–5", "6–10", "11–20", "21–44", "> 44"], vals = [0, 96, 214, 388, 602, 671, 213];
+  const W = 520, H = 220, L = 40, R = 10, Tp = 18, Bt = 26, max = 800;
+  const y = (v0) => Tp + (1 - v0 / max) * (H - Tp - Bt), step = (W - L - R) / bands.length, bw = Math.min(24, step * 0.55);
+  let g = "";
+  [0, 200, 400, 600, 800].forEach((v0) => { g += `<line x1="${L}" x2="${W - R}" y1="${y(v0)}" y2="${y(v0)}" stroke="${v0 ? "var(--grid)" : "var(--axis)"}"/><text x="${L - 6}" y="${y(v0) + 4}" text-anchor="end">${v0 >= 1000 ? (v0 / 1000).toFixed(1) + "K" : v0}</text>`; });
+  vals.forEach((v0, i) => {
+    const x = L + step * i + (step - bw) / 2, top = y(v0);
+    if (v0) g += `<path d="M${x} ${y(0)} V${top + 4} Q${x} ${top} ${x + 4} ${top} H${x + bw - 4} Q${x + bw} ${top} ${x + bw} ${top + 4} V${y(0)} Z" fill="${i <= 1 ? "var(--s2)" : "var(--s1)"}"/>`;
+    g += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${bands[i]}</text>`;
+    g += `<rect class="fh" data-i="${i}" x="${L + step * i}" y="${Tp}" width="${step}" height="${H - Tp - Bt}" fill="transparent"/>`;
+  });
+  g += `<text x="${L + step * 1 + step / 2}" y="${y(96) - 6}" text-anchor="middle" class="lbl">96</text>`;
+  const svg = $("#fhist"); svg.innerHTML = g;
+  const tip = $("#ftip"), card = svg.closest(".card");
+  svg.querySelectorAll(".fh").forEach((h) => {
+    h.onpointermove = (e) => { const i = +h.dataset.i; tip.innerHTML = `<b>${esc(D.tipFloat)} ${bands[i]}</b><div>${esc(D.tipActs)} ${vals[i].toLocaleString("en-US")}</div>`; placeTip(tip, card, e); };
+    h.onpointerleave = () => tip.classList.remove("on");
+  });
+  $("#dcma").innerHTML = `<thead><tr>${D.dh.map((h) => `<th>${esc(h)}</th>`).join("")}<th></th></tr></thead><tbody>${D.dcma.map(([a, b0, c0, l], i) => `<tr><td>${esc(a)}</td><td style="color:var(--muted)">${esc(b0)}</td><td>${esc(c0)}</td><td>${esc(l)}</td><td>${D.dres[i] ? `<span class="status good">${ICON.good}${esc(D.pass)}</span>` : `<span class="status warn">${ICON.warn}${esc(D.review)}</span>`}</td></tr>`).join("")}</tbody>`;
+}
+function renderSite() { renderLayout(); renderPanel(); renderXer(); }
+
+const EXTRA = {
+  en: {
+    "rep.title": "Palm Grove Villas · Project Controls Report", "rep.sub": "48 villas · 4 clusters · fictional demo project · Power BI",
+    "nav.full": "Open full screen ↗", "mk.sub": "Built by linking Power BI with code: Python and TypeScript automation feed the data model.",
+    pg0: "Overview", pg0s: "KPIs, S-curve, packages and look-ahead",
+    pg1: "Smart Site", pg1s: "Master plan by stage, photo log, activities, logs and Asite",
+    pg2: "Schedule health", pg2s: "XER analysis and DCMA 14-point check",
+    pg3: "Forecast & risk", pg3s: "Monte Carlo on the remaining critical path",
+    pg4: "Logistics", pg4s: "Gates, routes, cranes and today's deliveries",
+    pg5: "4D / BIM", pg5s: "Revit model linked to P6 activities",
+    pg6: "Automation", pg6s: "Refresh pipeline, scheduled jobs and run history",
+    pgShort: ["Overview", "Smart Site", "Schedule", "Risk", "Logistics", "4D / BIM", "Automation"],
+    pageOf: "Page {i} of {n}",
+    r2h: "Finish date distribution", r2run: "Run simulation", r2reg: "Risk register", r2regn: "tick to apply mitigation",
+    r2torn: "Delay contributed by each risk", r2tornn: "average days per run", r2trend: "Forecast finish by monthly update",
+    r2: { t: ["P50 finish", "P80 finish", "P90 finish", "Chance to meet contract", "Contract completion"], cn: "Contract", iters: "runs", runs: "runs", lg: ["On or before contract", "After contract"],
+      risks: [["Aluminium windows supply", "Factory slot for cluster C and D"], ["AC units (VRF) delivery", "Long-lead MEP equipment"], ["Municipality inspections", "Completion certificate re-inspection"], ["Summer labour productivity", "Heat-stress working hours"], ["Late design change", "Kitchen and majlis finishes"], ["Utility connection", "Power and water connection date"]] },
+    l2plan: "Site logistics plan", l2del: "Today's deliveries", l2deln: "gate slots, 06:00–18:00",
+    l2: { ly: ["Delivery route", "Worker walkway", "Crane coverage", "Laydown & compounds", "Exclusion zones"],
+      t: [["14", "Deliveries today", "good"], ["92%", "On-time slots", "good"], ["18 min", "Avg gate turnaround", "warn"], ["76%", "Crane utilisation", "good"], ["2", "Gate conflicts avoided", "good"]],
+      dl: [["Ready-mix concrete", "Supplier A", "G1", 6.5, 8.5], ["Rebar, cut & bent", "Supplier B", "G1", 7.5, 9], ["Blocks, 20 cm", "Supplier C", "G1", 9, 10.5], ["MEP pipes & fittings", "Supplier D", "G1", 10.25, 11.5], ["Aluminium windows, cluster D", "Supplier E", "G1", 11.5, 13.5], ["Floor tiles", "Supplier F", "G1", 13, 14.5], ["Scaffolding", "Supplier G", "G1", 14.5, 15.5], ["Waste skip exchange", "Contractor", "G2", 16, 17]],
+      dlg: ["Delivered", "On the way / at gate", "Scheduled"] },
+    "b.title": "4D villa model by week", "b.rvt": "Revit elements linked to P6", "b.link": "Each element in the villa model carries its P6 Activity ID in a shared parameter, so the model builds itself from the schedule. Pick any villa, same as the Smart Site page. Demo data.",
+    b: { modes: ["Realistic", "Status"], tr: ["Structure", "MEP", "Facade", "Finishes"], st: ["Planned", "In progress", "Complete"], lg: ["Finishes complete", "Facade installed", "Structure complete", "Structure in progress", "Delayed", "Not started"],
+      cat: ["Foundations", "Concrete structure", "Floors (slabs)", "Blockwork walls", "Windows", "Doors", "Pipes", "Ducts & AC", "Finishes", "Pool & landscape"], cats: ["Structural foundations", "Structural columns", "Floors (slabs)", "Walls (blockwork)", "Windows", "Doors", "Pipes", "Ducts & AC", "Finishes (generic)", "Site: pool & landscape"], rh: ["Revit category", "P6 activity", "Elements", "Installed"], flt: "activities and element IDs" },
+    "a.pipe": "Refresh pipeline", "a.pipen": "sources → engine → Power BI", "a.jobsT": "Scheduled jobs", "a.jobsn": "today", "a.hist": "Dataset refresh, last 30 days",
+    a: { t: [["9", "Automated jobs", "good"], ["412", "Runs this week", "good"], ["99.3%", "Success rate", "good"], ["46 h", "Planner hours saved / month", "good"], ["10:05", "Last full refresh", "good"]],
+      jh: ["Job", "Source / tool", "Schedule", "Last run", "Duration", "Status"], ok: "Succeeded", warn: "Needs mapping", lg: ["Succeeded", "Failed, auto-retried"], min: "min",
+      jobs: [["P6 XER import", "Primavera P6", "Daily 06:00", "06:02", "48 s", 1], ["Schedule health check", "Python (DCMA)", "After import", "06:03", "12 s", 1], ["Site diary sync", "Diaries / Excel", "Hourly", "10:00", "9 s", 1], ["Cost ledger refresh", "ERP export", "Daily 07:00", "07:01", "31 s", 1], ["Photo log indexing", "Site cameras", "Every 2 h", "10:00", "2 m 14 s", 1], ["Asite register sync", "Asite API", "Every 4 h", "08:00", "22 s", 0], ["Power BI dataset refresh", "Power BI service", "8× per day", "10:05", "1 m 40 s", 1], ["Weekly report pack", "Python + AI summary", "Mon 07:30", "13-Oct", "3 m 05 s", 1], ["Early-warning alerts", "n8n → email / WhatsApp", "On change", "10:06", "2 s", 1]] },
+  },
+  ar: {
+    "rep.title": "فلل بالم جروف · تقرير التحكم في المشروع", "rep.sub": "48 فيلا · 4 كلسترات · مشروع ديمو وهمي · Power BI",
+    "nav.full": "افتح بشاشة كاملة ↗", "mk.sub": "معمول بربط Power BI بالكود: أتمتة بـ Python وTypeScript بتغذي نموذج البيانات.",
+    pg0: "نظرة عامة", pg0s: "المؤشرات والـ S-Curve والحزم والـ Look-ahead",
+    pg1: "الموقع الذكي", pg1s: "الماستر بلان حسب المرحلة، الصور، الأنشطة، اليوميات وAsite",
+    pg2: "سلامة الجدول", pg2s: "تحليل XER وفحص DCMA 14 نقطة",
+    pg3: "التوقع والمخاطر", pg3s: "محاكاة مونت كارلو على المسار الحرج المتبقي",
+    pg4: "اللوجستيات", pg4s: "البوابات والمسارات والأوناش وتوريدات النهارده",
+    pg5: "4D / BIM", pg5s: "نموذج Revit مربوط بأنشطة P6",
+    pg6: "الأتمتة", pg6s: "مسار التحديث والمهام المجدولة وسجل التشغيل",
+    pgShort: ["نظرة عامة", "الموقع الذكي", "الجدول", "المخاطر", "اللوجستيات", "4D / BIM", "الأتمتة"],
+    pageOf: "صفحة {i} من {n}",
+    r2h: "توزيع تاريخ الانتهاء", r2run: "شغّل المحاكاة", r2reg: "سجل المخاطر", r2regn: "علّم لتطبيق خطة التخفيف",
+    r2torn: "التأخير اللي بيسببه كل خطر", r2tornn: "متوسط أيام لكل تشغيل", r2trend: "تاريخ الانتهاء المتوقع لكل تحديث شهري",
+    r2: { t: ["انتهاء P50", "انتهاء P80", "انتهاء P90", "فرصة الالتزام بالعقد", "تاريخ العقد"], cn: "العقد", iters: "تشغيل", runs: "تشغيل", lg: ["قبل أو في تاريخ العقد", "بعد تاريخ العقد"],
+      risks: [["توريد شبابيك الألومنيوم", "دور المصنع لكلستر C وD"], ["توريد وحدات التكييف VRF", "معدات MEP طويلة التوريد"], ["فحوصات البلدية", "إعادة فحص شهادة الإنجاز"], ["إنتاجية العمالة في الصيف", "ساعات العمل في الحر"], ["تعديل تصميم متأخر", "تشطيبات المطبخ والمجلس"], ["توصيل المرافق", "موعد توصيل الكهرباء والمياه"]] },
+    l2plan: "خطة لوجستيات الموقع", l2del: "توريدات النهارده", l2deln: "مواعيد البوابة، 06:00–18:00",
+    l2: { ly: ["مسار التوريد", "ممر العمال", "تغطية الأوناش", "مناطق التشوين", "مناطق ممنوعة"],
+      t: [["14", "توريدات النهارده", "good"], ["92%", "مواعيد في وقتها", "good"], ["18 د", "متوسط وقت البوابة", "warn"], ["76%", "استغلال الأوناش", "good"], ["2", "تعارضات تم تجنبها", "good"]],
+      dl: [["خرسانة جاهزة", "مورد A", "G1", 6.5, 8.5], ["حديد مقصوص ومشكل", "مورد B", "G1", 7.5, 9], ["بلوك 20 سم", "مورد C", "G1", 9, 10.5], ["مواسير MEP", "مورد D", "G1", 10.25, 11.5], ["شبابيك ألومنيوم، كلستر D", "مورد E", "G1", 11.5, 13.5], ["بلاط أرضيات", "مورد F", "G1", 13, 14.5], ["سقالات", "مورد G", "G1", 14.5, 15.5], ["تبديل حاوية مخلفات", "المقاول", "G2", 16, 17]],
+      dlg: ["تم التوريد", "في الطريق / على البوابة", "مجدول"] },
+    "b.title": "نموذج 4D للفيلا حسب الأسبوع", "b.rvt": "عناصر Revit المربوطة بـ P6", "b.link": "كل عنصر في نموذج الفيلا شايل كود نشاط P6 في Shared Parameter، فالنموذج بيتبني لوحده من الجدول. اختار أي فيلا، نفس صفحة الموقع الذكي. بيانات ديمو.",
+    b: { modes: ["واقعي", "الحالة"], tr: ["الهيكل", "MEP", "الواجهات", "التشطيبات"], st: ["مخطط", "جاري", "مكتمل"], lg: ["التشطيبات مكتملة", "الواجهة مركبة", "الهيكل مكتمل", "الهيكل جاري", "متأخر", "لم يبدأ"],
+      cat: ["الأساسات", "الهيكل الخرساني", "البلاطات", "حوائط البلوك", "الشبابيك", "الأبواب", "المواسير", "الدكت والتكييف", "التشطيبات", "المسبح واللاندسكيب"], cats: ["أساسات إنشائية", "أعمدة إنشائية", "بلاطات", "حوائط بلوك", "شبابيك", "أبواب", "مواسير", "دكت وتكييف", "تشطيبات", "الموقع: مسبح ولاندسكيب"], rh: ["فئة Revit", "نشاط P6", "العناصر", "المركب"], flt: "الأنشطة وأكواد العناصر" },
+    "a.pipe": "مسار التحديث", "a.pipen": "المصادر ← المحرك ← Power BI", "a.jobsT": "المهام المجدولة", "a.jobsn": "النهارده", "a.hist": "تحديث البيانات، آخر 30 يوم",
+    a: { t: [["9", "مهام مؤتمتة", "good"], ["412", "تشغيل الأسبوع ده", "good"], ["99.3%", "نسبة النجاح", "good"], ["46 س", "ساعات مهندس موفرة / شهر", "good"], ["10:05", "آخر تحديث كامل", "good"]],
+      jh: ["المهمة", "المصدر / الأداة", "الجدول", "آخر تشغيل", "المدة", "الحالة"], ok: "نجح", warn: "محتاج ربط", lg: ["نجح", "فشل وأعيد تلقائي"], min: "دقيقة",
+      jobs: [["استيراد XER من P6", "Primavera P6", "يومي 06:00", "06:02", "48 ث", 1], ["فحص سلامة الجدول", "Python (DCMA)", "بعد الاستيراد", "06:03", "12 ث", 1], ["مزامنة يوميات الموقع", "اليوميات / Excel", "كل ساعة", "10:00", "9 ث", 1], ["تحديث دفتر التكلفة", "ERP", "يومي 07:00", "07:01", "31 ث", 1], ["فهرسة صور الموقع", "كاميرات الموقع", "كل ساعتين", "10:00", "2 د 14 ث", 1], ["مزامنة سجل Asite", "Asite API", "كل 4 ساعات", "08:00", "22 ث", 0], ["تحديث بيانات Power BI", "Power BI service", "8 مرات يوميًا", "10:05", "1 د 40 ث", 1], ["تقرير الأسبوع", "Python + ملخص AI", "الاثنين 07:30", "13-Oct", "3 د 05 ث", 1], ["تنبيهات مبكرة", "n8n ← إيميل / واتساب", "عند التغيير", "10:06", "2 ث", 1]] },
+  },
+};
+Object.assign(T.en, EXTRA.en); Object.assign(T.ar, EXTRA.ar);
+T.en["nav.back"] = "← Website"; T.ar["nav.back"] = "→ الموقع";
+T.en.stages = T.en.stages; // keep
+/* =========================================================
+   MASTER PLAN (organic layout shared by Smart Site and Logistics)
+   ========================================================= */
+const CX = 300, CY = 282;
+const STG_VIR = ["transparent", "#46327e", "#365c8d", "#277f8e", "#1fa187", "#4ac16d", "#a0da39", "#fde725"];
+const RING = { rx: 206, ry: 172 };
+const PLACES = (() => {
+  const out = [], quads = [[-180, -90], [-90, 0], [90, 180], [0, 90]];   // B, A, C, D in angle order
+  const order = [1, 0, 2, 3];
+  for (let q = 0; q < 4; q++) {
+    const [a0, a1] = quads[order[q]];
+    for (let k = 0; k < 8; k++) { const a = (a0 + 9 + (k * (a1 - a0 - 18)) / 7) * Math.PI / 180; out.push({ q, x: CX + 252 * Math.cos(a), y: CY + 214 * Math.sin(a), out: true }); }
+    for (let k = 0; k < 4; k++) { const a = (a0 + 16 + (k * (a1 - a0 - 32)) / 3) * Math.PI / 180; out.push({ q, x: CX + 160 * Math.cos(a), y: CY + 128 * Math.sin(a), out: false }); }
+  }
+  out.forEach((p) => { const th = p.out ? Math.atan2(CY - p.y, CX - p.x) : Math.atan2(p.y - CY, p.x - CX); p.rot = th * 180 / Math.PI + 90; });
+  return out;
+})();
+const FOOT = ["M-15 -19 h30 v18 h-9 v9 h-21 z", "M-17 -18 h34 v20 h-12 v6 h-22 z", "M-13 -20 h20 v8 h7 v18 h-27 z"];
+function planBase(dim, P) {
+  P = P || "p";
+  let g = `<defs>
+    <radialGradient id="${P}lagoon" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2b7fa6"/><stop offset="1" stop-color="#174b66"/></radialGradient>
+    <pattern id="${P}hatchR" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="rgba(208,59,59,.12)"/><path d="M0 0V8" stroke="rgba(236,107,107,.6)" stroke-width="2"/></pattern>
+    <pattern id="${P}hatchA" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="8" height="8" fill="rgba(245,165,36,.1)"/><path d="M0 0V8" stroke="rgba(245,165,36,.55)" stroke-width="1.6"/></pattern>
+  </defs>`;
+  g += `<path d="M40 70 Q60 18 170 22 L430 18 Q560 22 572 110 L582 430 Q578 540 440 546 L160 548 Q30 540 24 420 Z" fill="#0f1215" stroke="#2a2f37" stroke-width="2"/>`;
+  // entrance boulevard
+  g += `<path d="M300 556 V${CY + RING.ry}" stroke="#1d2127" stroke-width="30"/><path d="M300 556 V${CY + RING.ry}" stroke="#14301f" stroke-width="6"/>`;
+  // ring road
+  g += `<ellipse cx="${CX}" cy="${CY}" rx="${RING.rx}" ry="${RING.ry}" fill="none" stroke="#1d2127" stroke-width="24"/>`;
+  g += `<ellipse cx="${CX}" cy="${CY}" rx="${RING.rx}" ry="${RING.ry}" fill="none" stroke="#3a3f47" stroke-width="1" stroke-dasharray="7 7"/>`;
+  // spur to clubhouse
+  g += `<path d="M${CX} ${CY - RING.ry} V${CY - 88}" stroke="#1d2127" stroke-width="16"/>`;
+  // park and lagoon
+  g += `<path d="M${CX - 120} ${CY + 10} C${CX - 120} ${CY - 80} ${CX + 120} ${CY - 92} ${CX + 124} ${CY + 4} C${CX + 128} ${CY + 92} ${CX - 116} ${CY + 98} ${CX - 120} ${CY + 10} Z" fill="#12261a" stroke="#1d3a26"/>`;
+  g += `<path d="M${CX - 82} ${CY + 8} C${CX - 86} ${CY - 46} ${CX - 10} ${CY - 58} ${CX + 30} ${CY - 40} C${CX + 86} ${CY - 22} ${CX + 92} ${CY + 30} ${CX + 52} ${CY + 46} C${CX + 10} ${CY + 62} ${CX - 78} ${CY + 56} ${CX - 82} ${CY + 8} Z" fill="url(#${P}lagoon)" opacity="${dim ? .6 : .95}"/>`;
+  g += `<path d="M${CX - 104} ${CY + 14} C${CX - 104} ${CY - 66} ${CX + 104} ${CY - 78} ${CX + 108} ${CY + 6}" fill="none" stroke="#3b5a43" stroke-width="1.5" stroke-dasharray="2 4"/>`;
+  g += `<rect x="${CX - 26}" y="${CY - 116}" width="52" height="30" rx="8" fill="#1b2026" stroke="#3a3f47"/><text x="${CX}" y="${CY - 97}" text-anchor="middle" style="font-size:8.5px">CLUBHOUSE</text>`;
+  // trees along the ring and boulevard
+  let tr = "";
+  for (let k = 0; k < 64; k++) { const a = (k / 64) * Math.PI * 2; if (Math.abs(a - Math.PI / 2) < 0.12) continue; const rr = k % 2 ? 1.1 : 0.9; tr += `<circle cx="${(CX + (RING.rx + (k % 2 ? 17 : -17)) * Math.cos(a)).toFixed(1)}" cy="${(CY + (RING.ry + (k % 2 ? 15 : -15)) * Math.sin(a)).toFixed(1)}" r="${(3.2 * rr).toFixed(1)}" fill="#2f6b3f" opacity=".85"/>`; }
+  for (let y = CY + RING.ry + 18; y < 552; y += 13) tr += `<circle cx="282" cy="${y}" r="3.4" fill="#2f6b3f"/><circle cx="318" cy="${y}" r="3.4" fill="#2f6b3f"/>`;
+  g += tr;
+  g += `<text x="300" y="552" text-anchor="middle" style="font-size:8.5px;fill:#c3c2b7">MAIN GATE</text>`;
+  return g;
+}
+function villaShape(n, fill, stroke, pool, extra) {
+  const P = PLACES[n];
+  return `<g transform="translate(${P.x.toFixed(1)} ${P.y.toFixed(1)}) rotate(${P.rot.toFixed(1)})" ${extra || ""}>
+    <rect x="-22" y="-25" width="44" height="50" rx="7" fill="#13171b" stroke="#23282f"/>
+    <path class="fp" d="${FOOT[n % 3]}" fill="${fill}" stroke="${stroke}" stroke-width="1.2" style="transition:fill .4s"/>
+    <rect x="-9" y="11" width="18" height="8" rx="2.5" fill="${pool ? "#2d8fbf" : "#1b2229"}"/>
+  </g>`;
+}
+
+/* Smart Site layout (replaces the grid version) */
+function renderLayout() {
+  const D = d(), svg = $("#lay"); let g = planBase(false, "s");
+  VILLAS.forEach((v, n) => {
+    const st = stageAt(v, week);
+    g += `<g class="villa${n === sel ? " sel" : ""}" data-n="${n}" tabindex="0" role="button" aria-label="Villa ${v.id}, ${esc(D.stages[st])}">${villaShape(n, st ? STG_VIR[st] : "#15191e", st ? "rgba(236,235,230,.22)" : "#3a3f47", st >= 6)}</g>`;
+  });
+  const sp = PLACES[sel];
+  g += `<circle cx="${sp.x}" cy="${sp.y}" r="30" fill="none" stroke="#f5a524" stroke-width="1.5" opacity=".9"><animate attributeName="r" values="26;34;26" dur="2s" repeatCount="indefinite"/></circle>`;
+  [["A", 480, 70], ["B", 120, 70], ["C", 110, 520], ["D", 490, 520]].forEach(([L, x, y]) => { g += `<text x="${x}" y="${y}" text-anchor="middle" style="font-size:10px;fill:#c3c2b7">${esc(D.cl)} ${L}</text>`; });
+  svg.innerHTML = g;
+  const tip = $("#ltip"), card = svg.closest(".card");
+  svg.querySelectorAll(".villa").forEach((el) => {
+    const n = +el.dataset.n, v = VILLAS[n];
+    el.onclick = () => { sel = n; photoSel = -1; renderLayout(); renderPanel(); };
+    el.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.onclick(); } };
+    el.onpointermove = (e) => {
+      const st = stageAt(v, week);
+      tip.innerHTML = `<b>Villa ${v.id}</b><div><i style="background:${st ? STG_VIR[st] : "#3a3f47"}"></i>${esc(d().stages[st])}</div><div>${pctAt(v, week).toFixed(0)}%</div>`;
+      placeTip(tip, card, e);
+    };
+    el.onpointerleave = () => tip.classList.remove("on");
+  });
+  const counts = Array(8).fill(0); VILLAS.forEach((v) => counts[stageAt(v, week)]++);
+  $("#stglg").innerHTML = D.stages.map((s0, k) => `<span><i style="background:${k ? STG_VIR[k] : "transparent"};border:1px solid ${k ? "transparent" : "#3a3f47"}"></i>${esc(s0)} <span class="stg-count">${counts[k]}</span></span>`).join("");
+  $("#wko").textContent = `${D.wk} ${week} · ${wkDate(week)}`;
+}
+
+/* =========================================================
+   FORECAST & RISK (Monte Carlo, runs in the browser)
+   ========================================================= */
+const CHUNKS = [[22, 26, 34], [28, 32, 44], [48, 55, 72], [22, 26, 36], [12, 15, 22]];
+const RISKS = [[0.4, 10, 25, 60], [0.3, 5, 20, 45], [0.35, 5, 12, 30], [0.5, 5, 10, 25], [0.25, 8, 20, 40], [0.3, 10, 18, 35]];
+const DD_MS = Date.UTC(2026, 9, 15), CONTRACT = Math.round((Math.max(...VILLAS.map((v) => v.start + 34)) - 41.43) * 7);
+let mitig = [false, false, false, false, false, false], nIter = 5000, mcRes = null, mcRunning = false;
+const tri = (a, m, b, u) => { const c = (m - a) / (b - a); return u < c ? a + Math.sqrt(u * (b - a) * (m - a)) : b - Math.sqrt((1 - u) * (b - a) * (b - m)); };
+const dayStr = (dd) => { const t = new Date(DD_MS + dd * 864e5); return String(t.getUTCDate()).padStart(2, "0") + "-" + MON[t.getUTCMonth()] + "-" + String(t.getUTCFullYear()).slice(2); };
+function runMC() {
+  if (mcRunning) return; mcRunning = true; $("#runmc").disabled = true;
+  const res = [], contrib = Array(6).fill(0); let done = 0;
+  const step = () => {
+    const n = Math.min(250, nIter - done);
+    for (let k = 0; k < n; k++) {
+      let t = 0; CHUNKS.forEach(([a, m, b]) => { t += tri(a, m, b, Math.random()); });
+      RISKS.forEach(([p, a, m, b], i) => { const pp = mitig[i] ? p * 0.5 : p, f = mitig[i] ? 0.7 : 1; if (Math.random() < pp) { const x = tri(a, m, b, Math.random()) * f; t += x; contrib[i] += x; } });
+      res.push(t);
+    }
+    done += n; $("#mcprog").style.width = (100 * done / nIter) + "%";
+    mcRes = { res: res.slice().sort((x, y) => x - y), contrib: contrib.map((c) => c / done), n: done };
+    drawMC();
+    if (done < nIter) requestAnimationFrame(step); else { mcRunning = false; $("#runmc").disabled = false; }
+  };
+  requestAnimationFrame(step);
+}
+const pct = (arr, p) => arr[Math.min(arr.length - 1, Math.floor(p * arr.length))];
+function drawMC() {
+  const D = d(), R = mcRes; if (!R) return;
+  const p50 = pct(R.res, 0.5), p80 = pct(R.res, 0.8), p90 = pct(R.res, 0.9);
+  const pOn = R.res.filter((x) => x <= CONTRACT).length / R.res.length;
+  const tiles = [[dayStr(p50), D.r2.t[0], p50 <= CONTRACT ? "good" : p50 - CONTRACT <= 14 ? "warn" : "serious"], [dayStr(p80), D.r2.t[1], p80 <= CONTRACT ? "good" : p80 - CONTRACT <= 21 ? "warn" : "serious"], [dayStr(p90), D.r2.t[2], p90 <= CONTRACT ? "good" : "serious"], [(pOn * 100).toFixed(0) + "%", D.r2.t[3], pOn >= 0.8 ? "good" : pOn >= 0.5 ? "warn" : "serious"], [dayStr(CONTRACT), D.r2.t[4], null]];
+  $("#rtiles").innerHTML = tiles.map(([v, l, st]) => `<div class="tile"><small>${esc(l)}</small><b>${v}</b>${st ? statusHTML(st) : `<span class="sub">${esc(D.r2.cn)}</span>`}</div>`).join("");
+  $("#mcstat").textContent = `${R.n.toLocaleString("en-US")} ${D.r2.iters}`;
+  // histogram by week
+  const W = 640, H = 280, L = 40, Rr = 12, Tp = 26, B = 40;
+  const lo = CONTRACT - 40, hi = CONTRACT + 110, bin = 7, nb = Math.ceil((hi - lo) / bin), counts = Array(nb).fill(0);
+  R.res.forEach((x) => { const i = Math.floor((x - lo) / bin); if (i >= 0 && i < nb) counts[i]++; });
+  const max = Math.max(...counts, 1), xs = (v) => L + ((v - lo) / (hi - lo)) * (W - L - Rr), ys = (c) => Tp + (1 - c / max) * (H - Tp - B);
+  const bw = (W - L - Rr) / nb - 2;
+  let g = `<line x1="${L}" x2="${W - Rr}" y1="${ys(0)}" y2="${ys(0)}" stroke="var(--axis)"/>`;
+  counts.forEach((c, i) => { if (!c) return; const x = L + i * ((W - L - Rr) / nb) + 1, top = ys(c), h = ys(0) - top, r = Math.min(3, h); const late = lo + i * bin + bin / 2 > CONTRACT; g += `<path class="hb" data-i="${i}" d="M${x} ${ys(0)} V${top + r} Q${x} ${top} ${x + r} ${top} H${x + bw - r} Q${x + bw} ${top} ${x + bw} ${top + r} V${ys(0)} Z" fill="${late ? "var(--s2)" : "var(--s3)"}"/>`; });
+  for (let v = lo + 5; v <= hi - 5; v += 30) g += `<text x="${xs(v)}" y="${H - 22}" text-anchor="middle">${dayStr(v).slice(3)}</text>`;
+  const vline = (v, lab, col, dy) => `<line x1="${xs(v)}" x2="${xs(v)}" y1="${Tp - 6}" y2="${ys(0)}" stroke="${col}" stroke-width="1.5" stroke-dasharray="${col === "var(--amber)" ? "5 4" : "0"}"/><text x="${xs(v) + 4}" y="${Tp - 10 + dy}" class="lbl" style="font-size:11px">${lab}</text>`;
+  g += vline(CONTRACT, D.r2.cn, "var(--amber)", 0) + vline(p50, "P50", "var(--ink-2)", 12) + vline(p80, "P80", "var(--ink-2)", 24);
+  counts.forEach((c, i) => { g += `<rect class="hh" data-i="${i}" x="${L + i * ((W - L - Rr) / nb)}" y="${Tp}" width="${(W - L - Rr) / nb}" height="${H - Tp - B}" fill="transparent"/>`; });
+  const svg = $("#mchist"); svg.innerHTML = g;
+  const tip = $("#mctip"), card = $("#hcard");
+  svg.querySelectorAll(".hh").forEach((h) => {
+    h.onpointermove = (e) => { const i = +h.dataset.i, a = lo + i * bin; tip.innerHTML = `<b>${dayStr(a)} → ${dayStr(a + bin - 1)}</b><div>${counts[i]} ${esc(D.r2.runs)} (${(100 * counts[i] / R.n).toFixed(1)}%)</div>`; placeTip(tip, card, e); };
+    h.onpointerleave = () => tip.classList.remove("on");
+  });
+  // tornado
+  const order = R.contrib.map((c, i) => [c, i]).sort((a, b) => b[0] - a[0]), tmax = Math.max(1, order[0][0]);
+  let t = "", y0 = 12;
+  order.forEach(([c, i], k) => {
+    const y = y0 + k * 35, w = (c / tmax) * 360;
+    t += `<text x="210" y="${y + 15}" text-anchor="end" class="lbl" style="font-family:var(--f-sans);font-size:12px">${esc(D.r2.risks[i][0])}</text>`;
+    t += `<rect x="220" y="${y + 3}" width="${Math.max(2, w)}" height="18" rx="4" fill="${mitig[i] ? "var(--s3)" : "var(--s2)"}"><animate attributeName="width" from="0" to="${Math.max(2, w)}" dur=".6s" fill="freeze"/></rect>`;
+    t += `<text x="${226 + w}" y="${y + 16}" class="lbl">${c.toFixed(1)} d</text>`;
+  });
+  $("#torn").innerHTML = t;
+}
+function renderRisk() {
+  const D = d();
+  $("#hlegend").innerHTML = `<span><i class="box" style="background:var(--s3)"></i>${esc(D.r2.lg[0])}</span><span><i class="box" style="background:var(--s2)"></i>${esc(D.r2.lg[1])}</span>`;
+  $("#iters").innerHTML = [1000, 5000, 10000].map((n) => `<button type="button" aria-pressed="${n === nIter}" data-n="${n}">${n / 1000}K</button>`).join("");
+  $("#iters").querySelectorAll("button").forEach((b) => b.onclick = () => { nIter = +b.dataset.n; renderRisk(); runMC(); });
+  $("#rlist").innerHTML = RISKS.map(([p, a, m, b], i) => `<label class="rrow"><input type="checkbox" data-i="${i}" ${mitig[i] ? "checked" : ""}><span>${esc(D.r2.risks[i][0])}<span class="m" style="display:block">${esc(D.r2.risks[i][1])}</span></span><span class="imp">${Math.round((mitig[i] ? p / 2 : p) * 100)}% · ${a}–${b} d</span></label>`).join("");
+  $("#rlist").querySelectorAll("input").forEach((c) => c.onchange = () => { mitig[+c.dataset.i] = c.checked; renderRisk(); runMC(); });
+  $("#runmc").onclick = runMC;
+  // forecast trend
+  const ups = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"], C0 = CONTRACT, p50 = [0, 0, 4, 9, 14, 19, 24, 28, 31, 34].map((x) => C0 + x), p20 = p50.map((x, i) => x - 8 - i * 0.4), p80 = p50.map((x, i) => x + 9 + i * 0.6);
+  const W = 520, H = 230, L = 64, Rr = 14, Tp = 14, B = 30, lo = CONTRACT - 20, hi = CONTRACT + 60;
+  const x = (i) => L + (i / 9) * (W - L - Rr), y = (v) => Tp + (1 - (v - lo) / (hi - lo)) * (H - Tp - B);
+  let g = "";
+  [0, 20, 40, 60, 80].map((k) => lo + k).forEach((v) => { g += `<line x1="${L}" x2="${W - Rr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${dayStr(v).slice(0, 6)}</text>`; });
+  ups.forEach((m, i) => { if (i % 3 === 0 || i === 9) g += `<text x="${x(i)}" y="${H - 10}" text-anchor="middle">${m}</text>`; });
+  g += `<path d="${p80.map((v, i) => `${i ? "L" : "M"}${x(i)} ${y(v)}`).join(" ")} ${p20.slice().reverse().map((v, k) => `L${x(9 - k)} ${y(v)}`).join(" ")} Z" fill="var(--s1)" fill-opacity=".12"/>`;
+  g += `<line x1="${L}" x2="${W - Rr}" y1="${y(CONTRACT)}" y2="${y(CONTRACT)}" stroke="var(--amber)" stroke-dasharray="5 4"/>`;
+  g += `<path d="${p50.map((v, i) => `${i ? "L" : "M"}${x(i)} ${y(v)}`).join(" ")}" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"/>`;
+  g += `<circle cx="${x(9)}" cy="${y(p50[9])}" r="4.5" fill="var(--s1)" stroke="var(--panel)" stroke-width="2"/><text x="${x(9) - 8}" y="${y(p50[9]) - 10}" text-anchor="end" class="lbl">P50 ${dayStr(p50[9])}</text>`;
+  $("#ftrend").innerHTML = g;
+  $("#flegend").innerHTML = `<span><i style="border-color:var(--s1)"></i>P50</span><span><i class="box" style="background:rgba(57,135,229,.3)"></i>P20–P80</span><span><i class="dash" style="border-color:var(--amber)"></i>${esc(D.r2.cn)}</span>`;
+  if (mcRes) drawMC();
+}
+
+/* =========================================================
+   LOGISTICS
+   ========================================================= */
+let lyr = { route: true, walk: true, crane: true, lay: true, excl: true };
+function renderLogi() {
+  const D = d(), svg = $("#logi"); let g = planBase(true, "l");
+  VILLAS.forEach((v, n) => { const st = stageAt(v, 40); g += villaShape(n, st ? STG_VIR[st] : "#15191e", "rgba(236,235,230,.1)", false, `opacity="${st >= 7 ? .35 : .55}"`); });
+  if (lyr.lay) {
+    g += `<rect x="520" y="230" width="52" height="110" rx="6" fill="url(#lhatchA)" stroke="rgba(245,165,36,.7)"/><text x="546" y="290" text-anchor="middle" transform="rotate(-90 546 288)" style="fill:#f7b955;font-size:9px">LAYDOWN 1</text>`;
+    g += `<rect x="34" y="232" width="48" height="96" rx="6" fill="url(#lhatchA)" stroke="rgba(245,165,36,.7)"/><text x="58" y="288" text-anchor="middle" transform="rotate(-90 58 284)" style="fill:#f7b955;font-size:9px">LAYDOWN 2</text>`;
+    g += `<rect x="330" y="508" width="92" height="34" rx="6" fill="#1b2026" stroke="#5a6470"/><text x="376" y="529" text-anchor="middle" style="fill:#c3c2b7;font-size:9px">SITE OFFICE</text>`;
+    g += `<rect x="178" y="508" width="92" height="34" rx="6" fill="#1b2026" stroke="#5a6470"/><text x="224" y="529" text-anchor="middle" style="fill:#c3c2b7;font-size:9px">WELFARE</text>`;
+  }
+  if (lyr.excl) g += `<path d="M420 120 a46 34 0 1 0 92 0 a46 34 0 1 0 -92 0" fill="url(#lhatchR)" stroke="rgba(236,107,107,.8)"/><text x="466" y="124" text-anchor="middle" style="fill:#ef8a8a;font-size:9px">LIFT ZONE</text>`;
+  if (lyr.crane) [[466, 120, 96], [150, 420, 92]].forEach(([x, y, r], k) => { g += `<circle cx="${x}" cy="${y}" r="${r}" fill="rgba(127,212,255,.05)" stroke="#7fd4ff" stroke-dasharray="4 5"/><circle cx="${x}" cy="${y}" r="5" fill="#7fd4ff"/><line x1="${x}" y1="${y}" x2="${x + r}" y2="${y}" stroke="#7fd4ff" stroke-width="1.5" style="transform-origin:${x}px ${y}px;animation:spin ${18 + k * 6}s linear infinite"/><text x="${x + 8}" y="${y - 8}" style="fill:#7fd4ff;font-size:9px">MC-0${k + 1} · ${k ? 30 : 50} t</text>`; });
+  if (lyr.route) {
+    const route = `M300 552 V${CY + RING.ry} A${RING.rx} ${RING.ry} 0 0 0 ${CX + RING.rx} ${CY} L520 ${CY} M${CX + RING.rx} ${CY} A${RING.rx} ${RING.ry} 0 0 0 ${CX} ${CY - RING.ry} A${RING.rx} ${RING.ry} 0 0 0 ${CX - RING.rx} ${CY} L18 ${CY}`;
+    g += `<path id="rt" d="${route}" fill="none" stroke="#f5a524" stroke-width="3" stroke-dasharray="10 14" class="dash-anim" opacity=".95"/>`;
+    g += `<path id="rtm" d="M300 552 V${CY + RING.ry} A${RING.rx} ${RING.ry} 0 0 0 ${CX + RING.rx} ${CY} A${RING.rx} ${RING.ry} 0 0 0 ${CX} ${CY - RING.ry} A${RING.rx} ${RING.ry} 0 0 0 ${CX - RING.rx} ${CY} L18 ${CY}" fill="none" stroke="none"/>`;
+    if (!reduce) for (let k = 0; k < 3; k++) g += `<g><animateMotion dur="14s" begin="${k * 4.6}s" repeatCount="indefinite" rotate="auto"><mpath href="#rtm"/></animateMotion><rect x="-9" y="-5" width="18" height="10" rx="2" fill="#f5a524"/><rect x="5" y="-5" width="5" height="10" rx="1" fill="#120c02"/></g>`;
+    g += `<g><rect x="262" y="536" width="76" height="18" rx="4" fill="#f5a524"/><text x="300" y="548" text-anchor="middle" style="fill:#120c02;font-size:9px;font-weight:600">GATE 1 · IN</text></g>`;
+    g += `<g><rect x="4" y="${CY - 30}" width="70" height="18" rx="4" fill="#f5a524"/><text x="39" y="${CY - 18}" text-anchor="middle" style="fill:#120c02;font-size:9px;font-weight:600">GATE 2 · OUT</text></g>`;
+  }
+  if (lyr.walk) g += `<path d="M224 508 C224 470 250 470 268 ${CY + RING.ry + 6} M268 ${CY + RING.ry + 6} C320 ${CY + RING.ry + 30} 420 470 500 430" fill="none" stroke="#4ac16d" stroke-width="2.2" stroke-dasharray="3 5" class="dash-anim"/><text x="430" y="470" style="fill:#7ddb92;font-size:9px">WORKER WALKWAY</text>`;
+  svg.innerHTML = `<style>@keyframes spin{to{transform:rotate(360deg)}}</style>` + g;
+  const LY = [["route", "#f5a524"], ["walk", "#4ac16d"], ["crane", "#7fd4ff"], ["lay", "#f5a524"], ["excl", "#ec6b6b"]];
+  $("#layers").innerHTML = LY.map(([k, c], i) => `<button type="button" aria-pressed="${lyr[k]}" data-k="${k}"><i style="background:${c}"></i>${esc(D.l2.ly[i])}</button>`).join("");
+  $("#layers").querySelectorAll("button").forEach((b) => b.onclick = () => { lyr[b.dataset.k] = !lyr[b.dataset.k]; renderLogi(); });
+  $("#ltiles").innerHTML = D.l2.t.map(([v, l, st]) => `<div class="tile"><small>${esc(l)}</small><b>${v}</b>${statusHTML(st)}</div>`).join("");
+  const now = 10.67, col = { done: "var(--s3)", way: "var(--amber)", plan: "#3a4350" };
+  $("#gdel").innerHTML = D.l2.dl.map(([m, sup, g0, s0, e0]) => { const st = e0 <= now ? "done" : s0 <= now + 0.6 ? "way" : "plan"; return `<div class="gd-row"><span class="nm">${esc(m)}<small>${esc(sup)} · ${g0}</small></span><div class="gd-track"><div class="gd-bar" style="left:${((s0 - 6) / 12) * 100}%;width:${((e0 - s0) / 12) * 100}%;background:${col[st]}"></div><div class="gd-now" style="left:${((now - 6) / 12) * 100}%"></div></div></div>`; }).join("");
+  $("#dlegend").innerHTML = `<span><i class="box" style="background:var(--s3)"></i>${esc(D.l2.dlg[0])}</span><span><i class="box" style="background:var(--amber)"></i>${esc(D.l2.dlg[1])}</span><span><i class="box" style="background:#3a4350"></i>${esc(D.l2.dlg[2])}</span><span><i style="border-color:var(--amber);width:2px;height:12px;border-top:0;border-left:2px solid var(--amber)"></i>10:40</span>`;
+}
+
+/* =========================================================
+   4D / BIM (isometric tower linked to activities)
+   ========================================================= */
+const FLOORS = 14;
+let bweek = 40, bplaying = null, bmode = 0, bsel = 7;
+const TRADES = [[6, 2, 2], [14, 2, 4], [20, 2.1, 3], [24, 2.2, 6]];   // start, per-floor offset, duration (weeks): structure, MEP, facade, finishes
+const tradeState = (t, f, w) => { const [s, o, du] = TRADES[t], st = s + o * f + (t === 2 && f >= 7 && f <= 9 ? 3 : 0), en = st + du; return w >= en ? 2 : w >= st ? 1 : 0; };
+function isoP(x, y, z) { return [310 + (x - y) * 0.866 * 15, 388 + (x + y) * 0.5 * 15 - z]; }
+function poly(pts) { return pts.map((p) => p.map((n) => n.toFixed(1)).join(",")).join(" "); }
+function renderBim() {
+  const D = d(), svg = $("#iso"); let g = "";
+  // ground
+  const gr = [isoP(-2, -2, 0), isoP(14, -2, 0), isoP(14, 12, 0), isoP(-2, 12, 0)];
+  g += `<polygon points="${poly(gr)}" fill="#12161a" stroke="#262a31"/>`;
+  for (let k = -2; k <= 14; k += 4) { g += `<line x1="${isoP(k, -2, 0)[0]}" y1="${isoP(k, -2, 0)[1]}" x2="${isoP(k, 12, 0)[0]}" y2="${isoP(k, 12, 0)[1]}" stroke="#1b2026"/>`; }
+  const W0 = 12, D0 = 10, FH = 24;
+  for (let f = 0; f < FLOORS; f++) {
+    const z0 = f * FH, z1 = z0 + FH;
+    const s = TRADES.map((_, t) => tradeState(t, f, bweek));
+    const delayed = s[2] === 1 && f >= 7 && f <= 9;
+    let left, right, topc, stroke = "rgba(236,235,230,.18)", dash = "";
+    if (bmode === 0) {
+      if (s[0] === 0) { left = right = "none"; stroke = "rgba(236,235,230,.16)"; dash = "3 4"; }
+      else if (s[0] === 1) { left = "#a77214"; right = "#8a5d10"; }
+      else if (delayed) { left = "#a63232"; right = "#862828"; }
+      else if (s[3] === 2) { left = "#8fc2ec"; right = "#5b97cf"; }
+      else if (s[2] >= 1) { left = "#3f7fc4"; right = "#2f679f"; }
+      else { left = "#8b939c"; right = "#6c737b"; }
+    } else {
+      const k = s[3] ? 3 : s[2] ? 2 : s[1] ? 1 : s[0] ? 0 : -1, TC = ["#9aa3ad", "#d97b2b", "#3987e5", "#a0da39"];
+      if (k < 0) { left = right = "none"; dash = "3 4"; } else { left = TC[k]; right = TC[k]; }
+    }
+    const fl = [isoP(0, D0, z0), isoP(W0, D0, z0), isoP(W0, D0, z1), isoP(0, D0, z1)];
+    const fr = [isoP(W0, D0, z0), isoP(W0, 0, z0), isoP(W0, 0, z1), isoP(W0, D0, z1)];
+    const top = [isoP(0, 0, z1), isoP(W0, 0, z1), isoP(W0, D0, z1), isoP(0, D0, z1)];
+    g += `<g class="fl${f === bsel ? " sel" : ""}" data-f="${f}" tabindex="0" role="button" aria-label="Level ${f + 1}">`;
+    g += `<polygon class="hl" points="${poly(fl)}" fill="${left}" stroke="${stroke}" ${dash ? `stroke-dasharray="${dash}"` : ""} opacity="${bmode === 1 && left !== "none" ? .9 : 1}"/>`;
+    g += `<polygon class="hl" points="${poly(fr)}" fill="${right}" stroke="${stroke}" ${dash ? `stroke-dasharray="${dash}"` : ""} opacity="${bmode === 1 && right !== "none" ? .75 : 1}"/>`;
+    if (s[0] >= 1 && bmode === 0 && s[2] >= 1) for (let k = 1; k < 6; k++) { const a = isoP(k * 2, D0, z0), b = isoP(k * 2, D0, z1); g += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="rgba(10,11,13,.35)"/>`; }
+    if (f === FLOORS - 1 || tradeState(0, f + 1, bweek) === 0) g += `<polygon points="${poly(top)}" fill="${s[0] ? "#b7bec6" : "none"}" stroke="${stroke}" opacity="${s[0] ? .9 : 1}"/>`;
+    g += `</g>`;
+  }
+  // crane while structure is in progress
+  const topF = [...Array(FLOORS).keys()].filter((f) => tradeState(0, f, bweek) >= 1).length;
+  if (topF > 0 && topF < FLOORS + 1 && tradeState(0, FLOORS - 1, bweek) < 2) { const b0 = isoP(W0 + 3, -2, 0), b1 = isoP(W0 + 3, -2, (topF + 3) * FH); g += `<line x1="${b0[0]}" y1="${b0[1]}" x2="${b1[0]}" y2="${b1[1]}" stroke="#f5a524" stroke-width="3"/><line x1="${b1[0] - 150}" y1="${b1[1]}" x2="${b1[0] + 40}" y2="${b1[1]}" stroke="#f5a524" stroke-width="3"/><line x1="${b1[0] - 90}" y1="${b1[1]}" x2="${b1[0] - 90}" y2="${b1[1] + 40}" stroke="#c3c2b7"/>`; }
+  svg.innerHTML = g;
+  svg.querySelectorAll(".fl").forEach((el) => {
+    const f = +el.dataset.f;
+    el.onclick = () => { bsel = f; renderBim(); };
+    el.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.onclick(); } };
+    el.onpointermove = (e) => { const tip = $("#isotip"), card = $("#isocard"), s = TRADES.map((_, t) => tradeState(t, f, bweek)); tip.innerHTML = `<b>Level ${String(f + 1).padStart(2, "0")}</b>${D.b.tr.map((t, k) => `<div>${esc(t)} · ${esc(D.b.st[s[k]])}</div>`).join("")}`; placeTip(tip, card, e); };
+    el.onpointerleave = () => $("#isotip").classList.remove("on");
+  });
+  $("#bwko").textContent = `${D.wk} ${bweek} · ${wkDate(bweek)}`;
+  $("#bmodes").innerHTML = D.b.modes.map((m, k) => `<button type="button" aria-pressed="${k === bmode}" data-k="${k}">${esc(m)}</button>`).join("");
+  $("#bmodes").querySelectorAll("button").forEach((b) => b.onclick = () => { bmode = +b.dataset.k; renderBim(); });
+  $("#blegend").innerHTML = bmode === 0
+    ? [["#8fc2ec", D.b.lg[0]], ["#3f7fc4", D.b.lg[1]], ["#8b939c", D.b.lg[2]], ["#a77214", D.b.lg[3]], ["#a63232", D.b.lg[4]]].map(([c, l]) => `<span><i class="box" style="background:${c}"></i>${esc(l)}</span>`).join("") + `<span><i class="box" style="border:1px dashed #6c737b;background:none"></i>${esc(D.b.lg[5])}</span>`
+    : ["#9aa3ad", "#d97b2b", "#3987e5", "#a0da39"].map((c, k) => `<span><i class="box" style="background:${c}"></i>${esc(D.b.tr[k])}</span>`).join("");
+  // Revit categories, % installed at the selected week
+  const cats = [[D.b.cat[0], 288, 0], [D.b.cat[1], 28, 0], [D.b.cat[2], 412, 0], [D.b.cat[3], 2316, 1], [D.b.cat[4], 3870, 1], [D.b.cat[5], 1904, 2], [D.b.cat[6], 1260, 3]];
+  $("#rvt").innerHTML = `<thead><tr>${D.b.rh.map((h, i) => `<th${i > 1 ? ' style="text-align:end"' : ""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>${cats.map(([c, n, t]) => { const done = [...Array(FLOORS).keys()].reduce((a, f) => a + (tradeState(t, f, bweek) === 2 ? 1 : tradeState(t, f, bweek) === 1 ? 0.5 : 0), 0) / FLOORS; return `<tr><td>${esc(c)}</td><td class="mono">${["A2", "A3", "A4", "A5"][t]}xxx</td><td class="num">${n.toLocaleString("en-US")}</td><td class="num">${(done * 100).toFixed(0)}%</td></tr>`; }).join("")}</tbody>`;
+  const s = TRADES.map((_, t) => tradeState(t, bsel, bweek));
+  $("#bfl").textContent = `Level ${String(bsel + 1).padStart(2, "0")} · ${D.b.flt}`;
+  $("#bdet").innerHTML = D.b.tr.map((t, k) => `<div class="rec"><span class="tag ${["ir", "rfi", "asite", "ncr"][k]}">${esc(D.b.st[s[k]])}</span><div><b>${esc(t)}</b><div class="m"><span>A${2 + k}${String(bsel + 1).padStart(2, "0")}0</span><span>ElementId ${486200 + bsel * 70 + k * 13}–${486200 + bsel * 70 + k * 13 + 12}</span></div></div></div>`).join("");
+}
+function setBweek(w) { bweek = w; $("#bwk").value = w; renderBim(); }
+function stopB() { if (bplaying) { clearInterval(bplaying); bplaying = null; $("#bplayic").innerHTML = '<path d="M4 2.5l9 5.5-9 5.5z"/>'; } }
+
+/* =========================================================
+   ONE PROJECT EVERYWHERE: Palm Grove Villas (fictional)
+   Overview, S-curve, packages and look-ahead are calculated
+   from the same 48 villas shown on the Smart Site page.
+   ========================================================= */
+const DW = 41;                                   // data week (12-Oct-26, data date 15-Oct-26)
+week = DW;
+const PLAN_ENDS = VILLAS.map((v) => { const e = []; let t = v.start; DUR.forEach((d0) => { t += d0; e.push(t); }); return e; });
+const stProg = (v, k, w, ends) => { const s0 = k === 1 ? v.start : ends[k - 2], e0 = ends[k - 1]; return Math.max(0, Math.min(1, (w - s0) / (e0 - s0))); };
+const vPct = (v, w, ends) => { const tot = ends[6] - v.start; return Math.max(0, Math.min(100, ((w - v.start) / tot) * 100)); };
+const NW = 80;
+const ACT_CURVE = [...Array(NW + 1)].map((_, w) => VILLAS.reduce((a, v) => a + vPct(v, w, v.ends), 0) / VILLAS.length);
+const PLAN_CURVE = Array(NW + 1).fill(0);
+for (let w = 0; w <= NW; w++) PLAN_CURVE[w] = VILLAS.reduce((a, v, i) => a + vPct(v, w, PLAN_ENDS[i]), 0) / VILLAS.length;
+const planFinishW = Math.max(...PLAN_ENDS.map((e) => e[6])), actFinishW = Math.max(...VILLAS.map((v) => v.ends[6]));
+const SLIP_D = Math.round((actFinishW - planFinishW) * 7);
+let liveBump = 0;
+
+function renderTiles(first) {
+  const D = d();
+  const act = ACT_CURVE[DW] + liveBump, pl = PLAN_CURVE[DW], spi = act / pl;
+  const items = [
+    { v: act, dec: 1, suf: "%", sub: `${D.tsub[0]} ${pl.toFixed(1)}%`, st: lvlIdx(spi, 0.97, 0.93, 0.88) },
+    { v: spi, dec: 2, suf: "", sub: D.tsub[1], st: lvlIdx(spi, 0.97, 0.93, 0.88) },
+    { v: 1.03, dec: 2, suf: "", sub: D.tsub[2], st: "good" },
+    { v: SLIP_D, dec: 0, suf: " d", sub: D.tsub[3], st: SLIP_D <= 0 ? "good" : SLIP_D <= 14 ? "warn" : SLIP_D <= 30 ? "serious" : "crit", sign: true },
+    { v: 486 + Math.round(liveBump * 40), dec: 0, suf: "", sub: `${D.tsub[4]} 520`, st: "warn" },
+  ];
+  const box = $("#tiles");
+  if (first || box.children.length !== 5) box.innerHTML = items.map((it, i) => `<div class="tile"><small>${esc(D.tiles[i])}</small><b id="tv${i}">0</b><span class="sub">${esc(it.sub)}</span><span id="ts${i}">${statusHTML(it.st)}</span>${i === 0 ? '<svg class="spark" id="spark" viewBox="0 0 120 28" aria-hidden="true"></svg>' : ""}</div>`).join("");
+  items.forEach((it, i) => { const el = $("#tv" + i); if (it.sign) { el.textContent = (it.v > 0 ? "+" : "") + it.v + it.suf; } else tween(el, it.v, it.dec, it.suf); $("#ts" + i).innerHTML = statusHTML(it.st); });
+  const sp = ACT_CURVE.slice(0, DW + 1), mx = Math.max(...sp) || 1;
+  $("#spark").innerHTML = `<polyline points="${sp.map((v, i) => `${(i / DW) * 116 + 2},${26 - (v / mx) * 22}`).join(" ")}" fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round"/><circle cx="118" cy="${26 - (sp[DW] / mx) * 22}" r="3" fill="var(--s2)"/>`;
+}
+
+function renderS() {
+  const svg = $("#scurve"), W = 640, H = 300, L = 44, R = 16, T = 14, B = 34;
+  const x = (w) => L + (w / NW) * (W - L - R), y = (v) => T + (1 - v / 100) * (H - T - B);
+  let g = "";
+  [0, 25, 50, 75, 100].forEach((v) => { g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="${v ? "var(--grid)" : "var(--axis)"}"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v}%</text>`; });
+  for (let w = 1; w <= NW; w += 13) g += `<text x="${x(w)}" y="${H - 12}" text-anchor="middle">${wkDate(w).slice(3)}</text>`;
+  g += `<line x1="${x(DW)}" x2="${x(DW)}" y1="${T}" y2="${H - B}" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="3 4"/><text x="${x(DW) + 6}" y="${T + 10}" class="lbl" style="fill:var(--amber-ink)">DD</text>`;
+  const path = (arr, a, b) => arr.slice(a, b + 1).map((v, i) => `${i ? "L" : "M"}${x(a + i).toFixed(1)} ${y(v).toFixed(1)}`).join(" ");
+  g += `<path d="${path(ACT_CURVE, 0, DW)} L${x(DW)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--s2)" fill-opacity=".1"/>`;
+  g += `<path class="draw" d="${path(PLAN_CURVE, 0, NW)}" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"/>`;
+  g += `<path class="draw" d="${path(ACT_CURVE, 0, DW)}" fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round"/>`;
+  g += `<path d="${path(ACT_CURVE, DW, NW)}" fill="none" stroke="var(--s2)" stroke-width="2" stroke-dasharray="5 5"/>`;
+  g += `<circle cx="${x(DW)}" cy="${y(ACT_CURVE[DW])}" r="5" fill="var(--s2)" stroke="var(--panel)" stroke-width="2"/><text x="${x(DW) + 10}" y="${y(ACT_CURVE[DW]) + 16}" class="lbl">${ACT_CURVE[DW].toFixed(1)}%</text>`;
+  g += `<line id="sx" y1="${T}" y2="${H - B}" stroke="var(--ink-2)" opacity="0"/><circle id="sp1" r="4.5" fill="var(--s1)" stroke="var(--panel)" stroke-width="2" opacity="0"/><circle id="sp2" r="4.5" fill="var(--s2)" stroke="var(--panel)" stroke-width="2" opacity="0"/><rect id="shit" x="${L}" y="${T}" width="${W - L - R}" height="${H - T - B}" fill="transparent"/>`;
+  svg.innerHTML = g;
+  if (!reduce) svg.querySelectorAll(".draw").forEach((p) => { const len = p.getTotalLength(); if (!len) return; p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.getBoundingClientRect(); p.style.transition = "stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)"; p.style.strokeDashoffset = 0; });
+  const hit = $("#shit"), tip = $("#stip"), card = $("#scard");
+  hit.onpointermove = (e) => {
+    const r = svg.getBoundingClientRect(), px = (e.clientX - r.left) * (W / r.width), w = Math.max(0, Math.min(NW, Math.round(((px - L) / (W - L - R)) * NW)));
+    const D = d(); $("#sx").setAttribute("x1", x(w)); $("#sx").setAttribute("x2", x(w)); $("#sx").setAttribute("opacity", ".5");
+    $("#sp1").setAttribute("cx", x(w)); $("#sp1").setAttribute("cy", y(PLAN_CURVE[w])); $("#sp1").setAttribute("opacity", 1);
+    $("#sp2").setAttribute("cx", x(w)); $("#sp2").setAttribute("cy", y(ACT_CURVE[w])); $("#sp2").setAttribute("opacity", 1);
+    tip.innerHTML = `<b>${esc(D.wk)} ${w} · ${wkDate(w)}</b><div><i style="background:var(--s1)"></i>${esc(D.s[0])} ${PLAN_CURVE[w].toFixed(1)}%</div><div><i style="background:var(--s2)"></i>${esc(w <= DW ? D.s[1] : D.s[2])} ${ACT_CURVE[w].toFixed(1)}%</div>`;
+    placeTip(tip, card, e);
+  };
+  hit.onpointerleave = () => { tip.classList.remove("on"); ["#sx", "#sp1", "#sp2"].forEach((s0) => $(s0).setAttribute("opacity", 0)); };
+}
+
+function renderPk() {
+  const D = d();
+  const rows = D.acts.map((a, k) => {
+    const act = Math.round(100 * VILLAS.reduce((s0, v) => s0 + stProg(v, k + 1, DW, v.ends), 0) / VILLAS.length);
+    const pl = Math.round(100 * VILLAS.reduce((s0, v, i) => s0 + stProg(v, k + 1, DW, PLAN_ENDS[i]), 0) / VILLAS.length);
+    return [D.stages[k + 1], act, pl];
+  });
+  $("#pk").innerHTML = rows.map(([n, a, p]) => `<div class="pk-row" title="${esc(n)}: ${a}% / ${p}%"><span class="nm">${esc(n)}</span><div class="pk-track"><div class="pk-fill" data-w="${a}"></div><div class="pk-plan" style="left:calc(${p}% - 1px)"></div></div><span class="v">${a}%</span></div>`).join("");
+  requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll(".pk-fill").forEach((f) => { f.style.width = f.dataset.w + "%"; })));
+}
+
+function renderLook() {
+  const D = d(), rows = [];
+  VILLAS.forEach((v) => { for (let k = 1; k <= 7; k++) { const s0 = k === 1 ? v.start : v.ends[k - 2], e0 = v.ends[k - 1]; if (s0 <= DW + 3 && e0 >= DW) { const fl = v.slow ? (k + v.i) % 3 : 3 + ((v.i * 3 + k) % 11); rows.push([`V${v.id}-${1000 + (k - 1) * 10}`, D.acts[k - 1], wkDate(Math.floor(Math.max(s0, 1))).slice(0, 6), wkDate(Math.floor(e0)).slice(0, 6), fl]); } } });
+  rows.sort((a, b) => a[4] - b[4]);
+  $("#look").innerHTML = `<thead><tr>${D.lh.map((h, i) => `<th${i === 4 ? ' style="text-align:end"' : ""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.slice(0, 10).map(([id, n, s0, e0, fl]) => { const st = fl <= 0 ? "crit" : fl <= 2 ? "serious" : fl <= 6 ? "warn" : "good"; return `<tr><td class="mono">${id}</td><td>${esc(n)}</td><td class="mono">${s0}</td><td class="mono">${e0}</td><td class="num">${fl}</td><td>${statusHTML(st)}</td></tr>`; }).join("")}</tbody>`;
+}
+
+function makeMp() { let r = 29; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280; mpSeries = [...Array(14)].map((_, i) => Math.round(486 * (0.9 + 0.12 * rnd()) * (i % 7 === 5 ? 0.62 : 1))); mpSeries[13] = 486; }
+PROJ[0].mp = 486; PROJ[0].mpPlan = 520; pi = 0;
+
+function refresh() {
+  const sy = $("#sync"); sy.classList.add("syncing"); $("#sync-t").textContent = d().sync[1];
+  setTimeout(() => { liveBump = Math.min(0.6, liveBump + 0.04); mpSeries[13] = 486 + Math.round(liveBump * 40); if (page === "overview") { renderTiles(false); renderMp(); } feedPush(); sy.classList.remove("syncing"); lastSync = Date.now(); syncTick(); }, 1100);
+}
+
+/* =========================================================
+   4D VILLA MODEL (linked to the villa selected on Smart Site)
+   ========================================================= */
+const S4 = 17;
+const iso = (x, y, z) => [300 + (x - y) * 0.866 * S4, 236 + (x + y) * 0.5 * S4 - z * S4];
+const pts = (a) => a.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
+const MAT = {
+  conc: ["#c3c8cd", "#a3aab1", "#868d95"], foot: ["#9aa1a8", "#7d848b", "#666c73"], block: ["#b0aa9f", "#958f84", "#7d786e"],
+  plaster: ["#f1ebe0", "#e1d7c5", "#c7bba6"], stone: ["#c8ae8a", "#b0966f", "#937b58"], dark: ["#3a3f47", "#2c3036", "#23272c"],
+};
+const ST4 = { 2: ["#9fb0c0", "#8396a8", "#6d8093"], 1: ["#e2a33a", "#c98a1b", "#a87011"], d: ["#d25b5b", "#b03a3a", "#8c2b2b"] };
+function box(x, y, z, w, dd, h, col, opt = {}) {
+  const T = [iso(x, y, z + h), iso(x + w, y, z + h), iso(x + w, y + dd, z + h), iso(x, y + dd, z + h)];
+  const Lf = [iso(x, y + dd, z), iso(x + w, y + dd, z), iso(x + w, y + dd, z + h), iso(x, y + dd, z + h)];
+  const Rf = [iso(x + w, y, z), iso(x + w, y + dd, z), iso(x + w, y + dd, z + h), iso(x + w, y, z + h)];
+  if (opt.ghost) return `<g fill="none" stroke="rgba(127,212,255,.35)" stroke-width=".8" stroke-dasharray="3 3"><polygon points="${pts(T)}"/><polygon points="${pts(Lf)}"/><polygon points="${pts(Rf)}"/></g>`;
+  const s0 = opt.stroke || "rgba(10,11,13,.35)";
+  return `<polygon points="${pts(Lf)}" fill="${col[1]}" stroke="${s0}" stroke-width=".6"/><polygon points="${pts(Rf)}" fill="${col[2]}" stroke="${s0}" stroke-width=".6"/><polygon points="${pts(T)}" fill="${col[0]}" stroke="${s0}" stroke-width=".6"/>`;
+}
+function faceRectY(x1, x2, yF, z1, z2, fill, stroke) { return `<polygon points="${pts([iso(x1, yF, z1), iso(x2, yF, z1), iso(x2, yF, z2), iso(x1, yF, z2)])}" fill="${fill}" stroke="${stroke || "none"}" stroke-width=".7"/>`; }
+function faceRectX(xF, y1, y2, z1, z2, fill, stroke) { return `<polygon points="${pts([iso(xF, y1, z1), iso(xF, y2, z1), iso(xF, y2, z2), iso(xF, y1, z2)])}" fill="${fill}" stroke="${stroke || "none"}" stroke-width=".7"/>`; }
+function renderBim() {
+  const D = d(), v = VILLAS[sel], w = week, svg = $("#iso");
+  const stage = stageAt(v, w), slow = v.slow;
+  const sp = (k) => stProg(v, k, w, v.ends);
+  const st = (k, t = 0) => { if (stage > k) return 2; if (stage < k) return 0; const p = sp(k); return p >= Math.min(1, t + 0.18) ? 2 : p > t ? 1 : 0; };
+  const statusMode = bmode === 1;
+  const C = (k, t, real) => { const s0 = st(k, t); if (s0 === 0) return null; if (!statusMode) return s0 === 1 && real === MAT.plaster ? MAT.block : real; return s0 === 2 ? ST4[2] : slow ? ST4.d : ST4[1]; };
+  const el = (k, t, real, args, extra) => { const c = C(k, t, real); return c ? box(...args, c, extra) : box(...args, null, { ghost: true }); };
+  let g = "";
+  // ground, plot, excavation
+  g += `<polygon points="${pts([iso(-3, -3, 0), iso(19, -3, 0), iso(19, 16, 0), iso(-3, 16, 0)])}" fill="#1a1d1a" stroke="#262a31"/>`;
+  for (let k = -3; k <= 19; k += 2) { const a = iso(k, -3, 0), b = iso(k, 16, 0); g += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#20241f" stroke-width=".7"/>`; }
+  if (st(1) >= 1 && st(3, 0.1) < 2) g += `<polygon points="${pts([iso(-1, -1, 0), iso(17, -1, 0), iso(17, 10, 0), iso(-1, 10, 0)])}" fill="#4a3f30" stroke="#5c4e3a"/>`;
+  // boundary wall and driveway (handover)
+  const hv = st(7);
+  if (hv) { g += `<polygon points="${pts([iso(12, 9.5, 0), iso(16, 9.5, 0), iso(16, 16, 0), iso(12, 16, 0)])}" fill="#3a3a36"/>`; }
+  g += hv ? box(-3, -3, 0, 0.3, 19, 0.9, MAT.plaster) + box(-3, -3, 0, 22, 0.3, 0.9, MAT.plaster) : box(-3, -3, 0, 22, 0.3, 0.9, null, { ghost: true });
+  // pool
+  const pool = st(7, 0.2);
+  g += `<polygon points="${pts([iso(1, 11, 0.02), iso(9, 11, 0.02), iso(9, 14.5, 0.02), iso(1, 14.5, 0.02)])}" fill="${pool ? "#2d8fbf" : "none"}" stroke="${pool ? "#7fd4ff" : "rgba(127,212,255,.35)"}" stroke-dasharray="${pool ? "0" : "3 3"}"/>`;
+  if (pool) g += `<polyline points="${pts([iso(2, 12, 0.03), iso(4, 12.6, 0.03), iso(6, 12.2, 0.03)])}" fill="none" stroke="rgba(255,255,255,.4)"/>`;
+  // footings and tie beams
+  const gx = [0, 4, 8, 12], gy = [0, 4.5, 9];
+  gx.forEach((x, i) => gy.forEach((y, j) => { g += el(2, (i * 3 + j) / 16, MAT.foot, [x - 0.6, y - 0.6, 0, 1.2, 1.2, 0.6]); }));
+  [[16, 3], [16, 9]].forEach(([x, y], j) => { g += el(2, 0.7 + j * 0.05, MAT.foot, [x - 0.6, y - 0.6, 0, 1.2, 1.2, 0.6]); });
+  // ground floor slab
+  g += el(3, 0, MAT.conc, [0, 0, 0.6, 12, 9, 0.35]) + el(3, 0.05, MAT.conc, [12, 3, 0.6, 4, 6, 0.35]);
+  // GF columns (visible until walls)
+  const wallsGF = st(4, 0);
+  if (!wallsGF) gx.forEach((x, i) => gy.forEach((y, j) => { g += el(3, 0.1 + (i + j) * 0.02, MAT.conc, [x - 0.2, y - 0.2, 0.95, 0.4, 0.4, 3]); }));
+  // GF walls (blockwork -> plaster)
+  const fin = st(6, 0);
+  const wallCol = (k, t) => (fin === 2 && !statusMode ? MAT.plaster : C(k, t, MAT.block));
+  const gfC = wallCol(4, 0);
+  g += gfC ? box(0, 0, 0.95, 12, 9, 3, gfC) : "";
+  // first floor slab + annex roof
+  g += el(3, 0.35, MAT.conc, [-0.3, -0.3, 3.95, 12.6, 9.6, 0.35]) + el(3, 0.4, MAT.conc, [12, 3, 3.95, 4.3, 6.3, 0.35]);
+  // annex walls
+  const anC = wallCol(4, 0.3);
+  if (anC) { /* drawn after main block below */ }
+  // FF columns
+  const wallsFF = st(4, 0.5);
+  if (!wallsFF) gx.forEach((x, i) => gy.forEach((y, j) => { g += el(3, 0.5 + (i + j) * 0.02, MAT.conc, [x - 0.2, y - 0.2, 4.3, 0.4, 0.4, 3]); }));
+  const ffC = wallCol(4, 0.5);
+  g += ffC ? box(0, 0, 4.3, 12, 9, 3, ffC) : "";
+  // roof slab and parapet
+  g += el(3, 0.8, MAT.conc, [-0.3, -0.3, 7.3, 12.6, 9.6, 0.35]);
+  if (st(6, 0.5)) { const pc = statusMode ? C(6, 0.5) : MAT.plaster; g += box(-0.3, -0.3, 7.65, 12.6, 0.25, 0.7, pc) + box(-0.3, -0.3, 7.65, 0.25, 9.6, 0.7, pc) + box(-0.3, 9.05, 7.65, 12.6, 0.25, 0.7, pc) + box(12.05, -0.3, 7.65, 0.25, 9.6, 0.7, pc); }
+  // MEP: roof AC units and water tank
+  if (st(5, 0.4)) { const mc = statusMode ? C(5, 0.4) : MAT.dark; g += box(2, 1.5, 7.65, 1.6, 1.1, 0.9, mc) + box(4.2, 1.5, 7.65, 1.6, 1.1, 0.9, mc) + box(8.5, 2, 7.65, 1.8, 1.8, 1.4, statusMode ? mc : ["#dfe3e6", "#c3c8cd", "#a3aab1"]); }
+  else g += box(2, 1.5, 7.65, 3.8, 1.1, 0.9, null, { ghost: true });
+  // openings and details on front faces (y = 9) and side (x = 12)
+  const glass = fin === 2 && !statusMode ? "#2f5d7c" : "#23272c";
+  const showOpen = (gfC || ffC) && !statusMode;
+  if (showOpen) {
+    [[1, 3.2], [5, 7.6], [9.2, 11]].forEach(([a, b]) => { if (gfC) g += faceRectY(a, b, 9, 1.6, 3.4, glass, "rgba(255,255,255,.12)"); if (ffC) g += faceRectY(a, b, 9, 5, 6.8, glass, "rgba(255,255,255,.12)"); });
+    if (gfC) g += faceRectY(4.0, 4.8, 9, 0.95, 3.4, fin === 2 ? "#6b4a2e" : "#23272c");
+    [[1, 3], [5.5, 7.5]].forEach(([a, b]) => { if (ffC) g += faceRectX(12, a, b, 5, 6.8, glass, "rgba(255,255,255,.12)"); });
+    if (fin === 2) g += faceRectY(0, 12, 9, 0.95, 1.9, "#b0966f") + `<line x1="${iso(0, 9, 3.95)[0]}" y1="${iso(0, 9, 3.95)[1]}" x2="${iso(12, 9, 3.95)[0]}" y2="${iso(12, 9, 3.95)[1]}" stroke="#8f8574" stroke-width="2"/>`;
+    if (st(4, 0) === 1 || (st(4, 0.6) === 1)) for (let k = 1; k < 9; k++) { const z = 0.95 + k * 0.38; if (gfC) g += `<line x1="${iso(0, 9, z)[0]}" y1="${iso(0, 9, z)[1]}" x2="${iso(12, 9, z)[0]}" y2="${iso(12, 9, z)[1]}" stroke="rgba(0,0,0,.18)" stroke-width=".6"/>`; }
+    if (st(5, 0) === 1) for (let k = 0; k < 4; k++) { const x = 1.5 + k * 3; g += `<path d="M${iso(x, 9, 1.2)[0]} ${iso(x, 9, 1.2)[1]} L${iso(x, 9, 6.9)[0]} ${iso(x, 9, 6.9)[1]}" stroke="#e07a2b" stroke-width="1.6" stroke-dasharray="4 2"/>`; }
+  }
+  // annex (garage / majlis) drawn in front of the main block
+  if (anC) { g += box(12, 3, 0.95, 4, 6, 3, anC); if (!statusMode) { g += faceRectY(12.6, 15.4, 9, 0.95, 3.1, fin === 2 ? "#5a6470" : "#23272c"); if (fin === 2) for (let k = 1; k < 6; k++) g += `<line x1="${iso(12.6, 9, 0.95 + k * 0.36)[0]}" y1="${iso(12.6, 9, 0.95 + k * 0.36)[1]}" x2="${iso(15.4, 9, 0.95 + k * 0.36)[0]}" y2="${iso(15.4, 9, 0.95 + k * 0.36)[1]}" stroke="rgba(255,255,255,.12)"/>`; } }
+  else g += box(12, 3, 0.95, 4, 6, 3, null, { ghost: true });
+  if (!gfC) g += box(0, 0, 0.95, 12, 9, 3, null, { ghost: true });
+  if (!ffC) g += box(0, 0, 4.3, 12, 9, 3, null, { ghost: true });
+  // pergola on annex roof
+  if (st(6, 0.6)) { const pc = statusMode ? C(6, 0.6) : ["#8a6a48", "#6e5236", "#5a4229"]; for (let k = 0; k < 5; k++) g += box(12.3 + k * 0.85, 3.4, 4.3, 0.25, 5.2, 0.25, pc); g += box(15.6, 8.4, 4.3, 0.25, 0.25, 2.2, pc); }
+  // landscaping
+  if (hv) { [[-1.5, 11], [10.5, 12.5], [17.5, 11.5], [17.6, 1], [-1.8, 3]].forEach(([x, y], k) => { const p = iso(x, y, 0), r = 9 + (k % 3) * 3; g += `<line x1="${p[0]}" y1="${p[1]}" x2="${p[0]}" y2="${p[1] - r * 1.6}" stroke="#6b4f33" stroke-width="2"/><circle cx="${p[0]}" cy="${p[1] - r * 1.8}" r="${r}" fill="#3f7f4a"/><circle cx="${p[0] - r * .3}" cy="${p[1] - r * 2}" r="${r * .55}" fill="#4f9a5a"/>`; }); }
+  // site crane / scaffolding hints while building
+  if (stage >= 3 && stage <= 6 && !statusMode) { for (let k = 0; k < 7; k++) { const a = iso(-0.6 + k * 2, 9.6, 0.95), b = iso(-0.6 + k * 2, 9.6, 7.6); g += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#7b8794" stroke-width="1"/>`; } [2.5, 5, 7.6].forEach((z) => { const a = iso(-0.6, 9.6, z), b = iso(11.4, 9.6, z); g += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#7b8794" stroke-width="1"/>`; }); }
+  g += `<text x="16" y="22" style="font-family:var(--f-mono);font-size:12px;fill:#c3c2b7">Villa ${v.id} · ${esc(D.stages[stage])} · ${pctAt(v, w).toFixed(0)}%</text>`;
+  svg.innerHTML = g;
+  $("#bwko").textContent = `${D.wk} ${w} · ${wkDate(w)}`;
+  $("#bwk").value = w;
+  $("#bmodes").innerHTML = D.b.modes.map((m, k) => `<button type="button" aria-pressed="${k === bmode}" data-k="${k}">${esc(m)}</button>`).join("");
+  $("#bmodes").querySelectorAll("button").forEach((b) => b.onclick = () => { bmode = +b.dataset.k; renderBim(); });
+  $("#blegend").innerHTML = bmode === 1
+    ? [[ST4[2][1], D.b.st[2]], [ST4[1][1], D.b.st[1]], [ST4.d[1], D.b.lg[4]]].map(([c, l]) => `<span><i class="box" style="background:${c}"></i>${esc(l)}</span>`).join("") + `<span><i class="box" style="border:1px dashed rgba(127,212,255,.6);background:none"></i>${esc(D.b.st[0])}</span>`
+    : [[MAT.foot[1], D.b.cat[0]], [MAT.conc[1], D.b.cat[1]], [MAT.block[1], D.b.cat[3]], [MAT.plaster[1], D.b.cat[8]], ["#2f5d7c", D.b.cat[4]], ["#2d8fbf", D.b.cat[9]]].map(([c, l]) => `<span><i class="box" style="background:${c}"></i>${esc(l)}</span>`).join("") + `<span><i class="box" style="border:1px dashed rgba(127,212,255,.6);background:none"></i>${esc(D.b.st[0])}</span>`;
+  // Revit categories for this villa, each linked to its P6 activity
+  const cats = [[0, 24, 2], [1, 36, 3], [2, 3, 3], [3, 64, 4], [4, 22, 6], [5, 18, 6], [6, 410, 5], [7, 96, 5], [8, 120, 6], [9, 14, 7]];
+  $("#rvt").innerHTML = `<thead><tr>${D.b.rh.map((h, i) => `<th${i > 1 ? ' style="text-align:end"' : ""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>${cats.map(([c, n, k]) => `<tr><td>${esc(D.b.cats[c])}</td><td class="mono">V${v.id}-${1000 + (k - 1) * 10}</td><td class="num">${n}</td><td class="num">${Math.round(stProg(v, k, w, v.ends) * 100)}%</td></tr>`).join("")}</tbody>`;
+  $("#bfl").textContent = `Villa ${v.id} · ${D.b.flt}`;
+  $("#bdet").innerHTML = D.acts.map((a, k) => { const s0 = st(k + 1); return `<div class="rec"><span class="tag ${["rfi", "ir", "ncr"][s0 === 1 && slow ? 2 : s0 === 2 ? 0 : 1]}">${esc(D.b.st[s0])}</span><div><b>${esc(a)}</b><div class="m"><span>V${v.id}-${1000 + k * 10}</span><span>ElementId ${480000 + v.plot * 40 + k * 5}–${480000 + v.plot * 40 + k * 5 + 4}</span></div></div></div>`; }).join("");
+  const sel4 = $("#bvilla");
+  if (sel4) { sel4.innerHTML = VILLAS.map((x, n) => `<option value="${n}" ${n === sel ? "selected" : ""}>Villa ${x.id}</option>`).join(""); sel4.onchange = () => { sel = +sel4.value; photoSel = -1; renderBim(); }; }
+}
+function setBweek(w0) { week = w0; renderBim(); }
+function stopB() { if (bplaying) { clearInterval(bplaying); bplaying = null; $("#bplayic").innerHTML = '<path d="M4 2.5l9 5.5-9 5.5z"/>'; } }
+
+/* =========================================================
+   AUTOMATION PAGE
+   ========================================================= */
+function renderAuto() {
+  const D = d();
+  $("#atiles").innerHTML = D.a.t.map(([v, l, st]) => `<div class="tile"><small>${esc(l)}</small><b>${v}</b>${statusHTML(st)}</div>`).join("");
+  $("#jobs").innerHTML = `<thead><tr>${D.a.jh.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${D.a.jobs.map(([j, s0, sc, lr, du, ok]) => `<tr><td>${esc(j)}</td><td style="color:var(--muted)">${esc(s0)}</td><td class="mono">${esc(sc)}</td><td class="mono">${esc(lr)}</td><td class="mono">${esc(du)}</td><td>${ok ? `<span class="status good">${ICON.good}${esc(D.a.ok)}</span>` : `<span class="status warn">${ICON.warn}${esc(D.a.warn)}</span>`}</td></tr>`).join("")}</tbody>`;
+  renderPipe();
+  // refresh history
+  const W = 640, H = 220, L = 40, R = 10, Tp = 14, B = 28, max = 3;
+  let r = 5; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
+  const vals = [...Array(30)].map((_, i) => 1.2 + rnd() * 0.9 + (i === 11 ? 0.6 : 0)), fail = (i) => i === 11 || i === 23;
+  const y = (v) => Tp + (1 - v / max) * (H - Tp - B), step = (W - L - R) / 30, bw = Math.min(14, step * 0.6);
+  let g = "";
+  [0, 1, 2, 3].forEach((v) => { g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="${v ? "var(--grid)" : "var(--axis)"}"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${v}m</text>`; });
+  vals.forEach((v, i) => { const x = L + step * i + (step - bw) / 2, t = y(v); g += `<path d="M${x} ${y(0)} V${t + 3} Q${x} ${t} ${x + 3} ${t} H${x + bw - 3} Q${x + bw} ${t} ${x + bw} ${t + 3} V${y(0)} Z" fill="${fail(i) ? "var(--crit)" : "var(--s3)"}"/>`; if (i % 5 === 4) g += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${String(i - 14 + 15).padStart(2, "0")}</text>`; g += `<rect class="rh" data-i="${i}" x="${L + step * i}" y="${Tp}" width="${step}" height="${H - Tp - B}" fill="transparent"/>`; });
+  const svg = $("#rhist"); svg.innerHTML = g;
+  $("#rhlegend").innerHTML = `<span><i class="box" style="background:var(--s3)"></i>${esc(D.a.lg[0])}</span><span><i class="box" style="background:var(--crit)"></i>${esc(D.a.lg[1])}</span>`;
+  const tip = $("#rhtip"), card = $("#rhcard");
+  svg.querySelectorAll(".rh").forEach((h) => {
+    h.onpointermove = (e) => { const i = +h.dataset.i, day = new Date(Date.UTC(2026, 8, 16 + i)); tip.innerHTML = `<b>${String(day.getUTCDate()).padStart(2, "0")}-${MON[day.getUTCMonth()]}</b><div>${vals[i].toFixed(1)} ${esc(D.a.min)} · ${esc(fail(i) ? D.a.lg[1] : D.a.lg[0])}</div>`; placeTip(tip, card, e); };
+    h.onpointerleave = () => tip.classList.remove("on");
+  });
+}
+
+/* tooltips inside the scaled canvas */
+let SCALE = 1;
+function placeTip(tip, card, e) {
+  const cr = card.getBoundingClientRect(), k = SCALE || 1;
+  let lx = (e.clientX - cr.left) / k + 14; if (lx > cr.width / k - 190) lx -= 210;
+  tip.style.left = lx + "px"; tip.style.top = ((e.clientY - cr.top) / k - 12) + "px"; tip.classList.add("on");
+}
+
+/* =========================================================
+   STATIC TEXT + PAGES
+   ========================================================= */
+function applyText() {
+  const D = d();
+  document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-t]").forEach((el) => { const v = D[el.dataset.t]; if (typeof v === "string") el.textContent = v; });
+  $("#lang").textContent = lang === "ar" ? "EN" : "ع";
+  $("#slegend").innerHTML = `<span><i style="border-color:var(--s1)"></i>${esc(D.s[0])}</span><span><i style="border-color:var(--s2)"></i>${esc(D.s[1])}</span><span><i class="dash" style="border-color:var(--s2)"></i>${esc(D.s[2])}</span>`;
+  $("#plegend").innerHTML = `<span><i class="box" style="background:var(--s2)"></i>${esc(D.p[0])}</span><span><i style="border-color:var(--ink);width:2px;height:12px;border-top:0;border-left:2px solid var(--ink)"></i>${esc(D.p[1])}</span>`;
+  $("#mlegend").innerHTML = `<span><i class="box" style="background:var(--s3)"></i>${esc(D.m[0])}</span><span><i class="dash" style="border-color:var(--ink-2)"></i>${esc(D.m[1])}</span>`;
+}
+const PAGES = ["overview", "site", "schedule", "risk", "logistics", "bim", "auto"];
+let page = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
+function renderTabs() {
+  const D = d(), i = PAGES.indexOf(page);
+  $("#tabs").innerHTML = PAGES.map((p, k) => `<button type="button" data-p="${p}" ${p === page ? 'aria-current="page"' : ""}>${esc(D.pgShort[k])}</button>`).join("");
+  $("#tabs").querySelectorAll("button").forEach((b) => b.onclick = () => go(b.dataset.p));
+  $("#pgn").textContent = D.pageOf.replace("{i}", i + 1).replace("{n}", PAGES.length);
+  $("#prevp").disabled = i === 0; $("#nextp").disabled = i === PAGES.length - 1;
+}
+function go(p) {
+  page = p; if (!EMBED) { try { history.replaceState(null, "", "#" + p); } catch (e) {} }
+  document.querySelectorAll(".page").forEach((el) => el.classList.toggle("on", el.id === "pg-" + p));
+  renderTabs(); showPage(p);
+  const fl = $("#fulllink"); if (fl) fl.href = "./#" + p;
+  setTimeout(fit, 60);
+}
+function showPage(p) {
+  if (p === "overview") renderAll(true);
+  if (p === "site") { renderLayout(); renderPanel(); }
+  if (p === "schedule") renderXer();
+  if (p === "risk") { renderRisk(); if (!mcRes) runMC(); }
+  if (p === "logistics") renderLogi();
+  if (p === "bim") renderBim();
+  if (p === "auto") { renderAuto(); }
+}
+$("#prevp").onclick = () => go(PAGES[Math.max(0, PAGES.indexOf(page) - 1)]);
+$("#nextp").onclick = () => go(PAGES[Math.min(PAGES.length - 1, PAGES.indexOf(page) + 1)]);
+
+/* scale the A4 landscape canvas to the available width */
+const EMBED = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+if (EMBED) document.body.classList.add("embed");
+function fit() {
+  const wrap = $("#wrapc"), c = $("#canvas");
+  if (innerWidth < 900) { SCALE = 1; c.style.transform = ""; wrap.style.height = ""; }
+  else { SCALE = wrap.clientWidth / 1400; c.style.transform = `scale(${SCALE})`; wrap.style.height = (990 * SCALE) + "px"; }
+  if (EMBED) { try { parent.postMessage({ type: "pbi-height", h: document.documentElement.scrollHeight }, "*"); } catch (e) {} }
+}
+addEventListener("resize", fit);
+
+/* =========================================================
+   BOOT
+   ========================================================= */
+$("#lang").onclick = () => { lang = lang === "ar" ? "en" : "ar"; store.set("lang", lang); applyText(); renderTabs(); showPage(page); $("#feed").innerHTML = ""; for (let k = 0; k < 4; k++) feedPush(); syncTick(); fit(); };
+$("#wk").oninput = (e) => { stopPlay(); setWeek(+e.target.value); };
+$("#bwk").oninput = (e) => { stopB(); setBweek(+e.target.value); };
+$("#bplay").onclick = () => {
+  if (bplaying) return stopB();
+  if (week >= 80) setBweek(1);
+  $("#bplayic").innerHTML = '<path d="M4 3h3v10H4zM9 3h3v10H9z"/>';
+  bplaying = setInterval(() => { if (week >= 80) return stopB(); setBweek(week + 1); }, 320);
+};
+applyText(); renderAll(true); makeMp();
+for (let k = 0; k < 4; k++) feedPush();
+go(page); fit(); syncTick();
+setTimeout(fit, 300); setTimeout(fit, 1500);
+setInterval(syncTick, 1000);
+if (!reduce) setInterval(() => { refresh(); }, 7000);
+addEventListener("message", (e) => { if (e.data && e.data.type === "pbi-lang" && (e.data.lang === "ar" || e.data.lang === "en") && e.data.lang !== lang) $("#lang").onclick(); });
+})();
+</script>
+</body>
+</html>

@@ -333,6 +333,11 @@ html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] h4 {
 @media (prefers-reduced-motion: reduce) { .flow .pk { display: none; } }
 @media (max-width: 960px) { .model { grid-template-columns: 1fr; } .model .ctl { border-inline-end: 0; border-bottom: 1px solid var(--line); } .lanes { grid-template-columns: 1fr; } }
 
+/* ---------- embedded Power BI report ---------- */
+.report-embed { display: grid; gap: 1.2rem; }
+.report-embed iframe { width: 100%; border: 0; display: block; min-height: 420px; background: transparent; border-radius: 14px; }
+.report-embed .meta { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
+
 /* ---------- linkedin ---------- */
 .li-card { border: 1px solid var(--line); border-radius: 26px; overflow: hidden; background: var(--bg-2); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
 .li-side { position: relative; display: grid; align-content: start; }
@@ -483,11 +488,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   <div class="wrap">
     <a class="brand" href="#hero"><i>S</i><b data-t="name">صديق محمود</b></a>
     <nav class="links" aria-label="Sections">
+      <a href="#report" data-t="n.report">Dashboard</a>
       <a href="#projects" data-t="n.projects">المشاريع</a>
       <a href="#career" data-t="n.career">المسيرة</a>
       <a href="#lab" data-t="n.lab">AI</a>
       <a href="portfolio/" data-t="n.portfolio">Portfolio</a>
-      <a href="presentation/" data-t="n.deck">Slides</a>
       <a href="#services" data-t="n.services">الخدمات</a>
       <a href="#contact" data-t="n.contact">تواصل</a>
     </nav>
@@ -541,6 +546,19 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         </div>
       </div>
       <div class="nums" id="nums" style="margin-top:clamp(4rem,9vw,7rem)"></div>
+    </div>
+  </section>
+
+  <!-- LIVE REPORT (Power BI style, embedded) -->
+  <section class="section" id="report">
+    <div class="wrap report-embed">
+      <div class="head" data-r style="margin-bottom:0">
+        <span class="kicker" data-t="rp.kicker"></span>
+        <h2 class="h2" data-t="rp.title"></h2>
+        <p class="lead" data-t="rp.sub"></p>
+      </div>
+      <iframe id="pbiframe" src="dashboard/" title="Project controls report, Power BI style, demo data" loading="lazy"></iframe>
+      <div class="meta"><a class="btn" href="dashboard/" target="_blank" rel="noopener"><span data-t="rp.full"></span> ↗</a></div>
     </div>
   </section>
 
@@ -749,7 +767,7 @@ const T = {
     "s.kicker": "خدمات هندسية متكاملة", "s.title": "بنستقبل مشاريع جديدة",
     "s.sub": "نفس الخبرة اللي خططت مشاريع بمليارات، متاحة لمشروعك: من الاستشارة لحد التسليم.",
     "s.cta": "عندك مشروع؟ ابعت التفاصيل وهيوصلك عرض.", "s.btn": "اطلب عرض سعر",
-    "n.lab": "AI", "n.portfolio": "البورتفوليو", "lab.pf": "شوف البورتفوليو الكامل", "n.deck": "العرض", "lab.deck": "شوف البرزنتيشن",
+    "n.lab": "AI", "n.report": "الداشبورد", "rp.kicker": "تقرير حي · Power BI × كود", "rp.title": "داشبورد تقدر تقلب فيه بنفسك", "rp.sub": "تقرير بشكل Power BI بمقاس A4 عرضي، سبع صفحات: نظرة عامة، الموقع الذكي بالصور واليوميات وAsite، سلامة الجدول من XER، مونت كارلو للمخاطر، اللوجستيات، 4D مع Revit، والأتمتة. اتعمل بربط Power BI بالكود. كل البيانات ديمو وهمية للعرض ومش بتمثل أي مشروع بشتغل عليه.", "rp.full": "افتحه بشاشة كاملة", "n.portfolio": "البورتفوليو", "lab.pf": "شوف البورتفوليو الكامل", "n.deck": "العرض", "lab.deck": "شوف البرزنتيشن",
     "lab.kicker": "أتمتة · ذكاء اصطناعي · تعلم آلي", "lab.title": "برامج زمنية بتراجع نفسها.",
     "lab.sub": "ببني أدوات بتقرأ جداول Primavera P6 وتراجعها وتنبّه للتأخير قبل ما يظهر في التقرير. الأتمتة بتعمل الشغل المتكرر، والذكاء الاصطناعي بيلقط الإشارات، والمهندس بياخد القرار.",
     "lab.mTitle": "جرّب: نموذج مخاطر التأخير", "lab.mSub": "حرّك الإشارات اللي بتطلع من تحديث P6 وشوف الشبكة بتقرأها إزاي.",
@@ -803,7 +821,7 @@ const T = {
     "s.kicker": "Integrated engineering services", "s.title": "Now taking on projects",
     "s.sub": "The same experience that planned billion-dirham projects, available for yours, from consultancy to handover.",
     "s.cta": "Have a project? Send the details and get a proposal.", "s.btn": "Request a proposal",
-    "n.lab": "AI", "n.portfolio": "Portfolio", "lab.pf": "See the full portfolio", "n.deck": "Slides", "lab.deck": "Watch the presentation",
+    "n.lab": "AI", "n.report": "Dashboard", "rp.kicker": "Live report · Power BI × Code", "rp.title": "A dashboard you can click through", "rp.sub": "A Power BI style report on an A4 landscape canvas, seven pages: overview, smart site with photos, diaries and Asite, schedule health from the XER, Monte Carlo risk, logistics, 4D with Revit, and automation. Built by linking Power BI with code. All data is fictional demo data and does not represent any project I work on.", "rp.full": "Open full screen", "n.portfolio": "Portfolio", "lab.pf": "See the full portfolio", "n.deck": "Slides", "lab.deck": "Watch the presentation",
     "lab.kicker": "Automation · AI · Machine learning", "lab.title": "Schedules that check themselves.",
     "lab.sub": "I build tools that read Primavera P6 schedules, check them and flag delay before it reaches the report. Automation does the repeat work, AI picks up the signals, and the engineer makes the call.",
     "lab.mTitle": "Try it: a delay-risk model", "lab.mSub": "Move the signals that come out of a P6 update and watch the network read them.",
@@ -992,6 +1010,10 @@ function updateLab(d = T[lang]) {
   $("#why").innerHTML = top.length ? `${esc(d["lab.why"])} ${top.map(([, i]) => `<b>${esc(d["lab.f"][i][0])}</b>`).join(" · ")}` : "";
 }
 
+/* embedded report: size the frame to its content and keep the language in step */
+addEventListener("message", (e) => { const f = document.getElementById("pbiframe"); if (f && e.source === f.contentWindow && e.data && e.data.type === "pbi-height") f.style.height = Math.ceil(e.data.h) + "px"; });
+(function () { const f = document.getElementById("pbiframe"); if (!f) return; const set = () => { if (!f.style.height) f.style.height = Math.round(f.clientWidth * 990 / 1400 + 150) + "px"; }; set(); addEventListener("resize", () => { f.style.height = ""; set(); }); f.addEventListener("load", () => { try { f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {} }); })();
+
 /* =====================================================================
    PAGE
    ===================================================================== */
@@ -1080,6 +1102,7 @@ function render() {
 
   $("#svc").innerHTML = SERVICES.map((s, i) => `<div class="svc spot" data-r><span class="no mono">0${i + 1}</span><svg viewBox="0 0 48 48"><path d="${s.ic}"/></svg><h3>${esc(s.t[L()])}</h3><p>${esc(s.d[L()])}</p></div>`).join("");
   renderLab(d);
+  try { const f = document.getElementById("pbiframe"); if (f && f.contentWindow) f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {}
   $("#plat").innerHTML = PLATFORMS.map((p) => `<div class="pl spot" data-r><small>${esc(p.k[L()])}</small><h3>${p.n}</h3><p>${esc(p.d[L()])}</p></div>`).join("");
   const li = (arr) => arr.map(([ab, t, s]) => `<div class="it"><span class="logo">${ab}</span><div><b>${esc(t[L()])}</b><span>${esc(s[L()])}</span></div></div>`).join("");
   $("#li-exp").innerHTML = li(LI_EXP); $("#li-lic").innerHTML = li(LI_LIC);
