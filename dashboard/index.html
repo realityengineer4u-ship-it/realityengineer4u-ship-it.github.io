@@ -342,6 +342,19 @@ body:not(.embed) .only-embed { display: none; }
   .nav button[aria-current="page"], html[dir="rtl"] .nav button[aria-current="page"] { box-shadow: inset 0 -2px 0 var(--amber); }
   .top { position: static; }
 }
+html[dir="rtl"] .mono, html[dir="rtl"] td.num, html[dir="rtl"] .rec .m span, html[dir="rtl"] .gd-axis div:last-child { direction: ltr; unicode-bidi: isolate; }
+html[dir="rtl"] td.mono, html[dir="rtl"] td.num { text-align: right; }
+.photo-main svg, .thumbs svg { direction: ltr; unicode-bidi: isolate; }
+.g-exec { grid-template-columns: 1.2fr 1fr 1fr; grid-template-rows: auto 1.1fr 1fr; grid-template-areas: "et et et" "msg cash cash" "mil risk dec"; }
+.g-ep { grid-template-columns: 1fr 1.1fr; grid-template-rows: auto 1fr 1fr; grid-template-areas: "ept ept" "eng ll" "cons pg"; }
+.g-eot { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto 1fr; grid-template-areas: "eott eott" "reg reg" "bar tl"; }
+.health { display: flex; justify-content: space-between; align-items: center; gap: .6rem; flex-wrap: wrap; padding-bottom: .3rem; border-bottom: 1px solid var(--line); }
+.msg { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: .6rem; align-items: start; font-size: .84rem; color: var(--ink-2); line-height: 1.5; }
+.msg .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: .45rem; }
+.seg.small button { padding: .28rem .55rem; font-size: .72rem; }
+#lmodes { flex-wrap: wrap; }
+.gd-row .nm small { display: block; }
+
 /* ---------- Power BI style report, A4 landscape canvas ---------- */
 html, body { background: var(--bg); }
 body.embed { background: transparent; }
@@ -443,6 +456,33 @@ body:not(.embed) { padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, e
   <div class="wrap-c" id="wrapc">
     <div class="canvas" id="canvas">
 
+      <section class="page" id="pg-exec" aria-label="Executive summary">
+        <div class="ph"><h2 data-t="pgE"></h2><span data-t="pgEs"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-exec">
+          <div class="tiles" id="extiles" style="grid-area:et"></div>
+          <div class="card" style="grid-area:msg">
+            <div class="card-h"><h3 data-t="ex.msgT"></h3></div>
+            <div class="recs" id="exmsg"></div>
+          </div>
+          <div class="card" style="grid-area:cash">
+            <div class="card-h"><h3 data-t="ex.cashT"></h3><div class="legend" id="excashlg"></div></div>
+            <svg class="chart" id="excash" viewBox="0 0 640 250" role="img" aria-label="Cumulative certified value against plan, AED million"></svg>
+          </div>
+          <div class="card" style="grid-area:mil">
+            <div class="card-h"><h3 data-t="ex.milT"></h3><span class="note-s" data-t="ex.milN"></span></div>
+            <div class="table-scroll"><table id="exmil"></table></div>
+          </div>
+          <div class="card" style="grid-area:risk">
+            <div class="card-h"><h3 data-t="ex.riskT"></h3><span class="note-s" data-t="ex.riskN"></span></div>
+            <div class="recs" id="exrisk"></div>
+          </div>
+          <div class="card" style="grid-area:dec">
+            <div class="card-h"><h3 data-t="ex.decT"></h3><span class="note-s" data-t="ex.decN"></span></div>
+            <div class="recs" id="exdec"></div>
+          </div>
+        </div>
+      </section>
+
       <section class="page" id="pg-overview" aria-label="Overview">
         <div class="ph"><h2 data-t="pg0"></h2><span data-t="pg0s"></span><span class="stamp" data-t="d.demo"></span></div>
         <div class="pg g-ov">
@@ -472,7 +512,7 @@ body:not(.embed) { padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, e
         <div class="ph"><h2 data-t="pg1"></h2><span data-t="pg1s"></span><span class="stamp" data-t="d.demo"></span></div>
         <div class="pg g-site">
           <div class="card layout-card" style="grid-area:lay">
-            <div class="card-h"><h3 data-t="v.lay"></h3><span class="note-s" data-t="v.layhint"></span></div>
+            <div class="card-h"><h3 data-t="v.lay"></h3><div class="seg small" role="group" aria-label="Layout view" id="lmodes"></div></div>
             <svg class="lay" id="lay" viewBox="0 0 600 560" role="group" aria-label="Master plan of a fictional villa community, coloured by construction stage"></svg>
             <div class="tip" id="ltip"></div>
             <div class="timeline">
@@ -508,6 +548,51 @@ body:not(.embed) { padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, e
           <div class="card" style="grid-area:dcma">
             <div class="card-h"><h3 data-t="x.dcma"></h3><span class="note-s" data-t="x.dcman"></span></div>
             <div class="table-scroll"><table class="dcma" id="dcma"></table></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-engproc" aria-label="Engineering and procurement">
+        <div class="ph"><h2 data-t="pgP"></h2><span data-t="pgPs"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-ep">
+          <div class="tiles" id="eptiles" style="grid-area:ept"></div>
+          <div class="card" id="engcard" style="grid-area:eng">
+            <div class="card-h"><h3 data-t="ep.engT"></h3><div class="legend" id="englg"></div></div>
+            <svg class="chart" id="engbar" viewBox="0 0 640 230" role="img" aria-label="Shop drawing and submittal status by discipline, 48 villas"></svg>
+            <div class="tip" id="etip"></div>
+          </div>
+          <div class="card" style="grid-area:ll">
+            <div class="card-h"><h3 data-t="ep.llT"></h3><span class="note-s" data-t="ep.llN"></span></div>
+            <div class="table-scroll"><table id="lltab"></table></div>
+          </div>
+          <div class="card" style="grid-area:cons">
+            <div class="card-h"><h3 data-t="ep.consT"></h3><span class="note-s" data-t="ep.consN"></span></div>
+            <div class="recs" id="econs"></div>
+          </div>
+          <div class="card" style="grid-area:pg">
+            <div class="card-h"><h3 data-t="ep.pgT"></h3><span class="note-s" data-t="ep.pgN"></span></div>
+            <div class="gantt-d" id="procgantt"></div>
+            <div class="legend" id="proclg"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="pg-eot" aria-label="EOT and claims">
+        <div class="ph"><h2 data-t="pgC"></h2><span data-t="pgCs"></span><span class="stamp" data-t="d.demo"></span></div>
+        <div class="pg g-eot">
+          <div class="tiles" id="eottiles" style="grid-area:eott"></div>
+          <div class="card" style="grid-area:reg">
+            <div class="card-h"><h3 data-t="eot.regT"></h3><span class="note-s" data-t="eot.regN"></span></div>
+            <div class="table-scroll"><table id="evtab"></table></div>
+          </div>
+          <div class="card" style="grid-area:bar">
+            <div class="card-h"><h3 data-t="eot.barT"></h3><div class="legend" id="eotlg"></div></div>
+            <svg class="chart" id="eotbar" viewBox="0 0 640 230" role="img" aria-label="Days claimed and awarded per delay event"></svg>
+          </div>
+          <div class="card" style="grid-area:tl">
+            <div class="card-h"><h3 data-t="eot.tlT"></h3><div class="legend" id="eotlg2"></div></div>
+            <div class="gantt-d" id="eottl"></div>
+            <div class="legend" id="eotcomp" style="gap:.4rem 1rem"></div>
           </div>
         </div>
       </section>
@@ -1706,6 +1791,337 @@ function renderBim() {
 function setBweek(w0) { week = w0; renderBim(); }
 function stopB() { if (bplaying) { clearInterval(bplaying); bplaying = null; $("#bplayic").innerHTML = '<path d="M4 2.5l9 5.5-9 5.5z"/>'; } }
 
+Object.assign(T.en, {
+  pgE: "Executive summary", pgEs: "For senior management: health, money, dates, risks and decisions",
+  pgP: "Engineering & procurement", pgPs: "Shop drawings, submittals and long-lead items linked to the villas",
+  pgC: "EOT & claims", pgCs: "Delay events, notices, entitlement and time impact",
+  pgShort: ["Executive", "Overview", "Smart Site", "Schedule", "Eng & Proc", "EOT", "Risk", "Logistics", "4D / BIM", "Automation"],
+  vtabs5: ["Activities", "Logs & Asite", "Engineering", "Procurement", "EOT"],
+  lm: { names: { stage: "Stage", upd: "Since last update", eng: "Engineering", proc: "Procurement", eot: "EOT" }, updS: "since last update", plan: "plan",
+    upd: { ahead: "Ahead of plan", on: "Progressing", behind: "Behind plan", stalled: "No progress", idle: "Not started / done" },
+    eng: { ok: "Drawings approved", com: "With comments / in review", rej: "Code C / not submitted", done: "Handed over" },
+    proc: { site: "Materials on site", transit: "In transit", ordered: "Ordered", late: "Late vs need date", done: "Handed over" },
+    eot: { none: "No delay event", award: "EOT awarded", sub: "Claim under review", notice: "Notice issued", rej: "Claim rejected", con: "Contractor risk" } },
+  "ex.msgT": "Key messages", "ex.cashT": "Cash flow · cumulative certified (AED M)", "ex.milT": "Key milestones", "ex.milN": "baseline vs forecast", "ex.riskT": "Top 5 risks", "ex.riskN": "expected delay", "ex.decT": "Decisions needed", "ex.decN": "from management this month",
+  ex: { t: ["Contract value", "Certified to date", "Forecast completion", "EOT awarded / claimed", "Safe man-hours"], ts: ["lump sum, 48 villas + infrastructure", "", "contract", "days, 5 delay events", "zero lost-time injuries"], plan: "plan",
+    hl: { good: "Overall: on track", warn: "Overall: watch", serious: "Overall: at risk" }, auto: "written from this week's data",
+    msg: ["Progress is {a}% against {p}% planned (SPI {spi}). The biggest gap is in {drv}.", "Forecast completion is {fin}, {slip} days after the contract date. {cl} days of EOT are claimed and {aw} awarded so far.", "Aluminium windows are late for {lw} villas in cluster D. This is contractor risk, so recovery is needed: air freight is proposed.", "Engineering: {apr}% of shop drawings are approved. {nc} are code C and must be resubmitted this week.", "Certified value is AED {cert} M, AED {gap} M behind the planned cash flow."],
+    cf: ["Planned", "Certified", "Forecast"], ms: ["Cluster A handover", "Cluster B handover", "Cluster C handover", "Cluster D handover", "Infrastructure & utilities", "Clubhouse", "Project completion"], mh: ["Milestone", "Baseline", "Forecast", "Var (d)", "Status"],
+    owner: "Owner:", owners: ["Procurement", "MEP manager", "Project manager", "Construction manager", "Design manager", "Contracts"],
+    dec: [["Approve air freight for cluster D windows", "20-Oct", "AED 0.35 M · recovers 12 days"], ["Confirm kitchen and majlis finishes (CI-014)", "22-Oct", "stops further delay on 10 villas"], ["Approve a second VRF supplier", "25-Oct", "protects MEP for clusters C and D"], ["Refer EV-05 (rock) to the DAAB", "30-Oct", "15 days and AED 0.7 M at stake"]] },
+  "ep.engT": "Shop drawings & submittals by discipline", "ep.llT": "Long-lead items", "ep.llN": "need date from P6", "ep.consT": "Activities waiting on engineering", "ep.consN": "next stage blocked", "ep.pgT": "Procurement timeline", "ep.pgN": "PO → manufacture → shipping → site",
+  ep: { t: ["Shop drawings approved", "Code C to resubmit", "Under review", "Long-lead items on time", "POs issued"],
+    es: { A: "A · Approved", B: "B · With comments", UR: "Under review", C: "C · Revise & resubmit", NS: "Not submitted" },
+    ps: { inst: "Installed", site: "On site", transit: "In transit", ordered: "Ordered", late: "Late", planned: "Not yet ordered" },
+    docs: ["Architectural shop drawings", "Structural shop drawings", "MEP coordination drawings", "Windows & doors submittal", "Finishes material submittal", "Landscape & pool drawings"],
+    items: ["Blocks & mortar", "Conduits & pipes", "VRF AC units", "Aluminium windows", "Porcelain tiles", "Kitchen units", "Pool & landscape equipment"],
+    disc: ["Architectural", "Structural", "MEP", "Windows & doors", "Finishes", "Landscape"],
+    lh: ["Item", "Qty", "Supplier", "PO", "Need on site", "Forecast", "Status"],
+    ll: { vrf: "VRF AC units", win: "Aluminium windows", kit: "Kitchen units", til: "Porcelain tiles (m²)", pool: "Pool equipment sets", sw: "Main switchgear", lgt: "Street light poles", blk: "Blocks (pcs)" },
+    ok: "On time", late: "Late", wait: "waits for", req: "Need", fc: "Forecast", ph: ["Order & approval", "Manufacture", "Ship & deliver", "Need on site"] },
+  "eot.regT": "Delay events register", "eot.regN": "FIDIC 2017, clause 20.2", "eot.barT": "Days claimed vs awarded", "eot.tlT": "Notice and claim timeline 2026",
+  eot: { t: ["Days claimed", "Days awarded", "Under review", "Rejected", "Cost claimed"], h: ["ID", "Event", "Cause", "Villas", "Notice", "Claim", "Days", "Awarded", "Status"],
+    ev: ["Late access to cluster D plots", "Kitchen and majlis design change (CI-014)", "Utility connection delay by authority", "Window supply delay (supplier)", "Unforeseen rock during excavation, cluster A"],
+    cause: { emp: "Employer", neu: "Neutral", con: "Contractor" }, st: { award: "Awarded", sub: "Under review", notice: "Notice issued", rej: "Rejected · to DAAB", con: "Not claimable" },
+    notice: "Notice", aw: "Awarded", cl: "Claimed", none: "No delay event linked to this villa.", tl: ["Event", "Event → notice", "Notice → detailed claim"], nd: "notice in", cdl: "claim in" },
+});
+Object.assign(T.ar, {
+  pgE: "الملخص التنفيذي", pgEs: "للإدارة العليا: الحالة، الفلوس، التواريخ، المخاطر والقرارات",
+  pgP: "الهندسة والمشتريات", pgPs: "الشوب دروينج والاعتمادات والمواد طويلة التوريد مربوطة بالفلل",
+  pgC: "الـ EOT والمطالبات", pgCs: "أحداث التأخير، الإشعارات، الاستحقاق وتأثيرها على المدة",
+  pgShort: ["الملخص التنفيذي", "نظرة عامة", "الموقع الذكي", "الجدول", "هندسة ومشتريات", "EOT", "المخاطر", "اللوجستيات", "4D / BIM", "الأتمتة"],
+  vtabs5: ["الأنشطة", "اليوميات وAsite", "الهندسة", "المشتريات", "EOT"],
+  lm: { names: { stage: "المرحلة", upd: "من آخر تحديث", eng: "الهندسة", proc: "المشتريات", eot: "EOT" }, updS: "من آخر تحديث", plan: "المخطط",
+    upd: { ahead: "أسرع من المخطط", on: "بيتقدم", behind: "متأخر عن المخطط", stalled: "مفيش تقدم", idle: "لم يبدأ / انتهى" },
+    eng: { ok: "الرسومات معتمدة", com: "بملاحظات / تحت المراجعة", rej: "كود C / لم تقدم", done: "تم التسليم" },
+    proc: { site: "المواد في الموقع", transit: "في الطريق", ordered: "تم الطلب", late: "متأخرة عن الاحتياج", done: "تم التسليم" },
+    eot: { none: "مفيش حدث تأخير", award: "EOT ممنوح", sub: "مطالبة تحت المراجعة", notice: "تم الإشعار", rej: "مطالبة مرفوضة", con: "مسؤولية المقاول" } },
+  "ex.msgT": "الرسائل الأساسية", "ex.cashT": "التدفق النقدي · المعتمد التراكمي (مليون درهم)", "ex.milT": "المعالم الرئيسية", "ex.milN": "الـ Baseline مقابل المتوقع", "ex.riskT": "أهم 5 مخاطر", "ex.riskN": "التأخير المتوقع", "ex.decT": "قرارات مطلوبة", "ex.decN": "من الإدارة الشهر ده",
+  ex: { t: ["قيمة العقد", "المعتمد لحد النهارده", "الانتهاء المتوقع", "EOT ممنوح / مطالب", "ساعات عمل آمنة"], ts: ["مقطوعية، 48 فيلا + بنية تحتية", "", "العقد", "يوم، 5 أحداث تأخير", "صفر إصابات مضيعة للوقت"], plan: "المخطط",
+    hl: { good: "الإجمالي: في المسار", warn: "الإجمالي: راقب", serious: "الإجمالي: في خطر" }, auto: "مكتوبة من بيانات الأسبوع",
+    msg: ["الإنجاز {a}% مقابل {p}% مخطط (SPI {spi}). أكبر فجوة في {drv}.", "الانتهاء المتوقع {fin}، بعد تاريخ العقد بـ {slip} يوم. تم المطالبة بـ {cl} يوم EOT ومنح {aw} لحد دلوقتي.", "شبابيك الألومنيوم متأخرة لـ {lw} فيلا في كلستر D. دي مسؤولية المقاول، ومحتاجة تعافي: مقترح شحن جوي.", "الهندسة: {apr}% من الشوب دروينج معتمدة. فيه {nc} كود C لازم يتقدموا تاني الأسبوع ده.", "القيمة المعتمدة {cert} مليون درهم، أقل من التدفق المخطط بـ {gap} مليون."],
+    cf: ["المخطط", "المعتمد", "المتوقع"], ms: ["تسليم كلستر A", "تسليم كلستر B", "تسليم كلستر C", "تسليم كلستر D", "البنية التحتية والمرافق", "النادي الاجتماعي", "انتهاء المشروع"], mh: ["المعلم", "Baseline", "المتوقع", "الفرق (يوم)", "الحالة"],
+    owner: "المسؤول:", owners: ["المشتريات", "مدير MEP", "مدير المشروع", "مدير التنفيذ", "مدير التصميم", "العقود"],
+    dec: [["اعتماد شحن جوي لشبابيك كلستر D", "20-Oct", "0.35 مليون درهم · بيرجع 12 يوم"], ["تأكيد تشطيبات المطبخ والمجلس (CI-014)", "22-Oct", "بيوقف تأخير زيادة في 10 فلل"], ["اعتماد مورد VRF تاني", "25-Oct", "بيحمي أعمال MEP لكلستر C وD"], ["إحالة EV-05 (الصخر) لمجلس فض النزاعات DAAB", "30-Oct", "15 يوم و0.7 مليون درهم"]] },
+  "ep.engT": "الشوب دروينج والاعتمادات حسب التخصص", "ep.llT": "المواد طويلة التوريد", "ep.llN": "تاريخ الاحتياج من P6", "ep.consT": "أنشطة مستنية الهندسة", "ep.consN": "المرحلة الجاية متوقفة", "ep.pgT": "جدول المشتريات", "ep.pgN": "أمر شراء ← تصنيع ← شحن ← موقع",
+  ep: { t: ["شوب دروينج معتمدة", "كود C لإعادة التقديم", "تحت المراجعة", "مواد طويلة التوريد في وقتها", "أوامر شراء صادرة"],
+    es: { A: "A · معتمد", B: "B · بملاحظات", UR: "تحت المراجعة", C: "C · تعديل وإعادة تقديم", NS: "لم يقدم" },
+    ps: { inst: "مركب", site: "في الموقع", transit: "في الطريق", ordered: "تم الطلب", late: "متأخر", planned: "لم يطلب بعد" },
+    docs: ["شوب دروينج معماري", "شوب دروينج إنشائي", "رسومات تنسيق MEP", "اعتماد الشبابيك والأبواب", "اعتماد مواد التشطيب", "رسومات اللاندسكيب والمسبح"],
+    items: ["بلوك ومونة", "مواسير وجلب", "وحدات تكييف VRF", "شبابيك ألومنيوم", "بلاط بورسلين", "وحدات مطبخ", "معدات المسبح واللاندسكيب"],
+    disc: ["معماري", "إنشائي", "MEP", "شبابيك وأبواب", "تشطيبات", "لاندسكيب"],
+    lh: ["البند", "الكمية", "المورد", "أمر الشراء", "الاحتياج", "المتوقع", "الحالة"],
+    ll: { vrf: "وحدات تكييف VRF", win: "شبابيك ألومنيوم", kit: "وحدات مطبخ", til: "بلاط بورسلين (م²)", pool: "أطقم معدات مسابح", sw: "لوحات كهرباء رئيسية", lgt: "أعمدة إنارة", blk: "بلوك (قطعة)" },
+    ok: "في الوقت", late: "متأخر", wait: "مستني", req: "الاحتياج", fc: "المتوقع", ph: ["طلب واعتماد", "تصنيع", "شحن وتوريد", "الاحتياج في الموقع"] },
+  "eot.regT": "سجل أحداث التأخير", "eot.regN": "فيديك 2017، البند 20.2", "eot.barT": "الأيام المطالب بها مقابل الممنوحة", "eot.tlT": "جدول الإشعارات والمطالبات 2026",
+  eot: { t: ["أيام مطالب بها", "أيام ممنوحة", "تحت المراجعة", "مرفوضة", "تكلفة مطالب بها"], h: ["الكود", "الحدث", "السبب", "فلل", "الإشعار", "المطالبة", "أيام", "ممنوح", "الحالة"],
+    ev: ["تأخير تسليم أراضي كلستر D", "تعديل تصميم المطبخ والمجلس (CI-014)", "تأخير توصيل المرافق من الجهة", "تأخير توريد الشبابيك (المورد)", "صخر غير متوقع في الحفر، كلستر A"],
+    cause: { emp: "المالك", neu: "محايد", con: "المقاول" }, st: { award: "ممنوح", sub: "تحت المراجعة", notice: "تم الإشعار", rej: "مرفوض · للـ DAAB", con: "غير قابل للمطالبة" },
+    notice: "إشعار", aw: "ممنوح", cl: "مطالب به", none: "مفيش حدث تأخير مربوط بالفيلا دي.", tl: ["الحدث", "الحدث ← الإشعار", "الإشعار ← المطالبة التفصيلية"], nd: "إشعار خلال", cdl: "مطالبة خلال" },
+});
+
+/* =========================================================
+   ENGINEERING, PROCUREMENT, EOT and EXECUTIVE (one villa project)
+   ========================================================= */
+const LASTW = () => Math.max(1, week - 4);                     // last monthly update
+const hsh = (...a) => a.reduce((h, x) => (h * 31 + x * 17 + 7) % 9973, 11);
+const DOCS = [[3, "arch"], [3, "str"], [5, "mep"], [6, "win"], [6, "fin"], [7, "lan"]];
+function engDocs(v, w = week) {
+  const st = stageAt(v, w);
+  return DOCS.map(([k], j) => {
+    let s0;
+    if (st >= k) s0 = "A";
+    else { const h = hsh(v.i, v.c, j, 3) % 11; s0 = k <= st + 1 ? (h < 6 ? "A" : h < 8 ? "B" : h < 9 ? "UR" : h < 10 ? "C" : "NS") : (h < 4 ? "A" : h < 6 ? "B" : h < 8 ? "UR" : "NS"); if (v.c === 3 && j === 3 && st < 6) s0 = v.i % 2 ? "C" : "UR"; }
+    return { j, k, s: s0, ref: `PGV-SD-${v.plot}-${String(j + 1).padStart(2, "0")}`, rev: s0 === "A" ? "Rev 1" : s0 === "C" ? "Rev 2" : "Rev 0" };
+  });
+}
+function engState(v) { const st = stageAt(v, week); if (st >= 7) return "done"; const near = engDocs(v).filter((x) => x.k <= st + 1 && x.k > st); if (!near.length) return "ok"; if (near.some((x) => x.s === "C" || x.s === "NS")) return "rej"; if (near.some((x) => x.s === "B" || x.s === "UR")) return "com"; return "ok"; }
+const ITEMS = [[4, "blk"], [5, "cnd"], [5, "vrf"], [6, "win"], [6, "til"], [6, "kit"], [7, "pool"]];
+function procItems(v, w = week) {
+  const st = stageAt(v, w);
+  return ITEMS.map(([k, key], j) => {
+    let s0; const h = hsh(v.i, v.c, j, 5) % 11;
+    if (st > k) s0 = "inst";
+    else if (k <= st + 1) { s0 = h < 5 ? "site" : h < 7 ? "transit" : h < 9 ? "ordered" : "late"; if (key === "win" && v.c === 3) s0 = "late"; if (key === "vrf" && v.slow) s0 = "transit"; }
+    else s0 = h < 4 ? "ordered" : "planned";
+    const s1 = k === 1 ? v.start : v.ends[k - 2];
+    return { j, k, key, s: s0, req: wkDate(Math.floor(Math.max(1, s1))), fc: s0 === "late" ? wkDate(Math.floor(s1 + 2 + (h % 2))) : wkDate(Math.floor(Math.max(1, s1 - 1))) };
+  });
+}
+function procState(v) { const st = stageAt(v, week); if (st >= 7) return "done"; const near = procItems(v).filter((x) => x.k === st || x.k === st + 1); if (near.some((x) => x.s === "late")) return "late"; if (near.some((x) => x.s === "ordered")) return "ordered"; if (near.some((x) => x.s === "transit")) return "transit"; return "site"; }
+const EVENTS = [
+  { id: "EV-01", cause: "emp", occ: "02-Mar-26", notice: "12-Mar-26", claim: "20-Apr-26", nd: 10, cd: 49, days: 21, award: 14, cost: 1.2, st: "award", f: (v) => v.c === 3 && v.i < 6 },
+  { id: "EV-02", cause: "emp", occ: "04-Jun-26", notice: "18-Jun-26", claim: "25-Jul-26", nd: 14, cd: 51, days: 18, award: 7, cost: 0.9, st: "sub", f: (v) => v.i % 5 === 0 },
+  { id: "EV-03", cause: "neu", occ: "20-Aug-26", notice: "02-Sep-26", claim: "", nd: 13, cd: 0, days: 10, award: 0, cost: 0.4, st: "notice", f: (v) => v.c === 2 },
+  { id: "EV-04", cause: "con", occ: "08-Sep-26", notice: "", claim: "", nd: 0, cd: 0, days: 0, award: 0, cost: 0, st: "con", f: (v) => v.c === 3 && v.i >= 6 },
+  { id: "EV-05", cause: "emp", occ: "26-Jan-26", notice: "10-Feb-26", claim: "18-Mar-26", nd: 15, cd: 51, days: 15, award: 0, cost: 0.7, st: "rej", f: (v) => v.c === 0 && v.i < 4 },
+];
+const EV_PRI = { rej: 5, notice: 4, sub: 3, con: 2, award: 1 };
+function eotState(v) { const ev = EVENTS.filter((e) => e.f(v)).sort((a, b) => EV_PRI[b.st] - EV_PRI[a.st]); return ev.length ? ev[0].st : "none"; }
+function updState(v) {
+  const w0 = LASTW(), st = stageAt(v, week);
+  if (st === 0) return "idle"; if (stageAt(v, w0) >= 7) return "idle";
+  const da = pctAt(v, week) - pctAt(v, w0), i = VILLAS.indexOf(v), dp = vPct(v, week, PLAN_ENDS[i]) - vPct(v, w0, PLAN_ENDS[i]);
+  if (da <= 0.5) return "stalled"; if (da >= dp + 1.5) return "ahead"; if (da < dp - 2.5) return "behind"; return "on";
+}
+const MODES = ["stage", "upd", "eng", "proc", "eot"];
+const MODE_COL = {
+  upd: { ahead: "#4ac16d", on: "#3987e5", behind: "#ec835a", stalled: "#d03b3b", idle: "#2a3038" },
+  eng: { ok: "#4ac16d", com: "#fab219", rej: "#d03b3b", done: "#2a3038" },
+  proc: { site: "#4ac16d", transit: "#3987e5", ordered: "#fab219", late: "#d03b3b", done: "#2a3038" },
+  eot: { none: "#2a3038", award: "#4ac16d", sub: "#3987e5", notice: "#fab219", rej: "#d03b3b", con: "#ec835a" },
+};
+let lmode = "stage";
+function villaState(v) { return lmode === "upd" ? updState(v) : lmode === "eng" ? engState(v) : lmode === "proc" ? procState(v) : eotState(v); }
+
+/* ---------- richer master plan ---------- */
+function planBase2(dim, P) {
+  let g = planBase(dim, P);
+  // sidewalks either side of the ring road
+  g += `<ellipse cx="${CX}" cy="${CY}" rx="${RING.rx + 14}" ry="${RING.ry + 14}" fill="none" stroke="#2b3038" stroke-width="2"/><ellipse cx="${CX}" cy="${CY}" rx="${RING.rx - 14}" ry="${RING.ry - 14}" fill="none" stroke="#2b3038" stroke-width="2"/>`;
+  // street lights
+  for (let k = 0; k < 24; k++) { const a = (k / 24) * Math.PI * 2 + 0.13; g += `<circle cx="${(CX + (RING.rx + 14) * Math.cos(a)).toFixed(1)}" cy="${(CY + (RING.ry + 14) * Math.sin(a)).toFixed(1)}" r="1.6" fill="#f7d58a" opacity=".75"/>`; }
+  // entrance roundabout with fountain, guard house, mosque
+  g += `<circle cx="300" cy="${CY + RING.ry + 34}" r="15" fill="#1d2127" stroke="#2b3038"/><circle cx="300" cy="${CY + RING.ry + 34}" r="8" fill="#1f4a2c"/><circle cx="300" cy="${CY + RING.ry + 34}" r="3.5" fill="#5fb0d8"/>`;
+  g += `<rect x="326" y="532" width="22" height="13" rx="2" fill="#20252c" stroke="#3a3f47"/><text x="337" y="528" text-anchor="middle" style="font-size:7px">GUARD</text>`;
+  g += `<g transform="translate(222 520)"><rect x="-16" y="-10" width="32" height="20" rx="3" fill="#1b2026" stroke="#3a3f47"/><circle cx="0" cy="-2" r="6" fill="#2a3038" stroke="#5a6470"/><rect x="11" y="-18" width="3" height="16" fill="#5a6470"/><text x="0" y="22" text-anchor="middle" style="font-size:7px">MOSQUE</text></g>`;
+  // park amenities: sports court and playground
+  g += `<g transform="translate(${CX + 58} ${CY + 30}) rotate(-14)"><rect x="-17" y="-10" width="34" height="20" rx="2" fill="#1e3a5a" stroke="#7fd4ff" stroke-width=".6"/><line x1="0" y1="-10" x2="0" y2="10" stroke="#7fd4ff" stroke-width=".6"/><circle r="3.5" fill="none" stroke="#7fd4ff" stroke-width=".6"/></g>`;
+  g += `<g transform="translate(${CX - 70} ${CY + 34})"><circle r="9" fill="#3b2f22" stroke="#6b5233" stroke-width=".8"/><circle cx="-3" cy="-2" r="1.6" fill="#e2a33a"/><circle cx="3" cy="2" r="1.6" fill="#e2a33a"/></g>`;
+  // street names
+  g += `<path id="${P}st1" d="M${CX - RING.rx + 6} ${CY - 6} A${RING.rx - 6} ${RING.ry - 6} 0 0 1 ${CX + RING.rx - 6} ${CY - 6}" fill="none"/><text style="font-size:8px;letter-spacing:3px;fill:#6c737b"><textPath href="#${P}st1" startOffset="22%">PALM CRESCENT</textPath></text>`;
+  // compass and scale bar
+  g += `<g transform="translate(560 44)"><circle r="14" fill="none" stroke="#3a3f47"/><path d="M0 -12 L4 2 L0 -1 L-4 2 Z" fill="#f5a524"/><text y="-17" text-anchor="middle" style="font-size:8px;fill:#c3c2b7">N</text></g>`;
+  g += `<g transform="translate(470 548)"><rect width="50" height="3" fill="#c3c2b7"/><rect x="25" width="25" height="3" fill="#3a3f47"/><text x="0" y="-4" style="font-size:7px">0</text><text x="46" y="-4" style="font-size:7px">50 m</text></g>`;
+  return g;
+}
+function villaShape2(n, fill, stroke, pool, extra, badge) {
+  const P = PLACES[n];
+  return `<g transform="translate(${P.x.toFixed(1)} ${P.y.toFixed(1)}) rotate(${P.rot.toFixed(1)})" ${extra || ""}>
+    <rect x="-22" y="-25" width="44" height="50" rx="7" fill="#13171b" stroke="#23282f"/>
+    <path d="${FOOT[n % 3]}" transform="translate(2.2 2.6)" fill="rgba(0,0,0,.45)"/>
+    <path class="fp" d="${FOOT[n % 3]}" fill="${fill}" stroke="${stroke}" stroke-width="1.2" style="transition:fill .4s"/>
+    <path d="${FOOT[n % 3]}" transform="scale(.78)" fill="none" stroke="rgba(255,255,255,.14)" stroke-width=".8"/>
+    <rect x="-3" y="-21.5" width="6" height="2.4" rx="1" fill="rgba(255,255,255,.35)"/>
+    <rect x="-9" y="11" width="18" height="8" rx="2.5" fill="${pool ? "#2d8fbf" : "#1b2229"}"/>
+    <circle cx="16" cy="18" r="3" fill="${pool ? "#3f7f4a" : "#1b2229"}"/>
+  </g>${badge || ""}`;
+}
+function renderLayout() {
+  const D = d(), svg = $("#lay"); let g = planBase2(false, "s");
+  VILLAS.forEach((v, n) => {
+    const st = stageAt(v, week);
+    let fill, stroke = st ? "rgba(236,235,230,.22)" : "#3a3f47", badge = "";
+    if (lmode === "stage") fill = st ? STG_VIR[st] : "#15191e";
+    else { const s0 = villaState(v); fill = MODE_COL[lmode][s0]; stroke = "rgba(236,235,230,.25)"; }
+    if (lmode === "upd") { const s0 = updState(v), P = PLACES[n]; if (s0 === "ahead" || s0 === "on") badge = `<path d="M${P.x - 4} ${P.y - 27} l4 -6 l4 6 z" fill="${MODE_COL.upd[s0]}" opacity=".95"><animate attributeName="opacity" values="1;.25;1" dur="1.8s" repeatCount="indefinite"/></path>`; if (s0 === "stalled" || s0 === "behind") badge = `<circle cx="${P.x}" cy="${P.y}" r="25" fill="none" stroke="${MODE_COL.upd[s0]}" stroke-width="1.2" opacity=".7"><animate attributeName="r" values="22;29;22" dur="2.2s" repeatCount="indefinite"/></circle>`; }
+    g += `<g class="villa${n === sel ? " sel" : ""}" data-n="${n}" tabindex="0" role="button" aria-label="Villa ${v.id}, ${esc(D.stages[st])}">${villaShape2(n, fill, stroke, st >= 6, "", badge)}</g>`;
+  });
+  const sp = PLACES[sel];
+  g += `<circle cx="${sp.x}" cy="${sp.y}" r="30" fill="none" stroke="#f5a524" stroke-width="1.5"><animate attributeName="r" values="26;34;26" dur="2s" repeatCount="indefinite"/></circle><text x="${sp.x}" y="${sp.y - 33}" text-anchor="middle" style="font-size:9px;fill:#f7b955;font-weight:600">${VILLAS[sel].id}</text>`;
+  [["A", 480, 70], ["B", 120, 70], ["C", 110, 520], ["D", 490, 520]].forEach(([L, x, y]) => { g += `<g><rect x="${x - 34}" y="${y - 11}" width="68" height="15" rx="7" fill="rgba(10,11,13,.6)" stroke="#2b3038"/><text x="${x}" y="${y}" text-anchor="middle" style="font-size:9px;fill:#c3c2b7">${esc(D.cl)} ${L}</text></g>`; });
+  svg.innerHTML = g;
+  const tip = $("#ltip"), card = svg.closest(".card");
+  svg.querySelectorAll(".villa").forEach((el) => {
+    const n = +el.dataset.n, v = VILLAS[n];
+    el.onclick = () => { sel = n; photoSel = -1; renderLayout(); renderPanel(); };
+    el.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.onclick(); } };
+    el.onpointermove = (e) => {
+      const st = stageAt(v, week), D2 = d(), da = pctAt(v, week) - pctAt(v, LASTW());
+      tip.innerHTML = `<b>Villa ${v.id} · ${pctAt(v, week).toFixed(0)}%</b><div><i style="background:${st ? STG_VIR[st] : "#3a3f47"}"></i>${esc(D2.stages[st])}</div><div>${esc(D2.lm.updS)} +${da.toFixed(0)}%</div>${lmode !== "stage" && lmode !== "upd" ? `<div><i style="background:${MODE_COL[lmode][villaState(v)]}"></i>${esc(D2.lm[lmode][villaState(v)])}</div>` : ""}`;
+      placeTip(tip, card, e);
+    };
+    el.onpointerleave = () => tip.classList.remove("on");
+  });
+  // legend for the current mode
+  if (lmode === "stage") { const counts = Array(8).fill(0); VILLAS.forEach((v) => counts[stageAt(v, week)]++); $("#stglg").innerHTML = D.stages.map((s0, k) => `<span><i style="background:${k ? STG_VIR[k] : "transparent"};border:1px solid ${k ? "transparent" : "#3a3f47"}"></i>${esc(s0)} <span class="stg-count">${counts[k]}</span></span>`).join(""); }
+  else { const counts = {}; VILLAS.forEach((v) => { const s0 = villaState(v); counts[s0] = (counts[s0] || 0) + 1; }); $("#stglg").innerHTML = Object.keys(MODE_COL[lmode]).map((k) => `<span><i style="background:${MODE_COL[lmode][k]}"></i>${esc(D.lm[lmode][k])} <span class="stg-count">${counts[k] || 0}</span></span>`).join("") + (lmode === "upd" ? `<span class="stg-count">· W${LASTW()} → W${week}</span>` : ""); }
+  $("#wko").textContent = `${D.wk} ${week} · ${wkDate(week)}`;
+  $("#lmodes").innerHTML = MODES.map((m) => `<button type="button" aria-pressed="${m === lmode}" data-m="${m}">${esc(D.lm.names[m])}</button>`).join("");
+  $("#lmodes").querySelectorAll("button").forEach((b) => b.onclick = () => { lmode = b.dataset.m; vtab = { stage: 0, upd: 0, eng: 2, proc: 3, eot: 4 }[lmode]; renderLayout(); renderPanel(); });
+}
+
+const ENG_COL = { A: "var(--good)", B: "var(--warn)", UR: "var(--s1)", C: "var(--crit)", NS: "#5a6470" };
+const PROC_COL = { inst: "#5a6470", site: "var(--good)", transit: "var(--s1)", ordered: "var(--warn)", late: "var(--crit)", planned: "#3a4350" };
+const EV_COL = { award: "var(--good)", sub: "var(--s1)", notice: "var(--warn)", rej: "var(--crit)", con: "var(--serious)" };
+function pill(txt, col) { return `<span class="tag" style="border-color:${col};color:var(--ink-2)"><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${col};margin-inline-end:5px"></i>${esc(txt)}</span>`; }
+function renderPanel() {
+  const D = d(), v = VILLAS[sel], st = stageAt(v, week), pct = pctAt(v, week);
+  $("#vname").textContent = `Villa ${v.id}`;
+  const da = pct - pctAt(v, LASTW()), i0 = VILLAS.indexOf(v), dp = vPct(v, week, PLAN_ENDS[i0]) - vPct(v, LASTW(), PLAN_ENDS[i0]);
+  $("#vsub").textContent = D.vsub.replace("{c}", `${D.cl} ${"ABCD"[v.c]}`).replace("{p}", v.plot).replace("{pct}", pct.toFixed(0)) + ` · ${D.lm.updS} ${ltr("+" + da.toFixed(0) + "%")} (${D.lm.plan} ${ltr("+" + dp.toFixed(0) + "%")})`;
+  const stk = st === 7 ? "good" : st === 0 ? "warn" : v.slow ? "serious" : "good";
+  $("#vstat").innerHTML = `<span class="status ${stk}">${ICON[stk]}${esc(D.stages[st])}</span>`;
+  $("#vbar").style.width = pct + "%";
+  const shots = [];
+  for (let k = 1; k <= st; k++) { const w = Math.min(week, v.ends[k - 1] - 0.3); shots.push({ k, w, stamp: `${wkDate(Math.floor(w))} ${String(7 + ((v.i + k) % 4)).padStart(2, "0")}:${String((v.plot * k * 7) % 60).padStart(2, "0")}` }); }
+  if (photoSel < 0 || photoSel >= shots.length) photoSel = shots.length - 1;
+  if (!shots.length) { $("#pmain").innerHTML = `<div style="display:grid;place-items:center;height:100%;padding:1rem;text-align:center;color:var(--muted);font-size:.85rem">${esc(D.none)}</div>`; $("#thumbs").innerHTML = ""; }
+  else {
+    const sh = shots[photoSel];
+    $("#pmain").innerHTML = photo(sh.k, v.plot + sh.k, sh.stamp, true);
+    $("#thumbs").innerHTML = shots.map((s0, j) => `<button type="button" aria-pressed="${j === photoSel}" data-j="${j}" aria-label="${esc(D.stages[s0.k])} ${s0.stamp}">${photo(s0.k, v.plot + s0.k, s0.stamp, false)}<span>${esc(D.stages[s0.k])}</span></button>`).join("");
+    $("#thumbs").querySelectorAll("button").forEach((b) => b.onclick = () => { photoSel = +b.dataset.j; renderPanel(); });
+  }
+  const tabs = D.vtabs5;
+  $("#vtabs").innerHTML = tabs.map((t, j) => `<button type="button" role="tab" aria-selected="${j === vtab}" data-j="${j}">${esc(t)}</button>`).join("");
+  $("#vtabs").querySelectorAll("button").forEach((b) => b.onclick = () => { vtab = +b.dataset.j; renderPanel(); });
+  let h = "";
+  if (vtab === 0) {
+    const rows = D.acts.map((a, k) => { const s0 = k === 0 ? v.start : v.ends[k - 1], e0 = v.ends[k], p0 = Math.max(0, Math.min(100, ((week - s0) / (e0 - s0)) * 100)); return `<tr><td class="mono">V${v.id}-${1000 + k * 10}</td><td>${esc(a)}</td><td class="mono">${wkDate(Math.floor(s0)).slice(0, 6)}</td><td class="mono">${wkDate(Math.floor(e0)).slice(0, 6)}</td><td class="num">${p0.toFixed(0)}</td></tr>`; }).join("");
+    h = `<div class="table-scroll"><table><thead><tr>${D.vh.map((x, j) => `<th${j === 4 ? ' style="text-align:end"' : ""}>${esc(x)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  } else if (vtab === 1) {
+    const recs = villaRecords(v);
+    h = `<div class="recs">${recs.map((r0) => `<div class="rec"><span class="tag ${r0.type}">${esc(D.rec[r0.type])}</span><div><b>${esc(r0.txt)}</b><div class="m"><span>${wkDate(Math.floor(r0.w))}</span><span>${esc(D.linked)} ${r0.act}</span>${r0.ref ? `<span>${r0.ref}</span>` : ""}</div></div></div>`).join("") || `<p class="note-s">—</p>`}</div>`;
+  } else if (vtab === 2) {
+    h = `<div class="recs">${engDocs(v).map((x) => `<div class="rec">${pill(D.ep.es[x.s], ENG_COL[x.s])}<div><b>${esc(D.ep.docs[x.j])}</b><div class="m"><span>${x.ref} · ${x.rev}</span><span>${esc(D.linked)} V${v.id}-${1000 + (x.k - 1) * 10}</span><span>${esc(D.stages[x.k])}</span></div></div></div>`).join("")}</div>`;
+  } else if (vtab === 3) {
+    h = `<div class="recs">${procItems(v).map((x) => `<div class="rec">${pill(D.ep.ps[x.s], PROC_COL[x.s])}<div><b>${esc(D.ep.items[x.j])}</b><div class="m"><span>${esc(D.ep.req)} ${x.req}</span>${x.s === "late" ? `<span style="color:#ef8a8a">${esc(D.ep.fc)} ${x.fc}</span>` : ""}<span>${esc(D.linked)} V${v.id}-${1000 + (x.k - 1) * 10}</span></div></div></div>`).join("")}</div>`;
+  } else {
+    const evs = EVENTS.filter((e) => e.f(v));
+    h = `<div class="recs">${evs.length ? evs.map((e) => `<div class="rec">${pill(D.eot.st[e.st], EV_COL[e.st])}<div><b>${e.id} · ${esc(D.eot.ev[EVENTS.indexOf(e)])}</b><div class="m"><span>${esc(D.eot.cause[e.cause])}</span>${e.notice ? `<span>${esc(D.eot.notice)} ${e.notice}</span>` : ""}${e.days ? `<span>${e.days} d / ${esc(D.eot.aw)} ${e.award} d</span>` : ""}</div></div></div>`).join("") : `<p class="note-s">${esc(D.eot.none)}</p>`}</div>`;
+  }
+  $("#vtab").innerHTML = h;
+}
+
+const ltr = (x) => "\u2066" + x + "\u2069";
+/* ---------- Engineering & Procurement page ---------- */
+const LL = [["vrf", 192, "Supplier H", "14-Jun-26", 30, 34, 1], ["win", 1056, "Supplier E", "02-Jul-26", 34, 39, 0], ["kit", 48, "Supplier K", "20-Jul-26", 38, 37, 1], ["til", 38400, "Supplier F", "11-Jul-26", 36, 35, 1], ["pool", 48, "Supplier P", "05-Aug-26", 46, 44, 1], ["sw", 2, "Supplier S", "10-May-26", 44, 45, 0], ["lgt", 64, "Supplier L", "01-Sep-26", 50, 48, 1], ["blk", 1100000, "Supplier C", "02-Feb-26", 14, 13, 1]];
+function renderEngProc() {
+  const D = d();
+  const all = VILLAS.flatMap((v) => engDocs(v)), n = all.length, cnt = (s0) => all.filter((x) => x.s === s0).length;
+  const llLate = LL.filter((x) => !x[6]).length;
+  const tiles = [[Math.round(100 * cnt("A") / n) + "%", D.ep.t[0], cnt("A") / n > 0.75 ? "good" : "warn"], [String(cnt("C")), D.ep.t[1], cnt("C") > 6 ? "serious" : "warn"], [String(cnt("UR")), D.ep.t[2], "warn"], [`${LL.length - llLate} / ${LL.length}`, D.ep.t[3], llLate ? "warn" : "good"], ["AED 96 M", D.ep.t[4], "good"]];
+  $("#eptiles").innerHTML = tiles.map(([v0, l, st]) => `<div class="tile"><small>${esc(l)}</small><b>${v0}</b>${statusHTML(st)}</div>`).join("");
+  // submittal status by discipline (stacked)
+  const ORD = ["A", "B", "UR", "C", "NS"], W = 640, H = 250, L = 150, R = 50, T0 = 10, rowH = 36;
+  let g = "";
+  D.ep.disc.forEach((nm, j) => {
+    const docs = VILLAS.map((v) => engDocs(v)[j]), tot = docs.length; let x = L;
+    const y = T0 + j * rowH;
+    g += `<text x="${L - 10}" y="${y + 17}" text-anchor="end" class="lbl" style="font-family:var(--f-sans);font-size:12px">${esc(nm)}</text>`;
+    ORD.forEach((s0) => { const c = docs.filter((d0) => d0.s === s0).length; if (!c) return; const w = (c / tot) * (W - L - R) - 2; g += `<rect class="eb" data-j="${j}" data-s="${s0}" data-c="${c}" x="${x}" y="${y + 4}" width="${Math.max(1, w)}" height="18" rx="3" fill="${ENG_COL[s0]}"/>`; if (w > 24) g += `<text x="${x + w / 2}" y="${y + 17}" text-anchor="middle" style="fill:#0a0b0d;font-size:10px;font-weight:600">${c}</text>`; x += w + 2; });
+    g += `<text x="${W - R + 8}" y="${y + 17}" class="lbl">${Math.round(100 * docs.filter((d0) => d0.s === "A").length / tot)}%</text>`;
+  });
+  $("#engbar").innerHTML = g;
+  $("#englg").innerHTML = ORD.map((s0) => `<span><i class="box" style="background:${ENG_COL[s0]}"></i>${esc(D.ep.es[s0])}</span>`).join("");
+  const tip = $("#etip"), card = $("#engcard");
+  $("#engbar").querySelectorAll(".eb").forEach((r) => { r.onpointermove = (e) => { tip.innerHTML = `<b>${esc(D.ep.disc[+r.dataset.j])}</b><div><i style="background:${ENG_COL[r.dataset.s]}"></i>${esc(D.ep.es[r.dataset.s])} · ${r.dataset.c}</div>`; placeTip(tip, card, e); }; r.onpointerleave = () => tip.classList.remove("on"); });
+  // long-lead items table
+  $("#lltab").innerHTML = `<thead><tr>${D.ep.lh.map((x, i) => `<th${i === 1 ? ' style="text-align:end"' : ""}>${esc(x)}</th>`).join("")}</tr></thead><tbody>${LL.map(([k, q, sup, po, req, fc, ok]) => `<tr><td>${esc(D.ep.ll[k])}</td><td class="num">${q.toLocaleString("en-US")}</td><td style="color:var(--muted)">${esc(sup)}</td><td class="mono">${po.slice(0, 6)}</td><td class="mono">${wkDate(req).slice(0, 6)}</td><td class="mono" style="${ok ? "" : "color:#ef8a8a"}">${wkDate(fc).slice(0, 6)}</td><td>${ok ? `<span class="status good">${ICON.good}${esc(D.ep.ok)}</span>` : `<span class="status crit">${ICON.crit}${esc(D.ep.late)}</span>`}</td></tr>`).join("")}</tbody>`;
+  // engineering constraints on the schedule
+  const cons = [];
+  VILLAS.forEach((v) => { const st = stageAt(v, week); engDocs(v).forEach((x) => { if ((x.s === "C" || x.s === "NS") && x.k === st + 1) cons.push([v, x]); }); });
+  $("#econs").innerHTML = cons.slice(0, 12).map(([v, x]) => `<div class="rec">${pill(D.ep.es[x.s], ENG_COL[x.s])}<div><b>V${v.id}-${1000 + (x.k - 1) * 10} · ${esc(D.acts[x.k - 1])}</b><div class="m"><span>${esc(D.ep.wait)} ${esc(D.ep.docs[x.j])}</span><span>${x.ref} ${x.rev}</span></div></div></div>`).join("") || `<p class="note-s">—</p>`;
+  // procurement timeline
+  const segs = LL.slice(0, 7), gt = $("#procgantt"), w0 = 1, w1 = 60, X = (w) => ((w - w0) / (w1 - w0)) * 100;
+  gt.innerHTML = segs.map(([k, , , , req, fc, ok]) => { const po = fc - 18, fab = fc - 8, sh = fc - 3; return `<div class="gd-row"><span class="nm">${esc(D.ep.ll[k])}</span><div class="gd-track"><div class="gd-bar" style="left:${X(po)}%;width:${X(fab) - X(po)}%;background:#3a4350"></div><div class="gd-bar" style="left:${X(fab)}%;width:${X(sh) - X(fab)}%;background:var(--s1)"></div><div class="gd-bar" style="left:${X(sh)}%;width:${X(fc) - X(sh)}%;background:${ok ? "var(--s3)" : "var(--crit)"}"></div><div class="gd-now" style="left:${X(req)}%;background:${ok ? "var(--ink-2)" : "var(--crit)"};box-shadow:none;width:2px"></div><div class="gd-now" style="left:${X(week)}%"></div></div></div>`; }).join("");
+  $("#proclg").innerHTML = `<span><i class="box" style="background:#3a4350"></i>${esc(D.ep.ph[0])}</span><span><i class="box" style="background:var(--s1)"></i>${esc(D.ep.ph[1])}</span><span><i class="box" style="background:var(--s3)"></i>${esc(D.ep.ph[2])}</span><span><i style="border-color:var(--ink-2);width:2px;height:12px;border-top:0;border-left:2px solid var(--ink-2)"></i>${esc(D.ep.ph[3])}</span><span><i style="border-color:var(--amber);width:2px;height:12px;border-top:0;border-left:2px solid var(--amber)"></i>${esc(D.wk)} ${week}</span>`;
+}
+
+/* ---------- EOT & claims page ---------- */
+function renderEot() {
+  const D = d(), claimable = EVENTS.filter((e) => e.days);
+  const claimed = claimable.reduce((a, e) => a + e.days, 0), awarded = claimable.reduce((a, e) => a + e.award, 0), rej = claimable.filter((e) => e.st === "rej").reduce((a, e) => a + e.days, 0), review = claimed - awarded - rej, cost = claimable.reduce((a, e) => a + e.cost, 0);
+  const tiles = [[claimed + " d", D.eot.t[0], "warn"], [awarded + " d", D.eot.t[1], "good"], [review + " d", D.eot.t[2], "warn"], [rej + " d", D.eot.t[3], "serious"], ["AED " + cost.toFixed(1) + " M", D.eot.t[4], "warn"]];
+  $("#eottiles").innerHTML = tiles.map(([v0, l, st]) => `<div class="tile"><small>${esc(l)}</small><b>${v0}</b>${statusHTML(st)}</div>`).join("");
+  $("#evtab").innerHTML = `<thead><tr>${D.eot.h.map((x, i) => `<th${i >= 6 && i <= 7 ? ' style="text-align:end"' : ""}>${esc(x)}</th>`).join("")}</tr></thead><tbody>${EVENTS.map((e, i) => `<tr><td class="mono">${e.id}</td><td style="white-space:normal;min-width:11rem">${esc(D.eot.ev[i])}</td><td>${esc(D.eot.cause[e.cause])}</td><td class="num">${VILLAS.filter(e.f).length}</td><td class="mono">${e.notice ? e.notice.slice(0, 6) : "—"}</td><td class="mono">${e.claim ? e.claim.slice(0, 6) : "—"}</td><td class="num">${e.days || "—"}</td><td class="num">${e.days ? e.award : "—"}</td><td>${pill(D.eot.st[e.st], EV_COL[e.st])}</td></tr>`).join("")}</tbody>`;
+  // claimed vs awarded per event
+  const W = 640, H = 230, L = 40, R = 10, T0 = 14, B = 28, max = 25, y = (v0) => T0 + (1 - v0 / max) * (H - T0 - B), step = (W - L - R) / claimable.length, bw = Math.min(22, step * 0.28);
+  let g = "";
+  [0, 5, 10, 15, 20, 25].forEach((v0) => { g += `<line x1="${L}" x2="${W - R}" y1="${y(v0)}" y2="${y(v0)}" stroke="${v0 ? "var(--grid)" : "var(--axis)"}"/><text x="${L - 6}" y="${y(v0) + 4}" text-anchor="end">${v0}</text>`; });
+  claimable.forEach((e, i) => { const x = L + step * i + step / 2; [[e.days, "var(--s1)", -bw - 1], [e.award, "var(--s3)", 1]].forEach(([v0, c, off]) => { if (!v0) return; const t = y(v0); g += `<path d="M${x + off} ${y(0)} V${t + 4} Q${x + off} ${t} ${x + off + 4} ${t} H${x + off + bw - 4} Q${x + off + bw} ${t} ${x + off + bw} ${t + 4} V${y(0)} Z" fill="${c}"/><text x="${x + off + bw / 2}" y="${t - 5}" text-anchor="middle" class="lbl">${v0}</text>`; }); g += `<text x="${x}" y="${H - 8}" text-anchor="middle">${e.id}</text>`; });
+  $("#eotbar").innerHTML = g;
+  $("#eotlg").innerHTML = `<span><i class="box" style="background:var(--s1)"></i>${esc(D.eot.cl)}</span><span><i class="box" style="background:var(--s3)"></i>${esc(D.eot.aw)}</span>`;
+  // notice compliance timeline (FIDIC 2017: notice within 28 days, claim within 84 days)
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"], X = (s0) => { const [dd, mm] = s0.split("-"); return ((MON.indexOf(mm) * 30.4 + +dd) / (10 * 30.4)) * 100; };
+  $("#eottl").innerHTML = EVENTS.map((e, i) => `<div class="gd-row"><span class="nm">${e.id}<small>${esc(D.eot.cause[e.cause])}</small></span><div class="gd-track">${e.notice ? `<div class="gd-bar" style="left:${X(e.occ)}%;width:${X(e.notice) - X(e.occ)}%;background:var(--warn)"></div>` : ""}${e.claim ? `<div class="gd-bar" style="left:${X(e.notice)}%;width:${X(e.claim) - X(e.notice)}%;background:var(--s1)"></div>` : ""}<div class="gd-now" style="left:${X(e.occ)}%;background:var(--ink);box-shadow:none"></div></div></div>`).join("") + `<div class="gd-axis"><div></div><div>${months.map((m) => `<span>${m}</span>`).join("")}</div></div>`;
+  $("#eotlg2").innerHTML = `<span><i style="border-color:var(--ink);width:2px;height:12px;border-top:0;border-left:2px solid var(--ink)"></i>${esc(D.eot.tl[0])}</span><span><i class="box" style="background:var(--warn)"></i>${esc(D.eot.tl[1])}</span><span><i class="box" style="background:var(--s1)"></i>${esc(D.eot.tl[2])}</span>`;
+  $("#eotcomp").innerHTML = EVENTS.filter((e) => e.notice).map((e) => `<span class="status ${e.nd <= 28 ? "good" : "crit"}">${ICON[e.nd <= 28 ? "good" : "crit"]}${e.id} · ${esc(D.eot.nd)} ${e.nd} d${e.cd ? ` · ${esc(D.eot.cdl)} ${e.cd} d` : ""}</span>`).join("");
+}
+
+/* ---------- Executive summary ---------- */
+const CONTRACT_AED = 412;
+function renderExec() {
+  const D = d(), act = ACT_CURVE[DW], pl = PLAN_CURVE[DW], spi = act / pl;
+  const lag = 5, cert = (arr, w) => CONTRACT_AED * (arr[Math.max(0, w - lag)] || 0) / 100 * 0.95;
+  const certNow = cert(ACT_CURVE, DW), certPlan = cert(PLAN_CURVE, DW);
+  const claimed = EVENTS.reduce((a, e) => a + e.days, 0), awarded = EVENTS.reduce((a, e) => a + e.award, 0);
+  const finDate = wkDate(Math.ceil(actFinishW)), conDate = wkDate(Math.ceil(planFinishW));
+  const health = spi >= 0.97 ? "good" : spi >= 0.92 ? "warn" : "serious";
+  const tiles = [["AED " + CONTRACT_AED + " M", D.ex.t[0], null, D.ex.ts[0]], ["AED " + certNow.toFixed(0) + " M", D.ex.t[1], certNow >= certPlan * 0.97 ? "good" : "warn", `${ltr(Math.round(100 * certNow / CONTRACT_AED) + "%")} · ${D.ex.plan} ${ltr(certPlan.toFixed(0) + " M")}`], [finDate, D.ex.t[2], SLIP_D > 30 ? "serious" : "warn", `${D.ex.ts[2]} ${ltr(conDate)} · ${ltr("+" + SLIP_D + " d")}`], [`${awarded} / ${claimed} d`, D.ex.t[3], "warn", D.ex.ts[3]], ["1.24 M", D.ex.t[4], "good", D.ex.ts[4]]];
+  $("#extiles").innerHTML = tiles.map(([v0, l, st, sub]) => `<div class="tile"><small>${esc(l)}</small><b>${v0}</b><span class="sub">${esc(sub)}</span>${st ? statusHTML(st) : ""}</div>`).join("");
+  // key messages built from the same data
+  const gaps = D.acts.map((a, k) => { const ac = VILLAS.reduce((s0, v) => s0 + stProg(v, k + 1, DW, v.ends), 0), pp = VILLAS.reduce((s0, v, i) => s0 + stProg(v, k + 1, DW, PLAN_ENDS[i]), 0); return [pp - ac, a]; }).sort((a, b) => b[0] - a[0]);
+  const allDocs = VILLAS.flatMap((v) => engDocs(v)), apr = Math.round(100 * allDocs.filter((x) => x.s === "A").length / allDocs.length), nC = allDocs.filter((x) => x.s === "C").length;
+  const lateWin = VILLAS.filter((v) => procItems(v).some((x) => x.key === "win" && x.s === "late")).length;
+  const msgs = D.ex.msg.map((m) => m.replace("{a}", act.toFixed(1)).replace("{p}", pl.toFixed(1)).replace("{spi}", spi.toFixed(2)).replace("{drv}", gaps[0][1]).replace("{fin}", ltr(finDate)).replace("{slip}", SLIP_D).replace("{cl}", claimed).replace("{aw}", awarded).replace("{lw}", lateWin).replace("{apr}", apr).replace("{nc}", nC).replace("{cert}", certNow.toFixed(0)).replace("{gap}", Math.max(0, certPlan - certNow).toFixed(1)));
+  const mstat = ["warn", "serious", "serious", "warn", "warn"];
+  $("#exmsg").innerHTML = `<div class="health"><span class="status ${health}" style="font-size:.95rem">${ICON[health]}${esc(D.ex.hl[health])}</span><span class="note-s">${esc(D.ex.auto)}</span></div>` + msgs.map((m, i) => `<div class="msg"><span class="dot" style="background:var(--${mstat[i] === "serious" ? "serious" : "warn"})"></span><p>${esc(m)}</p></div>`).join("");
+  // cash flow: planned vs certified, cumulative AED M, one axis
+  const W = 640, H = 250, L = 46, R = 14, T0 = 14, B = 30, x = (w) => L + (w / NW) * (W - L - R), y = (v0) => T0 + (1 - v0 / 420) * (H - T0 - B);
+  let g = "";
+  [0, 100, 200, 300, 400].forEach((v0) => { g += `<line x1="${L}" x2="${W - R}" y1="${y(v0)}" y2="${y(v0)}" stroke="${v0 ? "var(--grid)" : "var(--axis)"}"/><text x="${L - 6}" y="${y(v0) + 4}" text-anchor="end">${v0}</text>`; });
+  for (let w = 1; w <= NW; w += 13) g += `<text x="${x(w)}" y="${H - 10}" text-anchor="middle">${wkDate(w).slice(3)}</text>`;
+  const pth = (f, a, b) => { let s0 = ""; for (let w = a; w <= b; w++) s0 += `${w === a ? "M" : "L"}${x(w).toFixed(1)} ${y(f(w)).toFixed(1)}`; return s0; };
+  g += `<path d="${pth((w) => cert(ACT_CURVE, w), 0, DW)} L${x(DW)} ${y(0)} L${x(0)} ${y(0)} Z" fill="var(--s3)" fill-opacity=".12"/>`;
+  g += `<path d="${pth((w) => cert(PLAN_CURVE, w), 0, NW)}" fill="none" stroke="var(--s1)" stroke-width="2"/>`;
+  g += `<path d="${pth((w) => cert(ACT_CURVE, w), 0, DW)}" fill="none" stroke="var(--s3)" stroke-width="2"/>`;
+  g += `<path d="${pth((w) => cert(ACT_CURVE, w), DW, NW)}" fill="none" stroke="var(--s3)" stroke-width="2" stroke-dasharray="5 5"/>`;
+  g += `<line x1="${x(DW)}" x2="${x(DW)}" y1="${T0}" y2="${H - B}" stroke="var(--amber)" stroke-dasharray="3 4"/><circle cx="${x(DW)}" cy="${y(certNow)}" r="5" fill="var(--s3)" stroke="var(--panel)" stroke-width="2"/><text x="${x(DW) + 8}" y="${y(certNow) + 14}" class="lbl">AED ${certNow.toFixed(0)} M</text>`;
+  $("#excash").innerHTML = g;
+  $("#excashlg").innerHTML = `<span><i style="border-color:var(--s1)"></i>${esc(D.ex.cf[0])}</span><span><i style="border-color:var(--s3)"></i>${esc(D.ex.cf[1])}</span><span><i class="dash" style="border-color:var(--s3)"></i>${esc(D.ex.cf[2])}</span>`;
+  // milestones by cluster, baseline vs forecast
+  const ms = [0, 1, 2, 3].map((c) => { const vs = VILLAS.map((v, i) => [v, i]).filter(([v]) => v.c === c); const b = Math.max(...vs.map(([, i]) => PLAN_ENDS[i][6])), f = Math.max(...vs.map(([v]) => v.ends[6])); return [D.ex.ms[c], b, f]; });
+  ms.push([D.ex.ms[4], 58, 60.5], [D.ex.ms[5], 62, 62], [D.ex.ms[6], planFinishW, actFinishW]);
+  $("#exmil").innerHTML = `<thead><tr>${D.ex.mh.map((h, i) => `<th${i === 3 ? ' style="text-align:end"' : ""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>${ms.map(([n0, b, f]) => { const dv = Math.round((f - b) * 7), st = f <= week ? "good" : dv <= 0 ? "good" : dv <= 14 ? "warn" : dv <= 30 ? "serious" : "crit"; return `<tr><td>${esc(n0)}</td><td class="mono">${wkDate(Math.ceil(b))}</td><td class="mono">${wkDate(Math.ceil(f))}</td><td class="num">${dv > 0 ? "+" : ""}${dv}</td><td>${statusHTML(st)}</td></tr>`; }).join("")}</tbody>`;
+  // top risks
+  const rs = RISKS.map(([p, a, m, b], i) => [p * (a + m + b) / 3, i, p]).sort((a, b) => b[0] - a[0]).slice(0, 5);
+  $("#exrisk").innerHTML = rs.map(([sc, i, p]) => `<div class="rec"><span class="tag" style="border-color:${sc > 10 ? "var(--crit)" : "var(--warn)"}">${ltr(sc.toFixed(1) + " d")}</span><div><b>${esc(D.r2.risks[i][0])}</b><div class="m"><span>P ${Math.round(p * 100)}%</span><span>${esc(D.ex.owner)} ${esc(D.ex.owners[i])}</span></div></div></div>`).join("");
+  // decisions needed
+  $("#exdec").innerHTML = D.ex.dec.map(([t, due, imp], i) => `<div class="rec"><span class="tag" style="border-color:var(--amber);color:var(--amber-ink)">${ltr(due)}</span><div><b>${esc(t)}</b><div class="m"><span>${esc(imp)}</span></div></div></div>`).join("");
+}
+
 /* =========================================================
    AUTOMATION PAGE
    ========================================================= */
@@ -1751,8 +2167,8 @@ function applyText() {
   $("#plegend").innerHTML = `<span><i class="box" style="background:var(--s2)"></i>${esc(D.p[0])}</span><span><i style="border-color:var(--ink);width:2px;height:12px;border-top:0;border-left:2px solid var(--ink)"></i>${esc(D.p[1])}</span>`;
   $("#mlegend").innerHTML = `<span><i class="box" style="background:var(--s3)"></i>${esc(D.m[0])}</span><span><i class="dash" style="border-color:var(--ink-2)"></i>${esc(D.m[1])}</span>`;
 }
-const PAGES = ["overview", "site", "schedule", "risk", "logistics", "bim", "auto"];
-let page = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
+const PAGES = ["exec", "overview", "site", "schedule", "engproc", "eot", "risk", "logistics", "bim", "auto"];
+let page = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "exec";
 function renderTabs() {
   const D = d(), i = PAGES.indexOf(page);
   $("#tabs").innerHTML = PAGES.map((p, k) => `<button type="button" data-p="${p}" ${p === page ? 'aria-current="page"' : ""}>${esc(D.pgShort[k])}</button>`).join("");
@@ -1768,6 +2184,9 @@ function go(p) {
   setTimeout(fit, 60);
 }
 function showPage(p) {
+  if (p === "exec") renderExec();
+  if (p === "engproc") renderEngProc();
+  if (p === "eot") renderEot();
   if (p === "overview") renderAll(true);
   if (p === "site") { renderLayout(); renderPanel(); }
   if (p === "schedule") renderXer();
