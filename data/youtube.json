@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-15T11:47:22Z",
+ "updated": "2026-10-15T17:03:13Z",
  "channel": {
+  "views": "4,510,807",
   "joined": "Jan 12, 2018",
   "videos": "580",
-  "subscribers": "90.1K",
-  "views": "4,513,528"
+  "subscribers": "90.1K"
  },
  "videos": [
   {
@@ -13,10 +13,10 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 370,
+   "views": 431,
    "ago": {
-    "en": "1d ago",
-    "ar": "قبل يوم واحد"
+    "en": "2d ago",
+    "ar": "قبل يومين"
    },
    "published": "2026-10-13T15:38:03+00:00",
    "duration": "8:03",
@@ -26,12 +26,12 @@
    "id": "RBmrB7epBZI",
    "title": {
     "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
-    "ar": "كاش ولا تقسيط؟ الرقم 36% اللي لازم تعرفه قبل ما تمضي"
+    "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1000,
    "ago": {
-    "en": "4d ago",
-    "ar": "قبل 4 أيام"
+    "en": "5d ago",
+    "ar": "قبل 5 أيام"
    },
    "published": null,
    "duration": "11:24",
@@ -43,10 +43,10 @@
     "en": "Engineer Accreditation in the UAE 2026 | Are You Actually Certified or Not?!",
     "ar": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!"
    },
-   "views": 935,
+   "views": 943,
    "ago": {
-    "en": "5d ago",
-    "ar": "قبل 5 أيام"
+    "en": "6d ago",
+    "ar": "قبل 6 أيام"
    },
    "published": null,
    "duration": "7:09",
@@ -58,7 +58,7 @@
     "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
     "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
    },
-   "views": 434,
+   "views": 440,
    "ago": {
     "en": "7d ago",
     "ar": "قبل 7 أيام"
@@ -73,10 +73,10 @@
     "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
-   "views": 362,
+   "views": 365,
    "ago": {
-    "en": "9d ago",
-    "ar": "قبل 9 أيام"
+    "en": "10d ago",
+    "ar": "قبل 10 أيام"
    },
    "published": null,
    "duration": "8:05",
@@ -88,7 +88,7 @@
     "en": "The Hidden Bill",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
-   "views": 548,
+   "views": 549,
    "ago": {
     "en": "11d ago",
     "ar": "قبل 11 يومًا"
@@ -105,8 +105,8 @@
    },
    "views": 43000,
    "ago": {
-    "en": "11d ago",
-    "ar": "قبل 11 يومًا"
+    "en": "12d ago",
+    "ar": "قبل 12 يومًا"
    },
    "published": null,
    "duration": "8:18",
@@ -118,7 +118,7 @@
     "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
     "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
    },
-   "views": 717,
+   "views": 718,
    "ago": {
     "en": "12d ago",
     "ar": "قبل 12 يومًا"
@@ -268,7 +268,7 @@
     "en": "Are Engineering Jobs Going Extinct?! AI in Construction — Who Really Gets Replaced?",
     "ar": "وظيفة المهندس هتنقرض! مستقبل الهندسة مع الذكاء الاصطناعي؟"
    },
-   "views": 831,
+   "views": 832,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -358,7 +358,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 700,
+   "views": 705,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -418,7 +418,7 @@
     "en": "Must-Know Construction Terminology | Engineer in the UAE?",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 822,
+   "views": 823,
    "ago": {
     "en": "4mo ago",
     "ar": "خلال 4 أشهر"
@@ -463,21 +463,21 @@
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 370,
+   "views": 431,
    "short": false
   },
   {
    "id": "QlvcvxPCX5I",
    "title": "القرض الشخصي: الفلوس دي مش بتاعتك.. دي سنين من عمرك",
    "published": "2026-10-11T03:22:50+00:00",
-   "views": 1501,
+   "views": 1504,
    "short": true
   },
   {
    "id": "ZlR9CMLxBxY",
    "title": "التقسيط بدون فوائد: أكذوبة بتطير نص مرتبك",
    "published": "2026-10-11T03:22:08+00:00",
-   "views": 1600,
+   "views": 1605,
    "short": true
   },
   {
@@ -491,35 +491,35 @@
    "id": "R3MyLFU5gsM",
    "title": "الديون: معاك تشتري؟ اشتري.. مش معاك؟ متشتريش!",
    "published": "2026-10-11T03:20:43+00:00",
-   "views": 1426,
+   "views": 1431,
    "short": true
   },
   {
    "id": "FLWBF6k_iwo",
    "title": "الجمعيات وحشة ولا حلوة؟ خطرها القاتل إجبار الالتزام",
    "published": "2026-10-11T03:20:00+00:00",
-   "views": 1540,
+   "views": 1551,
    "short": true
   },
   {
    "id": "2GJPbrq8iNw",
    "title": "تقسيط عربية: ناس دفعت تمن العربية مرتين وثلاثة",
    "published": "2026-10-11T03:19:15+00:00",
-   "views": 1779,
+   "views": 1783,
    "short": true
   },
   {
    "id": "xpXyZQbzi7s",
    "title": "حساب هامش الربح: منتج بيكسبك 150 جنيه طلع 16 بس!",
    "published": "2026-10-11T00:21:51+00:00",
-   "views": 522,
+   "views": 523,
    "short": true
   },
   {
    "id": "VstnVqaJytU",
    "title": "مشروع ب 10000 جنيه؟ أخطر حاجة تعملها تشتري بضاعة الأول",
    "published": "2026-10-11T00:21:04+00:00",
-   "views": 1243,
+   "views": 1242,
    "short": true
   },
   {
@@ -533,7 +533,7 @@
    "id": "CEjLiF-ABnY",
    "title": "الرجوع من الغربة: فيلا 10 سنين = كاش حي في أصل ميت",
    "published": "2026-10-11T00:19:15+00:00",
-   "views": 3896,
+   "views": 3903,
    "short": true
   },
   {
@@ -554,14 +554,14 @@
    "id": "bhYWxgdGm2w",
    "title": "اشتري ارض ولا شقة؟ إنت شاري «هواء محاط بخرسانة»",
    "published": "2026-10-10T21:16:06+00:00",
-   "views": 1672,
+   "views": 1681,
    "short": true
   },
   {
    "id": "UaebdcECOeA",
    "title": "العقار يمرض ولا يموت؟ ثروتك محبوسة في الحيطان وقت الأزمة",
    "published": "2026-10-10T21:13:12+00:00",
-   "views": 1115,
+   "views": 1116,
    "short": true
   }
  ]
