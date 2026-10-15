@@ -1,0 +1,568 @@
+{
+ "updated": "2026-10-15T11:47:22Z",
+ "channel": {
+  "joined": "Jan 12, 2018",
+  "videos": "580",
+  "subscribers": "90.1K",
+  "views": "4,513,528"
+ },
+ "videos": [
+  {
+   "id": "Hu1Rt16SSCQ",
+   "title": {
+    "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
+    "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
+   },
+   "views": 370,
+   "ago": {
+    "en": "1d ago",
+    "ar": "قبل يوم واحد"
+   },
+   "published": "2026-10-13T15:38:03+00:00",
+   "duration": "8:03",
+   "mine": true
+  },
+  {
+   "id": "RBmrB7epBZI",
+   "title": {
+    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
+    "ar": "كاش ولا تقسيط؟ الرقم 36% اللي لازم تعرفه قبل ما تمضي"
+   },
+   "views": 1000,
+   "ago": {
+    "en": "4d ago",
+    "ar": "قبل 4 أيام"
+   },
+   "published": null,
+   "duration": "11:24",
+   "mine": true
+  },
+  {
+   "id": "Nz7O9MDCE6I",
+   "title": {
+    "en": "Engineer Accreditation in the UAE 2026 | Are You Actually Certified or Not?!",
+    "ar": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!"
+   },
+   "views": 935,
+   "ago": {
+    "en": "5d ago",
+    "ar": "قبل 5 أيام"
+   },
+   "published": null,
+   "duration": "7:09",
+   "mine": false
+  },
+  {
+   "id": "xaMUWUADyqQ",
+   "title": {
+    "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
+    "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
+   },
+   "views": 434,
+   "ago": {
+    "en": "7d ago",
+    "ar": "قبل 7 أيام"
+   },
+   "published": null,
+   "duration": "12:40",
+   "mine": true
+  },
+  {
+   "id": "v9TkAL3UaZo",
+   "title": {
+    "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
+    "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
+   },
+   "views": 362,
+   "ago": {
+    "en": "9d ago",
+    "ar": "قبل 9 أيام"
+   },
+   "published": null,
+   "duration": "8:05",
+   "mine": false
+  },
+  {
+   "id": "i295i-WBI0c",
+   "title": {
+    "en": "The Hidden Bill",
+    "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
+   },
+   "views": 548,
+   "ago": {
+    "en": "11d ago",
+    "ar": "قبل 11 يومًا"
+   },
+   "published": null,
+   "duration": "5:05",
+   "mine": true
+  },
+  {
+   "id": "7N72QijzO04",
+   "title": {
+    "en": "لو معاك 3 مليون جنيه.. عقار ولا ذهب ولا دولار؟ حسبتها بالأرقام",
+    "ar": "لو معاك 3 مليون جنيه.. عقار ولا ذهب ولا دولار؟ حسبتها بالأرقام"
+   },
+   "views": 43000,
+   "ago": {
+    "en": "11d ago",
+    "ar": "قبل 11 يومًا"
+   },
+   "published": null,
+   "duration": "8:18",
+   "mine": true
+  },
+  {
+   "id": "Xz-1SdilZsc",
+   "title": {
+    "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
+    "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
+   },
+   "views": 717,
+   "ago": {
+    "en": "12d ago",
+    "ar": "قبل 12 يومًا"
+   },
+   "published": null,
+   "duration": "8:21",
+   "mine": true
+  },
+  {
+   "id": "oy2t2PEK4BE",
+   "title": {
+    "en": "ليه المقاول بيفلس وهو كسبان؟ فخ السيولة اللي بيقفل شركات المقاولات",
+    "ar": "ليه المقاول بيفلس وهو كسبان؟ فخ السيولة اللي بيقفل شركات المقاولات"
+   },
+   "views": 1000,
+   "ago": {
+    "en": "2w ago",
+    "ar": "قبل أسبوعين"
+   },
+   "published": null,
+   "duration": "9:13",
+   "mine": true
+  },
+  {
+   "id": "lBKPIseYBSY",
+   "title": {
+    "en": "ازاي تبدأ بزنس من الصفر بدون فلوس؟ (بعقلية مهندس)",
+    "ar": "ازاي تبدأ بزنس من الصفر بدون فلوس؟ (بعقلية مهندس)"
+   },
+   "views": 613,
+   "ago": {
+    "en": "2w ago",
+    "ar": "قبل أسبوعين"
+   },
+   "published": null,
+   "duration": "9:40",
+   "mine": true
+  },
+  {
+   "id": "Bf24zKylIaM",
+   "title": {
+    "en": "ازاي تحسب تكاليف بيتك بنفسك مجانا | ميزان البناء",
+    "ar": "ازاي تحسب تكاليف بيتك بنفسك مجانا | ميزان البناء"
+   },
+   "views": 342,
+   "ago": {
+    "en": "2w ago",
+    "ar": "قبل أسبوعين"
+   },
+   "published": null,
+   "duration": "8:20",
+   "mine": false
+  },
+  {
+   "id": "zmOLOjq2jMU",
+   "title": {
+    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
+    "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
+   },
+   "views": 603,
+   "ago": {
+    "en": "2w ago",
+    "ar": "قبل أسبوعين"
+   },
+   "published": null,
+   "duration": "5:48",
+   "mine": true
+  },
+  {
+   "id": "0g-JY2KbQE4",
+   "title": {
+    "en": "هل العقار أفضل استثمار؟ «الابن البار» ممكن يدفن تحويشة عمرك | 4 حقائق",
+    "ar": "هل العقار أفضل استثمار؟ «الابن البار» ممكن يدفن تحويشة عمرك | 4 حقائق"
+   },
+   "views": 9500,
+   "ago": {
+    "en": "2w ago",
+    "ar": "قبل أسبوعين"
+   },
+   "published": null,
+   "duration": "6:46",
+   "mine": true
+  },
+  {
+   "id": "j00M83dMKqk",
+   "title": {
+    "en": "Before You Build… Find Out How Much Your Project Will Cost! | Mizan Al-Binaa",
+    "ar": "حاسبة تكلفة البناء مجاناً | اعرف بيتك هيكلف كام قبل ما تبدأ"
+   },
+   "views": 863,
+   "ago": {
+    "en": "2w ago",
+    "ar": "قبل أسبوعين"
+   },
+   "published": null,
+   "duration": "17:33",
+   "mine": false
+  },
+  {
+   "id": "Df-xRgvuKpI",
+   "title": {
+    "en": "بتصحى تعبان رغم 8 ساعات نوم؟ متلازمة المبنى المريض و6 أخطاء في أوضتك",
+    "ar": "بتصحى تعبان رغم 8 ساعات نوم؟ متلازمة المبنى المريض و6 أخطاء في أوضتك"
+   },
+   "views": 723,
+   "ago": {
+    "en": "2w ago",
+    "ar": "قبل أسبوعين"
+   },
+   "published": null,
+   "duration": "8:20",
+   "mine": true
+  },
+  {
+   "id": "IzsWDeDebAk",
+   "title": {
+    "en": "ليه الناس بتبيع بخسارة؟ 3 فخاخ المطور مخبيها عنك - شقق الأوف بلان 2026",
+    "ar": "ليه الناس بتبيع بخسارة؟ 3 فخاخ المطور مخبيها عنك - شقق الأوف بلان 2026"
+   },
+   "views": 508,
+   "ago": {
+    "en": "3w ago",
+    "ar": "قبل 3 أسابيع"
+   },
+   "published": null,
+   "duration": "6:42",
+   "mine": true
+  },
+  {
+   "id": "O9MrmPKP5C0",
+   "title": {
+    "en": "التصالح في مخالفات البناء 2026: إيصال جدية التصالح ما بيحميش شقتك! (آخر موعد 5 نوفمبر)",
+    "ar": "التصالح في مخالفات البناء 2026: إيصال جدية التصالح ما بيحميش شقتك! (آخر موعد 5 نوفمبر)"
+   },
+   "views": 690,
+   "ago": {
+    "en": "3w ago",
+    "ar": "قبل 3 أسابيع"
+   },
+   "published": null,
+   "duration": "9:01",
+   "mine": false
+  },
+  {
+   "id": "7JjJG1qz7iU",
+   "title": {
+    "en": "Are Engineering Jobs Going Extinct?! AI in Construction — Who Really Gets Replaced?",
+    "ar": "وظيفة المهندس هتنقرض! مستقبل الهندسة مع الذكاء الاصطناعي؟"
+   },
+   "views": 831,
+   "ago": {
+    "en": "3w ago",
+    "ar": "قبل 3 أسابيع"
+   },
+   "published": null,
+   "duration": "9:50",
+   "mine": false
+  },
+  {
+   "id": "0dEjxcAcayY",
+   "title": {
+    "en": "الإيجار القديم: عمارة بـ100 مليون إيجارها 72 جنيه! 3 ضربات و3 حلول",
+    "ar": "الإيجار القديم: عمارة بـ100 مليون إيجارها 72 جنيه! 3 ضربات و3 حلول"
+   },
+   "views": 1700,
+   "ago": {
+    "en": "1mo ago",
+    "ar": "قبل شهر واحد"
+   },
+   "published": null,
+   "duration": "11:00",
+   "mine": false
+  },
+  {
+   "id": "x2lq8YrAYh4",
+   "title": {
+    "en": "ازاي تجيب زبونك الأول من غير إعلان ممول",
+    "ar": "ازاي تجيب زبونك الأول من غير إعلان ممول"
+   },
+   "views": 697,
+   "ago": {
+    "en": "1mo ago",
+    "ar": "قبل شهر واحد"
+   },
+   "published": null,
+   "duration": "8:26",
+   "mine": true
+  },
+  {
+   "id": "8aIlSifSC4c",
+   "title": {
+    "en": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر..",
+    "ar": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر.."
+   },
+   "views": 898,
+   "ago": {
+    "en": "1mo ago",
+    "ar": "قبل شهر واحد"
+   },
+   "published": null,
+   "duration": "5:48",
+   "mine": false
+  },
+  {
+   "id": "iid2gQP7210",
+   "title": {
+    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
+    "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
+   },
+   "views": 611,
+   "ago": {
+    "en": "1mo ago",
+    "ar": "قبل شهر واحد"
+   },
+   "published": null,
+   "duration": "5:08",
+   "mine": false
+  },
+  {
+   "id": "HhPYaTeG0Dc",
+   "title": {
+    "en": "كيف يخدعك المطور العقاري؟ أفخاخ مدفونة في الكومباوندات.. المطور بيكسب من لحمك مرتين!",
+    "ar": "كيف يخدعك المطور العقاري؟ أفخاخ مدفونة في الكومباوندات.. المطور بيكسب من لحمك مرتين!"
+   },
+   "views": 1400,
+   "ago": {
+    "en": "1mo ago",
+    "ar": "قبل شهر واحد"
+   },
+   "published": null,
+   "duration": "7:56",
+   "mine": false
+  },
+  {
+   "id": "rCouSYIogqg",
+   "title": {
+    "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
+    "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
+   },
+   "views": 700,
+   "ago": {
+    "en": "1mo ago",
+    "ar": "قبل شهر واحد"
+   },
+   "published": null,
+   "duration": "13:33",
+   "mine": false
+  },
+  {
+   "id": "rJ8z7pi3cbM",
+   "title": {
+    "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
+    "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
+   },
+   "views": 3700,
+   "ago": {
+    "en": "3mo ago",
+    "ar": "خلال 3 أشهر"
+   },
+   "published": null,
+   "duration": "2:40",
+   "mine": false
+  },
+  {
+   "id": "TdOGz1JIyXE",
+   "title": {
+    "en": "Beware Before Equivalating Your Degree in the UAE.. Know This! 🇦🇪",
+    "ar": "أحذر قبل معادلة شهادة التخرج في الإمارات.. اعرف المعلومة دي! 🇦🇪"
+   },
+   "views": 2800,
+   "ago": {
+    "en": "3mo ago",
+    "ar": "خلال 3 أشهر"
+   },
+   "published": null,
+   "duration": "3:41",
+   "mine": false
+  },
+  {
+   "id": "Pof5GpWbdKU",
+   "title": {
+    "en": "UAE Degree Equivalency 2026 | Certificate Recognition Step by Step",
+    "ar": "معادلة الشهادة في الإمارات (الاعتراف بالشهادة) | الخطوات والأوراق 2026"
+   },
+   "views": 12000,
+   "ago": {
+    "en": "3mo ago",
+    "ar": "خلال 3 أشهر"
+   },
+   "published": null,
+   "duration": "7:30",
+   "mine": false
+  },
+  {
+   "id": "kgsOfc2qfbE",
+   "title": {
+    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
+    "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
+   },
+   "views": 822,
+   "ago": {
+    "en": "4mo ago",
+    "ar": "خلال 4 أشهر"
+   },
+   "published": null,
+   "duration": "5:24",
+   "mine": false
+  },
+  {
+   "id": "PvQ0RmIPCB0",
+   "title": {
+    "en": "Carpentry Work for Foundations in the UAE 2026 | Essential Handover Tips for Every Engineer",
+    "ar": "أعمال النجارة للقواعد في الإمارات 2026 | نصائح استلام مهمة لكل مهندس"
+   },
+   "views": 569,
+   "ago": {
+    "en": "7mo ago",
+    "ar": "خلال 7 أشهر"
+   },
+   "published": null,
+   "duration": "8:01",
+   "mine": false
+  },
+  {
+   "id": "7XqrdvfsW6Y",
+   "title": {
+    "en": "Starting excavation for a villa in the UAE 2026|Determining excavation boundaries and levels on-site",
+    "ar": "بداية حفر فيلا في الإمارات 2026 | تحديد حدود ومنسوب الحفر من الموقع خطوة بخطوة"
+   },
+   "views": 656,
+   "ago": {
+    "en": "7mo ago",
+    "ar": "خلال 7 أشهر"
+   },
+   "published": null,
+   "duration": "4:38",
+   "mine": false
+  }
+ ],
+ "items": [
+  {
+   "id": "Hu1Rt16SSCQ",
+   "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
+   "published": "2026-10-13T15:38:03+00:00",
+   "views": 370,
+   "short": false
+  },
+  {
+   "id": "QlvcvxPCX5I",
+   "title": "القرض الشخصي: الفلوس دي مش بتاعتك.. دي سنين من عمرك",
+   "published": "2026-10-11T03:22:50+00:00",
+   "views": 1501,
+   "short": true
+  },
+  {
+   "id": "ZlR9CMLxBxY",
+   "title": "التقسيط بدون فوائد: أكذوبة بتطير نص مرتبك",
+   "published": "2026-10-11T03:22:08+00:00",
+   "views": 1600,
+   "short": true
+  },
+  {
+   "id": "VCr9HJOewUQ",
+   "title": "الكاش باك أكبر كذبة؟ الكريدت كارد زي المشرط في إيد الجراح",
+   "published": "2026-10-11T03:21:26+00:00",
+   "views": 1087,
+   "short": true
+  },
+  {
+   "id": "R3MyLFU5gsM",
+   "title": "الديون: معاك تشتري؟ اشتري.. مش معاك؟ متشتريش!",
+   "published": "2026-10-11T03:20:43+00:00",
+   "views": 1426,
+   "short": true
+  },
+  {
+   "id": "FLWBF6k_iwo",
+   "title": "الجمعيات وحشة ولا حلوة؟ خطرها القاتل إجبار الالتزام",
+   "published": "2026-10-11T03:20:00+00:00",
+   "views": 1540,
+   "short": true
+  },
+  {
+   "id": "2GJPbrq8iNw",
+   "title": "تقسيط عربية: ناس دفعت تمن العربية مرتين وثلاثة",
+   "published": "2026-10-11T03:19:15+00:00",
+   "views": 1779,
+   "short": true
+  },
+  {
+   "id": "xpXyZQbzi7s",
+   "title": "حساب هامش الربح: منتج بيكسبك 150 جنيه طلع 16 بس!",
+   "published": "2026-10-11T00:21:51+00:00",
+   "views": 522,
+   "short": true
+  },
+  {
+   "id": "VstnVqaJytU",
+   "title": "مشروع ب 10000 جنيه؟ أخطر حاجة تعملها تشتري بضاعة الأول",
+   "published": "2026-10-11T00:21:04+00:00",
+   "views": 1243,
+   "short": true
+  },
+  {
+   "id": "Ir8JT7_KXyY",
+   "title": "مشروع بدون رأس مال؟ دي مش مشكلة.. دي ميزة تنافسية",
+   "published": "2026-10-11T00:20:16+00:00",
+   "views": 736,
+   "short": true
+  },
+  {
+   "id": "CEjLiF-ABnY",
+   "title": "الرجوع من الغربة: فيلا 10 سنين = كاش حي في أصل ميت",
+   "published": "2026-10-11T00:19:15+00:00",
+   "views": 3896,
+   "short": true
+  },
+  {
+   "id": "9GWk1JG3cFk",
+   "title": "شراء شقة بالتقسيط وتأجيرها؟ إنت كده شغال سخرة عند البنك",
+   "published": "2026-10-10T21:19:27+00:00",
+   "views": 67,
+   "short": true
+  },
+  {
+   "id": "yP2m-_MIFGs",
+   "title": "هل العقار افضل استثمار؟ شقة بمليون بقت بـ 3 ومكسبتش مليم!",
+   "published": "2026-10-10T21:17:43+00:00",
+   "views": 93,
+   "short": true
+  },
+  {
+   "id": "bhYWxgdGm2w",
+   "title": "اشتري ارض ولا شقة؟ إنت شاري «هواء محاط بخرسانة»",
+   "published": "2026-10-10T21:16:06+00:00",
+   "views": 1672,
+   "short": true
+  },
+  {
+   "id": "UaebdcECOeA",
+   "title": "العقار يمرض ولا يموت؟ ثروتك محبوسة في الحيطان وقت الأزمة",
+   "published": "2026-10-10T21:13:12+00:00",
+   "views": 1115,
+   "short": true
+  }
+ ]
+}

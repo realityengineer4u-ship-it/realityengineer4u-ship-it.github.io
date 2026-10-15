@@ -3026,6 +3026,12 @@ function go(p) {
   renderTabs(); showPage(p);
   const fl = $("#fulllink"); if (fl) fl.href = "./#" + p;
   setTimeout(fit, 60);
+  // after a page switch, keep the reader at the top of the new page instead of somewhere below it
+  if (booted) setTimeout(() => {
+    if (EMBED) { try { parent.postMessage({ type: "pbi-page" }, "*"); } catch (e) {} }
+    else { const t = $("#wrapc").getBoundingClientRect().top; if (t < 0) window.scrollTo({ top: t + scrollY - 8, behavior: "instant" }); }
+  }, 90);
+  booted = true;
 }
 function showPage(p) {
   if (p === "exec") renderExec();
@@ -3046,7 +3052,7 @@ $("#nextp").onclick = () => go(PAGES[Math.min(PAGES.length - 1, PAGES.indexOf(pa
 /* scale the A4 landscape canvas to the available width */
 const EMBED = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
 if (EMBED) document.body.classList.add("embed");
-let VH_PARENT = 0;
+let VH_PARENT = 0, lastPosted = 0, booted = false, lastFitW = 0;
 // fit the A4 landscape canvas to the visible area: width AND height, so it adapts to browser zoom
 function fit() {
   const wrap = $("#wrapc"), c = $("#canvas"), pbi = $("#pbi");
@@ -3060,9 +3066,9 @@ function fit() {
     c.style.transform = `scale(${SCALE})`; wrap.style.height = (990 * SCALE) + "px";
     c.style.left = Math.max(0, (wrap.clientWidth - 1400 * SCALE) / 2) + "px";
   }
-  if (EMBED) { try { parent.postMessage({ type: "pbi-height", h: Math.ceil($("#pbi").getBoundingClientRect().bottom + scrollY + 4) }, "*"); } catch (e) {} }
+  if (EMBED) { const h = Math.ceil($("#pbi").getBoundingClientRect().bottom + scrollY + 4); if (Math.abs(h - lastPosted) > 1) { lastPosted = h; try { parent.postMessage({ type: "pbi-height", h }, "*"); } catch (e) {} } }
 }
-addEventListener("resize", fit);
+addEventListener("resize", () => { if (innerWidth < 680 && innerWidth === lastFitW) return; lastFitW = innerWidth; fit(); });   // phones: ignore address-bar height changes
 
 /* =========================================================
    BOOT
@@ -3082,7 +3088,7 @@ go(page); fit(); syncTick();
 setTimeout(fit, 300); setTimeout(fit, 1500);
 setInterval(syncTick, 1000);
 if (!reduce) setInterval(() => { refresh(); }, 7000);
-addEventListener("message", (e) => { if (e.data && e.data.type === "pbi-vh" && e.data.h > 200 && Math.abs(e.data.h - VH_PARENT) > 2) { VH_PARENT = e.data.h; fit(); } });
+addEventListener("message", (e) => { if (e.data && e.data.type === "pbi-vh" && e.data.h > 200 && Math.abs(e.data.h - VH_PARENT) > 2) { VH_PARENT = e.data.h; if (innerWidth >= 680) fit(); } });
 if (window.visualViewport) visualViewport.addEventListener("resize", () => { if (visualViewport.scale === 1) fit(); });
 addEventListener("message", (e) => { if (e.data && e.data.type === "pbi-lang" && (e.data.lang === "ar" || e.data.lang === "en") && e.data.lang !== lang) $("#lang").onclick(); });
 })();

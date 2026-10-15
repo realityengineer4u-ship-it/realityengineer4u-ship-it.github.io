@@ -115,8 +115,8 @@ html.lenis, html.lenis body { height: auto; }
 .lang { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; font-weight: 600; font-size: .85rem; }
 
 /* ---------- hero ---------- */
-#hero { height: 260vh; position: relative; }
-.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: radial-gradient(ellipse 70% 60% at 30% 60%, #161a20 0%, var(--bg) 70%); }
+#hero { height: 260vh; height: 260lvh; position: relative; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: hidden; background: radial-gradient(ellipse 70% 60% at 30% 60%, #161a20 0%, var(--bg) 70%); }
 #tower { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1.2s var(--ease); }
 #tower.ready { opacity: 1; }
 .hero-copy { position: absolute; inset-inline-start: var(--gutter); top: calc(50% + 34px); transform: translateY(-50%); max-width: min(46rem, 52vw); display: grid; gap: 1.2rem; z-index: 2; }
@@ -445,6 +445,173 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 @media (max-width: 560px) { .nav .act .btn.li, .nav .act .btn.yt { display: none; } .mnav a.ext { display: flex; } .mnav a[href="#contact"] { grid-column: span 2; } }
 @media (min-width: 1081px) and (max-width: 1320px) { .links { gap: .95rem; font-size: .86rem; } .nav .act .btn.li, .nav .act .btn.yt { font-size: 0; gap: 0; padding: .5rem .7rem; } .nav .act .btn.li svg, .nav .act .btn.yt svg { margin: 0; } }
 
+/* ---------- social sections v2: LinkedIn, YouTube, My tools ---------- */
+.soc { border-top: 1px solid var(--line); }
+.soc::before { content: ""; position: absolute; inset-inline: 0; top: -1px; height: 1px; margin-inline: auto; width: min(420px, 60%); background: linear-gradient(90deg, transparent, var(--sc, var(--amber)), transparent); }
+#linkedin { --sc: #0a66c2; background: radial-gradient(ellipse 60% 50% at 15% 0%, rgba(10,102,194,.10), transparent 70%); }
+#channel { --sc: #ff3d33; background: radial-gradient(ellipse 60% 50% at 85% 0%, rgba(230,33,23,.10), transparent 70%); }
+#tools { --sc: var(--amber); }
+#linkedin .kicker { color: #4d9fe8; }
+#channel .kicker { color: #ff6a61; }
+
+/* LinkedIn */
+.lk { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+.lk-card { position: sticky; top: 96px; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--bg-2); display: grid; gap: 1rem; padding-bottom: 1.4rem; }
+.lk-cover { position: relative; height: 128px; background: linear-gradient(120deg, #0a66c2, #073f78 60%, #0b2742); overflow: hidden; }
+.lk-grid { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lk-cover::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px); background-size: 22px 22px; }
+.lk-in { position: absolute; inset-inline-end: 16px; top: 14px; z-index: 1; width: 34px; height: 34px; border-radius: 7px; background: #fff; color: #0a66c2; display: grid; place-items: center; font: 800 1.15rem/1 var(--f-sans, system-ui); }
+.lk-av { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; margin: -70px 1.4rem 0; border: 4px solid var(--bg-2); background: var(--amber); position: relative; z-index: 1; }
+.lk-id { padding-inline: 1.4rem; display: grid; gap: .35rem; }
+.lk-id h3 { font-size: 1.45rem; display: flex; align-items: center; gap: .45rem; }
+.lk-ok { width: 20px; height: 20px; flex: none; }
+.lk-id .hl { color: var(--ink); font-size: .95rem; line-height: 1.55; }
+.lk-id .loc { color: var(--muted); font-size: .88rem; display: flex; align-items: center; gap: .35rem; }
+.lk-id .loc svg { width: 15px; height: 15px; flex: none; }
+.lk-url { color: #4d9fe8; font-size: .85rem; text-decoration: none; justify-self: start; }
+.lk-url:hover { text-decoration: underline; }
+.lk-open { margin-inline: 1.4rem; display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: start; padding: .8rem 1rem; border-radius: 14px; background: rgba(111,207,151,.07); border: 1px solid rgba(111,207,151,.25); font-size: .88rem; }
+.lk-open i { width: 10px; height: 10px; margin-top: .45rem; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(111,207,151,.6); animation: lkpulse 2s infinite; }
+@keyframes lkpulse { 70% { box-shadow: 0 0 0 9px rgba(111,207,151,0); } 100% { box-shadow: 0 0 0 0 rgba(111,207,151,0); } }
+.lk-open b { color: var(--green); display: block; }
+.lk-open span { color: var(--muted); }
+.lk-nums { margin-inline: 1.4rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 14px; }
+.lk-nums div { padding: .75rem .6rem; text-align: center; display: grid; gap: .1rem; }
+.lk-nums div + div { border-inline-start: 1px solid var(--line); }
+.lk-nums b { font-family: var(--f-display); font-weight: 800; font-size: 1.25rem; direction: ltr; }
+.lk-nums span { color: var(--muted); font-size: .74rem; line-height: 1.35; }
+.lk-btns { margin-inline: 1.4rem; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.lk-btns .btn { justify-content: center; }
+.lk-btns .btn.li { grid-column: 1 / -1; background: #0a66c2; color: #fff; border-color: #0a66c2; }
+.lk-btns .btn.li svg { width: 17px; height: 17px; }
+.lk-main { border: 1px solid var(--line); border-radius: 22px; background: var(--bg-2); overflow: hidden; min-width: 0; }
+.lk-tabs, .yt2-tabs { display: flex; gap: .3rem; padding: .6rem; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.lk-tabs::-webkit-scrollbar, .yt2-tabs::-webkit-scrollbar { display: none; }
+.lk-tabs button, .yt2-tabs button { flex: none; border: 0; background: transparent; color: var(--muted); font: 600 .92rem var(--f-sans, system-ui); padding: .6rem 1rem; border-radius: 10px; cursor: pointer; transition: background .2s, color .2s; }
+.lk-tabs button:hover, .yt2-tabs button:hover { color: var(--ink); background: rgba(255,255,255,.05); }
+.lk-tabs button[aria-selected="true"] { color: #fff; background: #0a66c2; }
+.yt2-tabs button[aria-selected="true"] { color: #fff; background: #e62117; }
+.lk-tabs button .n { font-family: var(--f-mono); font-size: .75rem; opacity: .7; margin-inline-start: .35rem; }
+.lk-panel { padding: clamp(1.1rem, 2.4vw, 1.8rem); animation: pagein .35s var(--ease) both; }
+.lk-about p { color: var(--muted); font-size: 1rem; line-height: 1.8; margin: 0 0 1.2rem; }
+.lk-hi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; }
+.lk-hi div { padding: 1rem; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.02); display: grid; gap: .3rem; }
+.lk-hi small { font-family: var(--f-mono); color: #4d9fe8; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.lk-hi b { font-size: .98rem; line-height: 1.45; }
+.lk-tl { position: relative; display: grid; gap: .4rem; }
+.lk-role { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 1rem; padding: .9rem; border-radius: 14px; transition: background .2s; position: relative; }
+.lk-role:hover { background: rgba(255,255,255,.03); }
+.lk-role:not(:last-child)::after { content: ""; position: absolute; inset-inline-start: calc(.9rem + 23px); top: calc(.9rem + 52px); bottom: -.6rem; width: 2px; background: linear-gradient(var(--line), transparent); }
+.lk-logo { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; font: 800 .8rem var(--f-display); background: #1b2128; color: var(--amber); border: 1px solid var(--line); }
+.lk-role.now .lk-logo { background: #0a66c2; color: #fff; border-color: #0a66c2; }
+.lk-role b { display: block; font-weight: 600; font-size: 1rem; }
+.lk-role > div > span { display: block; color: var(--muted); font-size: .88rem; }
+.lk-span { margin-top: .55rem; height: 6px; border-radius: 3px; background: rgba(255,255,255,.06); position: relative; direction: ltr; }
+.lk-span i { position: absolute; top: 0; bottom: 0; border-radius: 3px; background: linear-gradient(90deg, #2a78d6, #4d9fe8); }
+.lk-role.now .lk-span i { background: linear-gradient(90deg, #f5a524, #ffcb6b); }
+.lk-axis { display: flex; justify-content: space-between; direction: ltr; font: .7rem var(--f-mono); color: var(--muted); padding-inline-start: calc(48px + 1.9rem); padding-inline-end: .9rem; }
+.lk-certs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+.lk-cert { display: grid; grid-template-columns: 44px 1fr; gap: .8rem; align-items: center; padding: .9rem; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.lk-cert b { display: block; font-weight: 600; font-size: .95rem; line-height: 1.4; }
+.lk-cert div > span { color: var(--muted); font-size: .84rem; }
+.lk-cert .lk-logo { width: 44px; height: 44px; }
+.lk-sk { display: grid; gap: 1.2rem; }
+.lk-sk h5 { margin: 0 0 .6rem; font: 600 .78rem var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: #4d9fe8; }
+.lk-sk .chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.lk-sk .chips span { padding: .4rem .85rem; border-radius: 999px; border: 1px solid var(--line); font-size: .88rem; background: rgba(255,255,255,.02); }
+.lk-live { display: grid; gap: 1rem; justify-items: start; }
+.lk-live p { color: var(--muted); margin: 0; }
+.lk-badge { min-height: 290px; width: 100%; display: grid; place-items: center; border-radius: 14px; border: 1px dashed var(--line); padding: .6rem; }
+.lk-badge .fb { display: grid; gap: .6rem; justify-items: center; text-align: center; color: var(--muted); font-size: .9rem; }
+
+/* YouTube */
+.yt2 { border: 1px solid var(--line); border-radius: 24px; background: var(--bg-2); overflow: hidden; }
+.yt2-top { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; justify-content: space-between; padding: clamp(1.1rem, 2.6vw, 1.8rem); background: linear-gradient(110deg, rgba(230,33,23,.16), transparent 55%), radial-gradient(ellipse 50% 120% at 100% 0%, rgba(245,165,36,.08), transparent 60%); }
+.yt2-ch { display: flex; gap: 1rem; align-items: center; min-width: 0; }
+.yt2-ch img { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; flex: none; border: 3px solid #e62117; padding: 2px; background: var(--bg-2); }
+.yt2-ch h3 { font-size: clamp(1.15rem, 2.2vw, 1.55rem); }
+.yt2-ch p { margin: .25rem 0 0; color: var(--muted); font-size: .9rem; display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.live { display: inline-flex; align-items: center; gap: .4rem; font: .74rem var(--f-mono); color: #ff8a83; padding: .15rem .55rem; border-radius: 999px; background: rgba(230,33,23,.12); }
+.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #ff3d33; animation: lkpulse 2s infinite; }
+.live:empty { display: none; }
+.yt2-ch .yt-tags { margin-top: .5rem; }
+.yt2-btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+.yt2-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+.yt2-stats div { padding: 1rem clamp(1rem, 2.4vw, 1.8rem); display: grid; gap: .1rem; }
+.yt2-stats div + div { border-inline-start: 1px solid var(--line); }
+.yt2-stats b { font-family: var(--f-display); font-weight: 800; font-size: clamp(1.4rem, 2.8vw, 2.2rem); line-height: 1.1; direction: ltr; text-align: start; }
+.yt2-stats div:first-child b { color: #ff4d42; }
+.yt2-stats span { color: var(--muted); font-size: .84rem; }
+.yt2-body { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 1.4rem; padding: clamp(1rem, 2.4vw, 1.6rem); }
+.yt2-feat { display: grid; gap: .8rem; align-content: start; }
+.yt2-player { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: #000; cursor: pointer; }
+.yt2-player img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease), filter .4s; }
+.yt2-player:hover img { transform: scale(1.03); filter: brightness(.85); }
+.yt2-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt2-play { position: absolute; inset: 0; margin: auto; width: 74px; height: 52px; border-radius: 14px; background: #e62117; display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.45); transition: transform .3s var(--ease); }
+.yt2-player:hover .yt2-play { transform: scale(1.08); }
+.yt2-play::after { content: ""; border-style: solid; border-width: 10px 0 10px 17px; border-color: transparent transparent transparent #fff; margin-left: 4px; }
+.yt2-dur { position: absolute; inset-inline-end: 12px; bottom: 12px; font: 600 .78rem var(--f-mono); padding: .25rem .5rem; border-radius: 7px; background: rgba(0,0,0,.78); color: #fff; }
+.yt2-badge { position: absolute; inset-inline-start: 12px; top: 12px; font: 600 .74rem var(--f-mono); padding: .3rem .6rem; border-radius: 8px; background: rgba(0,0,0,.7); color: #fff; }
+.yt2-feat h3 { font-family: var(--f-sans, system-ui); font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight: 700; line-height: 1.5; }
+.yt2-feat .meta { color: var(--muted); font-size: .88rem; display: flex; gap: .8rem; flex-wrap: wrap; }
+.yt2-side h4, .yt2-shorts-wrap h4 { font-size: .95rem; margin-bottom: .7rem; display: flex; align-items: center; gap: .5rem; }
+.yt2-list { display: grid; gap: .3rem; max-height: 470px; overflow-y: auto; scrollbar-width: thin; padding-inline-end: .2rem; }
+.yt2-item { display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: .75rem; padding: .45rem; border-radius: 12px; border: 0; background: transparent; color: inherit; text-align: start; cursor: pointer; font: inherit; transition: background .2s; }
+.yt2-item:hover { background: rgba(255,255,255,.05); }
+.yt2-item.on { background: rgba(230,33,23,.12); }
+.yt2-item .th { position: relative; aspect-ratio: 16 / 9; border-radius: 9px; overflow: hidden; background: #000; }
+.yt2-item img { width: 100%; height: 100%; object-fit: cover; }
+.yt2-item .th em { position: absolute; inset-inline-end: 5px; bottom: 5px; font: 600 .66rem var(--f-mono); font-style: normal; padding: .1rem .35rem; border-radius: 5px; background: rgba(0,0,0,.75); color: #fff; }
+.yt2-item b { font-size: .88rem; font-weight: 600; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.yt2-item small { color: var(--muted); font-size: .78rem; display: block; margin-top: .25rem; }
+.yt2-shorts-wrap { padding: 0 clamp(1rem, 2.4vw, 1.6rem) clamp(1.1rem, 2.4vw, 1.6rem); }
+.yt2-shorts-wrap[hidden] { display: none; }
+.sh-ic { width: 18px; height: 22px; border-radius: 6px; background: #e62117; display: inline-block; }
+.yt2-shorts { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(150px, 172px); gap: .8rem; overflow-x: auto; padding-bottom: .4rem; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+.yt2-short { scroll-snap-align: start; border: 0; padding: 0; background: transparent; color: inherit; font: inherit; text-align: start; cursor: pointer; display: grid; gap: .5rem; }
+.yt2-short .th { position: relative; aspect-ratio: 9 / 16; border-radius: 14px; overflow: hidden; background: #000; }
+.yt2-short img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.yt2-short:hover img { transform: scale(1.05); }
+.yt2-short .th::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(0,0,0,.75)); }
+.yt2-short .th em { position: absolute; inset-inline-start: 8px; bottom: 8px; z-index: 1; font: 600 .74rem var(--f-mono); font-style: normal; color: #fff; }
+.yt2-short b { font-size: .84rem; font-weight: 600; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.ytm { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 16px; background: rgba(5,6,8,.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); animation: mnin .25s ease both; }
+.ytm[hidden] { display: none; }
+.ytm-box { width: min(980px, 100%); display: grid; gap: .8rem; }
+.ytm-box.short { width: min(380px, 100%); }
+.ytm-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: #000; }
+.ytm-box.short .ytm-frame { aspect-ratio: 9 / 16; max-height: 78vh; }
+.ytm-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.ytm-bar { display: flex; gap: .7rem; align-items: center; }
+.ytm-bar b { flex: 1; min-width: 0; font-size: .95rem; line-height: 1.5; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ytm .gx { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 1.3rem; cursor: pointer; }
+
+/* My tools */
+#toolgrid { margin-top: 0; }
+.tool { position: relative; }
+.tool .go { display: inline-flex; gap: .4rem; align-items: center; margin-top: .6rem; font-weight: 600; font-size: .9rem; color: var(--amber-ink); }
+.tool:hover .go { gap: .7rem; }
+.tool .idx { position: absolute; inset-inline-end: 1.2rem; top: 1.2rem; z-index: 1; font: 600 .72rem var(--f-mono); padding: .25rem .55rem; border-radius: 999px; background: rgba(10,11,13,.75); color: var(--ink); border: 1px solid var(--line); }
+
+@media (max-width: 1080px) {
+  .lk { grid-template-columns: 1fr; }
+  .lk-card { position: static; }
+  .yt2-body { grid-template-columns: 1fr; }
+  .yt2-list { max-height: none; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .yt2-item { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .lk-hi, .lk-certs { grid-template-columns: 1fr; }
+  .yt2-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .yt2-stats div:nth-child(3) { border-inline-start: 0; }
+  .yt2-stats div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .yt2-list { grid-template-columns: 1fr; }
+  .yt2-item { grid-template-columns: 132px minmax(0, 1fr); }
+  .yt2-btns { width: 100%; } .yt2-btns .btn { flex: 1 1 auto; justify-content: center; }
+  .lk-axis { padding-inline-start: calc(48px + 1.9rem); }
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {
   .links { display: none; }
@@ -455,7 +622,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 }
 @media (max-width: 860px) {
   .g-axis span.odd { display: none; }
-  #hero { height: 200vh; }
+  #hero { height: 200vh; height: 200lvh; }
   .hero-copy { top: auto; bottom: 1rem; transform: none; max-width: none; inset-inline-end: var(--gutter); gap: .9rem; }
   .hero-copy .title { font-size: clamp(2.3rem, 11vw, 3rem); }
   .hero-copy .sub { font-size: .95rem; line-height: 1.6; }
@@ -515,6 +682,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       <a href="portfolio/" data-t="n.portfolio">Portfolio</a>
       <a href="presentation/" data-t="n.deck">Slides</a>
       <a href="#services" data-t="n.services">الخدمات</a>
+      <a href="#tools" data-t="n.tools">أدواتي</a>
       <a href="#contact" data-t="n.contact">تواصل</a>
     </nav>
     <div class="act">
@@ -690,67 +858,89 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   </section>
 
   <!-- LINKEDIN -->
-  <section class="section" id="linkedin" style="padding-top:0">
+  <section class="section soc" id="linkedin">
     <div class="wrap">
       <div class="head" data-r>
         <span class="kicker">LinkedIn</span>
         <h2 class="h2" data-t="l.title">بروفايلي المهني</h2>
+        <p class="lead" data-t="l.sub"></p>
       </div>
-      <div class="li-card" data-r>
-        <div class="li-side">
-          <div class="li-cover"></div>
-          <div class="li-me">
-            <img src="assets/portrait.webp" alt="" width="124" height="124">
-            <h3 data-t="name">صديق محمود</h3>
+      <div class="lk" data-r>
+        <aside class="lk-card">
+          <div class="lk-cover" aria-hidden="true"><svg class="lk-grid" viewBox="0 0 400 140" preserveAspectRatio="none"><path d="M0 110 L60 92 L120 98 L180 64 L240 72 L300 38 L360 46 L400 20" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2"/><path d="M0 120 L60 108 L120 104 L180 86 L240 80 L300 60 L360 56 L400 40" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2" stroke-dasharray="6 6"/></svg><span class="lk-in">in</span></div>
+          <img class="lk-av" src="assets/portrait.webp" alt="" width="128" height="128" loading="lazy">
+          <div class="lk-id">
+            <h3><span data-t="name">صديق محمود</span><svg class="lk-ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l2.6 2.2 3.4-.4.9 3.3 3 1.6-1.2 3.2 1.2 3.2-3 1.6-.9 3.3-3.4-.4L12 22.5l-2.6-2.2-3.4.4-.9-3.3-3-1.6 1.2-3.2-1.2-3.2 3-1.6.9-3.3 3.4.4z" fill="#0a66c2"/><path d="M7.5 12.2l3 3 6-6.2" fill="none" stroke="#fff" stroke-width="2"/></svg></h3>
             <p class="hl" data-t="l.headline"></p>
-            <p class="loc" data-t="l.loc">دبي، الإمارات العربية المتحدة</p>
-            <div class="open"><b data-t="l.openT">متاح لمشاريع</b><span data-t="l.open"></span></div>
-            <div class="btns">
-              <a class="btn li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener"><span data-t="l.view">افتح البروفايل</span> ↗</a>
-              <a class="btn" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener"><span data-t="l.connect">تواصل معي</span></a>
-              <a class="btn yt" href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8ZM9.8 15.1V8.9l5.7 3.1-5.7 3.1Z"/></svg><span>YouTube</span></a>
-            </div>
+            <p class="loc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg><span data-t="l.loc"></span></p>
+            <a class="lk-url" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener" dir="ltr">linkedin.com/in/siddekmahmoud</a>
           </div>
-        </div>
-        <div class="li-main">
-          <div class="li-sec"><h4 data-t="l.about">نبذة</h4><p data-t="l.aboutT"></p></div>
-          <div class="li-sec"><h4 data-t="l.exp">الخبرات</h4><div class="li-exp" id="li-exp"></div></div>
-          <div class="li-sec"><h4 data-t="l.lic">الشهادات والاعتمادات</h4><div class="li-exp" id="li-lic"></div></div>
-          <div class="li-sec"><h4 data-t="l.skills">المهارات</h4><div class="li-skills" id="li-skills"></div></div>
+          <div class="lk-open"><i aria-hidden="true"></i><div><b data-t="l.openT"></b><span data-t="l.open"></span></div></div>
+          <div class="lk-nums" id="lk-nums"></div>
+          <div class="lk-btns">
+            <a class="btn li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.4 2H3.6A1.6 1.6 0 0 0 2 3.6v16.8A1.6 1.6 0 0 0 3.6 22h16.8a1.6 1.6 0 0 0 1.6-1.6V3.6A1.6 1.6 0 0 0 20.4 2ZM8 19H5V9.5h3V19ZM6.5 8.2a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6ZM19 19h-3v-4.6c0-1.1 0-2.5-1.5-2.5S12.8 13 12.8 14.3V19h-3V9.5h2.9v1.3a3.2 3.2 0 0 1 2.9-1.6c3 0 3.5 2 3.5 4.6V19Z"/></svg><span data-t="l.view">افتح البروفايل</span></a>
+            <a class="btn" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener"><span data-t="l.follow">تابعني</span> +</a>
+            <a class="btn" href="https://www.linkedin.com/in/siddekmahmoud/recent-activity/all/" target="_blank" rel="noopener"><span data-t="l.posts">آخر المنشورات</span> ↗</a>
+          </div>
+        </aside>
+        <div class="lk-main">
+          <div class="lk-tabs" role="tablist" id="lk-tabs"></div>
+          <div class="lk-panel" id="lk-panel" role="tabpanel"></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CHANNEL -->
-  <section class="section" id="channel" style="padding-top:0">
+  <section class="section soc" id="channel">
     <div class="wrap">
       <div class="head" data-r>
         <span class="kicker">YouTube</span>
         <h2 class="h2" data-t="v.title">قناتي على يوتيوب</h2>
+        <p class="lead" data-t="v.lead"></p>
       </div>
-      <div class="yt-card" data-r>
-        <div class="yt-banner"><div class="yt-brand"><b data-t="v.brand">مهندس الواقع</b><span>REALITY ENGINEER</span></div></div>
-        <div class="yt-head">
-          <img src="assets/avatar.jpg" alt="" width="132" height="132" loading="lazy">
-          <div class="yt-id">
-            <h3 data-t="v.name">مهندس الواقع | Reality Engineer</h3>
-            <p class="yt-meta"><span dir="ltr">@reality-engineer</span> · <span data-t="v.meta">90.1 ألف مشترك · 579 فيديو</span></p>
-            <p class="yt-desc" data-t="v.desc"></p>
-            <div class="yt-tags" id="yt-tags"></div>
+      <div class="yt2" data-r>
+        <div class="yt2-top">
+          <div class="yt2-ch">
+            <img src="assets/avatar.jpg" alt="" width="84" height="84" loading="lazy">
+            <div>
+              <h3 data-t="v.name">مهندس الواقع | Reality Engineer</h3>
+              <p><span dir="ltr">@reality-engineer</span><span class="live" id="yt-live"></span></p>
+              <div class="yt-tags" id="yt-tags"></div>
+            </div>
           </div>
-          <div class="yt-btns">
-            <a class="btn yt" href="https://www.youtube.com/@reality-engineer?sub_confirmation=1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8ZM9.8 15.1V8.9l5.7 3.1-5.7 3.1Z"/></svg><span data-t="v.sub">اشترك</span></a>
+          <div class="yt2-btns">
+            <a class="btn yt" href="https://www.youtube.com/@reality-engineer?sub_confirmation=1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.8 15.1V8.9l5.4 3.1-5.4 3.1Z"/></svg><span data-t="v.sub">اشترك</span></a>
             <a class="btn" href="https://www.youtube.com/@reality-engineer/videos" target="_blank" rel="noopener"><span data-t="v.all">كل الفيديوهات</span> ↗</a>
           </div>
         </div>
-        <div class="yt-stats" id="yt-stats"></div>
-        <div class="yt-tabs"><span class="on" data-t="v.latest">أحدث الفيديوهات</span></div>
-        <div class="videos" id="videos"></div>
+        <div class="yt2-stats" id="yt-stats"></div>
+        <div class="yt2-body">
+          <div class="yt2-feat" id="yt-feat"></div>
+          <div class="yt2-side"><h4 data-t="v.upnext">الأعلى مشاهدة</h4><div class="yt2-list" id="yt-list"></div></div>
+        </div>
       </div>
-      <div class="tools" id="tools"></div>
     </div>
   </section>
+
+  <!-- MY TOOLS -->
+  <section class="section soc" id="tools">
+    <div class="wrap">
+      <div class="head" data-r>
+        <span class="kicker" data-t="t.kicker">My tools</span>
+        <h2 class="h2" data-t="t.title"></h2>
+        <p class="lead" data-t="t.sub"></p>
+      </div>
+      <div class="tools" id="toolgrid"></div>
+    </div>
+  </section>
+
+  <div class="ytm" id="ytm" hidden role="dialog" aria-modal="true" aria-label="Video">
+    <div class="ytm-box">
+      <div class="ytm-frame" id="ytm-frame"></div>
+      <div class="ytm-bar"><b id="ytm-t"></b><a class="btn yt" id="ytm-open" href="#" target="_blank" rel="noopener"><span data-t="v.open">افتح على يوتيوب</span> ↗</a><button type="button" class="gx" id="ytm-x" aria-label="Close">×</button></div>
+    </div>
+  </div>
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
@@ -976,7 +1166,6 @@ const LI_SKILLS = ["Primavera P6", "Project Controls", "Delay Analysis", "EOT Cl
 const VIDEOS = [
   { id: "7N72QijzO04", v: ["42 ألف", "42K"], ar: "لو معاك 3 مليون جنيه.. عقار ولا ذهب ولا دولار؟ حسبتها بالأرقام", en: "Got EGP 3 million? Property, gold or dollars. I ran the numbers" },
   { id: "0g-JY2KbQE4", v: ["9.4 ألف", "9.4K"], ar: "هل العقار أفضل استثمار؟ «الابن البار» ممكن يدفن تحويشة عمرك | 4 حقائق", en: "Is property the best investment? It can bury your life savings | 4 truths" },
-  { id: "0dEjxcAcayY", v: ["1.7 ألف", "1.7K"], ar: "الإيجار القديم: عمارة بـ100 مليون إيجارها 72 جنيه! 3 ضربات و3 حلول", en: "Old rent law: a 100-million building renting for 72 pounds" },
   { id: "RBmrB7epBZI", v: ["810", "810"], ar: "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟", en: "Cash or installments? A 5-million apartment for only 3.2 million?" },
   { id: "Xz-1SdilZsc", v: ["716", "716"], ar: "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام", en: "Why does your salary vanish at the start of the month?" },
   { id: "i295i-WBI0c", v: ["448", "448"], ar: "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك", en: "Beware Dubai service charges: 3 tricks that eat your returns" },
@@ -986,6 +1175,118 @@ const TOOLS = [
   { url: "https://realityengineer4u-ship-it.github.io/bawsala/", img: ["tool-bawsala.webp", "tool-bawsala-en.webp"], q: ["?lang=ar", "?lang=en"], n: ["بوصلة المهندس", "Engineer's Compass"], d: ["اكتشف التخصص الهندسي اللي يناسبك فعلًا، في 22 تخصص و15 دقيقة.", "Find the engineering major that truly fits you: 22 majors, 15 minutes."] },
   { url: "https://realityengineer4u-ship-it.github.io/structura-lab/", img: ["tool-structura.webp", "tool-structura-en.webp"], q: ["?lang=ar", "?lang=en"], n: ["المعمل الإنشائي", "Structura Lab"], d: ["اتعلم الهندسة الإنشائية من الصفر: تحليل وخرسانة ومعدني في 117 حلقة و39 معمل ثلاثي الأبعاد.", "Learn structural engineering from zero: analysis, concrete and steel in 117 episodes and 39 3D labs."] },
 ];
+
+/* ---------- LinkedIn, YouTube and My tools (v2) ---------- */
+Object.assign(T.ar, {
+  "l.sub": "بروفايلي على لينكدإن في مكان واحد: الخبرات على خط زمني، الشهادات، المهارات، وآخر نشاط مباشر.",
+  "l.follow": "تابعني", "l.posts": "آخر المنشورات",
+  "l.tabs": ["نبذة", "الخبرات", "الشهادات", "المهارات", "مباشر"],
+  "l.nums": [["8", "سنين خبرة"], ["5", "شركات"], ["5", "شهادات"]],
+  "l.hi": [["التخصص", "تخطيط وضبط مشاريع، تحليل تأخير وEOT"], ["الأدوات", "Primavera P6 · Power BI · أتمتة وAI"], ["النطاق", "1.9 مليار درهم · أبراج ومجتمعات فلل"]],
+  "l.groups": ["تخطيط وضبط المشاريع", "البيانات والأتمتة", "BIM والتنفيذ"],
+  "l.live": "البادج الرسمي من لينكدإن، بيتحدث لوحده من البروفايل.", "l.liveFb": "لو البادج ما ظهرش، افتح البروفايل مباشرة.", "l.now": "الآن",
+  "v.lead": "بتكلم عن العقارات والذهب والفلوس بعقلية مهندس تخطيط: بالأرقام ومن أرض الواقع. الفيديوهات هنا بتتحدث تلقائيًا من القناة.",
+  "v.tabs": ["الأحدث", "الأكثر مشاهدة"], "v.upnext": "الأعلى مشاهدة من أحدث الفيديوهات", "v.open": "افتح على يوتيوب", "v.new": "جديد",
+  "v.statsL": ["مشترك", "مشاهدة", "فيديو", "على يوتيوب منذ"], "v.live": "مباشر · اتحدث {t}",
+  "t.kicker": "أدواتي", "t.title": "أدوات مجانية بنيتها", "t.sub": "أدوات حقيقية بيستخدمها مهندسين وملاك كل يوم: تسعير، اختيار تخصص، وتعليم إنشائي. كلها مجانية وبتشتغل من المتصفح.", "t.open": "افتح الأداة", "n.tools": "أدواتي",
+});
+Object.assign(T.en, {
+  "l.sub": "My LinkedIn in one place: experience on a timeline, certifications, skills and live activity.",
+  "l.follow": "Follow", "l.posts": "Recent posts",
+  "l.tabs": ["About", "Experience", "Certifications", "Skills", "Live"],
+  "l.nums": [["8", "years"], ["5", "companies"], ["5", "certifications"]],
+  "l.hi": [["Focus", "Planning and project controls, delay analysis and EOT"], ["Tools", "Primavera P6 · Power BI · automation and AI"], ["Scope", "AED 1.9 bn · towers and villa communities"]],
+  "l.groups": ["Planning and project controls", "Data and automation", "BIM and delivery"],
+  "l.live": "LinkedIn's official badge, kept up to date from my profile.", "l.liveFb": "If the badge does not load, open the profile directly.", "l.now": "Now",
+  "v.lead": "Real estate, gold and money through a planning engineer's eyes: in numbers and from the ground. The videos here update from the channel on their own.",
+  "v.tabs": ["Latest", "Most viewed"], "v.upnext": "Most viewed of the latest videos", "v.open": "Open on YouTube", "v.new": "New",
+  "v.statsL": ["subscribers", "views", "videos", "on YouTube since"], "v.live": "Live · updated {t}",
+  "t.kicker": "My tools", "t.title": "Free tools I built", "t.sub": "Real tools engineers and owners use every day: pricing, choosing a major, and learning structures. All free and they run in the browser.", "t.open": "Open the tool", "n.tools": "My tools",
+});
+const LI_SPAN = [[2025.42, 0], [2024, 2025.4], [2022, 2024], [2019, 2022], [2018, 2019]];
+const LI_GROUPS = [["Primavera P6", "Project Controls", "Delay Analysis", "EOT Claims", "FIDIC", "EVM", "Team Leadership"], ["Power BI", "Excel VBA", "Python", "n8n Automation", "AI Workflows", "Machine Learning", "TypeScript / React"], ["Revit & BIM", "4D Simulation"]];
+let lkTab = 1, ytSel = 0, YT = null;
+const nowYear = () => { const t = new Date(); return t.getFullYear() + t.getMonth() / 12; };
+function renderLinkedIn(d) {
+  $("#lk-nums").innerHTML = d["l.nums"].map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("");
+  const counts = ["", LI_EXP.length, LI_LIC.length, LI_SKILLS.length, ""];
+  $("#lk-tabs").innerHTML = d["l.tabs"].map((t, i) => `<button type="button" role="tab" aria-selected="${i === lkTab}" data-i="${i}">${esc(t)}${counts[i] ? `<span class="n">${counts[i]}</span>` : ""}</button>`).join("");
+  $("#lk-tabs").querySelectorAll("button").forEach((b) => b.onclick = () => { lkTab = +b.dataset.i; renderLinkedIn(T[lang]); });
+  const P = $("#lk-panel"); let h = "";
+  if (lkTab === 0) h = `<div class="lk-about"><p>${esc(d["l.aboutT"])}</p><div class="lk-hi">${d["l.hi"].map(([k, v]) => `<div><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join("")}</div></div>`;
+  if (lkTab === 1) {
+    const a = 2018, b = 2027, X = (y) => ((y - a) / (b - a)) * 100;
+    h = `<div class="lk-tl">${LI_EXP.map(([ab, t, s], i) => { const [s0, e0] = LI_SPAN[i], e1 = e0 || nowYear(); return `<div class="lk-role${e0 ? "" : " now"}"><span class="lk-logo">${ab}</span><div><b>${esc(t[L()])}</b><span>${esc(s[L()])}${e0 ? "" : ` · <em style="color:var(--green);font-style:normal">${esc(d["l.now"])}</em>`}</span><div class="lk-span"><i style="left:${X(s0)}%;width:${X(e1) - X(s0)}%"></i></div></div></div>`; }).join("")}</div><div class="lk-axis">${[2018, 2020, 2022, 2024, 2026].map((y) => `<span>${y}</span>`).join("")}</div>`;
+  }
+  if (lkTab === 2) h = `<div class="lk-certs">${LI_LIC.map(([ab, t, s]) => `<div class="lk-cert"><span class="lk-logo">${ab}</span><div><b>${esc(t[L()])}</b><span>${esc(s[L()])}</span></div></div>`).join("")}</div>`;
+  if (lkTab === 3) h = `<div class="lk-sk">${LI_GROUPS.map((g, i) => `<div><h5>${esc(d["l.groups"][i])}</h5><div class="chips">${g.map((s) => `<span>${esc(s)}</span>`).join("")}</div></div>`).join("")}</div>`;
+  if (lkTab === 4) h = `<div class="lk-live"><p>${esc(d["l.live"])}</p><div class="lk-badge" id="lk-badge"><div class="badge-base LI-profile-badge" data-locale="${lang === "ar" ? "ar_AE" : "en_US"}" data-size="large" data-theme="dark" data-type="VERTICAL" data-vanity="siddekmahmoud" data-version="v1"></div></div><a class="btn li" style="background:#0a66c2;color:#fff;border-color:#0a66c2" href="https://www.linkedin.com/in/siddekmahmoud/recent-activity/all/" target="_blank" rel="noopener">${esc(d["l.posts"])} ↗</a></div>`;
+  P.innerHTML = h; P.style.animation = "none"; void P.offsetWidth; P.style.animation = "";
+  if (lkTab === 4) loadLiBadge(d);
+}
+function loadLiBadge(d) {
+  const fb = () => { const box = $("#lk-badge"); if (box && !box.querySelector("iframe")) box.innerHTML = `<div class="fb"><span class="lk-in" style="position:static">in</span><span>${esc(d["l.liveFb"])}</span><a class="btn li" style="background:#0a66c2;color:#fff;border-color:#0a66c2" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener">${esc(d["l.view"])} ↗</a></div>`; };
+  if (window.LIRenderAll) { try { window.LIRenderAll(); } catch (e) {} }
+  else if (!document.getElementById("li-badge-js")) { const s = document.createElement("script"); s.id = "li-badge-js"; s.async = true; s.src = "https://platform.linkedin.com/badges/js/profile.js"; s.onerror = fb; document.body.appendChild(s); }
+  setTimeout(fb, 7000);
+}
+/* YouTube: live data from data/youtube.json (refreshed by a scheduled job), then the built-in list */
+const ytThumb = (id, short) => `https://i.ytimg.com/vi/${id}/${short ? "oar2" : "hqdefault"}.jpg`;
+function ytNum(n) {
+  n = typeof n === "string" ? parseFloat(n.replace(/,/g, "")) * (/K/i.test(n) ? 1e3 : /M/i.test(n) ? 1e6 : 1) : n;
+  const ar = lang === "ar";
+  if (n >= 1e6) return (n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace(/\.0$/, "") + (ar ? " مليون" : "M");
+  if (n >= 1e3) return (n / 1e3).toFixed(n >= 1e5 ? 0 : 1).replace(/\.0$/, "") + (ar ? " ألف" : "K");
+  return String(Math.round(n));
+}
+function ytAgo(iso) {
+  const days = Math.max(0, Math.floor((Date.now() - Date.parse(iso)) / 864e5)), ar = lang === "ar";
+  const u = days < 1 ? null : days < 7 ? [days, ar ? ["يوم", "أيام"] : ["day", "days"]] : days < 30 ? [Math.floor(days / 7), ar ? ["أسبوع", "أسابيع"] : ["week", "weeks"]] : days < 365 ? [Math.floor(days / 30), ar ? ["شهر", "شهور"] : ["month", "months"]] : [Math.floor(days / 365), ar ? ["سنة", "سنين"] : ["year", "years"]];
+  if (!u) return ar ? "النهارده" : "today";
+  if (u[0] === 1 && days < 2) return ar ? "امبارح" : "yesterday";
+  return ar ? `من ${u[0]} ${u[0] === 1 ? u[1][0] : u[1][1]}` : `${u[0]} ${u[0] === 1 ? u[1][0] : u[1][1]} ago`;
+}
+const YT_MIN = 1000;   // only Siddek's own videos (data/youtube-mine.json), and none under a thousand views
+function ytItems() {
+  // the latest regular videos (no Shorts), most viewed first
+  const live = YT && YT.videos && YT.videos.length ? YT.videos.filter((v) => v.mine).map((v) => ({ id: v.id, title: v.title[lang] || v.title.en, views: v.views, ago: v.ago && v.ago[lang], published: v.published, duration: v.duration })) : null;
+  const base = VIDEOS.map((v) => ({ id: v.id, title: v[lang], views: parseFloat(v.v[1]) * (/K/.test(v.v[1]) ? 1e3 : 1), local: true }));
+  return (live || base).filter((v) => v.views >= YT_MIN).sort((a, b) => b.views - a.views);
+}
+function ytEmbed(id) { return `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1" title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`; }
+function renderYouTube(d) {
+  const ch = (YT && YT.channel) || {}, list = ytItems();
+  $("#yt-tags").innerHTML = d["v.tags"].map((t) => `<span>${esc(t)}</span>`).join("");
+  const st = [ytNum(ch.subscribers || "90.1K"), ytNum(ch.views || "4500000"), ch.videos || "579", (ch.joined || "2018").slice(-4)];
+  $("#yt-stats").innerHTML = st.map((v, i) => `<div><b>${esc(v)}</b><span>${esc(d["v.statsL"][i])}</span></div>`).join("");
+  $("#yt-live").textContent = YT ? d["v.live"].replace("{t}", ytAgo(YT.updated)) : "";
+  if (!list.length) return;
+  if (ytSel >= list.length) ytSel = 0;
+  const f = list[ytSel], when = (v) => v.ago || (v.published ? ytAgo(v.published) : ""), img = (v) => (v.local ? `assets/v-${v.id}.webp` : ytThumb(v.id));
+  $("#yt-feat").innerHTML = `<div class="yt2-player" id="yt-player" role="button" tabindex="0" aria-label="${esc(f.title)}"><img src="${img(f)}" alt="" loading="lazy" decoding="async"><span class="yt2-badge">#${ytSel + 1} · ${esc(d.views(ytNum(f.views)))}</span>${f.duration ? `<span class="yt2-dur">${f.duration}</span>` : ""}<span class="yt2-play"></span></div><h3>${esc(f.title)}</h3><div class="meta"><span>${esc(d.views(ytNum(f.views)))}</span>${when(f) ? `<span>${esc(when(f))}</span>` : ""}<a href="https://www.youtube.com/watch?v=${f.id}" target="_blank" rel="noopener" style="color:#ff6a61">${esc(d["v.open"])} ↗</a></div>`;
+  const pl = $("#yt-player"), play = () => { pl.innerHTML = ytEmbed(f.id); pl.style.cursor = "default"; pl.onclick = null; };
+  pl.onclick = play; pl.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(); } };
+  $("#yt-list").innerHTML = list.map((v, i) => `<button type="button" class="yt2-item${i === ytSel ? " on" : ""}" data-i="${i}"><span class="th"><img src="${img(v)}" alt="" loading="lazy" decoding="async">${v.duration ? `<em>${v.duration}</em>` : ""}</span><span><b>${esc(v.title)}</b><small>${esc(d.views(ytNum(v.views)))}${when(v) ? ` · ${esc(when(v))}` : ""}</small></span></button>`).join("");
+  $("#yt-list").querySelectorAll(".yt2-item").forEach((b) => b.onclick = () => { ytSel = +b.dataset.i; renderYouTube(T[lang]); const r = $("#yt-feat").getBoundingClientRect(); if (r.top < 70) landOn($("#yt-feat"), true); });
+}
+function openYtModal(v, short) {
+  const m = $("#ytm"); m.hidden = false; m.querySelector(".ytm-box").classList.toggle("short", !!short);
+  $("#ytm-frame").innerHTML = ytEmbed(v.id); $("#ytm-t").textContent = v.title;
+  $("#ytm-open").href = short ? `https://www.youtube.com/shorts/${v.id}` : `https://www.youtube.com/watch?v=${v.id}`;
+  $("#ytm-x").focus();
+}
+function closeYtModal() { const m = $("#ytm"); if (m.hidden) return; m.hidden = true; $("#ytm-frame").innerHTML = ""; }
+let socInit = false;
+function initSocial() {
+  if (socInit) return; socInit = true;
+  $("#ytm-x").addEventListener("click", closeYtModal);
+  $("#ytm").addEventListener("click", (e) => { if (e.target.id === "ytm") closeYtModal(); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape") closeYtModal(); });
+  fetch("data/youtube.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && j.items && j.items.length) { YT = j; renderYouTube(T[lang]); } }).catch(() => {});
+}
+function renderTools(d) {
+  $("#toolgrid").innerHTML = TOOLS.map((t, i) => `<a class="tool spot" data-r href="${t.url}${t.q[L()]}" target="_blank" rel="noopener"><span class="idx">0${i + 1}</span><img src="assets/${t.img[L()]}" alt="" loading="lazy" width="960" height="600"><div><small>${esc(d["t.free"])}</small><h3>${esc(t.n[L()])}</h3><p>${esc(t.d[L()])}</p><span class="go">${esc(d["t.open"])} <span aria-hidden="true">${lang === "ar" ? "←" : "→"}</span></span></div></a>`).join("");
+}
 
 /* ---------- lab: a small, readable neural network over schedule signals ---------- */
 const FX = [
@@ -1057,8 +1358,13 @@ function updateLab(d = T[lang]) {
 }
 
 /* embedded report: size the frame to its content and keep the language in step */
-addEventListener("message", (e) => { const f = document.getElementById("pbiframe"); if (f && e.source === f.contentWindow && e.data && e.data.type === "pbi-height") f.style.height = Math.ceil(e.data.h) + "px"; });
-(function () { const f = document.getElementById("pbiframe"); if (!f) return; const set = () => { if (f.style.height) return; const n = document.getElementById("nav"), byW = f.clientWidth * 990 / 1400 + 150, byH = innerHeight - (n ? n.offsetHeight : 0) - 24; f.style.height = Math.round(f.clientWidth >= 680 ? Math.min(byW, Math.max(380, byH)) : byW) + "px"; }; set(); addEventListener("resize", () => { f.style.height = ""; set(); }); const vh = () => { try { const n = document.getElementById("nav"); f.contentWindow.postMessage({ type: "pbi-vh", h: innerHeight - (n ? n.offsetHeight : 0) - 24 }, "*"); } catch (err) {} }; addEventListener("resize", vh); f.addEventListener("load", () => { try { f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {} vh(); }); })();
+addEventListener("message", (e) => {
+  const f = document.getElementById("pbiframe"); if (!f || e.source !== f.contentWindow || !e.data) return;
+  if (e.data.type === "pbi-height") { const h = Math.ceil(e.data.h); if (Math.abs(f.offsetHeight - h) > 1) f.style.height = h + "px"; }
+  // a page switch inside the report: if the reader is inside it, bring its top back into view
+  if (e.data.type === "pbi-page") { const n = document.getElementById("nav"), top = f.getBoundingClientRect().top, nb = n ? n.offsetHeight : 0; if (top < nb - 4) { const y = top + scrollY - nb - 8; if (window.__lenis) window.__lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo({ top: y, behavior: "instant" }); } }
+});
+(function () { const f = document.getElementById("pbiframe"); if (!f) return; const set = () => { if (f.style.height) return; const n = document.getElementById("nav"), byW = f.clientWidth * 990 / 1400 + 150, byH = innerHeight - (n ? n.offsetHeight : 0) - 24; f.style.height = Math.round(f.clientWidth >= 680 ? Math.min(byW, Math.max(380, byH)) : byW) + "px"; }; set(); let lastW = innerWidth; addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; f.style.height = ""; set(); }); const vh = () => { try { const n = document.getElementById("nav"); f.contentWindow.postMessage({ type: "pbi-vh", h: innerHeight - (n ? n.offsetHeight : 0) - 24 }, "*"); } catch (err) {} }; addEventListener("resize", vh); f.addEventListener("load", () => { try { f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {} vh(); }); })();
 
 /* =====================================================================
    PAGE
@@ -1150,13 +1456,7 @@ function render() {
   renderLab(d);
   try { const f = document.getElementById("pbiframe"); if (f && f.contentWindow) f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {}
   $("#plat").innerHTML = PLATFORMS.map((p) => `<div class="pl spot" data-r><small>${esc(p.k[L()])}</small><h3>${p.n}</h3><p>${esc(p.d[L()])}</p></div>`).join("");
-  const li = (arr) => arr.map(([ab, t, s]) => `<div class="it"><span class="logo">${ab}</span><div><b>${esc(t[L()])}</b><span>${esc(s[L()])}</span></div></div>`).join("");
-  $("#li-exp").innerHTML = li(LI_EXP); $("#li-lic").innerHTML = li(LI_LIC);
-  $("#li-skills").innerHTML = LI_SKILLS.map((s) => `<span>${esc(s)}</span>`).join("");
-  $("#yt-tags").innerHTML = d["v.tags"].map((t) => `<span>${esc(t)}</span>`).join("");
-  $("#yt-stats").innerHTML = d["v.stats"].map(([n, l]) => `<div><b>${n}</b><span>${esc(l)}</span></div>`).join("");
-  $("#videos").innerHTML = VIDEOS.map((v) => `<a class="vc" data-r href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener"><div class="th"><img src="assets/v-${v.id}.webp" alt="" loading="lazy" decoding="async" width="480" height="270"><span class="pl-ic"></span></div><h3>${esc(v[lang])}</h3><small>${esc(d.views(v.v[L()]))}</small></a>`).join("");
-  $("#tools").innerHTML = TOOLS.map((t) => `<a class="tool" data-r href="${t.url}${t.q[L()]}" target="_blank" rel="noopener"><img src="assets/${t.img[L()]}" alt="" loading="lazy" width="960" height="600"><div><small>${esc(d["t.free"])}</small><h3>${esc(t.n[L()])}</h3><p>${esc(t.d[L()])}</p></div></a>`).join("");
+  initSocial(); renderLinkedIn(d); renderYouTube(d); renderTools(d);
   observeReveals();
   layoutProjects();
 }
