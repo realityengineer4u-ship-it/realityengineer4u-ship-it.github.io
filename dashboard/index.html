@@ -2168,6 +2168,23 @@ const NEIGH = PLACES.map((P, n) => {
   same.forEach((o) => { const Q = PLACES[o.m], s = (Q.x - P.x) * rx + (Q.y - P.y) * ry; if (s > 0 && R < 0) R = o.m; else if (s <= 0 && L < 0) L = o.m; });
   return { L, R };
 });
+// a site worker in PPE (hi-vis vest, helmet); x,y = feet
+function worker(x, y, s, vest, pose) {
+  const v = vest || "#f07d1a", hel = pose === 2 ? "#f4f4f0" : "#f2c230";
+  let g = `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="0" rx="4" ry="1" fill="rgba(0,0,0,.25)"/>`;
+  g += `<path d="M-1.6 0 L-1.2 -6 M1.6 0 L1.2 -6" stroke="#2d3a4a" stroke-width="1.8" stroke-linecap="round"/>`;
+  g += `<rect x="-2.6" y="-12.5" width="5.2" height="7" rx="1.6" fill="${v}"/><path d="M-2.6 -9 H2.6" stroke="#e9eef0" stroke-width=".8"/>`;
+  g += pose === 1 ? `<path d="M2.2 -11 L5.5 -14.5" stroke="${v}" stroke-width="1.6" stroke-linecap="round"/>` : `<path d="M-2.4 -11 L-3.2 -6.5 M2.4 -11 L3.2 -6.5" stroke="${v}" stroke-width="1.4" stroke-linecap="round"/>`;
+  g += `<circle cx="0" cy="-14.4" r="1.9" fill="#c79a74"/><path d="M-2.3 -15 a2.3 2.3 0 0 1 4.6 0 z" fill="${hel}"/><rect x="-2.6" y="-15.1" width="5.2" height=".7" fill="${hel}"/></g>`;
+  return g;
+}
+function palmTree(x, y, s) {
+  let g = `<ellipse cx="${x + 4 * s}" cy="${y}" rx="${9 * s}" ry="${1.6 * s}" fill="rgba(0,0,0,.18)"/><path d="M${x} ${y} q${-2 * s} ${-16 * s} ${3 * s} ${-34 * s}" stroke="#7a5a3a" stroke-width="${2.4 * s}" fill="none"/>`;
+  for (let k = 0; k < 4; k++) g += `<path d="M${x - 1.1 * s} ${y - (8 + k * 7) * s} h${2.6 * s}" stroke="#5e4329" stroke-width=".5"/>`;
+  const tx = x + 3 * s, ty = y - 34 * s;
+  for (let i = 0; i < 8; i++) { const a = -Math.PI / 2 + (i - 3.5) * 0.48; g += `<path d="M${tx} ${ty} q${Math.cos(a) * 9 * s} ${-6 * s} ${Math.cos(a) * 17 * s} ${Math.sin(a) * 7 * s + 7 * s}" stroke="${i % 2 ? "#4f9a5a" : "#3a7744"}" stroke-width="${2.1 * s}" fill="none" stroke-linecap="round"/>`; }
+  return g + `<circle cx="${tx}" cy="${ty + 1}" r="${1.4 * s}" fill="#8a6a2a"/>`;
+}
 function elev(type, k, p, hero, uid) {
   // villa elevation, origin at ground centre, y up = negative; units ~ px at scale 1
   const W = [132, 150, 120][type], H = 31, L = -W / 2;
@@ -2176,120 +2193,211 @@ function elev(type, k, p, hero, uid) {
     : [[L, W * 0.76, 2], [L + W * 0.76, W * 0.24, 2, "set"]];
   let g = "";
   if (k === 0) {
-    g += `<rect x="${L - 8}" y="-2" width="${W + 16}" height="4" fill="#c4ae86"/>`;
-    for (let i = 0; i < 5; i++) g += `<rect x="${L + i * W / 4 - 1}" y="-10" width="2" height="10" fill="#d0602b"/>`;
+    g += `<rect x="${L - 8}" y="-2" width="${W + 16}" height="4" fill="#c9b38b"/>`;
+    for (let i = 0; i < 5; i++) g += `<rect x="${L + i * W / 4 - 1}" y="-10" width="2" height="10" fill="#e0652b"/><rect x="${L + i * W / 4 - 1}" y="-10" width="2" height="2" fill="#fff"/>`;
+    g += `<path d="M${L} -6 H${L + W}" stroke="#e0652b" stroke-width=".6" stroke-dasharray="3 2"/>`;
     return g;
   }
   if (k === 1) {
-    const dp = 6 + 10 * p, wd = (W + 10) * (0.35 + 0.65 * p);
-    g += `<path d="M${L - 5} 0 L${L - 5 + 10} ${dp} H${L - 5 + wd - 10} L${L - 5 + wd} 0 Z" fill="#6e5a40"/><path d="M${L - 5 + 6} 1 L${L - 5 + 12} ${dp - 2} H${L - 5 + wd - 12}" stroke="#5a4934" stroke-width="2" fill="none"/>`;
-    g += `<path d="M${L + wd + 4} 0 Q${L + wd + 22} ${-18 - 10 * p} ${L + wd + 44} 0 Z" fill="#a8916b"/>`;
-    if (hero) g += `<g transform="translate(${L + wd * 0.75} -6)"><rect x="-6" y="-14" width="46" height="18" rx="3" fill="#f2b324"/><rect x="4" y="-28" width="20" height="15" rx="2" fill="#f2b324"/><rect x="7" y="-25" width="12" height="8" fill="#2c5675"/><path d="M-4 -10 L-30 -30 L-44 -6" stroke="#e0a21a" stroke-width="5" fill="none" stroke-linejoin="round"/><path d="M-44 -6 l-6 8 h12 z" fill="#c98a1b"/><rect x="-10" y="2" width="56" height="9" rx="4.5" fill="#2f2f2f"/></g>`;
+    const dp = 6 + 10 * p, wd = (W + 10) * (0.35 + 0.65 * p), x0 = L - 5;
+    g += `<path d="M${x0} 0 L${x0 + 10} ${dp} H${x0 + wd - 10} L${x0 + wd} 0 Z" fill="url(#${uid}pit)"/><path d="M${x0 + 10} ${dp} H${x0 + wd - 10}" stroke="#4b3c2a" stroke-width="1.4"/>`;
+    for (let i = 0; i < 6; i++) g += `<path d="M${x0 + 4 + i * 2} ${i * 2.5} l2 2" stroke="#8a7350" stroke-width=".6"/>`;
+    g += `<path d="M${x0 + wd + 4} 0 Q${x0 + wd + 22} ${-20 - 10 * p} ${x0 + wd + 48} 0 Z" fill="#b29a72"/><path d="M${x0 + wd + 12} -6 Q${x0 + wd + 22} ${-16 - 8 * p} ${x0 + wd + 34} -6" stroke="#c9b28b" stroke-width="1" fill="none"/>`;
+    if (hero) {
+      // excavator: tracks, house, cab, boom, stick and bucket digging
+      const ex = x0 + wd * 0.72;
+      g += `<g transform="translate(${ex} -4)"><ellipse cx="18" cy="9" rx="30" ry="3" fill="rgba(0,0,0,.25)"/><rect x="-6" y="0" width="48" height="9" rx="4.5" fill="#2a2a2a"/>${[0, 1, 2, 3, 4].map((i) => `<circle cx="${-1 + i * 9.5}" cy="4.5" r="2.6" fill="#555"/>`).join("")}
+        <rect x="0" y="-12" width="40" height="12" rx="2" fill="#f2b324"/><rect x="0" y="-4" width="40" height="2" fill="#2a2a2a"/><rect x="24" y="-26" width="16" height="15" rx="2" fill="#f2b324"/><rect x="26.5" y="-24" width="11" height="9" rx="1" fill="url(#${uid}gl)"/><rect x="2" y="-17" width="10" height="6" fill="#e0a21a"/><rect x="5" y="-21" width="2" height="5" fill="#333"/>
+        <path d="M26 -10 L4 -36 L-26 -18" stroke="#e0a21a" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/><path d="M14 -18 L5 -32" stroke="#888" stroke-width="1.6"/><path d="M-26 -18 l-8 10 l9 4 z" fill="#c98a1b"/><path d="M-34 -8 l2 3 m2 -2 l2 3" stroke="#555" stroke-width=".8"/></g>`;
+      // tipper truck waiting for spoil
+      const tx = x0 + wd + 52;
+      g += `<g transform="translate(${tx} -2)"><rect x="0" y="-14" width="30" height="12" fill="#c43c2c"/><path d="M0 -14 l4 -4 h22 l4 4" fill="#a33022"/><rect x="31" y="-15" width="13" height="13" rx="2" fill="#e8e8e8"/><rect x="34" y="-13" width="8" height="6" fill="url(#${uid}gl)"/><circle cx="7" cy="0" r="3.4" fill="#222"/><circle cx="23" cy="0" r="3.4" fill="#222"/><circle cx="38" cy="0" r="3.4" fill="#222"/></g>`;
+      g += worker(x0 + 6, 0, 1, "#f07d1a", 1) + worker(x0 + wd + 30, -3, 0.95, "#c8e630", 0);
+    }
     return g;
   }
   if (k === 2) {
-    g += `<rect x="${L - 6}" y="-3" width="${W + 12}" height="6" fill="#a7a49c"/>`;
+    g += `<rect x="${L - 6}" y="-3" width="${W + 12}" height="6" fill="#a7a49c"/><rect x="${L - 6}" y="-3" width="${W + 12}" height="1.2" fill="#c4c0b6"/>`;
     const nF = Math.max(1, Math.ceil(6 * p));
     for (let i = 0; i < 6; i++) {
       const x = L + i * (W / 5) - 6;
-      if (i < nF) g += `<rect x="${x}" y="-12" width="12" height="10" fill="#b9b5ab" stroke="#8f8b82" stroke-width=".6"/><path d="M${x + 3} -12 v-16 M${x + 9} -12 v-16" stroke="#c4672b" stroke-width="1.4"/>`;
-      else g += `<rect x="${x}" y="-6" width="12" height="4" fill="none" stroke="#c4672b" stroke-dasharray="2 2"/>`;
+      if (i < nF) { g += `<rect x="${x}" y="-12" width="12" height="10" fill="#bdb9af"/><rect x="${x}" y="-12" width="12" height="2" fill="#d6d2c8"/><rect x="${x + 10}" y="-12" width="2" height="10" fill="#9f9b92"/>`; for (let r = 0; r < 4; r++) g += `<path d="M${x + 2 + r * 2.6} -12 v-16" stroke="#b5562a" stroke-width="1"/>`; g += `<path d="M${x + 1} -20 h11 M${x + 1} -25 h11" stroke="#b5562a" stroke-width=".6"/>`; }
+      else g += `<rect x="${x}" y="-12" width="12" height="10" fill="none" stroke="#a87444" stroke-width=".9"/><rect x="${x - 1}" y="-13" width="14" height="2" fill="#a87444"/>`;
     }
     if (p > 0.7) g += `<rect x="${L - 4}" y="-8" width="${W + 8}" height="4" fill="#9d9a92"/>`;
+    if (hero) {
+      // ready-mix truck pouring and rebar bundles
+      const mx = L + W + 12;
+      g += `<g transform="translate(${mx} -2)"><ellipse cx="22" cy="2" rx="28" ry="2" fill="rgba(0,0,0,.22)"/><rect x="0" y="-8" width="44" height="6" fill="#3b4652"/><g transform="rotate(-14 16 -16)"><ellipse cx="16" cy="-16" rx="16" ry="9" fill="#e8e8e8"/><path d="M4 -22 q12 8 24 -2 M3 -14 q12 8 26 -4" stroke="#c43c2c" stroke-width="2.4" fill="none"/></g><path d="M0 -14 L-14 -8" stroke="#888" stroke-width="2.2"/><rect x="34" y="-20" width="12" height="13" rx="2" fill="#f4f4f0"/><rect x="37" y="-18" width="7" height="6" fill="url(#${uid}gl)"/>${[6, 20, 30, 40].map((c) => `<circle cx="${c}" cy="0" r="3.2" fill="#222"/>`).join("")}</g>`;
+      for (let i = 0; i < 5; i++) g += `<path d="M${L - 34} ${-2 - i * 1.6} h26" stroke="#9c4a22" stroke-width="1.3"/>`;
+      g += worker(L + W * 0.3, -3, 1, "#f07d1a", 1) + worker(L + W * 0.62, -3, 1, "#c8e630", 0) + worker(mx - 8, 0, 0.95, "#f07d1a", 2);
+    }
     return g;
   }
   // k >= 3 : the building itself
   const floorsBuilt = k === 3 ? (p < 0.45 ? 1 : 2) : 2;
-  const glass = k === 7 || (k === 6 && p > 0.5) ? `url(#${uid}gl)` : "#2b2a28";
+  const glazed = k === 7 || (k === 6 && p > 0.5);
+  const wallRaw = (tag) => (tag === "set" ? "#a59f92" : "#b9b2a5"), wallFin = (tag) => (tag === "set" ? "#ddd3c1" : "#f1e9d9");
+  // ground contact shadow
+  g += `<ellipse cx="${W * 0.06}" cy="1" rx="${W * 0.62}" ry="3.2" fill="rgba(0,0,0,.22)"/>`;
   blocks.forEach(([x0, w, nf, tag], bi) => {
-    const nfb = Math.min(nf, floorsBuilt), set = tag === "set" ? -6 : 0;
+    const nfb = Math.min(nf, floorsBuilt);
     for (let f = 0; f < nfb; f++) {
-      const y0 = -(f + 1) * H + set * 0;
-      const topSlab = k === 3 && f === floorsBuilt - 1 && (p % 0.5) < 0.38 && p < 0.95;   // slab still being cast
+      const y0 = -(f + 1) * H;
+      const topSlab = k === 3 && f === floorsBuilt - 1 && (p % 0.5) < 0.38 && p < 0.95;
       // walls
       if (k === 4) {
         const fill = Math.max(0, Math.min(1, p * nfb - f));
-        if (fill > 0) { const hh = H * fill; g += `<rect x="${x0}" y="${y0 + H - hh}" width="${w}" height="${hh}" fill="#b9b2a5"/>`; for (let c = 0; c < hh; c += 5) g += `<path d="M${x0} ${y0 + H - c} H${x0 + w}" stroke="#9e978a" stroke-width=".6"/>`; }
+        if (fill > 0) { const hh = H * fill; g += `<rect x="${x0}" y="${y0 + H - hh}" width="${w}" height="${hh}" fill="${wallRaw(tag)}"/>`; for (let c = 0; c < hh; c += 4) { g += `<path d="M${x0} ${y0 + H - c} H${x0 + w}" stroke="#9e978a" stroke-width=".5"/>`; for (let b = (c / 4) % 2 ? 4 : 0; b < w; b += 8) g += `<path d="M${x0 + b} ${y0 + H - c} v-4" stroke="#a49d90" stroke-width=".4"/>`; } }
       } else if (k >= 5) {
-        g += `<rect x="${x0}" y="${y0}" width="${w}" height="${H}" fill="${tag === "set" ? "#a59f92" : "#b9b2a5"}"/>`;
-        if (k === 6) g += `<rect x="${x0}" y="${y0}" width="${w * p}" height="${H}" fill="${tag === "set" ? "#d8cfbe" : "#efe6d6"}"/>`;
-        if (k === 7) g += `<rect x="${x0}" y="${y0}" width="${w}" height="${H}" fill="${tag === "set" ? "#d8cfbe" : "#efe6d6"}"/><rect x="${x0}" y="${y0}" width="${w}" height="${H}" fill="url(#${uid}sh)"/>`;
+        g += `<rect x="${x0}" y="${y0}" width="${w}" height="${H}" fill="${wallRaw(tag)}"/>`;
+        if (k === 5) for (let c = 0; c < H; c += 4) g += `<path d="M${x0} ${y0 + c} H${x0 + w}" stroke="#a39c8f" stroke-width=".4"/>`;
+        if (k === 6) g += `<rect x="${x0}" y="${y0}" width="${w * p}" height="${H}" fill="${wallFin(tag)}"/><path d="M${x0 + w * p} ${y0} v${H}" stroke="rgba(0,0,0,.12)" stroke-width="1"/>`;
+        if (k === 7) g += `<rect x="${x0}" y="${y0}" width="${w}" height="${H}" fill="${wallFin(tag)}"/>`;
+        g += `<rect x="${x0}" y="${y0}" width="${w}" height="${H}" fill="url(#${uid}sh)"/>`;
+        if (k === 7 && f === 0 && bi === 0) g += `<rect x="${x0}" y="${y0 + H - 6}" width="${w}" height="6" fill="#c8ae8a"/><path d="M${x0} ${y0 + H - 3} H${x0 + w}" stroke="#b0966f" stroke-width=".5"/>`;
       }
       // openings
       if (k >= 4) {
         const nw = Math.max(1, Math.round(w / 38));
         for (let i = 0; i < nw; i++) {
           const cx = x0 + (w / nw) * (i + 0.5);
-          if (tag === "gar" && f === 0) { g += `<rect x="${cx - w * 0.36}" y="${y0 + 9}" width="${w * 0.72}" height="${H - 9}" fill="${k >= 6 ? "#8a8f95" : "#2b2a28"}"/>`; if (k >= 6) for (let s = 0; s < 5; s++) g += `<path d="M${cx - w * 0.36} ${y0 + 12 + s * 4} h${w * 0.72}" stroke="#6e737a" stroke-width=".8"/>`; continue; }
+          if (tag === "gar" && f === 0) { g += `<rect x="${cx - w * 0.36}" y="${y0 + 9}" width="${w * 0.72}" height="${H - 9}" fill="${k >= 6 ? "#8a8f95" : "#2b2a28"}"/>`; if (k >= 6) for (let s = 0; s < 6; s++) g += `<path d="M${cx - w * 0.36} ${y0 + 12 + s * 3.4} h${w * 0.72}" stroke="#6e737a" stroke-width=".8"/>`; if (k === 7) g += `<rect x="${cx - w * 0.4}" y="${y0 + 7}" width="${w * 0.8}" height="2.4" fill="#e9e4da"/>`; continue; }
           const door = f === 0 && bi === (type === 1 ? 1 : 0) && i === Math.floor(nw / 2);
-          if (door) { g += `<rect x="${cx - 8}" y="${y0 + 6}" width="16" height="${H - 6}" fill="${k === 7 ? "#6b4a2e" : "#2b2a28"}"/>`; if (k === 7) g += `<circle cx="${cx + 4}" cy="${y0 + 20}" r="1" fill="#e2c37a"/><rect x="${cx - 14}" y="${y0 + 3}" width="28" height="3" fill="#cfc6b6"/>`; continue; }
-          g += `<rect x="${cx - 8}" y="${y0 + 8}" width="16" height="15" fill="${glass}"/>`;
-          if (k >= 6 && glass !== "#2b2a28") g += `<rect x="${cx - 8}" y="${y0 + 8}" width="16" height="15" fill="none" stroke="#e9e4da" stroke-width="1.2"/><path d="M${cx} ${y0 + 8} v15" stroke="#e9e4da" stroke-width=".8"/><path d="M${cx - 6} ${y0 + 20} l7 -10" stroke="rgba(255,255,255,.35)" stroke-width="1.2"/>`;
+          if (door) {
+            g += `<rect x="${cx - 8}" y="${y0 + 6}" width="16" height="${H - 6}" fill="${k === 7 ? "#6b4a2e" : "#2b2a28"}"/>`;
+            if (k === 7) g += `<path d="M${cx} ${y0 + 6} v${H - 6}" stroke="#4e3420" stroke-width=".8"/><rect x="${cx - 6}" y="${y0 + 9}" width="4.5" height="9" fill="none" stroke="#4e3420" stroke-width=".5"/><rect x="${cx + 1.5}" y="${y0 + 9}" width="4.5" height="9" fill="none" stroke="#4e3420" stroke-width=".5"/><circle cx="${cx + 2.4}" cy="${y0 + 20}" r=".9" fill="#e2c37a"/><rect x="${cx - 15}" y="${y0 + 2}" width="30" height="3.4" fill="#efe9de"/><rect x="${cx - 15}" y="${y0 + 5.4}" width="30" height="1.6" fill="rgba(0,0,0,.18)"/><circle cx="${cx - 11}" cy="${y0 + 13}" r="1.3" fill="#ffdc8a"/><circle cx="${cx + 11}" cy="${y0 + 13}" r="1.3" fill="#ffdc8a"/>`;
+            if (k >= 6) g += `<rect x="${cx - 12}" y="${y0 + H - 1.5}" width="24" height="2" fill="#d9d0c0"/>`;
+            continue;
+          }
+          const wy = y0 + 8, wh = 15;
+          if (glazed) {
+            g += `<rect x="${cx - 9}" y="${wy - 1}" width="18" height="${wh + 2}" fill="#e9e4da"/><rect x="${cx - 8}" y="${wy}" width="16" height="${wh}" fill="url(#${uid}gl)"/><path d="M${cx} ${wy} v${wh} M${cx - 8} ${wy + 5} h16" stroke="#e9e4da" stroke-width=".8"/><path d="M${cx - 6} ${wy + wh - 2} l7 -11 M${cx - 2} ${wy + wh - 1} l6 -9" stroke="rgba(255,255,255,.35)" stroke-width="1.1"/><rect x="${cx - 10}" y="${wy + wh + 1}" width="20" height="1.6" fill="#f6efe2"/><rect x="${cx - 10}" y="${wy + wh + 2.6}" width="20" height="1" fill="rgba(0,0,0,.15)"/>`;
+          } else {
+            g += `<rect x="${cx - 8}" y="${wy}" width="16" height="${wh}" fill="#24221f"/><rect x="${cx - 8}" y="${wy}" width="16" height="2" fill="#151412"/>`;
+            if (k === 6) g += `<rect x="${cx - 8}" y="${wy}" width="16" height="${wh}" fill="rgba(140,200,230,.18)"/><path d="M${cx - 8} ${wy} l16 ${wh} M${cx + 8} ${wy} l-16 ${wh}" stroke="rgba(255,255,255,.25)" stroke-width=".5"/>`;
+          }
         }
       }
-      // frame: columns and slab (hidden by plaster at handover)
+      // frame: columns and slab
       if (k <= 5 || (k === 6 && p < 1)) {
         const nc = Math.max(2, Math.round(w / 34) + 1);
-        for (let c = 0; c < nc; c++) { const cxp = x0 + (c / (nc - 1)) * (w - 5); if (k === 6 && cxp < x0 + w * p) continue; g += `<rect x="${cxp}" y="${y0}" width="5" height="${H}" fill="#a9a59c"/>`; }
+        for (let c = 0; c < nc; c++) { const cxp = x0 + (c / (nc - 1)) * (w - 5); if (k === 6 && cxp < x0 + w * p) continue; g += `<rect x="${cxp}" y="${y0}" width="5" height="${H}" fill="#aaa69d"/><rect x="${cxp}" y="${y0}" width="1.4" height="${H}" fill="#c4c0b7"/>`; }
       }
-      if (!topSlab) g += `<rect x="${x0 - 3}" y="${y0 - 4}" width="${w + 6}" height="5" fill="${k === 7 ? "#f6efe2" : "#c3bfb5"}"/>`;
-      else { g += `<rect x="${x0 - 3}" y="${y0 - 4}" width="${w + 6}" height="2" fill="#8b6a43"/>`; for (let c = 4; c < w; c += 12) g += `<path d="M${x0 + c} ${y0 - 2} V${y0 + H}" stroke="#8b6a43" stroke-width=".6" opacity=".7"/>`; }
-      if (k === 5) g += `<path d="M${x0 + 4} ${y0 + 27} H${x0 + w - 4} M${x0 + w / 2} ${y0 + 2} V${y0 + 27}" stroke="#d07a2b" stroke-width="1.2" stroke-dasharray="4 2"/><rect x="${x0 + w * 0.7}" y="${y0 + 14}" width="5" height="7" fill="#7f8a96"/>`;
+      if (!topSlab) g += `<rect x="${x0 - 3}" y="${y0 - 4}" width="${w + 6}" height="5" fill="${k === 7 ? "#f8f2e6" : "#c3bfb5"}"/><rect x="${x0}" y="${y0 + 1}" width="${w}" height="2.2" fill="rgba(0,0,0,.16)"/>`;
+      else { g += `<rect x="${x0 - 3}" y="${y0 - 4}" width="${w + 6}" height="2" fill="#8b6a43"/>`; for (let c = 4; c < w; c += 12) g += `<path d="M${x0 + c} ${y0 - 2} V${y0 + H}" stroke="#8b6a43" stroke-width=".6" opacity=".7"/>`; for (let c = 2; c < w; c += 5) g += `<path d="M${x0 + c} ${y0 - 4} v-5" stroke="#b5562a" stroke-width=".6"/>`; }
+      if (k === 5) g += `<path d="M${x0 + 4} ${y0 + 27} H${x0 + w - 4} M${x0 + w / 2} ${y0 + 2} V${y0 + 27}" stroke="#d07a2b" stroke-width="1.2" stroke-dasharray="4 2"/><path d="M${x0 + 6} ${y0 + 4} H${x0 + w - 6}" stroke="#3c78b4" stroke-width="1" stroke-dasharray="3 2"/><rect x="${x0 + w * 0.7}" y="${y0 + 14}" width="5" height="7" fill="#7f8a96"/>`;
     }
     // parapet and roof kit
-    if (k >= 6 && nfb === nf) { const yt = -nf * H - 4; g += `<rect x="${x0 - 3}" y="${yt - 6}" width="${w + 6}" height="6" fill="${k === 7 ? "#f6efe2" : "#d9d1c2"}"/>`; if (tag === "set" || (type !== 1 && bi === 0)) g += `<rect x="${x0 + w * 0.2}" y="${yt - 13}" width="12" height="7" fill="#9aa3ac"/><rect x="${x0 + w * 0.55}" y="${yt - 11}" width="16" height="5" fill="#2c5675"/>`; }
-    if (k === 5 && nfb === nf) g += `<rect x="${x0 + w * 0.3}" y="${-nf * H - 13}" width="18" height="8" fill="#8d969f"/>`;
+    if (k >= 6 && nfb === nf) {
+      const yt = -nf * H - 4;
+      g += `<rect x="${x0 - 3}" y="${yt - 6}" width="${w + 6}" height="6" fill="${k === 7 ? "#f8f2e6" : "#d9d1c2"}"/><rect x="${x0 - 4}" y="${yt - 7}" width="${w + 8}" height="1.6" fill="#fffaf0"/>`;
+      if (tag === "set" || (type !== 1 && bi === 0) || (type === 1 && bi === 1)) g += `<rect x="${x0 + w * 0.18}" y="${yt - 14}" width="13" height="8" fill="#a3acb5"/><circle cx="${x0 + w * 0.18 + 6.5}" cy="${yt - 10}" r="2.6" fill="#6f7882"/><rect x="${x0 + w * 0.55}" y="${yt - 16}" width="9" height="10" rx="4" fill="#eef1f3"/>${k === 7 ? `<path d="M${x0 + w * 0.72} ${yt - 6} l12 -6 h18 l-12 6 z" fill="#2c4f72" stroke="#8fb0cc" stroke-width=".5"/>` : ""}`;
+    }
+    if (k === 5 && nfb === nf) g += `<rect x="${x0 + w * 0.3}" y="${-nf * H - 13}" width="18" height="8" fill="#8d969f"/><path d="M${x0 + w * 0.3 + 9} ${-nf * H - 13} v-6 h12" stroke="#8d969f" stroke-width="2.4" fill="none"/>`;
   });
   // balcony glass on the first floor of the main block
-  if (k >= 6 && hero) { const mb = blocks.find((b) => b[2] === 2 && !b[3]); g += `<rect x="${mb[0] + mb[1] * 0.3}" y="${-H - 12}" width="${mb[1] * 0.4}" height="9" fill="rgba(150,200,230,.35)" stroke="#e9e4da" stroke-width=".8"/>`; }
+  if (k >= 6 && hero) { const mb = blocks.find((b) => b[2] === 2 && !b[3]); g += `<rect x="${mb[0] + mb[1] * 0.28}" y="${-H - 12}" width="${mb[1] * 0.44}" height="9" fill="rgba(150,200,230,.32)" stroke="#e9e4da" stroke-width=".8"/><path d="M${mb[0] + mb[1] * 0.28} ${-H - 12} h${mb[1] * 0.44}" stroke="#fff" stroke-width="1"/>`; }
   // site kit around the building
-  if (k === 3) { g += `<rect x="${L + W + 14}" y="${-H * 3}" width="4" height="${H * 3}" fill="#e3a21a"/><path d="M${L + W + 16} ${-H * 3 + 2} H${L + W * 0.2}" stroke="#e3a21a" stroke-width="3"/><path d="M${L + W * 0.4} ${-H * 3 + 2} v${H * 0.8}" stroke="#555" stroke-width="1"/><rect x="${L + W * 0.4 - 5}" y="${-H * 2.2}" width="10" height="6" fill="#7a6447"/>`; }
-  if ((k >= 4 && k <= 6) && hero) { const sx = L - 12, top = -H * 2 - 10; for (let i = 0; i < 3; i++) g += `<path d="M${sx + i * 7} 0 V${top}" stroke="#7b8794" stroke-width="1.2"/>`; for (let y = 0; y > top; y -= 10) g += `<path d="M${sx} ${y} H${sx + 14}" stroke="#7b8794" stroke-width="1.2"/><path d="M${sx} ${y - 1} H${sx + 14}" stroke="#a37744" stroke-width="2"/>`; g += `<rect x="${sx - 1}" y="${top}" width="16" height="${-top}" fill="rgba(46,125,74,.22)"/>`; }
+  if (k === 3) {
+    // tower crane with lattice mast and jib
+    const cx = L + W + 18, top = -H * 3.4;
+    g += `<rect x="${cx - 3}" y="${top}" width="6" height="${-top}" fill="none" stroke="#e3a21a" stroke-width="1.2"/>`;
+    for (let y = 0; y > top; y -= 6) g += `<path d="M${cx - 3} ${y} L${cx + 3} ${y - 6} M${cx + 3} ${y} L${cx - 3} ${y - 6}" stroke="#e3a21a" stroke-width=".6"/>`;
+    g += `<path d="M${cx + 14} ${top} H${L + W * 0.05}" stroke="#e3a21a" stroke-width="3"/><path d="M${cx} ${top - 10} L${L + W * 0.2} ${top} M${cx} ${top - 10} L${cx + 14} ${top}" stroke="#c98a1b" stroke-width=".8"/><rect x="${cx + 8}" y="${top - 2}" width="8" height="6" fill="#555"/><rect x="${cx - 4}" y="${top + 2}" width="8" height="6" fill="#f2b324"/>`;
+    const hx = L + W * (0.25 + 0.4 * p);
+    g += `<path d="M${hx} ${top + 2} v${H * 1.2}" stroke="#444" stroke-width=".7"/><rect x="${hx - 6}" y="${top + 2 + H * 1.2}" width="12" height="5" fill="#7a6447"/>`;
+    if (hero) g += worker(L + W * 0.3, -floorsBuilt * H - 3, 0.9, "#f07d1a", 1) + worker(L + W * 0.55, -floorsBuilt * H - 3, 0.9, "#c8e630", 0) + worker(L - 14, 0, 1, "#f07d1a", 2);
+  }
+  if (k >= 4 && k <= 6 && hero) {
+    const sx = L - 14, top = -H * 2 - 10;
+    g += `<rect x="${sx - 1}" y="${top}" width="16" height="${-top}" fill="rgba(46,125,74,.25)"/>`;
+    for (let i = 0; i < 3; i++) g += `<path d="M${sx + i * 7} 0 V${top}" stroke="#7b8794" stroke-width="1.2"/>`;
+    for (let y = 0; y > top; y -= 10) g += `<path d="M${sx} ${y} H${sx + 14}" stroke="#7b8794" stroke-width="1.1"/><path d="M${sx} ${y - 1.2} H${sx + 14}" stroke="#a37744" stroke-width="2"/><path d="M${sx} ${y} L${sx + 14} ${y - 10}" stroke="#8b96a1" stroke-width=".5"/>`;
+    g += worker(sx + 7, -H - 1.5, 0.85, k === 6 ? "#c8e630" : "#f07d1a", 1);
+    // material on the ground for this stage
+    if (k === 4) for (let i = 0; i < 3; i++) g += `<g transform="translate(${L + W + 8 + i * 15} 0)"><rect x="0" y="-2" width="13" height="2" fill="#8b6a43"/>${[0, 1, 2].map((r) => `<rect x=".5" y="${-6 - r * 4}" width="12" height="4" fill="#b9b2a5" stroke="#9e978a" stroke-width=".4"/>`).join("")}</g>`;
+    if (k === 4) g += `<g transform="translate(${L + W + 56} 0)"><circle cx="6" cy="-7" r="6" fill="#d33b2c"/><circle cx="6" cy="-7" r="3.5" fill="#8f2a20"/><path d="M0 0 L6 -7 L12 0" stroke="#444" stroke-width="1.2" fill="none"/></g>`;
+    if (k === 5) g += `<g transform="translate(${L + W + 10} 0)"><circle cx="8" cy="-8" r="8" fill="#9a6b3c"/><circle cx="8" cy="-8" r="3" fill="#5e4329"/><circle cx="8" cy="-8" r="6" fill="none" stroke="#e07a2b" stroke-width="1.4"/><rect x="22" y="-14" width="30" height="14" rx="2" fill="#f4f4f0"/><rect x="45" y="-12" width="6" height="6" fill="url(#${uid}gl)"/><text x="34" y="-5" text-anchor="middle" font-family="monospace" font-size="5" fill="#2f7fc1">MEP</text><circle cx="28" cy="0" r="2.6" fill="#222"/><circle cx="46" cy="0" r="2.6" fill="#222"/></g>`;
+    if (k === 6) g += `<g transform="translate(${L + W + 10} 0)">${[0, 1, 2].map((i) => `<rect x="${i * 8}" y="-7" width="6" height="7" fill="${["#e9e4da", "#5f8fc0", "#e9e4da"][i]}" stroke="#999" stroke-width=".4"/>`).join("")}<rect x="28" y="-9" width="18" height="9" fill="#b07a42"/><path d="M28 -6 h18" stroke="#8b5e2e" stroke-width=".6"/></g>` + worker(L + W + 4, 0, 0.95, "#f07d1a", 0);
+  }
   return g;
 }
 function photo2(n, k, w, stamp, big) {
   const v = VILLAS[n], id = "pq" + (phId++), type = VTYPE(n), p = k === 0 ? 0 : stProg(v, k, w, v.ends);
-  const hr = +stamp.slice(10, 12) || 9, warm = hr <= 7 ? 1 : 0;
-  let g = `<defs><linearGradient id="${id}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${warm ? "#e9b27a" : "#6fa8d6"}"/><stop offset="1" stop-color="${warm ? "#f3dcc0" : "#d9e7ee"}"/></linearGradient>
-    <linearGradient id="${id}gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fb0d0"/><stop offset=".5" stop-color="#2f5673"/><stop offset="1" stop-color="#1f3d55"/></linearGradient>
-    <linearGradient id="${id}sh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(0,0,0,0)"/><stop offset="1" stop-color="rgba(0,0,0,.12)"/></linearGradient></defs>`;
-  g += `<rect width="320" height="180" fill="url(#${id}s)"/><circle cx="${warm ? 40 : 280}" cy="${warm ? 92 : 22}" r="${warm ? 14 : 9}" fill="${warm ? "#fbe3b8" : "#fffbe8"}" opacity=".85"/>`;
-  // far skyline (the opposite side of the community)
-  g += `<g fill="#a9b6c0" opacity=".5">${[10, 46, 88, 210, 252, 290].map((x, i) => `<rect x="${x}" y="${100 - (i % 3) * 4}" width="${26 + (i % 2) * 8}" height="${14 + (i % 3) * 4}"/>`).join("")}</g>`;
-  g += `<path d="M0 116 Q80 ${110 + (v.plot % 5)} 160 115 T320 112 V180 H0Z" fill="#cdb894"/>`;
-  // neighbours from the layout, at their own stage on the same date
+  const hr = +stamp.slice(10, 12) || 9, warm = hr <= 7 ? 1 : 0, seed = v.plot * 7 + k;
+  const temp = 26 + ((seed * 3) % 9) + (warm ? 0 : 4), wind = 6 + (seed % 14);
+  let g = `<defs>
+    <linearGradient id="${id}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${warm ? "#d98d62" : "#4f8fc6"}"/><stop offset=".55" stop-color="${warm ? "#f0bf8a" : "#9cc4e2"}"/><stop offset="1" stop-color="${warm ? "#f7dfc0" : "#e3eef2"}"/></linearGradient>
+    <radialGradient id="${id}sun" cx="${warm ? .14 : .86}" cy="${warm ? .5 : .1}" r=".55"><stop offset="0" stop-color="${warm ? "rgba(255,226,170,.9)" : "rgba(255,252,235,.85)"}"/><stop offset=".15" stop-color="${warm ? "rgba(255,210,150,.35)" : "rgba(255,250,230,.25)"}"/><stop offset="1" stop-color="rgba(255,255,255,0)"/></radialGradient>
+    <linearGradient id="${id}sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${warm ? "#d8b98c" : "#d6c29c"}"/><stop offset="1" stop-color="${warm ? "#b8956a" : "#b9a27a"}"/></linearGradient>
+    <linearGradient id="${id}gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${warm ? "#f0c89a" : "#a9d0ea"}"/><stop offset=".45" stop-color="#3a6a8c"/><stop offset="1" stop-color="#1b3a52"/></linearGradient>
+    <linearGradient id="${id}sh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${warm ? "rgba(255,200,140,.10)" : "rgba(255,255,255,.08)"}"/><stop offset="1" stop-color="rgba(0,0,0,.14)"/></linearGradient>
+    <linearGradient id="${id}pit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c6648"/><stop offset="1" stop-color="#4e3e2b"/></linearGradient>
+    <linearGradient id="${id}haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${warm ? "rgba(247,214,176,0)" : "rgba(226,238,244,0)"}"/><stop offset="1" stop-color="${warm ? "rgba(247,214,176,.55)" : "rgba(226,238,244,.6)"}"/></linearGradient>
+    <linearGradient id="${id}road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4e55"/><stop offset="1" stop-color="#2c2f34"/></linearGradient>
+    <radialGradient id="${id}vig" cx=".5" cy=".5" r=".75"><stop offset=".6" stop-color="rgba(0,0,0,0)"/><stop offset="1" stop-color="rgba(0,0,0,.38)"/></radialGradient>
+    <filter id="${id}bl" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <pattern id="${id}gr" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="none"/><circle cx="1" cy="2" r=".35" fill="rgba(0,0,0,.18)"/><circle cx="4" cy="5" r=".3" fill="rgba(255,255,255,.18)"/></pattern>
+  </defs>`;
+  // sky, sun glow and soft clouds
+  g += `<rect width="320" height="180" fill="url(#${id}s)"/><rect width="320" height="180" fill="url(#${id}sun)"/>`;
+  g += `<g filter="url(#${id}bl)" opacity="${warm ? .55 : .75}">${[[40 + (seed % 60), 22, 34], [190 + (seed % 50), 14, 44], [120 + (seed % 30), 38, 26]].map(([x, y, r]) => `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * 0.22}" fill="#fff"/><ellipse cx="${x + r * 0.4}" cy="${y - 3}" rx="${r * 0.5}" ry="${r * 0.2}" fill="#fff"/>`).join("")}</g>`;
+  if (!warm) g += `<path d="M${60 + (seed % 90)} 30 q3 -2 6 0 q3 -2 6 0" stroke="#3a4652" stroke-width=".7" fill="none" opacity=".5"/>`;
+  // distant city skyline with a tower crane
+  const sky = [[4, 18, 14], [22, 10, 22], [33, 14, 30], [50, 9, 18], [62, 16, 40], [80, 12, 24], [214, 12, 26], [228, 8, 44], [238, 16, 22], [256, 10, 34], [268, 18, 18], [290, 12, 28], [304, 14, 20]];
+  g += `<g fill="${warm ? "#b58d74" : "#9fb1bf"}" opacity=".6">${sky.map(([x, wd, h]) => `<rect x="${x}" y="${108 - h}" width="${wd}" height="${h}"/>`).join("")}<path d="M234 ${108 - 44} l3 -8 l3 8 z"/></g>`;
+  g += `<g stroke="${warm ? "#a57f66" : "#8fa3b2"}" opacity=".6" stroke-width=".8"><path d="M148 108 V60 M136 60 H178 M148 52 L178 60 M148 52 L136 60"/></g>`;
+  g += `<rect y="86" width="320" height="26" fill="url(#${id}haze)"/>`;
+  // ground plane with texture and tyre tracks
+  g += `<path d="M0 110 Q80 ${106 + (v.plot % 5)} 160 109 T320 107 V180 H0Z" fill="url(#${id}sand)"/><rect y="106" width="320" height="74" fill="url(#${id}gr)" opacity=".7"/>`;
+  g += `<path d="M20 138 C90 126 200 130 300 122" stroke="rgba(110,85,55,.25)" stroke-width="2.4" fill="none" stroke-dasharray="3 2"/><path d="M24 142 C94 130 204 134 304 126" stroke="rgba(110,85,55,.2)" stroke-width="2.4" fill="none" stroke-dasharray="3 2"/>`;
+  // neighbours from the layout, at their own stage on the same date, softened by distance
   const NB = NEIGH[n];
-  [[NB.L, 52], [NB.R, 268]].forEach(([m, x]) => {
+  [[NB.L, 50], [NB.R, 270]].forEach(([m, x]) => {
     if (m < 0) return;
     const nv = VILLAS[m], nk = stageAt(nv, w), np = nk ? stProg(nv, nk, w, nv.ends) : 0;
-    g += `<g transform="translate(${x} 128) scale(.44)" opacity=".92">${elev(VTYPE(m), nk, np, false, id)}</g>`;
-    if (big) g += `<text x="${x}" y="${nk >= 3 ? 94 : 116}" text-anchor="middle" font-family="monospace" font-size="7" fill="#3b4652" opacity=".8">${nv.id}</text>`;
+    g += `<g transform="translate(${x} 126) scale(.44)">${elev(VTYPE(m), nk, np, false, id)}</g><rect x="${x - 40}" y="80" width="80" height="48" fill="url(#${id}haze)" opacity=".5"/>`;
+    if (big) g += `<g transform="translate(${x} ${nk >= 3 ? 88 : 112})"><rect x="-11" y="-6" width="22" height="9" rx="2" fill="rgba(255,255,255,.75)"/><text y="1" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#2b3640">${nv.id}</text></g>`;
   });
-  // plot strip, hoarding or boundary wall, the ring road in front
-  g += `<rect y="146" width="320" height="10" fill="#bba680"/>`;
+  // the villa itself
+  g += `<rect y="146" width="320" height="6" fill="#bea984"/>`;
   g += `<g transform="translate(160 148)">${elev(type, k, p, true, id)}</g>`;
   if (k === 7) {
-    g += `<rect x="70" y="150" width="180" height="7" fill="#efe6d6"/><rect x="146" y="148" width="4" height="10" fill="#c9b79a"/><rect x="170" y="148" width="4" height="10" fill="#c9b79a"/>`;
-    [[62, 1], [258, 1.1]].forEach(([x, s]) => { g += `<path d="M${x} 156 q-2 -20 3 -34" stroke="#7a5a3a" stroke-width="${2.4 * s}" fill="none"/>`; for (let i = 0; i < 6; i++) { const a = -Math.PI / 2 + (i - 2.5) * 0.55; g += `<path d="M${x + 3} 122 q${Math.cos(a) * 8} -6 ${Math.cos(a) * 16} ${Math.sin(a) * 8 + 6}" stroke="${i % 2 ? "#4f9a5a" : "#3f7f4a"}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`; } });
-    if (type === 1) g += `<rect x="96" y="148" width="26" height="9" rx="3" fill="#5a6b7a"/><circle cx="101" cy="157" r="2.4" fill="#222"/><circle cx="117" cy="157" r="2.4" fill="#222"/>`;
+    g += `<rect x="62" y="148" width="196" height="8" fill="#f1e9d9"/><rect x="62" y="147" width="196" height="1.6" fill="#fffaf0"/><rect x="62" y="154" width="196" height="2" fill="rgba(0,0,0,.12)"/>`;
+    g += `<rect x="146" y="145" width="5" height="12" fill="#c9ae8a"/><rect x="169" y="145" width="5" height="12" fill="#c9ae8a"/><path d="M151 149 h18" stroke="#3a3f47" stroke-width="1.4"/>${[153, 157, 161, 165].map((x) => `<path d="M${x} 149 v7" stroke="#3a3f47" stroke-width=".8"/>`).join("")}`;
+    g += `<rect x="176" y="149.5" width="14" height="5" rx="1" fill="#2f3a46"/><text x="183" y="153.4" text-anchor="middle" font-family="monospace" font-size="3.6" fill="#f7d58a">${v.id}</text>`;
+    g += palmTree(64, 156, 1) + palmTree(256, 156, 1.1) + palmTree(108, 156, 0.7);
+    g += `<rect x="62" y="156" width="196" height="2" fill="#5c9a4f"/>`;
+    if (type === 1) g += `<g transform="translate(92 150)"><rect x="0" y="-3" width="30" height="7" rx="3" fill="#d7dbe0"/><path d="M5 -3 l4 -5 h12 l4 5" fill="#9fb0c0"/><path d="M10 -7.4 h10" stroke="#e8f2fa" stroke-width="1"/><circle cx="7" cy="4" r="2.6" fill="#222"/><circle cx="23" cy="4" r="2.6" fill="#222"/></g>`;
+    for (let i = 0; i < 3; i++) g += `<circle cx="${84 + i * 72}" cy="155" r="1.1" fill="#ffdc8a"/>`;
   } else if (k >= 1) {
-    for (let i = 0; i < 14; i++) g += `<rect x="${i * 23}" y="146" width="22" height="12" fill="${i % 2 ? "#2f7fc1" : "#3a8ad0"}"/>`;
-    g += `<rect x="108" y="141" width="104" height="15" rx="2" fill="#f4f1ea" stroke="#2f7fc1"/><text x="160" y="151" text-anchor="middle" font-family="monospace" font-size="7" fill="#1d2b38">PLOT ${v.plot} · ${v.id} · TYPE ${"ABC"[type]}</text>`;
+    // site hoarding with printed band, gate and safety signs
+    g += `<rect x="0" y="145" width="320" height="13" fill="#2f7fc1"/>${[...Array(14)].map((_, i) => `<path d="M${i * 23} 145 v13" stroke="#24689f" stroke-width="1"/>`).join("")}<rect x="0" y="145" width="320" height="2" fill="#f4f1ea"/><rect x="0" y="156" width="320" height="2" fill="#f4f1ea"/>`;
+    g += `<text x="48" y="154" font-family="sans-serif" font-size="5" font-weight="700" fill="#f4f1ea" letter-spacing=".6">PALM GROVE VILLAS</text><text x="241" y="154" font-family="sans-serif" font-size="4.4" fill="#d6e6f4" letter-spacing=".6">DEMO · FICTIONAL</text>`;
+    g += `<rect x="210" y="146" width="26" height="12" fill="#3b3f45"/><path d="M210 146 l26 12 M236 146 l-26 12" stroke="#5a6068" stroke-width=".8"/>`;
+    g += `<g transform="translate(14 147)"><path d="M0 8 L4 0 L8 8 Z" fill="#f2c230" stroke="#222" stroke-width=".5"/><text x="4" y="7" text-anchor="middle" font-size="5" font-weight="700" fill="#222">!</text></g><g transform="translate(32 151.5)"><circle r="4" fill="#1f5fa8"/><path d="M-2 .5 a2 2 0 0 1 4 0 z" fill="#fff"/></g>`;
+    g += `<rect x="114" y="137" width="92" height="15" rx="2" fill="#f4f1ea" stroke="#2f7fc1"/><text x="160" y="147" text-anchor="middle" font-family="monospace" font-size="6.6" fill="#1d2b38">PLOT ${v.plot} · ${v.id} · TYPE ${"ABC"[type]}</text>`;
   }
-  g += `<rect y="158" width="320" height="22" fill="#3b3f45"/><path d="M0 169 H320" stroke="#e7e2d4" stroke-width="1.2" stroke-dasharray="10 8"/>`;
-  g += `<rect x="20" y="132" width="2" height="26" fill="#6f767e"/><path d="M21 132 h8" stroke="#6f767e" stroke-width="2"/><rect x="298" y="132" width="2" height="26" fill="#6f767e"/>`;
-  // key plan inset: the same layout, coloured by stage on this date
+  // sidewalk, kerb, road with perspective lanes, street light
+  g += `<rect y="158" width="320" height="4" fill="#cfc9bd"/><rect y="161.5" width="320" height="1.4" fill="#e9e2d4"/>`;
+  g += `<path d="M0 163 H320 V180 H0Z" fill="url(#${id}road)"/><path d="M0 172 H320" stroke="#e7e2d4" stroke-width="1.1" stroke-dasharray="12 9"/><path d="M0 178 H320" stroke="rgba(255,255,255,.18)" stroke-width=".6"/>`;
+  g += `<g><rect x="296" y="112" width="1.8" height="48" fill="#6f767e"/><path d="M297 113 q-2 -4 -12 -4" stroke="#6f767e" stroke-width="1.6" fill="none"/><rect x="280" y="108" width="8" height="2.4" rx="1" fill="#59606a"/>${warm ? `<circle cx="284" cy="111" r="5" fill="rgba(255,220,140,.35)"/>` : ""}</g>`;
+  // camera overlay: vignette, grain, OSD
+  g += `<rect width="320" height="180" fill="url(#${id}vig)"/>`;
   if (big) {
-    let kp = `<g transform="translate(256 4) scale(.1)"><rect x="0" y="0" width="610" height="570" rx="40" fill="rgba(13,15,18,.78)"/><ellipse cx="${CX}" cy="${CY}" rx="${RING.rx}" ry="${RING.ry}" fill="none" stroke="#3a3f47" stroke-width="22"/>`;
+    let kp = `<g transform="translate(256 4) scale(.1)"><rect x="0" y="0" width="610" height="570" rx="40" fill="rgba(13,15,18,.8)"/><ellipse cx="${CX}" cy="${CY}" rx="${RING.rx}" ry="${RING.ry}" fill="none" stroke="#3a3f47" stroke-width="22"/>`;
     VILLAS.forEach((x, m) => { const P = PLACES[m], s0 = stageAt(x, w); kp += `<circle cx="${P.x}" cy="${P.y}" r="${m === n ? 26 : 15}" fill="${s0 ? STG_VIR[s0] : "#2a3038"}" ${m === n ? 'stroke="#f5a524" stroke-width="10"' : ""}/>`; });
     const P = PLACES[n], dx = (P.out ? CX - P.x : P.x - CX), dy = (P.out ? CY - P.y : P.y - CY), L0 = Math.hypot(dx, dy);
     const cx0 = P.x + dx / L0 * 70, cy0 = P.y + dy / L0 * 70;
     kp += `<path d="M${cx0} ${cy0} L${cx0 - dx / L0 * 40 - dy / L0 * 24} ${cy0 - dy / L0 * 40 + dx / L0 * 24} L${cx0 - dx / L0 * 40 + dy / L0 * 24} ${cy0 - dy / L0 * 40 - dx / L0 * 24} Z" fill="#f5a524" opacity=".9"/></g>`;
     g += kp;
-  }
-  g += `<rect x="6" y="6" width="${big ? 92 : 74}" height="15" rx="3" fill="rgba(0,0,0,.55)"/><text x="12" y="17" fill="#fff" font-family="monospace" font-size="${big ? 9 : 8}">CAM-${v.id}-0${1 + (v.plot % 3)} · DEMO</text>`;
-  g += `<rect x="${320 - (big ? 120 : 102)}" y="160" width="${big ? 114 : 96}" height="15" rx="3" fill="rgba(0,0,0,.55)"/><text x="${320 - (big ? 114 : 97)}" y="171" fill="#f7b955" font-family="monospace" font-size="${big ? 9 : 8}">${stamp}</text>`;
-  if (big && k >= 1 && k < 7) g += `<rect x="6" y="160" width="${70}" height="15" rx="3" fill="rgba(0,0,0,.55)"/><text x="12" y="171" fill="#fff" font-family="monospace" font-size="9">${String(Math.round(p * 100)).padStart(3, " ")}% · ST${k}</text>`;
+    g += `<g font-family="monospace"><rect x="6" y="6" width="104" height="15" rx="3" fill="rgba(0,0,0,.55)"/><circle cx="13" cy="13.5" r="2.6" fill="#e5484d"><animate attributeName="opacity" values="1;.2;1" dur="1.6s" repeatCount="indefinite"/></circle><text x="19" y="17" fill="#fff" font-size="8.4">CAM-${v.id}-0${1 + (v.plot % 3)} · DEMO</text>`;
+    g += `<rect x="6" y="24" width="84" height="12" rx="3" fill="rgba(0,0,0,.4)"/><text x="11" y="32.6" fill="#e6e6e6" font-size="6.6">${temp}°C · WIND ${wind} km/h</text></g>`;
+  } else g += `<rect x="6" y="6" width="78" height="15" rx="3" fill="rgba(0,0,0,.55)"/><text x="12" y="17" fill="#fff" font-family="monospace" font-size="8">CAM-${v.id}-0${1 + (v.plot % 3)}</text>`;
+  g += `<rect x="${320 - (big ? 120 : 102)}" y="160" width="${big ? 114 : 96}" height="15" rx="3" fill="rgba(0,0,0,.6)"/><text x="${320 - (big ? 114 : 97)}" y="171" fill="#f7b955" font-family="monospace" font-size="${big ? 9 : 8}">${stamp}</text>`;
+  if (big && k >= 1 && k < 7) g += `<g font-family="monospace"><rect x="6" y="160" width="96" height="15" rx="3" fill="rgba(0,0,0,.6)"/><rect x="11" y="166" width="40" height="4" rx="2" fill="rgba(255,255,255,.2)"/><rect x="11" y="166" width="${40 * p}" height="4" rx="2" fill="#f5a524"/><text x="56" y="170.6" fill="#fff" font-size="7.6">${Math.round(p * 100)}% · ST${k}</text></g>`;
+  if (big && k === 7) g += `<g font-family="monospace"><rect x="6" y="160" width="74" height="15" rx="3" fill="rgba(31,122,74,.85)"/><text x="12" y="170.6" fill="#fff" font-size="7.6">✓ HANDED OVER</text></g>`;
   return `<svg viewBox="0 0 320 180" role="img" aria-label="Illustrated site photo of villa ${v.id}, ${stamp}, demo">${g}</svg>`;
 }
 
