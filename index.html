@@ -1012,7 +1012,7 @@ function updateLab(d = T[lang]) {
 
 /* embedded report: size the frame to its content and keep the language in step */
 addEventListener("message", (e) => { const f = document.getElementById("pbiframe"); if (f && e.source === f.contentWindow && e.data && e.data.type === "pbi-height") f.style.height = Math.ceil(e.data.h) + "px"; });
-(function () { const f = document.getElementById("pbiframe"); if (!f) return; const set = () => { if (!f.style.height) f.style.height = Math.round(f.clientWidth * 990 / 1400 + 150) + "px"; }; set(); addEventListener("resize", () => { f.style.height = ""; set(); }); f.addEventListener("load", () => { try { f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {} }); })();
+(function () { const f = document.getElementById("pbiframe"); if (!f) return; const set = () => { if (!f.style.height) f.style.height = Math.round(f.clientWidth * 990 / 1400 + 150) + "px"; }; set(); addEventListener("resize", () => { f.style.height = ""; set(); }); const vh = () => { try { const n = document.getElementById("nav"); f.contentWindow.postMessage({ type: "pbi-vh", h: innerHeight - (n ? n.offsetHeight : 0) - 24 }, "*"); } catch (err) {} }; addEventListener("resize", vh); f.addEventListener("load", () => { try { f.contentWindow.postMessage({ type: "pbi-lang", lang }, "*"); } catch (err) {} vh(); }); })();
 
 /* =====================================================================
    PAGE
