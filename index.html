@@ -743,6 +743,17 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 <footer><div class="wrap"><span data-t="foot">© صديق محمود · مهندس الواقع</span><span class="mono">DWG SM-002 · REV 00</span></div></footer>
 
 <script>
+// every reload opens the site from the top
+(function () {
+  try { history.scrollRestoration = "manual"; } catch (e) {}
+  var nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
+  if (nav.type === "reload") {
+    if (location.hash) try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+    var top = function () { window.scrollTo(0, 0); };
+    top(); addEventListener("DOMContentLoaded", top); addEventListener("load", function () { top(); setTimeout(top, 60); });
+  }
+})();
+
 /* =====================================================================
    CONTENT (Arabic + English). Facts come from Siddek's CV and channel.
    ===================================================================== */

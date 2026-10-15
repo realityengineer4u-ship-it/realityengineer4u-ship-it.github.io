@@ -2325,7 +2325,7 @@ function renderBim() {
   const C = (k, t, real) => { const s0 = st(k, t); if (s0 === 0) return null; if (!statusMode) return s0 === 1 && real === MAT.plaster ? MAT.block : real; return s0 === 2 ? ST4[2] : slow ? ST4.d : ST4[1]; };
   const E = []; const el = (cat, k, t, inner) => { E.push({ cat, k, s: st(k, t) }); return `<g class="el${BPIN === k ? " pin" : ""}" data-e="${E.length - 1}" data-k="${k}">${inner}</g>`; };
   const bx = (cat, k, t, real, a, lit) => { const c = C(k, t, real); return el(cat, k, t, c ? (lit ? litBox(...a, c) : box(...a, c)) : box(...a, null, { ghost: true })); };
-  const dz1 = bexp ? 3.4 : 0, dz2 = bexp ? 6.8 : 0;
+  const dz1 = bexp ? 3.4 : 0, dz2 = bexp ? 6.8 : 0, VT = VTYPE(sel);   // villa type, same as the layout footprint and the site photos
   const fin = st(6, 0), building = stage >= 1 && stage <= 6, hv = st(7);
   let g = FACE_LIGHT + `<rect width="620" height="560" fill="url(#sky4)"/><rect width="620" height="560" fill="url(#sun4)"/>`;
   for (let k = 0; k < 40; k++) g += `<circle cx="${(k * 97) % 620}" cy="${(k * 53) % 150}" r="${k % 5 ? .6 : 1}" fill="rgba(255,255,255,${k % 3 ? .18 : .35})"/>`;
@@ -2414,14 +2414,25 @@ function renderBim() {
     m += box(8.6, 1.8, z2 + 0.35, 1.8, 1.8, 1.3, statusMode ? mc : ["#eef1f3", "#d3d8dc", "#b4bbc1"]);
     g += el("mep", 5, 0.4, m);
   } else g += box(1.6, 1.4, z2 + 0.35, 3.6, 1.1, 0.9, null, { ghost: true });
-  if (hv && !statusMode && !bexp) for (let k = 0; k < 3; k++) { const x0 = 5.6 + k * 0.05, y0 = 4.5 + k * 1.3; g += `<polygon points="${pts([iso(x0, y0, z2 + 0.6), iso(x0 + 5, y0, z2 + 0.6), iso(x0 + 5, y0 + 1.1, z2 + 1.1), iso(x0, y0 + 1.1, z2 + 1.1)])}" fill="#1e3e63" stroke="#7fa9c6" stroke-width=".7"/>`; }
+  if (hv && !statusMode && !bexp && VT === 1) { const pc = ["#8a6a48", "#6e5236", "#5a4229"]; let rp = ""; for (let k = 0; k < 7; k++) rp += box(5.6 + k * 0.8, 4.2, z2 + 2.4, 0.18, 4.2, 0.18, pc); [[5.6, 4.2], [10.6, 4.2], [5.6, 8.2], [10.6, 8.2]].forEach(([x, y]) => { rp += box(x, y, z2 + 0.35, 0.22, 0.22, 2.05, pc); }); g += rp; }
+  if (hv && !statusMode && !bexp && VT !== 1) for (let k = 0; k < 3; k++) { const x0 = 5.6 + k * 0.05, y0 = 4.5 + k * 1.3; g += `<polygon points="${pts([iso(x0, y0, z2 + 0.6), iso(x0 + 5, y0, z2 + 0.6), iso(x0 + 5, y0 + 1.1, z2 + 1.1), iso(x0, y0 + 1.1, z2 + 1.1)])}" fill="#1e3e63" stroke="#7fa9c6" stroke-width=".7"/>`; }
   // annex: garage + majlis with pergola
   const anC = wallCol(4, 0.3);
   if (!bexp) {
     g += anC ? el("wall", 4, 0.3, litBox(12, 3, 0.95, 4, 6, 3, anC)) : box(12, 3, 0.95, 4, 6, 3, null, { ghost: true });
     g += bx("slab", 3, 0.4, MAT.conc, [12, 3, 3.95, 4.3, 6.3, 0.35]);
-    if (anC && !statusMode) { g += faceRectY(12.5, 15.5, 9.3, 0.95, 3.2, fin === 2 ? "#5a6470" : "#23272c"); if (fin === 2) for (let k = 1; k < 7; k++) { const a = iso(12.5, 9.3, 0.95 + k * 0.32), b = iso(15.5, 9.3, 0.95 + k * 0.32); g += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="rgba(255,255,255,.14)"/>`; } g += winX(16, 4, 7, 1.6, 3.2, glass, frame); }
-    if (st(6, 0.6)) { const pc = statusMode ? C(6, 0.6) : ["#8a6a48", "#6e5236", "#5a4229"]; let pg2 = ""; for (let k = 0; k < 6; k++) pg2 += box(12.3 + k * 0.7, 3.4, 4.3, 0.2, 5.2, 0.22, pc); pg2 += box(15.7, 8.4, 4.3, 0.25, 0.25, 2.2, pc) + box(15.7, 3.4, 4.3, 0.25, 0.25, 2.2, pc); g += el("fin", 6, 0.6, pg2); }
+    if (VT === 2) {
+      // type C: two-storey annex, set back, with its own roof
+      const anC2 = wallCol(4, 0.6);
+      g += anC2 ? el("wall", 4, 0.6, litBox(12, 3.4, 4.3, 3.6, 5.2, 3, anC2)) : box(12, 3.4, 4.3, 3.6, 5.2, 3, null, { ghost: true });
+      g += bx("slab", 3, 0.85, MAT.conc, [11.9, 3.2, 7.3, 3.95, 5.6, 0.35]);
+      if (st(6, 0.5) && !statusMode) g += box(11.9, 8.55, 7.65, 3.95, 0.25, 0.5, MAT.plaster) + box(15.6, 3.2, 7.65, 0.25, 5.6, 0.5, MAT.plaster);
+      if (anC2 && !statusMode) { g += winY(12.5, 15, 8.6, 5.3, 6.9, glass, frame); g += winX(15.6, 4.2, 7.8, 5.3, 6.9, glass, frame); }
+      if (anC && !statusMode) { g += winY(12.5, 15.5, 9, 1.6, 3.2, glass, frame); g += winX(16, 4, 7, 1.6, 3.2, glass, frame); }
+    }
+    if (VT !== 2 && anC && !statusMode) { g += faceRectY(12.5, 15.5, 9.3, 0.95, 3.2, fin === 2 ? "#5a6470" : "#23272c"); if (fin === 2) for (let k = 1; k < 7; k++) { const a = iso(12.5, 9.3, 0.95 + k * 0.32), b = iso(15.5, 9.3, 0.95 + k * 0.32); g += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="rgba(255,255,255,.14)"/>`; } g += winX(16, 4, 7, 1.6, 3.2, glass, frame); }
+    if (st(6, 0.6) && VT === 2) { const pc = statusMode ? C(6, 0.6) : ["#8a6a48", "#6e5236", "#5a4229"]; let pg2 = ""; for (let k = 0; k < 6; k++) pg2 += box(12.3 + k * 0.7, 10, 2.6, 0.2, 4.6, 0.2, pc); pg2 += box(12.2, 14.4, 0.25, 0.25, 0.25, 2.35, pc) + box(15.9, 14.4, 0.25, 0.25, 0.25, 2.35, pc); g += el("fin", 6, 0.6, pg2); }
+    if (st(6, 0.6) && VT !== 2) { const pc = statusMode ? C(6, 0.6) : ["#8a6a48", "#6e5236", "#5a4229"]; let pg2 = ""; for (let k = 0; k < 6; k++) pg2 += box(12.3 + k * 0.7, 3.4, 4.3, 0.2, 5.2, 0.22, pc); pg2 += box(15.7, 8.4, 4.3, 0.25, 0.25, 2.2, pc) + box(15.7, 3.4, 4.3, 0.25, 0.25, 2.2, pc); g += el("fin", 6, 0.6, pg2); }
     // entrance canopy with slim columns
     if (st(6, 0.3) && !statusMode) g += box(3.8, 9, 3.4, 3, 1.6, 0.18, ["#f5f1ea", "#e1d9cb", "#c9bfae"]) + box(3.9, 10.4, 0.95, 0.15, 0.15, 2.45, ["#d9dde1", "#b9bec4", "#9aa1a8"]) + box(6.55, 10.4, 0.95, 0.15, 0.15, 2.45, ["#d9dde1", "#b9bec4", "#9aa1a8"]);
   }
@@ -2433,8 +2444,14 @@ function renderBim() {
     [[2, 9.8], [10.4, 9.8], [16.8, 15.4]].forEach(([x, y]) => { const p = iso(x, y, 0.5); g += `<circle cx="${p[0]}" cy="${p[1]}" r="2.2" fill="#ffd98a"/><circle cx="${p[0]}" cy="${p[1]}" r="7" fill="rgba(255,217,138,.18)"/>`; });
   }
   // HUD
-  g += `<g transform="translate(14 14)"><rect width="236" height="58" rx="10" fill="rgba(10,11,13,.72)" stroke="rgba(236,235,230,.14)"/><text x="12" y="22" style="font-family:var(--f-display);font-size:14px;font-weight:700;fill:#ecebe6">Villa ${v.id} · ${wkDate(w)}</text><text x="12" y="42" style="font-family:var(--f-mono);font-size:11px;fill:#c3c2b7">${esc(D.stages[stage])} · ${pctAt(v, w).toFixed(0)}%</text><rect x="150" y="34" width="74" height="7" rx="3.5" fill="#20242b"/><rect x="150" y="34" width="${(74 * pctAt(v, w)) / 100}" height="7" rx="3.5" fill="#f5a524"/></g>`;
+  g += `<g transform="translate(14 14)"><rect width="282" height="58" rx="10" fill="rgba(10,11,13,.72)" stroke="rgba(236,235,230,.14)"/><text x="12" y="22" style="font-family:var(--f-display);font-size:14px;font-weight:700;fill:#ecebe6">Villa ${v.id} · Type ${"ABC"[VT]} · ${wkDate(w)}</text><text x="12" y="42" style="font-family:var(--f-mono);font-size:11px;fill:#c3c2b7">${esc(D.stages[stage])} · ${pctAt(v, w).toFixed(0)}%</text><rect x="150" y="34" width="74" height="7" rx="3.5" fill="#20242b"/><rect x="150" y="34" width="${(74 * pctAt(v, w)) / 100}" height="7" rx="3.5" fill="#f5a524"/></g>`;
   svg.innerHTML = g;
+  if (VT === 1) {
+    // type B is the mirrored plan: garage and annex on the other side, same as its layout footprint and photos
+    const m = document.createElementNS(NS, "g"); m.setAttribute("transform", "translate(620 0) scale(-1 1)");
+    const hud = svg.lastElementChild; [...svg.childNodes].forEach((n0) => { if (n0 !== hud && n0.nodeName !== "defs") m.appendChild(n0); }); svg.insertBefore(m, hud);
+    m.querySelectorAll("text").forEach((t) => { const x = +t.getAttribute("x") || 0, an = t.getAttribute("text-anchor"); t.setAttribute("transform", `translate(${2 * x} 0) scale(-1 1)`); if (an === "end") t.setAttribute("text-anchor", "start"); else if (an === "start" || !an) t.setAttribute("text-anchor", "end"); });
+  }
   // element hover
   const tip = $("#isotip"), card = $("#isocard");
   svg.onpointermove = (e) => { const t = e.target.closest && e.target.closest(".el"); if (!t) { tip.classList.remove("on"); svg.querySelectorAll(".el.hl").forEach((x) => x.classList.remove("hl")); return; } const it = E[+t.dataset.e]; svg.querySelectorAll(".el.hl").forEach((x) => x !== t && x.classList.remove("hl")); t.classList.add("hl"); tip.innerHTML = `<b>${esc(D.b.ec[it.cat])}</b><div>V${v.id}-${1000 + (it.k - 1) * 10} · ${esc(D.acts[it.k - 1])}</div><div>${esc(D.b.st[it.s])} · ElementId ${480000 + v.plot * 40 + it.k * 5}</div>`; placeTip(tip, card, e); };
@@ -2639,7 +2656,8 @@ function applyText() {
   $("#mlegend").innerHTML = `<span><i class="box" style="background:var(--s3)"></i>${esc(D.m[0])}</span><span><i class="dash" style="border-color:var(--ink-2)"></i>${esc(D.m[1])}</span>`;
 }
 const PAGES = ["exec", "overview", "site", "schedule", "engproc", "eot", "risk", "logistics", "bim", "auto"];
-let page = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "exec";
+const RELOAD = ((performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {}).type === "reload";
+let page = !RELOAD && PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "exec";   // a reload starts from the first page
 function renderTabs() {
   const D = d(), i = PAGES.indexOf(page);
   $("#tabs").innerHTML = PAGES.map((p, k) => `<button type="button" data-p="${p}" ${p === page ? 'aria-current="page"' : ""}>${esc(D.pgShort[k])}</button>`).join("");

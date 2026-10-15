@@ -452,7 +452,8 @@ x-shape[kind="arrow-right"] { clip-path: polygon(0 30%, 60% 30%, 60% 0, 100% 50%
   stage.addEventListener("click", function (e) { if (e.target.closest("a")) return; var r = stage.getBoundingClientRect(); go(i + (e.clientX - r.left > r.width / 2 ? 1 : -1)); });
   addEventListener("resize", fit);
   fit();
-  var start = parseInt(location.hash.slice(1), 10);
+  var nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
+  var start = nav.type === "reload" ? NaN : parseInt(location.hash.slice(1), 10);   // a reload starts from the first slide
   go(isNaN(start) ? 0 : start - 1);
 })();
 </script>
