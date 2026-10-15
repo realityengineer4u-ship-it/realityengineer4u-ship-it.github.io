@@ -425,6 +425,26 @@ html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] h4 {
 footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .85rem; }
 footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
+/* ---------- menu button and drop-down menu (narrow screens) ---------- */
+.menu-b { display: none; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; place-content: center; gap: 4px; padding: 0; }
+.menu-b span { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .25s, opacity .2s; }
+.menu-b[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.menu-b[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-b[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.menu-b:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.mnav { position: absolute; inset-inline: 12px; top: calc(100% + 8px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; padding: .6rem; border: 1px solid var(--line); border-radius: 16px; background: rgba(16, 18, 22, .97); box-shadow: 0 18px 50px rgba(0, 0, 0, .55); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); max-width: 560px; margin-inline: auto; animation: mnin .22s ease both; }
+.mnav[hidden] { display: none; }
+.mnav a { display: flex; align-items: center; min-height: 46px; padding: .6rem .9rem; border-radius: 10px; background: rgba(255, 255, 255, .04); color: var(--ink); text-decoration: none; font-size: 1rem; }
+.mnav a:hover, .mnav a:focus-visible { background: rgba(255, 255, 255, .09); }
+.mnav a.hl { background: var(--amber); color: #120c02; font-weight: 600; }
+@keyframes mnin { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.mnav a.ext { display: none; justify-content: center; font-weight: 600; color: #fff; }
+.mnav a.ext.li { background: #0a66c2; }
+.mnav a.ext.yt { background: #e62117; }
+@media (max-width: 1080px) { .menu-b { display: grid; } }
+@media (max-width: 560px) { .nav .act .btn.li, .nav .act .btn.yt { display: none; } .mnav a.ext { display: flex; } .mnav a[href="#contact"] { grid-column: span 2; } }
+@media (min-width: 1081px) and (max-width: 1320px) { .links { gap: .95rem; font-size: .86rem; } .nav .act .btn.li, .nav .act .btn.yt { font-size: 0; gap: 0; padding: .5rem .7rem; } .nav .act .btn.li svg, .nav .act .btn.yt svg { margin: 0; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {
   .links { display: none; }
@@ -493,15 +513,30 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       <a href="#career" data-t="n.career">المسيرة</a>
       <a href="#lab" data-t="n.lab">AI</a>
       <a href="portfolio/" data-t="n.portfolio">Portfolio</a>
+      <a href="presentation/" data-t="n.deck">Slides</a>
       <a href="#services" data-t="n.services">الخدمات</a>
       <a href="#contact" data-t="n.contact">تواصل</a>
     </nav>
     <div class="act">
+      <button class="menu-b" type="button" id="menu-b" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button>
       <button class="lang" type="button" id="lang" aria-label="Switch language">EN</button>
       <a class="btn li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 2H3.6A1.6 1.6 0 0 0 2 3.6v16.8A1.6 1.6 0 0 0 3.6 22h16.8a1.6 1.6 0 0 0 1.6-1.6V3.6A1.6 1.6 0 0 0 20.4 2ZM8 19H5V9.5h3V19ZM6.5 8.2a1.8 1.8 0 1 1 0-3.5 1.8 1.8 0 0 1 0 3.5ZM19 19h-3v-4.6c0-1.1 0-2.5-1.5-2.5S12.8 13 12.8 14.3V19h-3V9.5h2.9v1.3a3.2 3.2 0 0 1 2.8-1.6c3 0 3.5 2 3.5 4.5V19Z"/></svg><span>LinkedIn</span></a>
       <a class="btn yt" href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8ZM9.8 15.1V8.9l5.7 3.1-5.7 3.1Z"/></svg><span>YouTube</span></a>
     </div>
   </div>
+  <nav class="mnav" id="mnav" aria-label="Menu" hidden>
+    <a class="hl" href="portfolio/" data-t="n.portfolio">Portfolio</a>
+    <a class="hl" href="presentation/" data-t="n.deck">Slides</a>
+    <a href="#report" data-t="n.report">Dashboard</a>
+    <a href="#projects" data-t="n.projects">المشاريع</a>
+    <a href="#career" data-t="n.career">المسيرة</a>
+    <a href="#lab" data-t="n.lab">AI</a>
+    <a href="#services" data-t="n.services">الخدمات</a>
+    <a href="#tools" data-t="n.tools">Free tools</a>
+    <a href="#contact" data-t="n.contact">تواصل</a>
+    <a class="ext li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a class="ext yt" href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener">YouTube ↗</a>
+  </nav>
 </header>
 
 <main>
@@ -778,7 +813,7 @@ const T = {
     "s.kicker": "خدمات هندسية متكاملة", "s.title": "بنستقبل مشاريع جديدة",
     "s.sub": "نفس الخبرة اللي خططت مشاريع بمليارات، متاحة لمشروعك: من الاستشارة لحد التسليم.",
     "s.cta": "عندك مشروع؟ ابعت التفاصيل وهيوصلك عرض.", "s.btn": "اطلب عرض سعر",
-    "n.lab": "AI", "n.report": "الداشبورد", "rp.kicker": "تقرير حي · Power BI × كود", "rp.title": "داشبورد تقدر تقلب فيه بنفسك", "rp.sub": "تقرير بشكل Power BI بمقاس A4 عرضي، 11 صفحة لمشروع فلل واحد: الملخص التنفيذي، نظرة عامة، الموقع الذكي بالصور واليوميات وAsite، سلامة الجدول من XER، الهندسة والمشتريات، الـ EOT والمطالبات، مونت كارلو للمخاطر، اللوجستيات، 4D للموقع كله، 4D للفيلا مع Revit، والأتمتة. اتعمل بربط Power BI بالكود. كل البيانات ديمو وهمية للعرض ومش بتمثل أي مشروع بشتغل عليه.", "rp.full": "افتحه بشاشة كاملة", "n.portfolio": "البورتفوليو", "lab.pf": "شوف البورتفوليو الكامل", "n.deck": "العرض", "lab.deck": "شوف البرزنتيشن",
+    "n.lab": "AI", "n.report": "الداشبورد", "rp.kicker": "تقرير حي · Power BI × كود", "rp.title": "داشبورد تقدر تقلب فيه بنفسك", "rp.sub": "تقرير بشكل Power BI بمقاس A4 عرضي، 11 صفحة لمشروع فلل واحد: الملخص التنفيذي، نظرة عامة، الموقع الذكي بالصور واليوميات وAsite، سلامة الجدول من XER، الهندسة والمشتريات، الـ EOT والمطالبات، مونت كارلو للمخاطر، اللوجستيات، 4D للموقع كله، 4D للفيلا مع Revit، والأتمتة. اتعمل بربط Power BI بالكود. كل البيانات ديمو وهمية للعرض ومش بتمثل أي مشروع بشتغل عليه.", "rp.full": "افتحه بشاشة كاملة", "n.portfolio": "البورتفوليو", "lab.pf": "شوف البورتفوليو الكامل", "n.deck": "العرض", "n.tools": "الأدوات المجانية", "lab.deck": "شوف البرزنتيشن",
     "lab.kicker": "أتمتة · ذكاء اصطناعي · تعلم آلي", "lab.title": "برامج زمنية بتراجع نفسها.",
     "lab.sub": "ببني أدوات بتقرأ جداول Primavera P6 وتراجعها وتنبّه للتأخير قبل ما يظهر في التقرير. الأتمتة بتعمل الشغل المتكرر، والذكاء الاصطناعي بيلقط الإشارات، والمهندس بياخد القرار.",
     "lab.mTitle": "جرّب: نموذج مخاطر التأخير", "lab.mSub": "حرّك الإشارات اللي بتطلع من تحديث P6 وشوف الشبكة بتقرأها إزاي.",
@@ -832,7 +867,7 @@ const T = {
     "s.kicker": "Integrated engineering services", "s.title": "Now taking on projects",
     "s.sub": "The same experience that planned billion-dirham projects, available for yours, from consultancy to handover.",
     "s.cta": "Have a project? Send the details and get a proposal.", "s.btn": "Request a proposal",
-    "n.lab": "AI", "n.report": "Dashboard", "rp.kicker": "Live report · Power BI × Code", "rp.title": "A dashboard you can click through", "rp.sub": "A Power BI style report on an A4 landscape canvas, eleven pages for one villa project: executive summary, overview, smart site with photos, diaries and Asite, schedule health from the XER, engineering and procurement, EOT and claims, Monte Carlo risk, logistics, 4D of the whole site, villa 4D with Revit, and automation. Built by linking Power BI with code. All data is fictional demo data and does not represent any project I work on.", "rp.full": "Open full screen", "n.portfolio": "Portfolio", "lab.pf": "See the full portfolio", "n.deck": "Slides", "lab.deck": "Watch the presentation",
+    "n.lab": "AI", "n.report": "Dashboard", "rp.kicker": "Live report · Power BI × Code", "rp.title": "A dashboard you can click through", "rp.sub": "A Power BI style report on an A4 landscape canvas, eleven pages for one villa project: executive summary, overview, smart site with photos, diaries and Asite, schedule health from the XER, engineering and procurement, EOT and claims, Monte Carlo risk, logistics, 4D of the whole site, villa 4D with Revit, and automation. Built by linking Power BI with code. All data is fictional demo data and does not represent any project I work on.", "rp.full": "Open full screen", "n.portfolio": "Portfolio", "lab.pf": "See the full portfolio", "n.deck": "Slides", "n.tools": "Free tools", "lab.deck": "Watch the presentation",
     "lab.kicker": "Automation · AI · Machine learning", "lab.title": "Schedules that check themselves.",
     "lab.sub": "I build tools that read Primavera P6 schedules, check them and flag delay before it reaches the report. Automation does the repeat work, AI picks up the signals, and the engineer makes the call.",
     "lab.mTitle": "Try it: a delay-risk model", "lab.mSub": "Move the signals that come out of a P6 update and watch the network read them.",
@@ -1233,6 +1268,17 @@ onScrollProjects(); onScrollNav();
   $("#gnote-go").addEventListener("click", hide);
 })();
 document.fonts && document.fonts.ready.then(() => { layoutProjects(); onScrollProjects(); });
+
+/* ---------- menu for narrow screens ---------- */
+(() => {
+  const b = $("#menu-b"), m = $("#mnav"); if (!b || !m) return;
+  const set = (on) => { m.hidden = !on; b.setAttribute("aria-expanded", on); };
+  b.addEventListener("click", (e) => { e.stopPropagation(); set(m.hidden); });
+  m.addEventListener("click", (e) => { if (e.target.closest("a")) set(false); });
+  document.addEventListener("click", (e) => { if (!m.hidden && !m.contains(e.target)) set(false); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && !m.hidden) { set(false); b.focus(); } });
+  addEventListener("resize", () => { if (innerWidth > 1080) set(false); });
+})();
 
 /* ---------- land exactly on a section: clears the fixed header and keeps
    re-aiming while lazy content above it (dashboard, images) settles ---------- */
