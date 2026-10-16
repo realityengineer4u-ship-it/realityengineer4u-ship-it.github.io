@@ -1,4 +1,201 @@
 {
- "_how": "Recommendations shown on the site, newest first. Paste LinkedIn recommendations here, and approved ones sent from the site form. Fields: name, role, relation (mgr | rep | team | co | client | sub | learn | other), text (as written, any language), date, source (linkedin | site), optional url (their LinkedIn), photo, project.",
- "items": []
+ "_how": "Recommendations shown on the site, newest first. Paste LinkedIn recommendations here, and approved ones sent from the site form. Fields: name, role, relation (mgr | rep | team | co | diff | study | client | sub | learn | other), text (as written, any language), date, source (linkedin | site), optional url (their LinkedIn), photo, project. Set truncated: true when the text was cut on LinkedIn (a link to the full one is shown).",
+ "items": [
+  {
+   "name": "Andrew Mathew, PMP",
+   "role": "Planning Manager | Project Management and Controls",
+   "relation": "team",
+   "date": "Aug 27, 2026",
+   "source": "linkedin",
+   "text": "I highly recommend Siddek for his exceptional skills as a Senior Planning Engineer. He has a strong expertise in site planning and a remarkable ability to transform complex planning requirements into practical, AI-based reporting systems. His innovative tools significantly streamline and facilitate the reporting process, improving efficiency, accuracy and accessibility. His combination of planning expertise and technology-driven thinking makes him a valuable asset to any project team.",
+   "photo": "assets/recs/andrew-mathew.webp"
+  },
+  {
+   "name": "Hayder Yousif",
+   "role": "Planning Manager at LAING O ROURKE CONSTRUCTION PRIVATE LIMITED",
+   "relation": "team",
+   "date": "Jul 15, 2026",
+   "source": "linkedin",
+   "text": "SIDDEK has excellent planning and scheduling skills, with strong proficiency in programming and automation tools. His ability to analyze project data, develop efficient workflows, and create customized solutions has significantly improved project performance and reporting accuracy"
+  },
+  {
+   "name": "Afsal Abdul Azeez",
+   "role": "Planning / Project Engineer | Oil & Gas Industry | Project Controls & Scheduling",
+   "relation": "team",
+   "date": "Jul 6, 2026",
+   "source": "linkedin",
+   "text": "I currently have the privilege of working with Siddek at GINCO Contracting on the Acres project, and it has been a truly rewarding experience. Siddek is one of the few engineers who seamlessly combines engineering expertise with the power of AI to work smarter, enhance productivity, and consistently deliver outstanding results.\nSince the project began, he has continuously supported our team through his technical expertise, innovative mindset, and problem-solving abilities. His knowledge of Power BI and AI is…",
+   "photo": "assets/recs/afsal-abdul-azeez.webp",
+   "truncated": true
+  },
+  {
+   "name": "Mohammad Munir PMP/DM",
+   "role": "Assistant Vice President",
+   "relation": "mgr",
+   "date": "Jul 6, 2026",
+   "source": "linkedin",
+   "text": "I worked with Siddek at Ginco Contracting and found him to be a smart, dedicated, and reliable Planning Engineer. He is technically capable, easy to work with, and always committed to delivering his work. I wish him every success in his career.",
+   "photo": "assets/recs/mohammad-munir.webp"
+  },
+  {
+   "name": "Syed Muzammil (PMP)®",
+   "role": "Senior Planning Engineer, PMP | Project Controls | Primavera P6 | Delay Analysis | Risk Management | High Rise & Villa Projects | ADNOC, ENOC & EMARAT Projects",
+   "relation": "team",
+   "date": "Jun 29, 2026",
+   "source": "linkedin",
+   "text": "It has been a pleasure working with you. Your technical expertise, sharp problem solving skills and ability to complete complex tasks efficiently are truly impressive.\n\nWhat makes you stand out even more is your humility and kindness. It is rare to find someone who is both exceptionally talented and an outstanding human being. Wishing you continued success.",
+   "photo": "assets/recs/syed-muzammil.webp"
+  },
+  {
+   "name": "Shehab-Eddin Abd-Ennasser",
+   "role": "BIM Manager | Mechanical Engineer",
+   "relation": "team",
+   "date": "May 11, 2026",
+   "source": "linkedin",
+   "text": "I had the pleasure of working with Siddek. He is professional, detail-oriented, and consistently demonstrates strong planning, coordination, and problem-solving skills.\n\nHe is  a fast learner who effectively uses new technologies to streamline planning workflows and improve the efficiency of daily and weekly reporting and monitoring.…",
+   "photo": "assets/recs/shehab-eddin.webp",
+   "truncated": true
+  },
+  {
+   "name": "Hafiz hassan Ali",
+   "role": "Planning & Control Engineer | Project Manager | Town Planning | High Rise & Mixed-Use | Luxury Residential | Retail & Hospitality | Wastewater Infrastructure & Wet Utilities | OMNIYAT | DHRE | WASL | EMAAR | WADE ADAMS",
+   "relation": "team",
+   "date": "Apr 30, 2026",
+   "source": "linkedin",
+   "text": "I had the pleasure of working with Seddiq at GCC GINCO, where he consistently demonstrated strong capabilities as a Planning Engineer.\n\nWhat really sets Seddiq apart is his ability to combine solid planning fundamentals with automation and smart tools. He has developed Excel-based macros and coding solutions that significantly reduce the time required for schedule updates, reporting, and data analysis — turning tasks that…",
+   "photo": "assets/recs/hafiz-hassan-ali.webp",
+   "truncated": true
+  },
+  {
+   "name": "mohamed barakat",
+   "role": "Civil Engineer | SCE Member | Roads & Infrastructure | Expert in Civil 3D, BIM tools | Tendering | Cost Professional in Training.",
+   "relation": "study",
+   "date": "Apr 25, 2026",
+   "source": "linkedin",
+   "text": "I had the pleasure of working with Seddeq at the Faculty of Engineering, Zagazig University, and I can confidently say that he is a highly capable, professional, and dependable colleague.Seddeq demonstrates strong technical knowledge, a disciplined work ethic, and a genuine commitment to quality in every task he takes on.\nWhat stands out most about Seddeq his ability to work effectively with others, communicate clearly, and handle responsibilities with integrity and consistency.He is also proactive, supportive, and…",
+   "photo": "assets/recs/mohamed-barakat.webp",
+   "truncated": true
+  },
+  {
+   "name": "Elbara Isam",
+   "role": "Planning Engineer @ Ginco Contracting Co. LLC | Construction Management | p6 Expertise",
+   "relation": "team",
+   "date": "Mar 5, 2026",
+   "source": "linkedin",
+   "text": "I had the pleasure of working with Siddek at Ginco Contracting, where he demonstrated strong professionalism and solid expertise in planning and project controls. He is highly skilled in project scheduling, progress monitoring, and reporting, with excellent analytical abilities.\n\nSiddek is also highly proficient in Power BI, using it effectively to develop insightful dashboards that support project performance tracking and decision-making. I highly recommend him as a competent and dedicated Planning Engineer.",
+   "photo": "assets/recs/elbara-isam.webp"
+  },
+  {
+   "name": "Ammar Usama, PMP",
+   "role": "Sr. Planning Engineer at UNEC",
+   "relation": "study",
+   "date": "Feb 21, 2026",
+   "source": "linkedin",
+   "text": "I have had a pleasure of knowing siddek for more than 10 years and full of confidently I can say that he was exceptionally hardworking and intelligent\nAdditionally he is professional and reliable that’s why I highly recommended him for any opportunity",
+   "photo": "assets/recs/ammar-usama.webp"
+  },
+  {
+   "name": "Ahmed Soliman",
+   "role": "Project Engineer | Senior Civil Engineer | 8+ Years Experience | UAE | Large-Scale Residential Projects",
+   "relation": "study",
+   "date": "Aug 16, 2025",
+   "source": "linkedin",
+   "text": "we were friends at the same university, and I have known him as an outstanding student since that time. He demonstrates strong proficiency in various engineering software programs and possesses excellent leadership skills in managing and guiding the employees under his supervision.",
+   "photo": "assets/recs/ahmed-soliman.webp"
+  },
+  {
+   "name": "ABDUL RIYAZ B A",
+   "role": "Planning Engineer – Planning | Construction Project Expert | Scheduling | Budgeting | Cost Control | QS Professional | 10+ Years of Experience | Ex-Sobha Ltd",
+   "relation": "team",
+   "date": "Jul 2, 2025",
+   "source": "linkedin",
+   "text": "I’ve had the pleasure of working with Siddek and can confidently say he is one of the most reliable and technically skilled professionals I know.\n\nSiddek has exceptional expertise in Primavera, with a keen ability to analyze schedules thoroughly, resolve complex issues, and tackle challenges efficiently. He always spots potential problems early and addresses them proactively to keep work on track.…",
+   "photo": "assets/recs/abdul-riyaz.webp",
+   "truncated": true
+  },
+  {
+   "name": "Mohamad Gammaz, PMP®, PRMG",
+   "role": "RTA Approved | Railway | High Speed Rail HSR | Oil&Gas | ADNOC | TAQA Approved | Bridges | Tunnels | Consulting",
+   "relation": "diff",
+   "date": "May 16, 2025",
+   "source": "linkedin",
+   "text": "I have had the pleasure of knowing Eng. SIDDEK for more than six years, both as a colleague and a close friend and I can truly say that I've had a friend of lifetime.\n\nI worked with SIDDEk on a mega steel structure project in the past, and then became close friends. His dedication and work ethic stood out, in addition to his hardworking. He was always striving to grow technically, continuously learning and developing his skills.…",
+   "photo": "assets/recs/mohamad-gammaz.webp",
+   "truncated": true
+  },
+  {
+   "name": "Mohammed Abdelrhman, PMP",
+   "role": "Project Manager | 12 Years’ Experience in Industrial Maintenance & Civil Projects",
+   "relation": "team",
+   "date": "May 15, 2025",
+   "source": "linkedin",
+   "text": "I have had the pleasure of working with Eng. Siddek on several projects, and I am consistently impressed by his exceptional skills in civil engineering and project management. His expertise in planning, execution, and site coordination is evident in every task he undertakes.\n\nSiddek is not only technically proficient but also highly committed, detail-oriented, and proactive in solving complex challenges. His ability to lead teams effectively and maintain high productivity…",
+   "truncated": true
+  },
+  {
+   "name": "Osama Qassem",
+   "role": "Senior Planning Engineer | Project Controls | PMO | Project Management | Power BI | Schedule Management | Delay Analysis | Infrastructure Projects",
+   "relation": "team",
+   "date": "May 15, 2025",
+   "source": "linkedin",
+   "text": "I’ve had the pleasure of working with Siddek and can confidently say he is one of the most capable and well-rounded planning engineers I’ve come across. His strength lies not only in mastering project scheduling tools and techniques but also in his solid background in site execution and technical design, which gives him a unique edge in understanding and aligning the plan with real-world construction dynamics.\nHe’s also committed to continuous learning, always seeking to enhance his knowledge and stay ahead in the field."
+  },
+  {
+   "name": "Muhammad Bahaa Elfeel",
+   "role": "Project Control | Planning Engineer | Primavera P6 | Cost & Time Management | Project Planning & Control Engineer | Scheduling | Delay Analysis | Cost Control | Expertise in Project Management & Construction",
+   "relation": "mgr",
+   "date": "Apr 1, 2025",
+   "source": "linkedin",
+   "text": "I am pleased to recommend a person like Eng SIDDEK who has several engineering skills in civil engineering he is a committed , accurate, honest, helpful and ambitious one also he can lead a team without any problem and with high productive work . He is the best choice for everyone who want to get a quick and accurate work."
+  },
+  {
+   "name": "Abdallah Abdelbaset",
+   "role": "Civil Engineer | QC Engineer | Site Engineer | Concrete & Quality Control | Open to Work",
+   "relation": "client",
+   "date": "Feb 22, 2025",
+   "source": "linkedin",
+   "text": "Eng. Siddek is an exceptional professional who would be a great addition to any engineering team. His expertise in civil engineering, planning, and BIM technology, combined with his strong work ethic, sets him apart. His leadership and communication skills play a crucial role in driving projects to success. I fully recommend him without hesitation."
+  },
+  {
+   "name": "Mohamed Elessili, PMP®",
+   "role": "Planning Engineer @ Building forum company | PMP, MBA",
+   "relation": "mgr",
+   "date": "May 4, 2024",
+   "source": "linkedin",
+   "text": "A highly qualified engineer who is very skilled in his work"
+  },
+  {
+   "name": "Mohamed Abdalla",
+   "role": "Customer Success specialist(SaaS) | Enterprise Customer Success | Product Adoption & Retention | CRM & Operations | Arabic & English",
+   "relation": "team",
+   "date": "Apr 22, 2024",
+   "source": "linkedin",
+   "text": "The best technical,site engineer and colleague to work with."
+  },
+  {
+   "name": "Abdelrhman Mohamed",
+   "role": "Senior QS at Redcon construction co.",
+   "relation": "diff",
+   "date": "Apr 20, 2024",
+   "source": "linkedin",
+   "text": "I find SIDDEK to be a complete civil engineer.  He has an innovative way of thinking to solve problems and overcome difficulties.  Good team player.  Very flexible and deals with different work conditions and difficulties.He has absolutely my full endorsement."
+  },
+  {
+   "name": "Mahmoud Elmansy",
+   "role": "Owner of “Mahmoud Elmansy For Technical Works CO”",
+   "relation": "diff",
+   "date": "Apr 20, 2024",
+   "source": "linkedin",
+   "text": "I highly recommend Eng / Siddek for any engineering role. Their expertise in civil engineering and BIM technology, combined with a strong work ethic, makes them an asset to any team. Siddek's leadership and communication skills ensure project success. They have my full endorsement."
+  },
+  {
+   "name": "Tarek Hussien",
+   "role": "cairo",
+   "relation": "mgr",
+   "date": "Apr 20, 2024",
+   "source": "linkedin",
+   "text": "I have had the pleasure of working with you for several years at two different companies. As a colleague and former line manager, I can confidently attest to your exceptional work ethic, dedication and commitment to professional growth.\nDuring our time together, You have consistently gone above and beyond, delivering high-quality results and fostering a positive work atmosphere. Their passion for excellence and genuine enthusiasm for their work was evident to everyone around them.…",
+   "truncated": true
+  }
+ ]
 }

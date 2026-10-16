@@ -627,11 +627,14 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 .rec-c .q { position: absolute; inset-inline-end: 1.1rem; top: .4rem; font: 800 4.2rem/1 Georgia, serif; color: rgba(245,165,36,.18); pointer-events: none; }
 .rec-c blockquote { margin: 0; font-size: .98rem; line-height: 1.8; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
 .rec-c.open blockquote { -webkit-line-clamp: unset; display: block; }
+.rec-c .full { justify-self: start; color: #6fb2f2; font-size: .84rem; text-decoration: none; margin-top: -.5rem; }
+.rec-c .full:hover { text-decoration: underline; }
 .rec-c .more { justify-self: start; border: 0; background: none; padding: 0; color: var(--amber-ink); font: 600 .85rem var(--f-sans, system-ui); cursor: pointer; }
 .rec-who { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: .8rem; align-items: center; padding-top: .9rem; border-top: 1px solid var(--line); }
 .rec-av { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font: 800 .95rem var(--f-display); color: #fff; overflow: hidden; }
 .rec-av img { width: 100%; height: 100%; object-fit: cover; }
 .rec-who b { display: block; font-weight: 700; }
+.rec-who small { display: block; color: var(--muted); font: .74rem var(--f-mono); margin-top: .2rem; opacity: .8; }
 .rec-who > div > span { display: block; color: var(--muted); font-size: .84rem; line-height: 1.45; }
 .rec-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
 .rec-tags i { font-style: normal; font-size: .76rem; padding: .22rem .6rem; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); }
@@ -642,9 +645,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 .rec-empty .q { font: 800 3.4rem/1 Georgia, serif; color: var(--amber); }
 .rec-empty b { display: block; font-size: 1.1rem; }
 .rec-empty span { color: var(--muted); font-size: .92rem; }
-.recs-nav { display: flex; gap: .4rem; justify-content: center; }
-.recs-nav button { width: 8px; height: 8px; border-radius: 4px; border: 0; padding: 0; background: rgba(255,255,255,.2); cursor: pointer; transition: width .3s, background .3s; }
-.recs-nav button[aria-current="true"] { width: 26px; background: var(--amber); }
+.recs-nav { display: flex; gap: .8rem; justify-content: center; align-items: center; }
+.recs-nav button { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 1.1rem; cursor: pointer; transition: background .2s, border-color .2s; }
+.recs-nav button:hover { background: var(--amber); border-color: var(--amber); color: #120c02; }
+.recs-nav .ct { font: .85rem var(--f-mono); color: var(--muted); min-width: 4.5rem; text-align: center; }
+.rec-who > div > span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .rmod { position: fixed; inset: 0; z-index: 130; display: grid; place-items: center; padding: 16px; background: rgba(5,6,8,.82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); overflow-y: auto; animation: mnin .25s ease both; }
 .rmod[hidden] { display: none; }
 .rmod-box { width: min(720px, 100%); max-height: calc(100dvh - 32px); overflow-y: auto; display: grid; gap: 1rem; padding: clamp(1.1rem, 3vw, 1.8rem); border-radius: 22px; border: 1px solid var(--line); background: var(--bg-2); box-shadow: 0 30px 80px rgba(0,0,0,.6); }
@@ -1440,8 +1445,9 @@ Object.assign(T.ar, {
   "r.fText": "التوصية", "r.fMsg": "رسالة خاصة ليا (مش هتتنشر)", "r.fMail": "إيميلك للرد (اختياري، مش هيتنشر)", "r.fLi": "رابط لينكدإن بتاعك (اختياري)",
   "r.fConsent": "موافق إن اسمي ووظيفتي والتوصية يظهروا في الموقع بعد المراجعة.", "r.fNote": "مفيش حاجة بتتنشر من غير مراجعة. الإيميل والرسالة الخاصة مش بيظهروا لأي حد.", "r.fSend": "ابعت",
   "r.mode": [["توصية", "ممكن تتنشر في الموقع"], ["رسالة بس", "خاصة ليا"]],
-  "r.rel": { mgr: "كنت مديره", rep: "كان مديري", team: "في نفس الفريق", co: "نفس الشركة، فريق تاني", client: "عميل أو استشاري", sub: "مقاول باطن أو مورد", learn: "اتعلمت منه", other: "علاقة تانية" },
-  "r.relCard": { mgr: "كان مدير صديق", rep: "صديق كان مديره", team: "اشتغلوا في نفس الفريق", co: "نفس الشركة", client: "عميل / استشاري", sub: "مقاول باطن / مورد", learn: "اتعلم منه", other: "" },
+  "r.rel": { mgr: "كنت مديره", rep: "كان مديري", team: "في نفس الفريق", co: "نفس الشركة، فريق تاني", diff: "اشتغلنا من شركتين مختلفتين", study: "درسنا مع بعض", client: "عميل أو استشاري", sub: "مقاول باطن أو مورد", learn: "اتعلمت منه", other: "علاقة تانية" },
+  "r.relCard": { mgr: "كان مدير صديق المباشر", rep: "صديق كان مديره", team: "اشتغلوا في نفس الفريق", co: "نفس الشركة", diff: "اشتغلوا مع بعض من شركتين مختلفتين", study: "درسوا مع بعض", client: "كان عميل صديق", sub: "مقاول باطن / مورد", learn: "اتعلم منه", other: "" },
+  "r.full": "التوصية كاملة على لينكدإن", "r.count": "{n} توصية على لينكدإن",
   "r.src": { linkedin: "لينكدإن", site: "من الموقع" },
   "r.eName": "اكتب اسمك.", "r.eRole": "اكتب وظيفتك والشركة.", "r.eRel": "اختار علاقتك بيا.", "r.eText": "التوصية قصيرة شوية، اكتب 30 حرف على الأقل.", "r.eMsg": "اكتب رسالتك.", "r.eConsent": "لازم توافق على النشر علشان التوصية تظهر، أو اختار «رسالة بس».", "r.eMail": "الإيميل مش مظبوط.",
   "r.back": "→ رجوع", "r.chT": "فين تحب تكتب التوصية؟", "r.chS": "اختار المكان اللي يريحك.",
@@ -1459,8 +1465,9 @@ Object.assign(T.en, {
   "r.fText": "Recommendation", "r.fMsg": "Private message to me (not published)", "r.fMail": "Your email for a reply (optional, private)", "r.fLi": "Your LinkedIn link (optional)",
   "r.fConsent": "I agree that my name, role and recommendation may appear on this site after review.", "r.fNote": "Nothing is published without review. Your email and private message are never shown.", "r.fSend": "Send",
   "r.mode": [["Recommendation", "may be published on the site"], ["Message only", "private, to me"]],
-  "r.rel": { mgr: "I managed Siddek", rep: "Siddek managed me", team: "Same team", co: "Same company, other team", client: "Client or consultant", sub: "Subcontractor or supplier", learn: "I learned from him", other: "Other" },
-  "r.relCard": { mgr: "Managed Siddek", rep: "Reported to Siddek", team: "Worked on the same team", co: "Same company", client: "Client / consultant", sub: "Subcontractor / supplier", learn: "Learned from Siddek", other: "" },
+  "r.rel": { mgr: "I managed Siddek", rep: "Siddek managed me", team: "Same team", co: "Same company, other team", diff: "Worked together, different companies", study: "Studied together", client: "Client or consultant", sub: "Subcontractor or supplier", learn: "I learned from him", other: "Other" },
+  "r.relCard": { mgr: "Managed Siddek directly", rep: "Reported to Siddek", team: "Worked on the same team", co: "Same company", diff: "Worked together, different companies", study: "Studied together", client: "Was Siddek's client", sub: "Subcontractor / supplier", learn: "Learned from Siddek", other: "" },
+  "r.full": "Full recommendation on LinkedIn", "r.count": "{n} recommendations on LinkedIn",
   "r.src": { linkedin: "LinkedIn", site: "Via the site" },
   "r.eName": "Please add your name.", "r.eRole": "Please add your role and company.", "r.eRel": "Please choose how you know me.", "r.eText": "The recommendation is a bit short, at least 30 characters please.", "r.eMsg": "Please write your message.", "r.eConsent": "Please agree to publishing so the recommendation can appear, or choose Message only.", "r.eMail": "That email does not look right.",
   "r.back": "← Back", "r.chT": "Where would you like to write it?", "r.chS": "Pick whichever is easier for you.",
@@ -1479,15 +1486,17 @@ function renderRecs(d) {
     tr.innerHTML = `<div class="rec-empty"><span class="q">“</span><div><b>${esc(d["r.emptyT"])}</b><span>${esc(d["r.emptyS"])}</span></div><button type="button" class="btn solid" data-rec-open>${esc(d["r.leave"])} +</button></div>`;
     $("#recs-nav").innerHTML = ""; return;
   }
-  tr.innerHTML = RECS.map((r, i) => `<article class="rec-c" data-i="${i}"><span class="q" aria-hidden="true">”</span><blockquote dir="auto">${esc(r.text)}</blockquote>${r.text.length > 320 ? `<button type="button" class="more">${esc(d["r.more"])}</button>` : ""}<div class="rec-tags">${r.relation && d["r.relCard"][r.relation] ? `<i>${esc(d["r.relCard"][r.relation])}</i>` : ""}${r.project ? `<i>${esc(r.project)}</i>` : ""}<i class="${r.source === "site" ? "site" : "src"}">${esc(d["r.src"][r.source] || d["r.src"].linkedin)}</i></div><div class="rec-who"><span class="rec-av" style="background:${recCol(r.name)}">${r.photo ? `<img src="${esc(r.photo)}" alt="" loading="lazy">` : esc(initials(r.name))}</span><div><b dir="auto">${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:inherit">${esc(r.name)}</a>` : esc(r.name)}</b><span dir="auto">${esc(r.role || "")}${r.date ? ` · ${esc(r.date)}` : ""}</span></div></div></article>`).join("");
+  tr.innerHTML = RECS.map((r, i) => `<article class="rec-c" data-i="${i}" dir="${/[\u0600-\u06ff]/.test(r.text) ? "rtl" : "ltr"}"><span class="q" aria-hidden="true">”</span><blockquote dir="auto">${esc(r.text)}</blockquote>${r.text.length > 320 ? `<button type="button" class="more">${esc(d["r.more"])}</button>` : ""}${r.truncated ? `<a class="full" href="https://www.linkedin.com/in/siddekmahmoud/details/recommendations/" target="_blank" rel="noopener">${esc(d["r.full"])} ↗</a>` : ""}<div class="rec-tags">${r.relation && d["r.relCard"][r.relation] ? `<i>${esc(d["r.relCard"][r.relation])}</i>` : ""}${r.project ? `<i>${esc(r.project)}</i>` : ""}<i class="${r.source === "site" ? "site" : "src"}">${esc(d["r.src"][r.source] || d["r.src"].linkedin)}</i></div><div class="rec-who"><span class="rec-av" style="background:${recCol(r.name)}">${r.photo ? `<img src="${esc(r.photo)}" alt="" loading="lazy">` : esc(initials(r.name))}</span><div><b dir="auto">${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:inherit">${esc(r.name)}</a>` : esc(r.name)}</b><span dir="auto">${esc(r.role || "")}</span>${r.date ? `<small dir="ltr">${esc(r.date)}</small>` : ""}</div></div></article>`).join("");
   tr.querySelectorAll(".more").forEach((b) => b.onclick = () => { const c = b.closest(".rec-c"), o = c.classList.toggle("open"); b.textContent = o ? d["r.less"] : d["r.more"]; });
+  const cnt = RECS.filter((x) => x.source !== "site").length, lk = $("#recs .recs-act .btn.li span"); if (lk && cnt) lk.textContent = d["r.count"].replace("{n}", cnt);
   const cards = [...tr.children];
-  $("#recs-nav").innerHTML = cards.length > 1 ? cards.map((_, i) => `<button type="button" aria-label="${i + 1}" data-i="${i}"></button>`).join("") : "";
-  const dots = [...$("#recs-nav").children], cur = () => { const r0 = tr.getBoundingClientRect(); let best = 0, bd = 1e9; cards.forEach((c, i) => { const dd = Math.abs(c.getBoundingClientRect().left - r0.left); if (dd < bd) { bd = dd; best = i; } }); return best; };
-  const mark = () => { const k = cur(); dots.forEach((b, i) => b.setAttribute("aria-current", i === k)); };
-  const show = (i) => { const c = cards[(i + cards.length) % cards.length]; tr.scrollTo({ left: c.offsetLeft - tr.offsetLeft - (lang === "ar" ? tr.clientWidth - c.offsetWidth : 0), behavior: reduceMotion ? "auto" : "smooth" }); };
-  dots.forEach((b) => b.onclick = () => show(+b.dataset.i));
-  tr.onscroll = () => mark(); mark();
+  const nav = $("#recs-nav"), prevI = lang === "ar" ? "→" : "←", nextI = lang === "ar" ? "←" : "→";
+  nav.innerHTML = cards.length > 1 ? `<button type="button" class="pv" aria-label="Previous">${prevI}</button><span class="ct" dir="ltr"></span><button type="button" class="nx" aria-label="Next">${nextI}</button>` : "";
+  const cur = () => { const r0 = tr.getBoundingClientRect(); let best = 0, bd = 1e9; cards.forEach((c, i) => { const r1 = c.getBoundingClientRect(), dd = Math.abs(lang === "ar" ? r1.right - r0.right : r1.left - r0.left); if (dd < bd) { bd = dd; best = i; } }); return best; };
+  const mark = () => { const ct = nav.querySelector(".ct"); if (ct) ct.textContent = `${cur() + 1} / ${cards.length}`; };
+  const show = (i) => { const c = cards[(i + cards.length) % cards.length]; c.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest", inline: "start" }); };
+  if (cards.length > 1) { nav.querySelector(".pv").onclick = () => show(cur() - 1); nav.querySelector(".nx").onclick = () => show(cur() + 1); }
+  let st = 0; tr.onscroll = () => { cancelAnimationFrame(st); st = requestAnimationFrame(mark); }; mark();
   clearInterval(recTimer);
   if (!reduceMotion && cards.length > 1) recTimer = setInterval(() => { if (document.hidden || tr.matches(":hover") || !$("#rmod").hidden) return; const r0 = tr.getBoundingClientRect(); if (r0.bottom < 0 || r0.top > innerHeight) return; const k = cur(); show(k + 1 >= cards.length ? 0 : k + 1); }, 7000);
 }
