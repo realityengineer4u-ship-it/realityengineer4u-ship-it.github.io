@@ -5,7 +5,7 @@ Runs on a schedule in GitHub Actions (see .github/workflows/youtube.yml) and can
 be run by hand: python3 scripts/update_youtube.py
 Standard library only. If YouTube cannot be reached, the old file is kept.
 """
-import json, re, sys, urllib.request, xml.etree.ElementTree as ET
+import json, re, sys, time, urllib.error, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -15,14 +15,21 @@ OUT = Path(__file__).resolve().parent.parent / "data" / "youtube.json"
 UA = {"User-Agent": "Mozilla/5.0 (site data refresh)", "Accept-Language": "en-US,en;q=0.9"}
 
 
+def get_lang(url, accept="en-US,en;q=0.9", tries=4):
+    """YouTube sometimes answers 404 or 5xx for a moment (the RSS feed above all), so retry with a pause."""
+    for n in range(tries):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers={**UA, "Accept-Language": accept}), timeout=30) as r:
+                return r.read().decode("utf-8", "replace")
+        except (urllib.error.URLError, TimeoutError) as err:
+            if n == tries - 1:
+                raise
+            print(f"retry {n + 1} for {url}: {err}", file=sys.stderr)
+            time.sleep(5 * (n + 1))
+
+
 def get(url):
-    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
-        return r.read().decode("utf-8", "replace")
-
-
-def get_lang(url, accept):
-    with urllib.request.urlopen(urllib.request.Request(url, headers={**UA, "Accept-Language": accept}), timeout=30) as r:
-        return r.read().decode("utf-8", "replace")
+    return get_lang(url)
 
 
 def views_num(t):
@@ -67,9 +74,14 @@ def first(pattern, text):
 
 def main():
     ns = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/schemas/2015", "media": "http://search.yahoo.com/mrss/"}
-    root = ET.fromstring(get(f"https://www.youtube.com/feeds/videos.xml?channel_id={CHANNEL}"))
+    old_data = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     items = []
-    for e in root.findall("a:entry", ns):
+    try:
+        root = ET.fromstring(get(f"https://www.youtube.com/feeds/videos.xml?channel_id={CHANNEL}"))
+    except Exception as err:  # the feed only adds exact view counts and dates; the Videos tab below is enough
+        print("feed failed, keeping the last feed items:", err, file=sys.stderr)
+        root = None
+    for e in (root.findall("a:entry", ns) if root is not None else []):
         vid = e.findtext("yt:videoId", namespaces=ns)
         link = e.find("a:link", ns).get("href", "")
         stats = e.find("media:group/media:community/media:statistics", ns)
@@ -81,7 +93,7 @@ def main():
             "short": "/shorts/" in link,
         })
     if not items:
-        raise SystemExit("feed returned no videos")
+        items = old_data.get("items", [])
 
     # the latest regular videos (no Shorts) with view counts, titles in both languages
     videos = []
@@ -116,8 +128,11 @@ def main():
     mine = set(json.loads(mine_file.read_text(encoding="utf-8")).get("mine", [])) if mine_file.exists() else set()
     for v in videos:
         v["mine"] = v["id"] in mine
-    if not videos and OUT.exists():
-        videos = json.loads(OUT.read_text(encoding="utf-8")).get("videos", [])
+    if not videos:
+        if root is None:
+            print("YouTube unreachable this run; data/youtube.json left as it was")
+            return
+        videos = old_data.get("videos", [])
     data = {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "channel": channel, "videos": videos, "items": items}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
