@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-18T15:53:20Z",
+ "updated": "2026-10-18T20:45:43Z",
  "channel": {
-  "subscribers": "90.1K",
   "joined": "Jan 12, 2018",
+  "views": "4,516,032",
   "videos": "580",
-  "views": "4,516,032"
+  "subscribers": "90.1K"
  },
  "videos": [
   {
@@ -30,8 +30,8 @@
    },
    "views": 1100,
    "ago": {
-    "en": "7d ago",
-    "ar": "قبل 7 أيام"
+    "en": "8d ago",
+    "ar": "قبل 8 أيام"
    },
    "published": null,
    "duration": "11:24",
@@ -58,10 +58,10 @@
     "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
     "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
    },
-   "views": 475,
+   "views": 476,
    "ago": {
-    "en": "10d ago",
-    "ar": "قبل 10 أيام"
+    "en": "11d ago",
+    "ar": "قبل 11 يومًا"
    },
    "published": null,
    "duration": "12:40",
@@ -73,7 +73,7 @@
     "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
-   "views": 373,
+   "views": 376,
    "ago": {
     "en": "13d ago",
     "ar": "قبل 13 يومًا"
@@ -178,7 +178,7 @@
     "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
-   "views": 609,
+   "views": 610,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -253,7 +253,7 @@
     "en": "التصالح في مخالفات البناء 2026: إيصال جدية التصالح ما بيحميش شقتك! (آخر موعد 5 نوفمبر)",
     "ar": "التصالح في مخالفات البناء 2026: إيصال جدية التصالح ما بيحميش شقتك! (آخر موعد 5 نوفمبر)"
    },
-   "views": 747,
+   "views": 749,
    "ago": {
     "en": "4w ago",
     "ar": "قبل 4 أسابيع"
@@ -325,10 +325,10 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
+    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
-   "views": 612,
+   "views": 613,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -418,7 +418,7 @@
     "en": "Must-Know Construction Terminology | Engineer in the UAE?",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 837,
+   "views": 839,
    "ago": {
     "en": "4mo ago",
     "ar": "خلال 4 أشهر"
@@ -448,7 +448,7 @@
     "en": "Starting excavation for a villa in the UAE 2026|Determining excavation boundaries and levels on-site",
     "ar": "بداية حفر فيلا في الإمارات 2026 | تحديد حدود ومنسوب الحفر من الموقع خطوة بخطوة"
    },
-   "views": 661,
+   "views": 664,
    "ago": {
     "en": "7mo ago",
     "ar": "خلال 7 أشهر"
@@ -512,7 +512,7 @@
    "id": "xpXyZQbzi7s",
    "title": "حساب هامش الربح: منتج بيكسبك 150 جنيه طلع 16 بس!",
    "published": "2026-10-11T00:21:51+00:00",
-   "views": 534,
+   "views": 537,
    "short": true
   },
   {
@@ -533,7 +533,7 @@
    "id": "CEjLiF-ABnY",
    "title": "الرجوع من الغربة: فيلا 10 سنين = كاش حي في أصل ميت",
    "published": "2026-10-11T00:19:15+00:00",
-   "views": 3949,
+   "views": 3952,
    "short": true
   },
   {
@@ -554,7 +554,7 @@
    "id": "bhYWxgdGm2w",
    "title": "اشتري ارض ولا شقة؟ إنت شاري «هواء محاط بخرسانة»",
    "published": "2026-10-10T21:16:06+00:00",
-   "views": 1711,
+   "views": 1716,
    "short": true
   },
   {
