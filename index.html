@@ -801,6 +801,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   <div class="wrap">
     <a class="brand" href="#hero"><i>S</i><b data-t="name">صديق محمود</b></a>
     <nav class="links" aria-label="Sections">
+      <a href="#cv" data-t="n.cv">CV</a>
       <a href="#report" data-t="n.report">Dashboard</a>
       <a href="#projects" data-t="n.projects">المشاريع</a>
       <a href="#career" data-t="n.career">المسيرة</a>
@@ -809,7 +810,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       <a href="presentation/" data-t="n.deck">Slides</a>
       <a href="#services" data-t="n.services">الخدمات</a>
       <a href="#tools" data-t="n.tools">أدواتي</a>
-      <a href="#cv" data-t="n.cv">CV</a>
       <a href="#contact" data-t="n.contact">تواصل</a>
     </nav>
     <div class="act">
@@ -822,13 +822,13 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   <nav class="mnav" id="mnav" aria-label="Menu" hidden>
     <a class="hl" href="portfolio/" data-t="n.portfolio">Portfolio</a>
     <a class="hl" href="presentation/" data-t="n.deck">Slides</a>
+    <a href="#cv" data-t="n.cv">CV</a>
     <a href="#report" data-t="n.report">Dashboard</a>
     <a href="#projects" data-t="n.projects">المشاريع</a>
     <a href="#career" data-t="n.career">المسيرة</a>
     <a href="#lab" data-t="n.lab">AI</a>
     <a href="#services" data-t="n.services">الخدمات</a>
     <a href="#tools" data-t="n.tools">Free tools</a>
-    <a href="#cv" data-t="n.cv">CV</a>
     <a href="#contact" data-t="n.contact">تواصل</a>
     <a class="ext li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener">LinkedIn ↗</a>
     <a class="ext yt" href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener">YouTube ↗</a>
@@ -896,6 +896,33 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   </section>
 
   <!-- LIVE REPORT (Power BI style, embedded) -->
+  <!-- CV -->
+  <section class="section" id="cv">
+    <div class="wrap cvgrid">
+      <figure class="cvsheet" data-r>
+        <div class="back"></div>
+        <div class="pg"><img src="assets/cv-page1.webp" alt="First page of Siddek Mahmoud Samy's CV" width="880" height="1246" loading="lazy"></div>
+        <span class="stamp">ATS-READY · PDF + WORD</span>
+      </figure>
+      <div class="cvcopy" data-r>
+        <span class="kicker" data-t="cv.kicker">السيرة الذاتية</span>
+        <h2 class="h2" data-t="cv.title"></h2>
+        <p class="lead" data-t="cv.lead"></p>
+        <ul class="cvlist">
+          <li><span data-t="cv.l1"></span></li>
+          <li><span data-t="cv.l2"></span></li>
+          <li><span data-t="cv.l3"></span></li>
+          <li><span data-t="cv.l4"></span></li>
+        </ul>
+        <div class="cvbtns">
+          <a class="btn solid" href="cv/Siddek_Mahmoud_Samy_CV.pdf" download="Siddek_Mahmoud_Samy_CV.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg><span data-t="cv.pdf">حمّل PDF</span></a>
+          <a class="btn" href="cv/Siddek_Mahmoud_Samy_CV.docx" download="Siddek_Mahmoud_Samy_CV.docx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg><span data-t="cv.word">حمّل Word</span></a>
+        </div>
+        <p class="cvnote" data-t="cv.note"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="report">
     <div class="wrap report-embed">
       <div class="head" data-r style="margin-bottom:0">
@@ -1075,33 +1102,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         <p class="lead" data-t="t.sub"></p>
       </div>
       <div class="tools" id="toolgrid"></div>
-    </div>
-  </section>
-
-  <!-- CV -->
-  <section class="section" id="cv">
-    <div class="wrap cvgrid">
-      <figure class="cvsheet" data-r>
-        <div class="back"></div>
-        <div class="pg"><img src="assets/cv-page1.webp" alt="First page of Siddek Mahmoud Samy's CV" width="880" height="1246" loading="lazy"></div>
-        <span class="stamp">ATS-READY · PDF + WORD</span>
-      </figure>
-      <div class="cvcopy" data-r>
-        <span class="kicker" data-t="cv.kicker">السيرة الذاتية</span>
-        <h2 class="h2" data-t="cv.title"></h2>
-        <p class="lead" data-t="cv.lead"></p>
-        <ul class="cvlist">
-          <li><span data-t="cv.l1"></span></li>
-          <li><span data-t="cv.l2"></span></li>
-          <li><span data-t="cv.l3"></span></li>
-          <li><span data-t="cv.l4"></span></li>
-        </ul>
-        <div class="cvbtns">
-          <a class="btn solid" href="cv/Siddek_Mahmoud_Samy_CV.pdf" download="Siddek_Mahmoud_Samy_CV.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg><span data-t="cv.pdf">حمّل PDF</span></a>
-          <a class="btn" href="cv/Siddek_Mahmoud_Samy_CV.docx" download="Siddek_Mahmoud_Samy_CV.docx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg><span data-t="cv.word">حمّل Word</span></a>
-        </div>
-        <p class="cvnote" data-t="cv.note"></p>
-      </div>
     </div>
   </section>
 
