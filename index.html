@@ -3,12 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Siddek Mahmoud</title>
-<meta name="description" content="Siddek Mahmoud: Planning Lead in the UAE and creator of the Reality Engineer channel. Planning and project controls, Primavera P6, automation, AI workflows and machine learning for construction schedules.">
-<meta property="og:title" content="Siddek Mahmoud · Planning Lead">
+<title>Siddek Mahmoud Samy · Planning Lead</title>
+<meta name="description" content="Siddek Mahmoud Samy: Planning Lead and Senior Planning Engineer in the UAE. Project controls, delay analysis and EOT, Primavera P6, 4D planning, Power BI and automation. Creator of the Reality Engineer channel.">
+<meta property="og:title" content="Siddek Mahmoud Samy · Planning Lead">
 <meta property="og:description" content="Planning the built world: towers, master communities and villa programmes across the UAE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: a cinematic dark site in one visual world. A pinned hero where a BIM model
@@ -62,6 +65,23 @@ p { margin: 0; }
 .duo { display: flex; gap: .7rem; flex-wrap: wrap; }
 .btn.wa { background: #1fae54; border-color: #1fae54; color: #fff; }
 .btn svg { width: 18px; height: 18px; flex: none; }
+/* ---------- CV ---------- */
+#cv { border-top: 1px solid var(--line); background: radial-gradient(ellipse 60% 70% at 20% 50%, #1a1710 0%, var(--bg) 65%); }
+.cvgrid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+.cvsheet { position: relative; justify-self: center; width: min(440px, 100%); perspective: 1400px; margin: 0; }
+.cvsheet .pg { position: relative; border-radius: 6px; overflow: hidden; box-shadow: 0 40px 80px -20px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.06); transform: rotateY(-14deg) rotateX(6deg) rotate(-2deg); transition: transform .8s var(--ease); background: #fff; }
+.cvsheet:hover .pg { transform: rotateY(0) rotateX(0) rotate(0); }
+.cvsheet .pg img { display: block; width: 100%; height: auto; }
+.cvsheet .pg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.18), transparent 40%); pointer-events: none; }
+.cvsheet .back { position: absolute; inset: 0; border-radius: 6px; background: #e9e6df; transform: translate(18px, 14px) rotate(3deg); box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); z-index: -1; }
+.cvsheet .stamp { position: absolute; right: -14px; top: 22px; z-index: 2; padding: .55rem .9rem; border-radius: 12px; background: var(--amber); color: #120c02; font-family: var(--f-mono); font-size: .72rem; font-weight: 500; letter-spacing: .08em; box-shadow: 0 14px 30px rgba(0,0,0,.4); rotate: 4deg; }
+.cvcopy { display: grid; gap: 1.4rem; }
+.cvlist { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; border-top: 1px solid var(--line); padding-top: 1.2rem; }
+.cvlist li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: .6rem; color: #d6d5cf; }
+.cvlist li::before { content: "✓"; color: var(--green); font-weight: 700; }
+.cvbtns { display: flex; gap: .7rem; flex-wrap: wrap; }
+.cvnote { color: var(--muted); font-size: .84rem; margin: 0; }
+@media (max-width: 900px) { .cvgrid { grid-template-columns: 1fr; } .cvsheet { width: min(320px, 80%); } }
 
 /* reveal: elements rest visible; they only slide into place */
 @media (prefers-reduced-motion: no-preference) {
@@ -774,7 +794,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
 <div id="loader" aria-hidden="true"><div class="ld">
   <div class="ld-g"><i style="--w:38%;--x:0%"></i><i style="--w:44%;--x:22%"></i><i style="--w:30%;--x:52%"></i><i style="--w:26%;--x:70%"></i><i class="ms" style="--x:96%"></i></div>
   <div class="ld-n"><b id="ld-n">0</b><span>%</span></div>
-  <div class="ld-t">F9 · SCHEDULING PROJECT <span>SIDDEK MAHMOUD</span></div>
+  <div class="ld-t">F9 · SCHEDULING PROJECT <span>SIDDEK MAHMOUD SAMY</span></div>
 </div></div>
 
 <header class="nav" id="nav">
@@ -789,6 +809,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       <a href="presentation/" data-t="n.deck">Slides</a>
       <a href="#services" data-t="n.services">الخدمات</a>
       <a href="#tools" data-t="n.tools">أدواتي</a>
+      <a href="#cv" data-t="n.cv">CV</a>
       <a href="#contact" data-t="n.contact">تواصل</a>
     </nav>
     <div class="act">
@@ -807,6 +828,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     <a href="#lab" data-t="n.lab">AI</a>
     <a href="#services" data-t="n.services">الخدمات</a>
     <a href="#tools" data-t="n.tools">Free tools</a>
+    <a href="#cv" data-t="n.cv">CV</a>
     <a href="#contact" data-t="n.contact">تواصل</a>
     <a class="ext li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener">LinkedIn ↗</a>
     <a class="ext yt" href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener">YouTube ↗</a>
@@ -851,7 +873,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
           <span class="kicker" data-t="a.kicker">عني</span>
           <p class="big" data-t-html="a.big"></p>
           <p class="lead" data-t="a.text"></p>
-          <div class="duo"><a class="btn li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 2H3.6A1.6 1.6 0 0 0 2 3.6v16.8A1.6 1.6 0 0 0 3.6 22h16.8a1.6 1.6 0 0 0 1.6-1.6V3.6A1.6 1.6 0 0 0 20.4 2ZM8 19H5V9.5h3V19ZM6.5 8.2a1.8 1.8 0 1 1 0-3.5 1.8 1.8 0 0 1 0 3.5ZM19 19h-3v-4.6c0-1.1 0-2.5-1.5-2.5S12.8 13 12.8 14.3V19h-3V9.5h2.9v1.3a3.2 3.2 0 0 1 2.8-1.6c3 0 3.5 2 3.5 4.5V19Z"/></svg><span data-t="a.li">تابعني على LinkedIn</span></a><a class="btn yt" href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8ZM9.8 15.1V8.9l5.7 3.1-5.7 3.1Z"/></svg><span data-t="a.yt">اشترك في القناة</span></a></div>
+          <div class="duo"><a class="btn li" href="https://www.linkedin.com/in/siddekmahmoud" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 2H3.6A1.6 1.6 0 0 0 2 3.6v16.8A1.6 1.6 0 0 0 3.6 22h16.8a1.6 1.6 0 0 0 1.6-1.6V3.6A1.6 1.6 0 0 0 20.4 2ZM8 19H5V9.5h3V19ZM6.5 8.2a1.8 1.8 0 1 1 0-3.5 1.8 1.8 0 0 1 0 3.5ZM19 19h-3v-4.6c0-1.1 0-2.5-1.5-2.5S12.8 13 12.8 14.3V19h-3V9.5h2.9v1.3a3.2 3.2 0 0 1 2.8-1.6c3 0 3.5 2 3.5 4.5V19Z"/></svg><span data-t="a.li">تابعني على LinkedIn</span></a><a class="btn yt" href="https://www.youtube.com/@reality-engineer" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8ZM9.8 15.1V8.9l5.7 3.1-5.7 3.1Z"/></svg><span data-t="a.yt">اشترك في القناة</span></a><a class="btn" href="cv/Siddek_Mahmoud_Samy_CV.pdf" download><span data-t="a.cv">حمّل الـ CV (PDF)</span></a><a class="btn" href="cv/Siddek_Mahmoud_Samy_CV.docx" download><span data-t="a.cvw">نسخة Word</span></a></div>
         </div>
       </div>
       <div class="recs" id="recs" data-r>
@@ -881,7 +903,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         <h2 class="h2" data-t="rp.title"></h2>
         <p class="lead" data-t="rp.sub"></p>
       </div>
-      <iframe id="pbiframe" src="dashboard/" title="Project controls report, Power BI style, demo data" loading="lazy"></iframe>
+      <iframe id="pbiframe" data-src="dashboard/" title="Project controls report, Power BI style, demo data" loading="lazy"></iframe>
       <div class="meta"><a class="btn" href="dashboard/" target="_blank" rel="noopener"><span data-t="rp.full"></span> ↗</a></div>
     </div>
   </section>
@@ -1056,6 +1078,33 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     </div>
   </section>
 
+  <!-- CV -->
+  <section class="section" id="cv">
+    <div class="wrap cvgrid">
+      <figure class="cvsheet" data-r>
+        <div class="back"></div>
+        <div class="pg"><img src="assets/cv-page1.webp" alt="First page of Siddek Mahmoud Samy's CV" width="880" height="1246" loading="lazy"></div>
+        <span class="stamp">ATS-READY · PDF + WORD</span>
+      </figure>
+      <div class="cvcopy" data-r>
+        <span class="kicker" data-t="cv.kicker">السيرة الذاتية</span>
+        <h2 class="h2" data-t="cv.title"></h2>
+        <p class="lead" data-t="cv.lead"></p>
+        <ul class="cvlist">
+          <li><span data-t="cv.l1"></span></li>
+          <li><span data-t="cv.l2"></span></li>
+          <li><span data-t="cv.l3"></span></li>
+          <li><span data-t="cv.l4"></span></li>
+        </ul>
+        <div class="cvbtns">
+          <a class="btn solid" href="cv/Siddek_Mahmoud_Samy_CV.pdf" download="Siddek_Mahmoud_Samy_CV.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg><span data-t="cv.pdf">حمّل PDF</span></a>
+          <a class="btn" href="cv/Siddek_Mahmoud_Samy_CV.docx" download="Siddek_Mahmoud_Samy_CV.docx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg><span data-t="cv.word">حمّل Word</span></a>
+        </div>
+        <p class="cvnote" data-t="cv.note"></p>
+      </div>
+    </div>
+  </section>
+
   <div class="ytm" id="ytm" hidden role="dialog" aria-modal="true" aria-label="Video">
     <div class="ytm-box">
       <div class="ytm-frame" id="ytm-frame"></div>
@@ -1131,15 +1180,15 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
    ===================================================================== */
 const T = {
   ar: {
-    name: "صديق محمود",
+    name: "صديق محمود سامي",
     "n.projects": "المشاريع", "n.career": "المسيرة", "n.services": "الخدمات", "n.channel": "القناة", "n.contact": "تواصل",
     "h.kicker": "قائد التخطيط · الإمارات",
     title: ["بخطط", "اللي", "بيتبني."],
     "h.sub": "مهندس تخطيط أول في الإمارات. خططت أبراج ومجتمعات فلل بقيمة مليارات الدراهم، وببني أدوات أتمتة وذكاء اصطناعي بتشتغل عليها فرق التخطيط كل يوم.",
     "h.cta1": "شوف المشاريع", "h.cta2": "اطلب عرض سعر", "h.cue": "انزل عشان البرج يتبني",
-    "a.kicker": "عني", "a.tag": "مهندس تخطيط أول · GCC Contracting",
+    "a.kicker": "عني", "a.tag": "مهندس تخطيط أول · قائد التخطيط · Ginco Contracting Co. LLC Sharjah", "a.cv": "حمّل الـ CV (PDF)", "a.cvw": "نسخة Word",
     "a.big": "ثمان سنين بحوّل الرسومات لـ<em>برامج زمنية</em> بتتنفذ، وبحوّل البرامج لـ<em>برمجيات</em> بتوفر أيام على الفرق.",
-    "a.text": "بدأت مهندس موقع في مجموعة طلعت مصطفى، وبعدها انتقلت للإمارات في 2019. خططت أبراج دبي كريك هاربر، ومجتمع عزيزي فينيسيا، و836 فيلا في The Haven لألدار. وعلى يوتيوب بشارك واقع الموقع والفلوس بالأرقام مع أكتر من 90 ألف مشترك.",
+    "a.text": "بدأت مهندس موقع في مجموعة طلعت مصطفى، وبعدها انتقلت للإمارات في أبريل 2019. خططت أبراج دبي كريك هاربر، ومجتمع عزيزي فينيسيا، و836 فيلا في The Haven لألدار. وعلى يوتيوب بشارك واقع الموقع والفلوس بالأرقام مع أكتر من 90 ألف مشترك.",
     "a.li": "تابعني على LinkedIn",
     nums: [["8", " سنين", "خبرة تخطيط"], ["1.9", "B", "درهم نطاق مباشر"], ["836", "", "فيلا وتاون هاوس"], ["32", "+", "مهندس على منصاتي"], ["90", "K+", "مشترك على يوتيوب"], ["4.5", "M+", "مشاهدة"]],
     "p.kicker": "مشاريع مختارة", "p.title": "حيث وصلت الخطط",
@@ -1158,7 +1207,7 @@ const T = {
     "lab.out": "احتمال تأخير أكتر من 30 يوم", "lab.v": ["منخفض", "راقب", "مرتفع"], "lab.why": "أكتر حاجة رافعة الخطر:",
     "lab.note": "نموذج توضيحي بأوزان تجريبية. النموذج الحقيقي بيتدرب على تاريخ تحديثات المحفظة نفسها.",
     "lab.lanes": [
-      ["الأتمتة", "80%", "أقل وقت في دورة التقارير", ["محرك VBA بيحدّث الـ actuals في P6 بسجل مراجعة وحماية للبيانات", "محرك إنشاء Baseline لمشاريع +100 وحدة في دقايق بدل أيام", "نماذج Power Query وDAX بتربط P6 والتكلفة والموقع"], ["Excel VBA", "Python", "Power Query", "DAX", "TypeScript"]],
+      ["الأتمتة", "80%", "أقل وقت في دورة التقارير", ["أداة VBA بتحدّث تقدم +100 فيلا في P6 في أقل من دقيقتين بسجل مراجعة وحماية للبيانات", "نظام VBA لتتبع 836 فيلا بيطلع +50 لياوت تقدم PDF كل يوم", "نماذج Power Query وDAX بتربط P6 والتكلفة والموقع"], ["Excel VBA", "Python", "Power Query", "DAX", "TypeScript"]],
       ["الذكاء الاصطناعي", "EOT", "مسار مطالبات بمساعدة AI", ["أحداث التأخير بتتسجل وتترتبط بالأنشطة أول بأول عن طريق n8n وGmail وGoogle Sheets وPrimavera", "تقارير بمساعدة الذكاء الاصطناعي للإدارة", "بدرّب فريق التخطيط على التقارير المدمجة بالـ AI"], ["n8n", "LLM workflows", "Gmail API", "Google Sheets"]],
       ["التعلم الآلي", "Haven", "منصة بتتعلم من كل مشروع", ["مكتبات أنماط بتتعلم من جداول المشاريع السابقة، فكل مشروع بيرفع مستوى اللي بعده", "توليد ومراجعة ملفات XER تلقائيًا بفحوصات سلامة للبيانات", "كشف الشذوذ في الجدول قبل ما يوصل للتقرير"], ["React 18", "TypeScript", "Dexie", "SQLite", "Supabase"]]
     ],
@@ -1166,12 +1215,12 @@ const T = {
     "lab.nodes": [["البريد", "إشعار تأخير يوصل"], ["استخلاص بالـ AI", "التاريخ والسبب والنشاط"], ["سجل التأخير", "Google Sheets"], ["ربط بـ P6", "الأنشطة المتأثرة"], ["Power BI", "دليل جاهز لـ EOT"]],
     "pl.kicker": "برامج بنيتها بنفسي", "pl.title": "أدوات التخطيط اللي فريقي شغال عليها",
     "l.title": "بروفايلي المهني",
-    "l.headline": "قائد التخطيط | مهندس تخطيط أول | Primavera P6 · Power BI · تحليل التأخير ومطالبات EOT | أتمتة وذكاء اصطناعي للتحكم في المشاريع",
+    "l.headline": "Planning Lead | Senior Planning Engineer | Project Controls · Delay Analysis & EOT | Primavera P6 · Power BI · Automation | Built GCC Pro & Haven | DM G+4 · ADM | UAE",
     "l.loc": "دبي، الإمارات العربية المتحدة", "l.openT": "متاح لمشاريع",
     "l.open": "استشارات · مكتب فني · Shop Drawings · BIM · تخطيط P6",
     "l.view": "افتح البروفايل", "l.connect": "تواصل معي",
     "l.about": "نبذة",
-    "l.aboutT": "قائد تخطيط بخبرة 8 سنين، منها أكتر من 7 في الإمارات، في الأبراج العالية والمجتمعات المتكاملة ومشاريع الفلل. بقود التخطيط والتحكم في المشاريع على مستوى الشركة، وبجهز مطالبات التأخير، وببني منصات بيستخدمها أكتر من 32 مهندس تخطيط يوميًا.",
+    "l.aboutT": "بحوّل جداول Primavera P6 لقرارات، وببني البرامج اللي فرق التخطيط بتشتغل عليها. قائد تخطيط ومهندس تخطيط أول بخبرة 8 سنين في الإنشاءات (أكتر من 7 في الإمارات): أبراج دبي كريك هاربر، ومجتمع عزيزي فينيسيا بقيمة 30 مليار درهم، و836 فيلا وتاون هاوس في The Haven لألدار، بنطاق مباشر 1.9 مليار درهم. حاليًا بقود التخطيط والتحكم في المشاريع على مستوى المكتب الرئيسي لـ GCC Contracting (جينكو الشارقة) عبر محفظة مشاريع شغالة.",
     "l.exp": "الخبرات", "l.lic": "الشهادات والاعتمادات", "l.skills": "المهارات",
     "v.title": "قناتي على يوتيوب", "v.brand": "مهندس الواقع", "v.name": "مهندس الواقع | Reality Engineer", "v.meta": "90.1 ألف مشترك · 579 فيديو",
     "v.desc": "عقارات، ذهب، استثمار وفلوس، بالأرقام ومن أرض الواقع. بنحسبها بعقلية مهندس تخطيط عشان تاخد قرارك وانت فاهم.",
@@ -1185,15 +1234,15 @@ const T = {
     foot: "© صديق محمود · مهندس الواقع",
   },
   en: {
-    name: "Siddek Mahmoud",
+    name: "Siddek Mahmoud Samy",
     "n.projects": "Projects", "n.career": "Career", "n.services": "Services", "n.channel": "Channel", "n.contact": "Contact",
     "h.kicker": "Planning Lead · UAE",
     title: ["Planning", "the built", "world."],
     "h.sub": "Senior Planning Engineer in the UAE. I have planned towers and villa communities worth billions of dirhams, and I build the automation and AI tools planning teams work in every day.",
     "h.cta1": "See the projects", "h.cta2": "Request a proposal", "h.cue": "Scroll to build the tower",
-    "a.kicker": "About", "a.tag": "Senior Planning Engineer · GCC Contracting",
+    "a.kicker": "About", "a.tag": "Senior Planning Engineer · Planning Lead · Ginco Contracting Co. LLC Sharjah", "a.cv": "Download CV (PDF)", "a.cvw": "Word version",
     "a.big": "Eight years turning drawings into <em>programmes</em> that get built, and programmes into <em>software</em> that saves teams days.",
-    "a.text": "I started as a site engineer with Talaat Moustafa Group and moved to the UAE in 2019. I have planned towers at Dubai Creek Harbour, the Azizi Venice community and 836 villas at Aldar's The Haven. On YouTube I share what sites and money really look like, in numbers, with 90K+ subscribers.",
+    "a.text": "I started as a site engineer with Talaat Moustafa Group and moved to the UAE in April 2019. I have planned towers at Dubai Creek Harbour, the Azizi Venice community and 836 villas at Aldar's The Haven. On YouTube I share what sites and money really look like, in numbers, with 90K+ subscribers.",
     "a.li": "Follow me on LinkedIn",
     nums: [["8", " yrs", "in planning"], ["1.9", "B", "AED direct scope"], ["836", "", "villas & townhouses"], ["32", "+", "engineers on my platforms"], ["90", "K+", "YouTube subscribers"], ["4.5", "M+", "views"]],
     "p.kicker": "Selected projects", "p.title": "Where the plans landed",
@@ -1212,7 +1261,7 @@ const T = {
     "lab.out": "Probability of more than 30 days' slip", "lab.v": ["Low", "Watch", "High"], "lab.why": "Biggest drivers of risk:",
     "lab.note": "Illustrative model with demo weights. A production model trains on the portfolio's own update history.",
     "lab.lanes": [
-      ["Automation", "80%", "shorter reporting cycle", ["VBA engine that updates P6 actuals with an audit log and integrity guards", "Baseline Creation Engine: 100+ unit programmes in minutes instead of days", "Power Query and DAX models joining P6, cost and site data"], ["Excel VBA", "Python", "Power Query", "DAX", "TypeScript"]],
+      ["Automation", "80%", "shorter reporting cycle", ["VBA tool that updates progress for 100+ villas in P6 in under 2 minutes, with an audit log and integrity guards", "836-villa VBA tracking system that generates 50+ PDF progress layouts every day", "Power Query and DAX models joining P6, cost and site data"], ["Excel VBA", "Python", "Power Query", "DAX", "TypeScript"]],
       ["AI", "EOT", "AI-assisted claims workflow", ["n8n + Gmail + Google Sheets + Primavera: delay events logged and linked to activities as they happen", "AI-assisted reporting for leadership", "I train the planning team on AI-integrated reporting"], ["n8n", "LLM workflows", "Gmail API", "Google Sheets"]],
       ["Machine learning", "Haven", "a platform that learns from every project", ["Pattern banks learned from past project schedules, so each project raises the baseline for the next", "Automatic XER generation and validation with data integrity checks", "Anomaly checks that catch schedule problems before they reach a report"], ["React 18", "TypeScript", "Dexie", "SQLite", "Supabase"]]
     ],
@@ -1220,12 +1269,12 @@ const T = {
     "lab.nodes": [["Inbox", "Delay notice arrives"], ["AI extraction", "Date, cause, activity"], ["Delay register", "Google Sheets"], ["Linked to P6", "Affected activities"], ["Power BI", "EOT-ready evidence"]],
     "pl.kicker": "Software I built", "pl.title": "The planning tools my team works in",
     "l.title": "My professional profile",
-    "l.headline": "Planning Lead | Senior Planning Engineer | Primavera P6 · Power BI · Delay analysis & EOT | Automation & AI for project controls",
+    "l.headline": "Planning Lead | Senior Planning Engineer | Project Controls · Delay Analysis & EOT | Primavera P6 · Power BI · Automation | Built GCC Pro & Haven | DM G+4 · ADM | UAE",
     "l.loc": "Dubai, United Arab Emirates", "l.openT": "Open to projects",
     "l.open": "Consultancy · Technical office · Shop drawings · BIM · P6 planning",
     "l.view": "View profile", "l.connect": "Connect",
     "l.about": "About",
-    "l.aboutT": "Planning Lead with 8 years of experience, 7+ in the UAE, across high-rise, master communities and villa programmes. I lead company-wide planning and project controls, prepare delay and EOT claims, and build platforms that 32+ planning engineers use every day.",
+    "l.aboutT": "I turn Primavera P6 schedules into decisions, and I build the software planning teams run on. Planning Lead and Senior Planning Engineer with 8 years in construction (7+ in the UAE): high-rise towers at Dubai Creek Harbour, the AED 30 BN Azizi Venice community, and 836 villas & townhouses at Aldar's The Haven. AED 1.9 BN of direct scope. Today I lead planning and project controls at head-office level for GCC Contracting (Ginco Sharjah) across a live multi-project portfolio.",
     "l.exp": "Experience", "l.lic": "Licenses & certifications", "l.skills": "Skills",
     "v.title": "My YouTube channel", "v.brand": "مهندس الواقع", "v.name": "Reality Engineer | مهندس الواقع", "v.meta": "90.1K subscribers · 579 videos",
     "v.desc": "Real estate, gold, investing and money, in numbers and from the ground. Worked out with a planning engineer's mindset so you decide with the facts.",
@@ -1239,11 +1288,11 @@ const T = {
     foot: "© Siddek Mahmoud · Reality Engineer",
   },
 };
-const MARQUEE = ["Aldar · The Haven", "AZIZI · Venice", "Dubai Creek Harbour · Cove 2", "GCC Contracting", "Fibrex Construction", "Al Qabdah Global", "Talaat Moustafa Group", "LACASA", "360 Degrees", "Primavera P6", "Power BI", "Procore CMP"];
+const MARQUEE = ["Aldar · The Haven", "AZIZI · Venice", "Dubai Creek Harbour · Cove 2", "Ginco Contracting (GCC)", "Fibrex Construction", "Al Qabdah Global", "Talaat Moustafa Group", "LACASA", "360 Degrees", "Primavera P6", "Power BI", "Procore CMP"];
 
 const PROJECTS = [
   { draw: "villas", value: "AED 900M", title: ["The Haven", "The Haven · Packages 2 & 3"], where: ["الحزمتين 2 و3 · أبوظبي · ألدار العقارية", "Abu Dhabi · Aldar Properties"],
-    facts: [[["الوحدات", "Units"], ["836 فيلا وتاون هاوس", "836 villas & townhouses"]], [["التسلسل", "Sequence"], ["604 يوم", "604 days"]], [["المقاول", "Contractor"], ["GCC Contracting", "GCC Contracting"]], [["الأداة", "Tooling"], ["محاكاة 4D · Haven", "4D simulation · Haven"]]],
+    facts: [[["الوحدات", "Units"], ["836 فيلا وتاون هاوس", "836 villas & townhouses"]], [["التسلسل", "Sequence"], ["604 يوم", "604 days"]], [["المقاول", "Contractor"], ["جينكو للمقاولات (GCC)", "Ginco Contracting (GCC)"]], [["الأداة", "Tooling"], ["محاكاة 4D · Haven", "4D simulation · Haven"]]],
     role: [["دوري:", "قيادة التخطيط، الـ Baseline، قياس التقدم، خطط التعافي، ومحاكاة 4D لتسلسل التنفيذ."], ["My role:", "Led site planning, the baseline, progress measurement, recovery planning and a 4D simulation of the build sequence."]] },
   { draw: "lagoon", value: "AED 30BN", title: ["عزيزي فينيسيا", "Azizi Venice"], where: ["دبي الجنوب · مجموعة عزيزي", "Dubai South · AZIZI Group"],
     facts: [[["المساحة", "Area"], ["24 مليون قدم²", "24M sq ft GFA"]], [["الاستشاري", "Consultant"], ["360 Degrees", "360 Degrees"]], [["المقاول", "Contractor"], ["جاردينيا للمقاولات", "Gardinia Contracting"]], [["الفترة", "Period"], ["2024 – 2025", "2024 – 2025"]]],
@@ -1261,16 +1310,16 @@ const CAREER = [
   { id: "B1000", type: "loe", start: 2018.0, finish: null, name: ["قناة مهندس الواقع", "Reality Engineer channel"], org: ["يوتيوب · 579 فيديو", "YouTube · 579 videos"],
     pts: [["أسست القناة في يناير 2018: مقاولات وتكاليف وعقارات وفلوس بالأرقام.", "+90 ألف مشترك و+4.5 مليون مشاهدة."], ["Founded January 2018: contracting, costs, property and money in numbers.", "90K+ subscribers and 4.5M+ views."]] },
   { id: "M1000", type: "ms", start: 2018.5, finish: 2018.5, name: ["بكالوريوس هندسة مدنية", "B.Sc. Civil Engineering"], org: ["جامعة الزقازيق", "Zagazig University"],
-    pts: [["وبعدها دبلومة المهندس المحترف من جامعة القاهرة."], ["Followed by the Professional Engineer's Diploma, Cairo University."]] },
+    pts: [["جامعة الزقازيق 2013 – 2018.", "وبعدها دبلومة إعداد المهندس المحترف، تكنولوجيا تشييد المباني، جامعة القاهرة 2019."], ["Zagazig University, 2013 – 2018.", "Followed by the Diploma in Professional Construction Engineer Preparation, Building Construction Technology, Cairo University (2019)."]] },
   { id: "A1010", type: "task", start: 2018.75, finish: 2019.08, name: ["مهندس فني وموقع", "Technical & Site Engineer"], org: ["مجموعة طلعت مصطفى · القاهرة الجديدة", "Talaat Moustafa Group · New Cairo"],
     pts: [["حصر كميات وتخطيط وإشراف على أعمال الموقع.", "مسؤولية السلامة والجودة."], ["Take-offs, planning and supervision of site works.", "Responsible for safety and quality."]] },
-  { id: "A1020", type: "task", start: 2019.08, finish: 2022.0, name: ["مهندس تخطيط", "Junior Planning Engineer"], org: ["القبضة جلوبال للمقاولات · دبي", "Al Qabdah Global · Dubai"],
+  { id: "A1020", type: "task", start: 2019.25, finish: 2022.0, name: ["مهندس تخطيط", "Junior Planning Engineer"], org: ["القبضة جلوبال للمقاولات · دبي", "Al Qabdah Global · Dubai"],
     pts: [["جداول P6 لأبراج سكنية وتجارية.", "نماذج Excel للعمالة والإنتاجية وحّدت تقارير الموقع.", "تحليل انحرافات ودعم مطالبات التأخير."], ["P6 schedules for residential and commercial towers.", "Excel manpower and productivity templates that standardised reporting.", "Variance analysis and delay-claim support."]] },
   { id: "A1030", type: "task", start: 2022.0, finish: 2024.5, name: ["مهندس تخطيط · Cove 2", "Planning Engineer · Cove 2"], org: ["فايبركس للإنشاءات · دبي", "Fibrex Construction · Dubai"],
     pts: [["أبراج فوق بوديوم بقيمة مليار درهم، والاستشاري LACASA.", "مطالبات EOT وبرامج معدلة وخطط تعافي.", "أتمتة التحديثات والتقارير بـ Excel Macros وPower BI."], ["Towers over a podium, AED 1 Bn, consultant LACASA.", "EOT claims, revised programmes and recovery plans.", "Automated updates and reporting with Excel macros and Power BI."]] },
   { id: "A1040", type: "task", start: 2024.5, finish: 2025.42, name: ["مهندس تخطيط · عزيزي فينيسيا", "Planning Engineer · Azizi Venice"], org: ["جاردينيا للمقاولات · دبي الجنوب", "Gardinia Contracting · Dubai South"],
     pts: [["مجتمع بقيمة 30 مليار درهم و24 مليون قدم².", "جداول متعددة القطع ضد مواعيد التسليم.", "تحليل as-planned مقابل as-built."], ["AED 30 Bn community, 24M sq ft.", "Multi-plot schedules against handover milestones.", "As-planned vs as-built delay analysis."]] },
-  { id: "A1050", type: "crit", start: 2025.42, finish: null, name: ["مهندس تخطيط أول · قائد التخطيط", "Senior Planning Engineer · Planning Lead"], org: ["GCC Contracting · المكتب الرئيسي", "GCC Contracting · Head Office"],
+  { id: "A1050", type: "crit", start: 2025.42, finish: null, name: ["مهندس تخطيط أول · قائد التخطيط", "Senior Planning Engineer · Planning Lead"], org: ["جينكو للمقاولات · الشارقة · المكتب الرئيسي", "Ginco Contracting Co. LLC Sharjah · Head Office"],
     pts: [["قيادة التخطيط والتحكم في المشاريع على مستوى الشركة.", "The Haven لألدار: 836 وحدة بقيمة 900 مليون درهم ومحاكاة 4D.", "بناء GCC Pro وHaven لأكتر من 32 مهندس تخطيط."], ["Company-wide planning and project controls lead.", "The Haven for Aldar: 836 units, AED 900 M, with a 4D simulation.", "Built GCC Pro and Haven for 32+ planning engineers."]] },
   { id: "A1060", type: "open", start: NOW_Y, finish: null, name: ["خدمات هندسية متكاملة", "Integrated engineering services"], org: ["استشارات · مكتب فني · Shop Drawings · BIM", "Consultancy · Technical office · Shop drawings · BIM"],
     pts: [["متاح الآن لمشاريع جديدة."], ["Available now for new projects."]] },
@@ -1286,29 +1335,42 @@ const SERVICES = [
 ];
 
 const PLATFORMS = [
+  { k: ["تخطيط 4D", "4D planning"], n: "4D Planning & Site Logistics", d: ["محاكاة 4D من جدول Primavera P6 مباشرة: 272 فيلا على 604 يوم، مقارنة المخطط بالفعلي لدور برج عبر 17 تخصص، ومحرك لوجستيات للموقع.", "4D simulations driven by the P6 schedule: 272 villas over 604 days, plan vs actual for a tower floor across 17 trades, and a site logistics engine."] },
+  { k: ["BIM × P6", "BIM × P6"], n: "4D Platform", d: ["منصة 4D بتربط +132,000 عنصر IFC بأنشطة P6 لمجتمع 186 فيلا في دبي، ومحرك تقارير أسبوعية من XER وPower BI.", "Links 132,000+ IFC elements to P6 activities for a 186-villa community in Dubai, with a weekly report engine from XER and Power BI."] },
   { k: ["نظام قسم التخطيط", "Planning department OS"], n: "GCC Pro", d: ["منصة على مستوى الشركة بيستخدمها أكتر من 32 مهندس تخطيط. شغل كان بياخد أيام بقى بيخلص في دقايق.", "Company-wide platform for 32+ planning engineers. Workflows that took days now take minutes."] },
-  { k: ["ذكاء المشاريع", "Construction intelligence"], n: "Haven", d: ["بيقرأ ويراجع ويولّد جداول Primavera P6 من مكتبات أنماط، بفحوصات سلامة للبيانات.", "Ingests, validates and generates Primavera P6 schedules from pattern banks with integrity checks."] },
+  { k: ["ذكاء المشاريع", "Construction intelligence"], n: "Haven", d: ["بيقرأ ويراجع ويولّد جداول Primavera P6 من مكتبات أنماط، مع S-curves وEVM.", "Ingests, validates and generates P6 XER schedules from pattern banks, with S-curves and EVM (SPI/CPI/EAC)."] },
+  { k: ["أتمتة P6", "P6 automation"], n: "P6 Progress Automation", d: ["تحديث تقدم +100 فيلا في P6 في أقل من دقيقتين بدل نص يوم، بسجل مراجعة كامل.", "Progress for 100+ villas updated in P6 in under 2 minutes instead of half a day, with a full audit log."] },
+  { k: ["أتمتة EOT بالـ AI", "AI-powered EOT"], n: "EOT Automation", d: ["n8n وGmail وGoogle Sheets وP6 في مسار واحد بيجمع أحداث التأخير ومستنداتها تلقائيًا.", "n8n, Gmail, Google Sheets and P6 in one workflow that collects delay events and records automatically."] },
+  { k: ["تتبع التقدم", "Progress tracking"], n: "836-Villa Tracker", d: ["نظام Excel VBA اتوسع من 168 قطعة لـ 836 فيلا، وبيطلع +50 لياوت PDF كل يوم.", "Excel VBA system scaled from 168 plots to 836 villas, generating 50+ PDF progress layouts a day."] },
   { k: ["التحكم في المستندات", "Document control"], n: "DC Core", d: ["9,964 مستند و19,519 مراجعة، بتتبع كامل للتحويلات والمراجعات.", "9,964 documents and 19,519 revisions with full transmittal traceability."] },
-  { k: ["ملاحظات الجودة", "QA/QC snagging"], n: "Snag Manager", d: ["تطبيق بيشتغل في الموقع من غير نت، بتتبع للوحدات وصور موثقة.", "Offline-first site app with unit tracking and captioned photo evidence."] },
-  { k: ["مولّد الـ Baseline", "Baseline generator"], n: "Baseline Engine", d: ["بيبني Baseline لمشاريع +100 وحدة في دقايق بدل أيام.", "Builds baselines for 100+ unit programmes in minutes instead of days."] },
-  { k: ["ذكاء الأعمال", "Business intelligence"], n: "Power BI Suite", d: ["لوحات تقدم وإنتاجية لحظية من P6 والتكلفة والموقع، ومسار EOT بمساعدة الذكاء الاصطناعي.", "Real-time progress and KPI dashboards from P6, cost and site data, with an AI-assisted EOT workflow."] },
 ];
 
 const LI_EXP = [
-  ["GCC", ["مهندس تخطيط أول · قائد التخطيط", "Senior Planning Engineer · Planning Lead"], ["GCC Contracting · يونيو 2025 – الآن", "GCC Contracting · Jun 2025 – Present"]],
-  ["GDN", ["مهندس تخطيط", "Planning Engineer"], ["جاردينيا للمقاولات (عزيزي) · 2024 – 2025", "Gardinia Contracting (AZIZI) · 2024 – 2025"]],
-  ["FBX", ["مهندس تخطيط", "Planning Engineer"], ["فايبركس للإنشاءات · 2022 – 2024", "Fibrex Construction Group · 2022 – 2024"]],
-  ["AQG", ["مهندس تخطيط", "Junior Planning Engineer"], ["القبضة جلوبال · 2019 – 2022", "Al Qabdah Global · 2019 – 2022"]],
-  ["TMG", ["مهندس فني وموقع", "Technical & Site Engineer"], ["مجموعة طلعت مصطفى · 2018 – 2019", "Talaat Moustafa Group · 2018 – 2019"]],
+  ["GCC", ["مهندس تخطيط أول · قائد التخطيط (المكتب الرئيسي)", "Senior Planning Engineer · Planning Lead (Head Office)"], ["Ginco Contracting Co. LLC Sharjah · يونيو 2025 – الآن", "Ginco Contracting Co. LLC Sharjah · Jun 2025 – Present"]],
+  ["YT", ["صانع محتوى | يوتيوبر", "Content Creator | YouTuber"], ["يوتيوب · مهندس الواقع · يناير 2018 – الآن", "YouTube · Reality Engineer · Jan 2018 – Present"]],
+  ["GDN", ["مهندس تخطيط", "Planning Engineer"], ["جاردينيا للمقاولات · يوليو 2024 – يونيو 2025", "Gardinia Contracting · Jul 2024 – Jun 2025"]],
+  ["FBX", ["مهندس تخطيط", "Planning Engineer"], ["فايبركس للإنشاءات · يناير 2022 – يوليو 2024", "Fibrex Construction Group · Jan 2022 – Jul 2024"]],
+  ["AQG", ["مهندس تخطيط جونيور", "Junior Planning Engineer"], ["القبضة جلوبال · أبريل 2019 – يناير 2022", "Al Qabdah Global Building Contracting · Apr 2019 – Jan 2022"]],
+  ["TMG", ["مهندس فني وموقع", "Technical & Site Engineer"], ["مجموعة طلعت مصطفى · أكتوبر 2018 – فبراير 2019", "Talaat Moustafa Group · Oct 2018 – Feb 2019"]],
+  ["KPC", ["متدرب هندسي", "Engineering Trainee"], ["خالدة للبترول · مارس 2016 – يناير 2018", "Khalda Petroleum Co · Mar 2016 – Jan 2018"]],
 ];
 const LI_LIC = [
-  ["CMP", ["Procore Construction Management Professional", "Procore Construction Management Professional"], ["Procore · فبراير 2025", "Procore · Feb 2025"]],
-  ["PPE", ["Professional Planning Engineer (PPE)", "Professional Planning Engineer (PPE)"], ["فبراير 2025", "Feb 2025"]],
   ["DM", ["مهندس معتمد G+4", "G+4 Approved Engineer"], ["بلدية دبي", "Dubai Municipality"]],
   ["AD", ["مهندس ممارس مسجل", "Registered Practising Engineer"], ["أبوظبي", "Abu Dhabi"]],
+  ["PPE", ["Professional Planning Engineer (PPE)", "Professional Planning Engineer (PPE)"], ["فبراير 2025", "Feb 2025"]],
+  ["CMP", ["Procore Construction Management Professional", "Procore Construction Management Professional"], ["Procore Technologies · فبراير 2025", "Procore Technologies · Feb 2025"]],
+  ["EOT", ["Claims Management and (EOT)", "Claims Management and (EOT)"], ["Planning Engineer FZE · مايو 2025", "Planning Engineer FZE · May 2025"]],
+  ["P6", ["Power BI Monitoring and Controlling with P6", "Power BI Monitoring and Controlling with P6"], ["Planning Engineer FZE · يناير 2026", "Planning Engineer FZE · Jan 2026"]],
+  ["FAB", ["Learn Microsoft Power BI in Microsoft Fabric", "Learn Microsoft Power BI in Microsoft Fabric"], ["Udemy · فبراير 2026", "Udemy · Feb 2026"]],
+  ["PBI", ["Microsoft Power BI for Project Planning and Control", "Microsoft Power BI for Project Planning and Control"], ["Udemy · يوليو 2025", "Udemy · Jul 2025"]],
+  ["VBA", ["Excel: Learning VBA", "Excel: Learning VBA"], ["NASBA · مارس 2026", "NASBA · Mar 2026"]],
+  ["DMR", ["Data Management and Reporting", "Data Management and Reporting"], ["Planning Engineer FZE · أبريل 2025", "Planning Engineer FZE · Apr 2025"]],
+  ["OPT", ["Oracle Primavera Top 50 Tips and Tricks", "Oracle Primavera Top 50 Tips and Tricks"], ["Planning Engineer FZE · فبراير 2025", "Planning Engineer FZE · Feb 2025"]],
+  ["PMI", ["Construction Management: Reading Drawings and Specifications", "Construction Management: Reading Drawings and Specifications"], ["Project Management Institute · فبراير 2025", "Project Management Institute · Feb 2025"]],
+  ["HSE", ["Construction Management: Safety and Health", "Construction Management: Safety and Health"], ["LinkedIn · فبراير 2025", "LinkedIn · Feb 2025"]],
   ["PMP", ["PMP · جاري", "PMP · in progress"], ["PMI", "PMI"]],
 ];
-const LI_SKILLS = ["Primavera P6", "Project Controls", "Delay Analysis", "EOT Claims", "FIDIC", "Power BI", "EVM", "4D Simulation", "Revit & BIM", "Excel VBA", "Python", "n8n Automation", "AI Workflows", "Machine Learning", "TypeScript / React", "Team Leadership"];
+const LI_SKILLS = ["Primavera P6", "Project Control", "Project Scheduling", "CPM Scheduling", "Delay Analysis", "Claims Management", "Earned Value Management (EVM)", "Resource Planning", "Construction Risk Management", "Microsoft Power BI", "Microsoft Fabric", "Dashboards", "Data Visualization", "VBA Excel", "Microsoft Excel Macros", "n8n", "Workflow Automation", "4D BIM", "Procore", "Construction Safety"];
 
 const VIDEOS = [
   { id: "7N72QijzO04", v: ["42 ألف", "42K"], ar: "لو معاك 3 مليون جنيه.. عقار ولا ذهب ولا دولار؟ حسبتها بالأرقام", en: "Got EGP 3 million? Property, gold or dollars. I ran the numbers" },
@@ -1328,7 +1390,7 @@ Object.assign(T.ar, {
   "l.sub": "بروفايلي على لينكدإن في مكان واحد: الخبرات على خط زمني، الشهادات، المهارات، وآخر نشاط مباشر.",
   "l.follow": "تابعني", "l.posts": "آخر المنشورات",
   "l.tabs": ["نبذة", "الخبرات", "الشهادات", "المهارات", "مباشر"],
-  "l.nums": [["8", "سنين خبرة"], ["5", "شركات"], ["5", "شهادات"]],
+  "l.nums": [["8", "سنين خبرة"], ["7", "خبرات"], ["10", "شهادات"]],
   "l.hi": [["التخصص", "تخطيط وضبط مشاريع، تحليل تأخير وEOT"], ["الأدوات", "Primavera P6 · Power BI · أتمتة وAI"], ["النطاق", "1.9 مليار درهم · أبراج ومجتمعات فلل"]],
   "l.groups": ["تخطيط وضبط المشاريع", "البيانات والأتمتة", "BIM والتنفيذ"],
   "l.live": "البادج الرسمي من لينكدإن، بيتحدث لوحده من البروفايل.", "l.liveFb": "لو البادج ما ظهرش، افتح البروفايل مباشرة.", "l.now": "الآن",
@@ -1341,7 +1403,7 @@ Object.assign(T.en, {
   "l.sub": "My LinkedIn in one place: experience on a timeline, certifications, skills and live activity.",
   "l.follow": "Follow", "l.posts": "Recent posts",
   "l.tabs": ["About", "Experience", "Certifications", "Skills", "Live"],
-  "l.nums": [["8", "years"], ["5", "companies"], ["5", "certifications"]],
+  "l.nums": [["8", "years"], ["7", "roles"], ["10", "certifications"]],
   "l.hi": [["Focus", "Planning and project controls, delay analysis and EOT"], ["Tools", "Primavera P6 · Power BI · automation and AI"], ["Scope", "AED 1.9 bn · towers and villa communities"]],
   "l.groups": ["Planning and project controls", "Data and automation", "BIM and delivery"],
   "l.live": "LinkedIn's official badge, kept up to date from my profile.", "l.liveFb": "If the badge does not load, open the profile directly.", "l.now": "Now",
@@ -1350,8 +1412,32 @@ Object.assign(T.en, {
   "v.statsL": ["subscribers", "views", "videos", "on YouTube since"], "v.live": "Live · updated {t}",
   "t.kicker": "My tools", "t.title": "Free tools I built", "t.sub": "Real tools engineers and owners use every day: pricing, choosing a major, and learning structures. All free and they run in the browser.", "t.open": "Open the tool", "n.tools": "My tools",
 });
-const LI_SPAN = [[2025.42, 0], [2024, 2025.4], [2022, 2024], [2019, 2022], [2018, 2019]];
-const LI_GROUPS = [["Primavera P6", "Project Controls", "Delay Analysis", "EOT Claims", "FIDIC", "EVM", "Team Leadership"], ["Power BI", "Excel VBA", "Python", "n8n Automation", "AI Workflows", "Machine Learning", "TypeScript / React"], ["Revit & BIM", "4D Simulation"]];
+Object.assign(T.ar, {
+  "n.cv": "الـ CV",
+  "cv.kicker": "السيرة الذاتية",
+  "cv.title": "خد الخبرة كلها معاك.",
+  "cv.lead": "8 سنين، 7 خبرات، و1.9 مليار درهم نطاق مباشر، في CV نضيف بيعدّي أنظمة ATS وبيتقري كويس على الورق. نفس بيانات لينكدإن بالظبط.",
+  "cv.l1": "عمود واحد وعناوين أقسام قياسية بتقراها أنظمة ATS صح",
+  "cv.l2": "نص حقيقي قابل للتحديد، من غير جداول ولا صور ولا صناديق نص",
+  "cv.l3": "كلمات مفتاحية لوظائف قائد التخطيط وProject Controls: Primavera P6، تحليل التأخير، EOT، FIDIC، EVM، تخطيط 4D",
+  "cv.l4": "كل دور بالأرقام: قيمة المشاريع، عدد الفلل، والمهندسين على المنصات",
+  "cv.pdf": "حمّل PDF", "cv.word": "حمّل Word",
+  "cv.note": "نسخة Word للبورتالات ووكالات التوظيف اللي بتطلب ملف قابل للتعديل.",
+});
+Object.assign(T.en, {
+  "n.cv": "CV",
+  "cv.kicker": "Curriculum vitae",
+  "cv.title": "Take the full record with you.",
+  "cv.lead": "Eight years, seven roles and AED 1.9 BN of direct scope, in a clean CV built to pass applicant tracking systems and read well on paper. It matches my LinkedIn profile exactly.",
+  "cv.l1": "Single-column layout with standard section headings that ATS software parses correctly",
+  "cv.l2": "Real, selectable text, with no tables, text boxes or images",
+  "cv.l3": "Keyword-rich for Planning Lead and Project Controls roles: Primavera P6, delay analysis, EOT, FIDIC, EVM, 4D planning",
+  "cv.l4": "Every role quantified: project values, villa counts and engineers on the platforms I built",
+  "cv.pdf": "Download PDF", "cv.word": "Download Word",
+  "cv.note": "The Word version is for portals and recruitment agencies that ask for an editable file.",
+});
+const LI_SPAN = [[2025.42, 0], [2018, 0], [2024.5, 2025.42], [2022, 2024.5], [2019.25, 2022], [2018.75, 2019.08], [2016.17, 2018]];
+const LI_GROUPS = [["Primavera P6", "Project Control", "Project Scheduling", "CPM Scheduling", "Delay Analysis", "Claims Management", "Earned Value Management (EVM)", "Resource Planning", "Construction Risk Management"], ["Microsoft Power BI", "Microsoft Fabric", "Dashboards", "Data Visualization", "VBA Excel", "Microsoft Excel Macros", "n8n", "Workflow Automation"], ["4D BIM", "Procore", "Construction Safety"]];
 let lkTab = 1, ytSel = 0, YT = null;
 const nowYear = () => { const t = new Date(); return t.getFullYear() + t.getMonth() / 12; };
 function renderLinkedIn(d) {
@@ -1362,8 +1448,8 @@ function renderLinkedIn(d) {
   const P = $("#lk-panel"); let h = "";
   if (lkTab === 0) h = `<div class="lk-about"><p>${esc(d["l.aboutT"])}</p><div class="lk-hi">${d["l.hi"].map(([k, v]) => `<div><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join("")}</div></div>`;
   if (lkTab === 1) {
-    const a = 2018, b = 2027, X = (y) => ((y - a) / (b - a)) * 100;
-    h = `<div class="lk-tl">${LI_EXP.map(([ab, t, s], i) => { const [s0, e0] = LI_SPAN[i], e1 = e0 || nowYear(); return `<div class="lk-role${e0 ? "" : " now"}"><span class="lk-logo">${ab}</span><div><b>${esc(t[L()])}</b><span>${esc(s[L()])}${e0 ? "" : ` · <em style="color:var(--green);font-style:normal">${esc(d["l.now"])}</em>`}</span><div class="lk-span"><i style="left:${X(s0)}%;width:${X(e1) - X(s0)}%"></i></div></div></div>`; }).join("")}</div><div class="lk-axis">${[2018, 2020, 2022, 2024, 2026].map((y) => `<span>${y}</span>`).join("")}</div>`;
+    const a = 2016, b = 2027, X = (y) => ((y - a) / (b - a)) * 100;
+    h = `<div class="lk-tl">${LI_EXP.map(([ab, t, s], i) => { const [s0, e0] = LI_SPAN[i], e1 = e0 || nowYear(); return `<div class="lk-role${e0 ? "" : " now"}"><span class="lk-logo">${ab}</span><div><b>${esc(t[L()])}</b><span>${esc(s[L()])}${e0 ? "" : ` · <em style="color:var(--green);font-style:normal">${esc(d["l.now"])}</em>`}</span><div class="lk-span"><i style="left:${X(s0)}%;width:${X(e1) - X(s0)}%"></i></div></div></div>`; }).join("")}</div><div class="lk-axis">${[2016, 2018, 2020, 2022, 2024, 2026].map((y) => `<span>${y}</span>`).join("")}</div>`;
   }
   if (lkTab === 2) h = `<div class="lk-certs">${LI_LIC.map(([ab, t, s]) => `<div class="lk-cert"><span class="lk-logo">${ab}</span><div><b>${esc(t[L()])}</b><span>${esc(s[L()])}</span></div></div>`).join("")}</div>`;
   if (lkTab === 3) h = `<div class="lk-sk">${LI_GROUPS.map((g, i) => `<div><h5>${esc(d["l.groups"][i])}</h5><div class="chips">${g.map((s) => `<span>${esc(s)}</span>`).join("")}</div></div>`).join("")}</div>`;
@@ -1909,9 +1995,18 @@ const ldStart = performance.now(); let ldDone = false;
 function finishLoader() {
   if (ldDone) return; ldDone = true;
   const n = $("#ld-n"); if (n) n.textContent = "100";
-  setTimeout(() => { const l = $("#loader"); if (l) l.classList.add("out"); document.body.classList.add("go"); setTimeout(() => l && l.remove(), 1200); }, reduceMotion ? 0 : Math.max(250, 1000 - (performance.now() - ldStart)));
+  setTimeout(() => { const l = $("#loader"); if (l) l.classList.add("out"); document.body.classList.add("go"); setTimeout(() => l && l.remove(), 1200); }, reduceMotion ? 0 : Math.max(200, 600 - (performance.now() - ldStart)));
 }
 setTimeout(finishLoader, 3000);
+
+/* ---------- dashboard iframe: load only when it is about to be seen ---------- */
+(() => {
+  const f = document.getElementById("pbiframe"); if (!f || !f.dataset.src) return;
+  const go = () => { if (!f.src) f.src = f.dataset.src; };
+  if (!("IntersectionObserver" in window)) return go();
+  const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); go(); } }, { rootMargin: "600px 0px" });
+  io.observe(f);
+})();
 
 /* ---------- smooth scroll (desktop) and spotlight cards ---------- */
 if (!reduceMotion && !matchMedia("(pointer: coarse)").matches) {
