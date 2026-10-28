@@ -1,16 +1,16 @@
 {
- "updated": "2026-10-27T22:15:30Z",
+ "updated": "2026-10-28T05:45:15Z",
  "channel": {
-  "views": "4,529,413",
-  "videos": "581",
   "joined": "Jan 12, 2018",
+  "views": "4,530,789",
+  "videos": "581",
   "subscribers": "90.2K"
  },
  "videos": [
   {
    "id": "qvGzDXW1Hxo",
    "title": {
-    "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
+    "en": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
    "views": 1146,
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
+    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1100,
@@ -85,10 +85,10 @@
   {
    "id": "v9TkAL3UaZo",
    "title": {
-    "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
+    "en": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
-   "views": 404,
+   "views": 406,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -130,7 +130,7 @@
   {
    "id": "Xz-1SdilZsc",
    "title": {
-    "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
+    "en": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام",
     "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
    },
    "views": 729,
@@ -190,7 +190,7 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
+    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
    "views": 630,
@@ -223,7 +223,7 @@
     "en": "Before You Build… Find Out How Much Your Project Will Cost! | Mizan Al-Binaa",
     "ar": "حاسبة تكلفة البناء مجاناً | اعرف بيتك هيكلف كام قبل ما تبدأ"
    },
-   "views": 895,
+   "views": 897,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -268,7 +268,7 @@
     "en": "التصالح في مخالفات البناء 2026: إيصال جدية التصالح ما بيحميش شقتك! (آخر موعد 5 نوفمبر)",
     "ar": "التصالح في مخالفات البناء 2026: إيصال جدية التصالح ما بيحميش شقتك! (آخر موعد 5 نوفمبر)"
    },
-   "views": 967,
+   "views": 969,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -340,7 +340,7 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
+    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
    "views": 621,
@@ -430,7 +430,7 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
+    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
    "views": 879,
