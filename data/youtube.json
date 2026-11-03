@@ -1,16 +1,16 @@
 {
- "updated": "2026-11-02T15:56:45Z",
+ "updated": "2026-11-03T00:59:56Z",
  "channel": {
   "videos": "583",
   "joined": "Jan 12, 2018",
-  "views": "4,537,306",
-  "subscribers": "90.2K"
+  "subscribers": "90.2K",
+  "views": "4,537,804"
  },
  "videos": [
   {
    "id": "qvGzDXW1Hxo",
    "title": {
-    "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
+    "en": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
    "views": 1252,
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
+    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -88,7 +88,7 @@
     "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
-   "views": 410,
+   "views": 411,
    "ago": {
     "en": "4w ago",
     "ar": "قبل 4 أسابيع"
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "The Hidden Bill",
+    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 566,
@@ -135,8 +135,8 @@
    },
    "views": 732,
    "ago": {
-    "en": "4w ago",
-    "ar": "قبل 4 أسابيع"
+    "en": "1mo ago",
+    "ar": "قبل شهر واحد"
    },
    "published": null,
    "duration": "8:21",
@@ -163,7 +163,7 @@
     "en": "ازاي تبدأ بزنس من الصفر بدون فلوس؟ (بعقلية مهندس)",
     "ar": "ازاي تبدأ بزنس من الصفر بدون فلوس؟ (بعقلية مهندس)"
    },
-   "views": 635,
+   "views": 636,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -190,7 +190,7 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
+    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
    "views": 632,
@@ -283,7 +283,7 @@
     "en": "Are Engineering Jobs Going Extinct?! AI in Construction — Who Really Gets Replaced?",
     "ar": "وظيفة المهندس هتنقرض! مستقبل الهندسة مع الذكاء الاصطناعي؟"
    },
-   "views": 838,
+   "views": 839,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -328,7 +328,7 @@
     "en": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر..",
     "ar": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر.."
    },
-   "views": 925,
+   "views": 926,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -340,7 +340,7 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
+    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
    "views": 626,
@@ -373,7 +373,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 780,
+   "views": 783,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -433,7 +433,7 @@
     "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 890,
+   "views": 894,
    "ago": {
     "en": "4mo ago",
     "ar": "خلال 4 أشهر"
