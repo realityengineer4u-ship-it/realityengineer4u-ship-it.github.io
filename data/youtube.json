@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-04T06:26:31Z",
+ "updated": "2026-11-04T19:46:52Z",
  "channel": {
-  "views": "4,539,037",
+  "joined": "Jan 12, 2018",
   "subscribers": "90.2K",
   "videos": "583",
-  "joined": "Jan 12, 2018"
+  "views": "4,539,835"
  },
  "videos": [
   {
@@ -13,10 +13,10 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1263,
+   "views": 1300,
    "ago": {
-    "en": "11d ago",
-    "ar": "قبل 11 يومًا"
+    "en": "12d ago",
+    "ar": "قبل 12 يومًا"
    },
    "published": "2026-10-23T10:33:48+00:00",
    "duration": "9:21",
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 699,
+   "views": 704,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -73,10 +73,10 @@
     "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
     "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
    },
-   "views": 560,
+   "views": 563,
    "ago": {
-    "en": "3w ago",
-    "ar": "قبل 3 أسابيع"
+    "en": "4w ago",
+    "ar": "قبل 4 أسابيع"
    },
    "published": null,
    "duration": "12:40",
@@ -85,7 +85,7 @@
   {
    "id": "v9TkAL3UaZo",
    "title": {
-    "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
+    "en": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
    "views": 412,
@@ -105,8 +105,8 @@
    },
    "views": 566,
    "ago": {
-    "en": "4w ago",
-    "ar": "قبل 4 أسابيع"
+    "en": "1mo ago",
+    "ar": "قبل شهر واحد"
    },
    "published": null,
    "duration": "5:05",
@@ -190,7 +190,7 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
+    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
    "views": 632,
@@ -340,10 +340,10 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
+    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
-   "views": 627,
+   "views": 628,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -373,7 +373,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 783,
+   "views": 786,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -388,7 +388,7 @@
     "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
     "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
    },
-   "views": 4300,
+   "views": 4400,
    "ago": {
     "en": "3mo ago",
     "ar": "خلال 3 أشهر"
@@ -430,7 +430,7 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
+    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
    "views": 898,
@@ -463,28 +463,28 @@
    "id": "42aEF9YrdFQ",
    "title": "PDCA Cycle 🔄 | سر التحسين المستمر في نظام ISO 9001",
    "published": "2026-11-01T08:50:44+00:00",
-   "views": 1146,
+   "views": 1162,
    "short": true
   },
   {
    "id": "V5MLL3FjwnM",
    "title": "what is not Documented , is not Done (ISO 9001)",
    "published": "2026-10-30T12:27:30+00:00",
-   "views": 782,
+   "views": 789,
    "short": true
   },
   {
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1263,
+   "views": 1300,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 699,
+   "views": 704,
    "short": false
   },
   {
@@ -526,7 +526,7 @@
    "id": "2GJPbrq8iNw",
    "title": "تقسيط عربية: ناس دفعت تمن العربية مرتين وثلاثة",
    "published": "2026-10-11T03:19:15+00:00",
-   "views": 1820,
+   "views": 1821,
    "short": true
   },
   {
@@ -540,7 +540,7 @@
    "id": "VstnVqaJytU",
    "title": "مشروع ب 10000 جنيه؟ أخطر حاجة تعملها تشتري بضاعة الأول",
    "published": "2026-10-11T00:21:04+00:00",
-   "views": 1264,
+   "views": 1267,
    "short": true
   },
   {
