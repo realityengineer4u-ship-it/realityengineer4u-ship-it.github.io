@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-06T06:50:17Z",
+ "updated": "2026-11-06T19:26:05Z",
  "channel": {
+  "views": "4,542,657",
   "videos": "583",
-  "joined": "Jan 12, 2018",
   "subscribers": "90.2K",
-  "views": "4,542,251"
+  "joined": "Jan 12, 2018"
  },
  "videos": [
   {
@@ -13,10 +13,10 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1323,
+   "views": 1332,
    "ago": {
-    "en": "13d ago",
-    "ar": "قبل 13 يومًا"
+    "en": "2w ago",
+    "ar": "قبل أسبوعين"
    },
    "published": "2026-10-23T10:33:48+00:00",
    "duration": "9:21",
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 710,
+   "views": 713,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
+    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -60,8 +60,8 @@
    },
    "views": 1300,
    "ago": {
-    "en": "3w ago",
-    "ar": "قبل 3 أسابيع"
+    "en": "4w ago",
+    "ar": "قبل 4 أسابيع"
    },
    "published": null,
    "duration": "7:09",
@@ -73,7 +73,7 @@
     "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
     "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
    },
-   "views": 568,
+   "views": 570,
    "ago": {
     "en": "4w ago",
     "ar": "قبل 4 أسابيع"
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
+    "en": "The Hidden Bill",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 566,
@@ -360,8 +360,8 @@
    },
    "views": 1500,
    "ago": {
-    "en": "1mo ago",
-    "ar": "قبل شهر واحد"
+    "en": "2mo ago",
+    "ar": "قبل شهرين"
    },
    "published": null,
    "duration": "7:56",
@@ -375,8 +375,8 @@
    },
    "views": 793,
    "ago": {
-    "en": "1mo ago",
-    "ar": "قبل شهر واحد"
+    "en": "2mo ago",
+    "ar": "قبل شهرين"
    },
    "published": null,
    "duration": "13:33",
@@ -385,7 +385,7 @@
   {
    "id": "rJ8z7pi3cbM",
    "title": {
-    "en": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة",
+    "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
     "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
    },
    "views": 4400,
@@ -418,7 +418,7 @@
     "en": "UAE Degree Equivalency 2026 | Certificate Recognition Step by Step",
     "ar": "معادلة الشهادة في الإمارات (الاعتراف بالشهادة) | الخطوات والأوراق 2026"
    },
-   "views": 13000,
+   "views": 14000,
    "ago": {
     "en": "4mo ago",
     "ar": "خلال 4 أشهر"
@@ -430,10 +430,10 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
+    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 906,
+   "views": 910,
    "ago": {
     "en": "4mo ago",
     "ar": "خلال 4 أشهر"
@@ -463,28 +463,28 @@
    "id": "42aEF9YrdFQ",
    "title": "PDCA Cycle 🔄 | سر التحسين المستمر في نظام ISO 9001",
    "published": "2026-11-01T08:50:44+00:00",
-   "views": 1167,
+   "views": 1177,
    "short": true
   },
   {
    "id": "V5MLL3FjwnM",
    "title": "what is not Documented , is not Done (ISO 9001)",
    "published": "2026-10-30T12:27:30+00:00",
-   "views": 791,
+   "views": 796,
    "short": true
   },
   {
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1323,
+   "views": 1332,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 710,
+   "views": 713,
    "short": false
   },
   {
@@ -540,7 +540,7 @@
    "id": "VstnVqaJytU",
    "title": "مشروع ب 10000 جنيه؟ أخطر حاجة تعملها تشتري بضاعة الأول",
    "published": "2026-10-11T00:21:04+00:00",
-   "views": 1271,
+   "views": 1275,
    "short": true
   },
   {
