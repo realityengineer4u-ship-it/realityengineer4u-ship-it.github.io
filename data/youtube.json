@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-07T06:00:15Z",
+ "updated": "2026-11-07T13:04:03Z",
  "channel": {
   "videos": "583",
+  "views": "4,543,430",
   "subscribers": "90.2K",
-  "joined": "Jan 12, 2018",
-  "views": "4,543,430"
+  "joined": "Jan 12, 2018"
  },
  "videos": [
   {
@@ -13,7 +13,7 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1332,
+   "views": 1341,
    "ago": {
     "en": "2w ago",
     "ar": "قبل أسبوعين"
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 713,
+   "views": 714,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
+    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -55,7 +55,7 @@
   {
    "id": "Nz7O9MDCE6I",
    "title": {
-    "en": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!",
+    "en": "Engineer Accreditation in the UAE 2026 | Are You Actually Certified or Not?!",
     "ar": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!"
    },
    "views": 1300,
@@ -85,7 +85,7 @@
   {
    "id": "v9TkAL3UaZo",
    "title": {
-    "en": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات",
+    "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
    "views": 414,
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
+    "en": "The Hidden Bill",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 566,
@@ -190,10 +190,10 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
+    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
-   "views": 632,
+   "views": 633,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -328,7 +328,7 @@
     "en": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر..",
     "ar": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر.."
    },
-   "views": 928,
+   "views": 929,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -340,7 +340,7 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
+    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
    "views": 629,
@@ -373,7 +373,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 796,
+   "views": 797,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -385,7 +385,7 @@
   {
    "id": "rJ8z7pi3cbM",
    "title": {
-    "en": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة",
+    "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
     "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
    },
    "views": 4400,
@@ -400,7 +400,7 @@
   {
    "id": "TdOGz1JIyXE",
    "title": {
-    "en": "أحذر قبل معادلة شهادة التخرج في الإمارات.. اعرف المعلومة دي! 🇦🇪",
+    "en": "Beware Before Equivalating Your Degree in the UAE.. Know This! 🇦🇪",
     "ar": "أحذر قبل معادلة شهادة التخرج في الإمارات.. اعرف المعلومة دي! 🇦🇪"
    },
    "views": 3100,
@@ -430,7 +430,7 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
+    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
    "views": 912,
@@ -463,28 +463,28 @@
    "id": "42aEF9YrdFQ",
    "title": "PDCA Cycle 🔄 | سر التحسين المستمر في نظام ISO 9001",
    "published": "2026-11-01T08:50:44+00:00",
-   "views": 1177,
+   "views": 1180,
    "short": true
   },
   {
    "id": "V5MLL3FjwnM",
    "title": "what is not Documented , is not Done (ISO 9001)",
    "published": "2026-10-30T12:27:30+00:00",
-   "views": 796,
+   "views": 798,
    "short": true
   },
   {
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1332,
+   "views": 1341,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 713,
+   "views": 714,
    "short": false
   },
   {
@@ -498,14 +498,14 @@
    "id": "ZlR9CMLxBxY",
    "title": "التقسيط بدون فوائد: أكذوبة بتطير نص مرتبك",
    "published": "2026-10-11T03:22:08+00:00",
-   "views": 1652,
+   "views": 1654,
    "short": true
   },
   {
    "id": "VCr9HJOewUQ",
    "title": "الكاش باك أكبر كذبة؟ الكريدت كارد زي المشرط في إيد الجراح",
    "published": "2026-10-11T03:21:26+00:00",
-   "views": 1108,
+   "views": 1110,
    "short": true
   },
   {
@@ -554,7 +554,7 @@
    "id": "CEjLiF-ABnY",
    "title": "الرجوع من الغربة: فيلا 10 سنين = كاش حي في أصل ميت",
    "published": "2026-10-11T00:19:15+00:00",
-   "views": 3974,
+   "views": 3975,
    "short": true
   },
   {
