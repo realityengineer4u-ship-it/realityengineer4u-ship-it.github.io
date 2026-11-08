@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-08T06:04:27Z",
+ "updated": "2026-11-08T13:27:02Z",
  "channel": {
-  "videos": "583",
   "views": "4,544,642",
   "joined": "Jan 12, 2018",
+  "videos": "583",
   "subscribers": "90.2K"
  },
  "videos": [
@@ -13,7 +13,7 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1341,
+   "views": 1347,
    "ago": {
     "en": "2w ago",
     "ar": "قبل أسبوعين"
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 716,
+   "views": 717,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
+    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -73,7 +73,7 @@
     "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
     "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
    },
-   "views": 578,
+   "views": 579,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
+    "en": "The Hidden Bill",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 567,
@@ -190,7 +190,7 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
+    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
    "views": 633,
@@ -223,7 +223,7 @@
     "en": "Before You Build… Find Out How Much Your Project Will Cost! | Mizan Al-Binaa",
     "ar": "حاسبة تكلفة البناء مجاناً | اعرف بيتك هيكلف كام قبل ما تبدأ"
    },
-   "views": 910,
+   "views": 911,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -328,7 +328,7 @@
     "en": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر..",
     "ar": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر.."
    },
-   "views": 933,
+   "views": 934,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -340,7 +340,7 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
+    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
    "views": 629,
@@ -373,7 +373,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 799,
+   "views": 802,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -400,7 +400,7 @@
   {
    "id": "TdOGz1JIyXE",
    "title": {
-    "en": "Beware Before Equivalating Your Degree in the UAE.. Know This! 🇦🇪",
+    "en": "أحذر قبل معادلة شهادة التخرج في الإمارات.. اعرف المعلومة دي! 🇦🇪",
     "ar": "أحذر قبل معادلة شهادة التخرج في الإمارات.. اعرف المعلومة دي! 🇦🇪"
    },
    "views": 3200,
@@ -430,7 +430,7 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
+    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
    "views": 919,
@@ -463,28 +463,28 @@
    "id": "42aEF9YrdFQ",
    "title": "PDCA Cycle 🔄 | سر التحسين المستمر في نظام ISO 9001",
    "published": "2026-11-01T08:50:44+00:00",
-   "views": 1187,
+   "views": 1189,
    "short": true
   },
   {
    "id": "V5MLL3FjwnM",
    "title": "what is not Documented , is not Done (ISO 9001)",
    "published": "2026-10-30T12:27:30+00:00",
-   "views": 800,
+   "views": 801,
    "short": true
   },
   {
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1341,
+   "views": 1347,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 716,
+   "views": 717,
    "short": false
   },
   {
@@ -519,7 +519,7 @@
    "id": "FLWBF6k_iwo",
    "title": "الجمعيات وحشة ولا حلوة؟ خطرها القاتل إجبار الالتزام",
    "published": "2026-10-11T03:20:00+00:00",
-   "views": 1595,
+   "views": 1596,
    "short": true
   },
   {
