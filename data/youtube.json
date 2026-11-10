@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-09T22:23:09Z",
+ "updated": "2026-11-10T07:21:33Z",
  "channel": {
-  "joined": "Jan 12, 2018",
-  "views": "4,547,127",
+  "subscribers": "90.2K",
   "videos": "585",
-  "subscribers": "90.2K"
+  "views": "4,547,895",
+  "joined": "Jan 12, 2018"
  },
  "videos": [
   {
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
+    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "The Hidden Bill",
+    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 568,
@@ -130,7 +130,7 @@
   {
    "id": "Xz-1SdilZsc",
    "title": {
-    "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
+    "en": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام",
     "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
    },
    "views": 734,
@@ -223,7 +223,7 @@
     "en": "Before You Build… Find Out How Much Your Project Will Cost! | Mizan Al-Binaa",
     "ar": "حاسبة تكلفة البناء مجاناً | اعرف بيتك هيكلف كام قبل ما تبدأ"
    },
-   "views": 912,
+   "views": 915,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -328,7 +328,7 @@
     "en": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر..",
     "ar": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر.."
    },
-   "views": 935,
+   "views": 936,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -340,10 +340,10 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
+    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
-   "views": 630,
+   "views": 632,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -385,7 +385,7 @@
   {
    "id": "rJ8z7pi3cbM",
    "title": {
-    "en": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة",
+    "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
     "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
    },
    "views": 4500,
@@ -433,7 +433,7 @@
     "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 923,
+   "views": 925,
    "ago": {
     "en": "4mo ago",
     "ar": "خلال 4 أشهر"
