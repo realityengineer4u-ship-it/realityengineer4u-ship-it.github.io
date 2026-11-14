@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-14T18:04:36Z",
+ "updated": "2026-11-14T22:26:03Z",
  "channel": {
+  "joined": "Jan 12, 2018",
   "subscribers": "90.3K",
   "videos": "585",
-  "joined": "Jan 12, 2018",
   "views": "4,553,215"
  },
  "videos": [
@@ -13,7 +13,7 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1383,
+   "views": 1386,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 771,
+   "views": 773,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
+    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -55,7 +55,7 @@
   {
    "id": "Nz7O9MDCE6I",
    "title": {
-    "en": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!",
+    "en": "Engineer Accreditation in the UAE 2026 | Are You Actually Certified or Not?!",
     "ar": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!"
    },
    "views": 1400,
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "The Hidden Bill",
+    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 568,
@@ -130,7 +130,7 @@
   {
    "id": "Xz-1SdilZsc",
    "title": {
-    "en": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام",
+    "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
     "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
    },
    "views": 736,
@@ -163,7 +163,7 @@
     "en": "ازاي تبدأ بزنس من الصفر بدون فلوس؟ (بعقلية مهندس)",
     "ar": "ازاي تبدأ بزنس من الصفر بدون فلوس؟ (بعقلية مهندس)"
    },
-   "views": 642,
+   "views": 643,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -385,7 +385,7 @@
   {
    "id": "rJ8z7pi3cbM",
    "title": {
-    "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
+    "en": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة",
     "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
    },
    "views": 4600,
@@ -448,7 +448,7 @@
     "en": "Carpentry Work for Foundations in the UAE 2026 | Essential Handover Tips for Every Engineer",
     "ar": "أعمال النجارة للقواعد في الإمارات 2026 | نصائح استلام مهمة لكل مهندس"
    },
-   "views": 591,
+   "views": 592,
    "ago": {
     "en": "8mo ago",
     "ar": "خلال 8 أشهر"
@@ -463,7 +463,7 @@
    "id": "pmnU7w0Kudk",
    "title": "ليه الشركات بتدفع فلوس عشان تاخد ISO 9001؟! 🤔",
    "published": "2026-11-08T17:35:08+00:00",
-   "views": 422,
+   "views": 423,
    "short": true
   },
   {
@@ -491,14 +491,14 @@
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1383,
+   "views": 1386,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 771,
+   "views": 773,
    "short": false
   },
   {
