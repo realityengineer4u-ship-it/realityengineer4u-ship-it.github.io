@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-15T06:36:06Z",
+ "updated": "2026-11-15T18:52:27Z",
  "channel": {
-  "views": "4,554,047",
   "joined": "Jan 12, 2018",
   "videos": "585",
-  "subscribers": "90.3K"
+  "subscribers": "90.3K",
+  "views": "4,554,493"
  },
  "videos": [
   {
@@ -13,7 +13,7 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1386,
+   "views": 1392,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 773,
+   "views": 784,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
+    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -73,7 +73,7 @@
     "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
     "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
    },
-   "views": 595,
+   "views": 596,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -85,7 +85,7 @@
   {
    "id": "v9TkAL3UaZo",
    "title": {
-    "en": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات",
+    "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
    "views": 418,
@@ -190,10 +190,10 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
+    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
-   "views": 636,
+   "views": 637,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -328,7 +328,7 @@
     "en": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر..",
     "ar": " ٤ خدع في باقة التشطيبات تسليم المفتاح - تشطيب ١٥٠٠ للمتر.."
    },
-   "views": 942,
+   "views": 943,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -340,7 +340,7 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
+    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
    "views": 632,
@@ -373,7 +373,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 827,
+   "views": 829,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -430,10 +430,10 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
+    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 949,
+   "views": 952,
    "ago": {
     "en": "5mo ago",
     "ar": "خلال 5 أشهر"
@@ -448,7 +448,7 @@
     "en": "Carpentry Work for Foundations in the UAE 2026 | Essential Handover Tips for Every Engineer",
     "ar": "أعمال النجارة للقواعد في الإمارات 2026 | نصائح استلام مهمة لكل مهندس"
    },
-   "views": 592,
+   "views": 593,
    "ago": {
     "en": "8mo ago",
     "ar": "خلال 8 أشهر"
@@ -463,21 +463,21 @@
    "id": "pmnU7w0Kudk",
    "title": "ليه الشركات بتدفع فلوس عشان تاخد ISO 9001؟! 🤔",
    "published": "2026-11-08T17:35:08+00:00",
-   "views": 423,
+   "views": 441,
    "short": true
   },
   {
    "id": "LqBT4TgxyHA",
    "title": "يعني إيه ISO؟ 🤔 وليه الاسم ده مش اختصار؟! | ISO 9001",
    "published": "2026-11-08T17:22:45+00:00",
-   "views": 778,
+   "views": 785,
    "short": true
   },
   {
    "id": "42aEF9YrdFQ",
    "title": "PDCA Cycle 🔄 | سر التحسين المستمر في نظام ISO 9001",
    "published": "2026-11-01T08:50:44+00:00",
-   "views": 1212,
+   "views": 1214,
    "short": true
   },
   {
@@ -491,14 +491,14 @@
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1386,
+   "views": 1392,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 773,
+   "views": 784,
    "short": false
   },
   {
@@ -512,7 +512,7 @@
    "id": "ZlR9CMLxBxY",
    "title": "التقسيط بدون فوائد: أكذوبة بتطير نص مرتبك",
    "published": "2026-10-11T03:22:08+00:00",
-   "views": 1656,
+   "views": 1658,
    "short": true
   },
   {
@@ -554,7 +554,7 @@
    "id": "VstnVqaJytU",
    "title": "مشروع ب 10000 جنيه؟ أخطر حاجة تعملها تشتري بضاعة الأول",
    "published": "2026-10-11T00:21:04+00:00",
-   "views": 1281,
+   "views": 1282,
    "short": true
   },
   {
