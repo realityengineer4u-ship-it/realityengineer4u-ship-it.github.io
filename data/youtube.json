@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-17T07:56:32Z",
+ "updated": "2026-11-17T20:57:04Z",
  "channel": {
-  "views": "4,556,488",
   "videos": "585",
-  "joined": "Jan 12, 2018",
-  "subscribers": "90.3K"
+  "views": "4,556,965",
+  "subscribers": "90.3K",
+  "joined": "Jan 12, 2018"
  },
  "videos": [
   {
@@ -13,7 +13,7 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1398,
+   "views": 1399,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 803,
+   "views": 811,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
+    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -85,7 +85,7 @@
   {
    "id": "v9TkAL3UaZo",
    "title": {
-    "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
+    "en": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
    "views": 418,
@@ -130,7 +130,7 @@
   {
    "id": "Xz-1SdilZsc",
    "title": {
-    "en": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام",
+    "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
     "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
    },
    "views": 737,
@@ -373,7 +373,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 839,
+   "views": 841,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -400,7 +400,7 @@
   {
    "id": "TdOGz1JIyXE",
    "title": {
-    "en": "أحذر قبل معادلة شهادة التخرج في الإمارات.. اعرف المعلومة دي! 🇦🇪",
+    "en": "Beware Before Equivalating Your Degree in the UAE.. Know This! 🇦🇪",
     "ar": "أحذر قبل معادلة شهادة التخرج في الإمارات.. اعرف المعلومة دي! 🇦🇪"
    },
    "views": 3300,
@@ -430,10 +430,10 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
+    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 960,
+   "views": 961,
    "ago": {
     "en": "5mo ago",
     "ar": "خلال 5 أشهر"
@@ -491,14 +491,14 @@
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1398,
+   "views": 1399,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 803,
+   "views": 811,
    "short": false
   },
   {
