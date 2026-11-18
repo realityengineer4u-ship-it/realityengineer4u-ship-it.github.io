@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-18T07:31:01Z",
+ "updated": "2026-11-18T20:33:30Z",
  "channel": {
-  "videos": "585",
   "joined": "Jan 12, 2018",
-  "views": "4,557,663",
-  "subscribers": "90.3K"
+  "videos": "585",
+  "subscribers": "90.3K",
+  "views": "4,557,663"
  },
  "videos": [
   {
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 811,
+   "views": 821,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
+    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -55,7 +55,7 @@
   {
    "id": "Nz7O9MDCE6I",
    "title": {
-    "en": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!",
+    "en": "Engineer Accreditation in the UAE 2026 | Are You Actually Certified or Not?!",
     "ar": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!"
    },
    "views": 1400,
@@ -73,7 +73,7 @@
     "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
     "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
    },
-   "views": 599,
+   "views": 604,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
+    "en": "The Hidden Bill",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 568,
@@ -223,7 +223,7 @@
     "en": "Before You Build… Find Out How Much Your Project Will Cost! | Mizan Al-Binaa",
     "ar": "حاسبة تكلفة البناء مجاناً | اعرف بيتك هيكلف كام قبل ما تبدأ"
    },
-   "views": 924,
+   "views": 925,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -285,8 +285,8 @@
    },
    "views": 839,
    "ago": {
-    "en": "1mo ago",
-    "ar": "قبل شهر واحد"
+    "en": "2mo ago",
+    "ar": "قبل شهرين"
    },
    "published": null,
    "duration": "9:50",
@@ -385,7 +385,7 @@
   {
    "id": "rJ8z7pi3cbM",
    "title": {
-    "en": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة",
+    "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
     "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
    },
    "views": 4700,
@@ -430,10 +430,10 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
+    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 962,
+   "views": 968,
    "ago": {
     "en": "5mo ago",
     "ar": "خلال 5 أشهر"
@@ -463,21 +463,21 @@
    "id": "pmnU7w0Kudk",
    "title": "ليه الشركات بتدفع فلوس عشان تاخد ISO 9001؟! 🤔",
    "published": "2026-11-08T17:35:08+00:00",
-   "views": 452,
+   "views": 453,
    "short": true
   },
   {
    "id": "LqBT4TgxyHA",
    "title": "يعني إيه ISO؟ 🤔 وليه الاسم ده مش اختصار؟! | ISO 9001",
    "published": "2026-11-08T17:22:45+00:00",
-   "views": 791,
+   "views": 793,
    "short": true
   },
   {
    "id": "42aEF9YrdFQ",
    "title": "PDCA Cycle 🔄 | سر التحسين المستمر في نظام ISO 9001",
    "published": "2026-11-01T08:50:44+00:00",
-   "views": 1213,
+   "views": 1214,
    "short": true
   },
   {
@@ -498,7 +498,7 @@
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 811,
+   "views": 821,
    "short": false
   },
   {
@@ -512,7 +512,7 @@
    "id": "ZlR9CMLxBxY",
    "title": "التقسيط بدون فوائد: أكذوبة بتطير نص مرتبك",
    "published": "2026-10-11T03:22:08+00:00",
-   "views": 1659,
+   "views": 1660,
    "short": true
   },
   {
