@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-19T07:27:53Z",
+ "updated": "2026-11-19T20:39:16Z",
  "channel": {
+  "joined": "Jan 12, 2018",
   "views": "4,558,683",
-  "videos": "585",
   "subscribers": "90.3K",
-  "joined": "Jan 12, 2018"
+  "videos": "585"
  },
  "videos": [
   {
@@ -13,7 +13,7 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1401,
+   "views": 1402,
    "ago": {
     "en": "3w ago",
     "ar": "قبل 3 أسابيع"
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 834,
+   "views": 842,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -55,7 +55,7 @@
   {
    "id": "Nz7O9MDCE6I",
    "title": {
-    "en": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!",
+    "en": "Engineer Accreditation in the UAE 2026 | Are You Actually Certified or Not?!",
     "ar": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!"
    },
    "views": 1400,
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
+    "en": "The Hidden Bill",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 568,
@@ -130,7 +130,7 @@
   {
    "id": "Xz-1SdilZsc",
    "title": {
-    "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
+    "en": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام",
     "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
    },
    "views": 737,
@@ -190,7 +190,7 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
+    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
    "views": 638,
@@ -255,8 +255,8 @@
    },
    "views": 527,
    "ago": {
-    "en": "1mo ago",
-    "ar": "قبل شهر واحد"
+    "en": "2mo ago",
+    "ar": "قبل شهرين"
    },
    "published": null,
    "duration": "6:42",
@@ -373,7 +373,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 846,
+   "views": 849,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -430,10 +430,10 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
+    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 968,
+   "views": 972,
    "ago": {
     "en": "5mo ago",
     "ar": "خلال 5 أشهر"
@@ -448,7 +448,7 @@
     "en": "Carpentry Work for Foundations in the UAE 2026 | Essential Handover Tips for Every Engineer",
     "ar": "أعمال النجارة للقواعد في الإمارات 2026 | نصائح استلام مهمة لكل مهندس"
    },
-   "views": 594,
+   "views": 595,
    "ago": {
     "en": "8mo ago",
     "ar": "خلال 8 أشهر"
@@ -470,7 +470,7 @@
    "id": "LqBT4TgxyHA",
    "title": "يعني إيه ISO؟ 🤔 وليه الاسم ده مش اختصار؟! | ISO 9001",
    "published": "2026-11-08T17:22:45+00:00",
-   "views": 797,
+   "views": 799,
    "short": true
   },
   {
@@ -484,28 +484,28 @@
    "id": "V5MLL3FjwnM",
    "title": "what is not Documented , is not Done (ISO 9001)",
    "published": "2026-10-30T12:27:30+00:00",
-   "views": 815,
+   "views": 817,
    "short": true
   },
   {
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1401,
+   "views": 1402,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 834,
+   "views": 842,
    "short": false
   },
   {
    "id": "QlvcvxPCX5I",
    "title": "القرض الشخصي: الفلوس دي مش بتاعتك.. دي سنين من عمرك",
    "published": "2026-10-11T03:22:50+00:00",
-   "views": 1536,
+   "views": 1537,
    "short": true
   },
   {
