@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-22T19:42:30Z",
+ "updated": "2026-11-23T07:41:18Z",
  "channel": {
-  "joined": "Jan 12, 2018",
+  "views": "4,563,465",
   "subscribers": "90.3K",
-  "views": "4,562,719",
-  "videos": "585"
+  "videos": "585",
+  "joined": "Jan 12, 2018"
  },
  "videos": [
   {
@@ -13,7 +13,7 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1409,
+   "views": 1412,
    "ago": {
     "en": "4w ago",
     "ar": "قبل 4 أسابيع"
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 937,
+   "views": 951,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
+    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -85,7 +85,7 @@
   {
    "id": "v9TkAL3UaZo",
    "title": {
-    "en": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات",
+    "en": "Honeycombing in Concrete? Don't Just Patch It With Mortar! The Right Way to Repair It From a Site...",
     "ar": "تعشيش في الخرسانة؟ متقفلهاش بالمونة! المعالجة الصح من موقع في الإمارات"
    },
    "views": 418,
@@ -100,7 +100,7 @@
   {
    "id": "i295i-WBI0c",
    "title": {
-    "en": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك",
+    "en": "The Hidden Bill",
     "ar": "احذر رسوم الصيانة في دبي: 3 حيل تاكل أرباح عقارك"
    },
    "views": 568,
@@ -190,7 +190,7 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
+    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
    "views": 641,
@@ -253,7 +253,7 @@
     "en": "ليه الناس بتبيع بخسارة؟ 3 فخاخ المطور مخبيها عنك - شقق الأوف بلان 2026",
     "ar": "ليه الناس بتبيع بخسارة؟ 3 فخاخ المطور مخبيها عنك - شقق الأوف بلان 2026"
    },
-   "views": 531,
+   "views": 530,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -430,10 +430,10 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
+    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 985,
+   "views": 988,
    "ago": {
     "en": "5mo ago",
     "ar": "خلال 5 أشهر"
@@ -463,14 +463,14 @@
    "id": "pmnU7w0Kudk",
    "title": "ليه الشركات بتدفع فلوس عشان تاخد ISO 9001؟! 🤔",
    "published": "2026-11-08T17:35:08+00:00",
-   "views": 469,
+   "views": 470,
    "short": true
   },
   {
    "id": "LqBT4TgxyHA",
    "title": "يعني إيه ISO؟ 🤔 وليه الاسم ده مش اختصار؟! | ISO 9001",
    "published": "2026-11-08T17:22:45+00:00",
-   "views": 810,
+   "views": 813,
    "short": true
   },
   {
@@ -491,14 +491,14 @@
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1409,
+   "views": 1412,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 937,
+   "views": 951,
    "short": false
   },
   {
@@ -547,7 +547,7 @@
    "id": "xpXyZQbzi7s",
    "title": "حساب هامش الربح: منتج بيكسبك 150 جنيه طلع 16 بس!",
    "published": "2026-10-11T00:21:51+00:00",
-   "views": 570,
+   "views": 573,
    "short": true
   },
   {
