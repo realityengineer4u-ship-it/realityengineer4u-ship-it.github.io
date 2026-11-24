@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-23T23:55:02Z",
+ "updated": "2026-11-24T09:56:03Z",
  "channel": {
-  "subscribers": "90.3K",
+  "joined": "Jan 12, 2018",
+  "views": "4,564,688",
   "videos": "585",
-  "views": "4,563,956",
-  "joined": "Jan 12, 2018"
+  "subscribers": "90.3K"
  },
  "videos": [
   {
@@ -13,7 +13,7 @@
     "en": "Why might an engineer with 5 years of experience get rejected in the UAE?!",
     "ar": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!"
    },
-   "views": 1414,
+   "views": 1417,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -28,7 +28,7 @@
     "en": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
     "ar": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك"
    },
-   "views": 971,
+   "views": 989,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -40,7 +40,7 @@
   {
    "id": "RBmrB7epBZI",
    "title": {
-    "en": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟",
+    "en": "Cash or Installments? An Apartment Worth 5 Million, but You Only Pay 3.2 Million?",
     "ar": "كاش ولا تقسيط؟ شقة بـ 5 مليون هتدفع فيها 3.2 مليون بس؟"
    },
    "views": 1200,
@@ -73,7 +73,7 @@
     "en": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)",
     "ar": "ازاي تبدأ تجارة ناجحة من الصفر (النموذج العملي)"
    },
-   "views": 611,
+   "views": 612,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -130,7 +130,7 @@
   {
    "id": "Xz-1SdilZsc",
    "title": {
-    "en": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام",
+    "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
     "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
    },
    "views": 737,
@@ -190,7 +190,7 @@
   {
    "id": "zmOLOjq2jMU",
    "title": {
-    "en": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب",
+    "en": "The One Mistake That Leaves Expats Broke After Years of Hard Work",
     "ar": "غلطة واحدة بتخلي المغترب يرجع مفلس بعد سنين تعب"
    },
    "views": 641,
@@ -238,7 +238,7 @@
     "en": "بتصحى تعبان رغم 8 ساعات نوم؟ متلازمة المبنى المريض و6 أخطاء في أوضتك",
     "ar": "بتصحى تعبان رغم 8 ساعات نوم؟ متلازمة المبنى المريض و6 أخطاء في أوضتك"
    },
-   "views": 738,
+   "views": 740,
    "ago": {
     "en": "1mo ago",
     "ar": "قبل شهر واحد"
@@ -340,7 +340,7 @@
   {
    "id": "iid2gQP7210",
    "title": {
-    "en": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت..",
+    "en": "Paid in 2024 and the Apartment is Still a Vacant Lot - The State Has Intervened..",
     "ar": "دفعت ٢٠٢٤ والشقة لسه أرض فاضية - الدولة تدخلت.."
    },
    "views": 632,
@@ -388,7 +388,7 @@
     "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
     "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
    },
-   "views": 4800,
+   "views": 4900,
    "ago": {
     "en": "4mo ago",
     "ar": "خلال 4 أشهر"
@@ -430,10 +430,10 @@
   {
    "id": "kgsOfc2qfbE",
    "title": {
-    "en": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟",
+    "en": "Must-Know Construction Terminology | Engineer in the UAE?",
     "ar": " لازم تعرف مسميات الموقع دي | مهندس في الإمارات؟"
    },
-   "views": 993,
+   "views": 994,
    "ago": {
     "en": "5mo ago",
     "ar": "خلال 5 أشهر"
@@ -477,28 +477,28 @@
    "id": "42aEF9YrdFQ",
    "title": "PDCA Cycle 🔄 | سر التحسين المستمر في نظام ISO 9001",
    "published": "2026-11-01T08:50:44+00:00",
-   "views": 1219,
+   "views": 1220,
    "short": true
   },
   {
    "id": "V5MLL3FjwnM",
    "title": "what is not Documented , is not Done (ISO 9001)",
    "published": "2026-10-30T12:27:30+00:00",
-   "views": 817,
+   "views": 819,
    "short": true
   },
   {
    "id": "qvGzDXW1Hxo",
    "title": "ليه مهندس بخبرة 5 سنين ممكن يترفض في الإمارات؟!",
    "published": "2026-10-23T10:33:48+00:00",
-   "views": 1414,
+   "views": 1417,
    "short": false
   },
   {
    "id": "Hu1Rt16SSCQ",
    "title": "أشتري دهب دلوقتي ولا أستنى؟ الطريقة اللي تغيّر حساباتك",
    "published": "2026-10-13T15:38:03+00:00",
-   "views": 971,
+   "views": 989,
    "short": false
   },
   {
@@ -540,7 +540,7 @@
    "id": "2GJPbrq8iNw",
    "title": "تقسيط عربية: ناس دفعت تمن العربية مرتين وثلاثة",
    "published": "2026-10-11T03:19:15+00:00",
-   "views": 1824,
+   "views": 1825,
    "short": true
   },
   {
