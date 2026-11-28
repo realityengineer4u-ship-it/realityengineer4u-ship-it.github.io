@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-27T21:18:52Z",
+ "updated": "2026-11-28T07:52:10Z",
  "channel": {
-  "joined": "Jan 12, 2018",
   "videos": "585",
-  "views": "4,568,511",
-  "subscribers": "90.4K"
+  "subscribers": "90.4K",
+  "joined": "Jan 12, 2018",
+  "views": "4,568,511"
  },
  "videos": [
   {
@@ -55,7 +55,7 @@
   {
    "id": "Nz7O9MDCE6I",
    "title": {
-    "en": "Engineer Accreditation in the UAE 2026 | Are You Actually Certified or Not?!",
+    "en": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!",
     "ar": "تصنيف المهندسين في الإمارات 2026 | إنت معتمد فعلًا ولا لأ؟!"
    },
    "views": 1500,
@@ -130,7 +130,7 @@
   {
    "id": "Xz-1SdilZsc",
    "title": {
-    "en": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام",
+    "en": "Why Your Salary Disappears at the Start of the Month: The Math Behind It",
     "ar": "ليه مرتبك بيطير أول الشهر؟ حسبتها بالأرقام"
    },
    "views": 737,
@@ -373,7 +373,7 @@
     "en": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات",
     "ar": "إياك تشطب شقتك أو تبني بيتك قبل ما تعرف الـ 7 أفخاخ دي! كوارث المقاولات"
    },
-   "views": 880,
+   "views": 882,
    "ago": {
     "en": "2mo ago",
     "ar": "قبل شهرين"
@@ -385,7 +385,7 @@
   {
    "id": "rJ8z7pi3cbM",
    "title": {
-    "en": "Degree Equivalency in the UAE | Step-by-Step Guide to Submitting an Application",
+    "en": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة",
     "ar": "معادلة شهادة التخرج في الإمارات | طريقة تقديم طلب المعادلة خطوة بخطوة"
    },
    "views": 5000,
